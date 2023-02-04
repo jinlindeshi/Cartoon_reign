@@ -1,0 +1,25 @@
+ManifestFileVersion: 0
+CRC: 2204998234
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 2dfdabfbb59b60aac9e278cd032e7312
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 939e20ecac0e95a3f7c5cfb3e57acb1d
+HashAppended: 0
+ClassTypes:
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Res/Models/MobaForest/3D/tower/_models/Materials/tower_texture_02.mat
+- Assets/Res/Models/MobaForest/3D/tower/_models/Materials/tower_broken_texture_01.mat
+- Assets/Res/Models/MobaForest/3D/tower/_models/Materials/tower_texture_01.mat
+Dependencies:
+- D:/Gitee/vivaFramework/Assets/StreamingAssets/models^mobaforest^3d^tower^_models^textures.unity3d
+- D:/Gitee/vivaFramework/Assets/StreamingAssets/models^mobaforest^textures.unity3d

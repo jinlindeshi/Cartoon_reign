@@ -1,0 +1,36 @@
+ManifestFileVersion: 0
+CRC: 3111196735
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 3e80ee494ee3526fcc29abe840cdd435
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: de5b6614feb6f94b0a6e2f2cfc56359c
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 74
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Res/Models/Toon_Zombies_extended/animation/Calm/TZ_calm-A_walk_rm.FBX
+- Assets/Res/Models/Toon_Zombies_extended/animation/Calm/TZ_calm-B_idle_A.FBX
+- Assets/Res/Models/Toon_Zombies_extended/animation/Calm/TZ_calm-C_walk.FBX
+- Assets/Res/Models/Toon_Zombies_extended/animation/Calm/TZ_calm-C_walk_rm.FBX
+- Assets/Res/Models/Toon_Zombies_extended/animation/Calm/TZ_calm-C_idle_A.FBX
+- Assets/Res/Models/Toon_Zombies_extended/animation/Calm/TZ_calm-B_walk_rm.FBX
+- Assets/Res/Models/Toon_Zombies_extended/animation/Calm/TZ_Hulk_calm_walk_rm.FBX
+- Assets/Res/Models/Toon_Zombies_extended/animation/Calm/TZ_calm-B_walk.FBX
+- Assets/Res/Models/Toon_Zombies_extended/animation/Calm/TZ_calm-A_walk.FBX
+- Assets/Res/Models/Toon_Zombies_extended/animation/Calm/TZ_Hulk_calm_walk.FBX
+- Assets/Res/Models/Toon_Zombies_extended/animation/Calm/TZ_Tank_calm_walk.FBX
+- Assets/Res/Models/Toon_Zombies_extended/animation/Calm/TZ_Hulk_calm_idle.FBX
+- Assets/Res/Models/Toon_Zombies_extended/animation/Calm/TZ_Tank_calm_idle.FBX
+- Assets/Res/Models/Toon_Zombies_extended/animation/Calm/TZ_Tank_calm_walk_rm.FBX
+- Assets/Res/Models/Toon_Zombies_extended/animation/Calm/TZ_calm-A_idle_A.FBX
+Dependencies:
+- D:/Gitee/vivaFramework/Assets/StreamingAssets/models^toon_zombies_extended^models.unity3d

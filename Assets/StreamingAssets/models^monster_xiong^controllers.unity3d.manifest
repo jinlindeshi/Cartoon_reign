@@ -1,0 +1,20 @@
+ManifestFileVersion: 0
+CRC: 3701534759
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: bf7c196867b80ff9284fe2d265b89225
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: fdf6c57a251b9f6ec27bdd2fe01b033c
+HashAppended: 0
+ClassTypes:
+- Class: 74
+  Script: {instanceID: 0}
+- Class: 91
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Res/Models/monster_xiong/Controllers/xiong_default.controller
+Dependencies:
+- D:/Gitee/vivaFramework/Assets/StreamingAssets/models^monster_xiong^models.unity3d

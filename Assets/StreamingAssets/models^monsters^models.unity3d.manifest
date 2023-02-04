@@ -1,0 +1,48 @@
+ManifestFileVersion: 0
+CRC: 812341910
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: d57c2852457f4401c299ebd7242843cc
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 0b39dd89f61f4c251694150eaede31a1
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 74
+  Script: {instanceID: 0}
+- Class: 90
+  Script: {instanceID: 0}
+- Class: 95
+  Script: {instanceID: 0}
+- Class: 137
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Res/Models/monsters/Models/sychj@attack02.FBX
+- Assets/Res/Models/monsters/Models/monster@skin.FBX
+- Assets/Res/Models/monsters/Models/monster@ded.FBX
+- Assets/Res/Models/monsters/Models/monster@idl.FBX
+- Assets/Res/Models/monsters/Models/monster@atk.FBX
+- Assets/Res/Models/monsters/Models/monster@run.FBX
+- Assets/Res/Models/monsters/Models/sychj_skin.FBX
+- Assets/Res/Models/monsters/Models/sychj@dead.FBX
+- Assets/Res/Models/monsters/Models/sychj@attack01.FBX
+- Assets/Res/Models/monsters/Models/sychj@idle.FBX
+- Assets/Res/Models/monsters/Models/sychj@hit.FBX
+- Assets/Res/Models/monsters/Models/sychj@run.FBX
+Dependencies:
+- D:/Gitee/vivaFramework/Assets/StreamingAssets/models^monsters^materials.unity3d
+- D:/Gitee/vivaFramework/Assets/StreamingAssets/models^monsters^textures.unity3d

@@ -1,0 +1,18 @@
+ManifestFileVersion: 0
+CRC: 2929678188
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: d9661e308628004bd9bde4a91a47aa19
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: b0363f7088f9761414f730641bf9a24b
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Res/Models/MobaForest/3D/torchs/_models/textures/torch_small_texture_01.png
+- Assets/Res/Models/MobaForest/3D/torchs/_models/textures/torch_big_texture_01.png
+Dependencies: []

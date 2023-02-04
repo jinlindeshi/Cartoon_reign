@@ -1,0 +1,22 @@
+ManifestFileVersion: 0
+CRC: 3812761963
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 443f08521c53bdf05ca7d384a74888e6
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 939e20ecac0e95a3f7c5cfb3e57acb1d
+HashAppended: 0
+ClassTypes:
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Res/Effects/Materials/Water/wave3.mat
+Dependencies:
+- D:/Gitee/vivaFramework/Assets/StreamingAssets/effects^textures.unity3d

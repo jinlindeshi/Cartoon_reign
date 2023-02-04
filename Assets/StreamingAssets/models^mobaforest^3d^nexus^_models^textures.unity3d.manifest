@@ -1,0 +1,20 @@
+ManifestFileVersion: 0
+CRC: 1967034975
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 79723beb8d241a7288261d380569e976
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: b0363f7088f9761414f730641bf9a24b
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Res/Models/MobaForest/3D/nexus/_models/textures/nexus_blue_illumination.png
+- Assets/Res/Models/MobaForest/3D/nexus/_models/textures/nexus_red.png
+- Assets/Res/Models/MobaForest/3D/nexus/_models/textures/nexus_red_illumination.png
+- Assets/Res/Models/MobaForest/3D/nexus/_models/textures/nexus_blue.png
+Dependencies: []

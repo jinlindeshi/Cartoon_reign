@@ -1,0 +1,50 @@
+ManifestFileVersion: 0
+CRC: 679901026
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: dd35f3a2c11a270957fb11cb16eca942
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 939e20ecac0e95a3f7c5cfb3e57acb1d
+HashAppended: 0
+ClassTypes:
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Res/Models/MobaForest/Standard Assets/Particles/Sources/Materials/Fire Add.mat
+- Assets/Res/Models/MobaForest/Standard Assets/Particles/Sources/Materials/FlameD.mat
+- Assets/Res/Models/MobaForest/Standard Assets/Particles/Sources/Materials/Fire Smoke.mat
+- Assets/Res/Models/MobaForest/Standard Assets/Particles/Sources/Materials/Water
+  Splash1.mat
+- Assets/Res/Models/MobaForest/Standard Assets/Particles/Sources/Materials/SoapBubble.mat
+- Assets/Res/Models/MobaForest/Standard Assets/Particles/Sources/Materials/FlameB.mat
+- Assets/Res/Models/MobaForest/Standard Assets/Particles/Sources/Materials/Smoke.mat
+- Assets/Res/Models/MobaForest/Standard Assets/Particles/Sources/Materials/Fairy
+  Dust.mat
+- Assets/Res/Models/MobaForest/Standard Assets/Particles/Sources/Materials/Smoke
+  Trail.mat
+- Assets/Res/Models/MobaForest/Standard Assets/Particles/Sources/Materials/Smoke2.mat
+- Assets/Res/Models/MobaForest/Standard Assets/Particles/Sources/Materials/Sparkles1.mat
+- Assets/Res/Models/MobaForest/Standard Assets/Particles/Sources/Materials/FlameA.mat
+- Assets/Res/Models/MobaForest/Standard Assets/Particles/Sources/Materials/Snowflake.mat
+- Assets/Res/Models/MobaForest/Standard Assets/Particles/Sources/Materials/Sparkles2.mat
+- Assets/Res/Models/MobaForest/Standard Assets/Particles/Sources/Materials/Water
+  Splash2.mat
+- Assets/Res/Models/MobaForest/Standard Assets/Particles/Sources/Materials/FlameC.mat
+- Assets/Res/Models/MobaForest/Standard Assets/Particles/Sources/Materials/Poof1.mat
+- Assets/Res/Models/MobaForest/Standard Assets/Particles/Sources/Materials/Smoke3.mat
+- Assets/Res/Models/MobaForest/Standard Assets/Particles/Sources/Materials/Dust Material
+  1.mat
+- Assets/Res/Models/MobaForest/Standard Assets/Particles/Sources/Materials/Spark.mat
+- Assets/Res/Models/MobaForest/Standard Assets/Particles/Sources/Materials/Smoke4.mat
+- Assets/Res/Models/MobaForest/Standard Assets/Particles/Sources/Materials/Smoke1.mat
+- Assets/Res/Models/MobaForest/Standard Assets/Particles/Sources/Materials/FlameE.mat
+Dependencies:
+- D:/Gitee/vivaFramework/Assets/StreamingAssets/models^mobaforest^standard assets^particles^sources^shaders.unity3d
+- D:/Gitee/vivaFramework/Assets/StreamingAssets/models^mobaforest^standard assets^particles^sources^textures.unity3d

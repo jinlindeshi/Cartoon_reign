@@ -1,0 +1,549 @@
+ManifestFileVersion: 0
+CRC: 452918829
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: lua/lua.unity3d
+      Dependencies: {}
+    Info_1:
+      Name: scene_basescene.unity3d
+      Dependencies: {}
+    Info_2:
+      Name: scene_war.unity3d
+      Dependencies:
+        Dependency_0: models^mobaforest.unity3d
+        Dependency_1: models^mobaforest^3d^base.unity3d
+        Dependency_2: models^mobaforest^3d^base^model.unity3d
+        Dependency_3: models^mobaforest^3d^brush.unity3d
+        Dependency_4: models^mobaforest^3d^chest.unity3d
+        Dependency_5: models^mobaforest^3d^inhibitor.unity3d
+        Dependency_6: models^mobaforest^3d^nexus.unity3d
+        Dependency_7: models^mobaforest^3d^nexus^_models.unity3d
+        Dependency_8: models^mobaforest^3d^nexus^_models^materials.unity3d
+        Dependency_9: models^mobaforest^3d^rocks.unity3d
+        Dependency_10: models^mobaforest^3d^torchs.unity3d
+        Dependency_11: models^mobaforest^3d^tower.unity3d
+        Dependency_12: models^mobaforest^3d^trees.unity3d
+        Dependency_13: models^mobaforest^3d^vegetation.unity3d
+        Dependency_14: models^mobaforest^3d^walls.unity3d
+        Dependency_15: models^mobaforest^3d^walls^_models.unity3d
+        Dependency_16: scenes^war.unity3d
+    Info_3:
+      Name: behaviortree.unity3d
+      Dependencies: {}
+    Info_4:
+      Name: effect^materials.unity3d
+      Dependencies:
+        Dependency_0: effect^textures.unity3d
+        Dependency_1: shaders^effect.unity3d
+        Dependency_2: shaders^ui.unity3d
+    Info_5:
+      Name: effect^meshes.unity3d
+      Dependencies: {}
+    Info_6:
+      Name: effect^prefabs.unity3d
+      Dependencies:
+        Dependency_0: effect^materials.unity3d
+        Dependency_1: effect^meshes.unity3d
+    Info_7:
+      Name: effect^textures.unity3d
+      Dependencies: {}
+    Info_8:
+      Name: effects^materials.unity3d
+      Dependencies:
+        Dependency_0: effects^textures.unity3d
+    Info_9:
+      Name: effects^materials^geometric.unity3d
+      Dependencies:
+        Dependency_0: effects^textures.unity3d
+    Info_10:
+      Name: effects^materials^glows.unity3d
+      Dependencies:
+        Dependency_0: effects^textures.unity3d
+    Info_11:
+      Name: effects^materials^misc.unity3d
+      Dependencies:
+        Dependency_0: effects^textures.unity3d
+    Info_12:
+      Name: effects^materials^water.unity3d
+      Dependencies:
+        Dependency_0: effects^textures.unity3d
+    Info_13:
+      Name: effects^models.unity3d
+      Dependencies: {}
+    Info_14:
+      Name: effects^prefabs.unity3d
+      Dependencies:
+        Dependency_0: effects^materials.unity3d
+        Dependency_1: effects^materials^geometric.unity3d
+        Dependency_2: effects^materials^glows.unity3d
+        Dependency_3: effects^materials^misc.unity3d
+        Dependency_4: effects^materials^water.unity3d
+        Dependency_5: effects^models.unity3d
+    Info_15:
+      Name: effects^textures.unity3d
+      Dependencies: {}
+    Info_16:
+      Name: fonts.unity3d
+      Dependencies: {}
+    Info_17:
+      Name: materials^ui.unity3d
+      Dependencies:
+        Dependency_0: shaders^ui.unity3d
+    Info_18:
+      Name: models^common.unity3d
+      Dependencies: {}
+    Info_19:
+      Name: models^defendbuildings.unity3d
+      Dependencies:
+        Dependency_0: models^defendbuildings^materials.unity3d
+    Info_20:
+      Name: models^defendbuildings^materials.unity3d
+      Dependencies: {}
+    Info_21:
+      Name: models^kanna^controllers.unity3d
+      Dependencies:
+        Dependency_0: models^kanna^models.unity3d
+    Info_22:
+      Name: models^kanna^materials.unity3d
+      Dependencies:
+        Dependency_0: models^common.unity3d
+        Dependency_1: models^kanna^textures.unity3d
+        Dependency_2: models^mobaforest^standard assets^particles^sources^textures.unity3d
+        Dependency_3: shaders^urp.unity3d
+    Info_23:
+      Name: models^kanna^models.unity3d
+      Dependencies:
+        Dependency_0: models^kanna^textures.unity3d
+    Info_24:
+      Name: models^kanna^textures.unity3d
+      Dependencies: {}
+    Info_25:
+      Name: models^mobaforest.unity3d
+      Dependencies:
+        Dependency_0: models^mobaforest^textures.unity3d
+    Info_26:
+      Name: models^mobaforest^3d^base.unity3d
+      Dependencies:
+        Dependency_0: models^mobaforest^3d^base^model.unity3d
+        Dependency_1: models^mobaforest^3d^base^model^materials.unity3d
+    Info_27:
+      Name: models^mobaforest^3d^base^model.unity3d
+      Dependencies:
+        Dependency_0: models^mobaforest^3d^base^model^materials.unity3d
+    Info_28:
+      Name: models^mobaforest^3d^base^model^materials.unity3d
+      Dependencies:
+        Dependency_0: models^mobaforest^3d^base^model^texture.unity3d
+    Info_29:
+      Name: models^mobaforest^3d^base^model^texture.unity3d
+      Dependencies: {}
+    Info_30:
+      Name: models^mobaforest^3d^brush.unity3d
+      Dependencies:
+        Dependency_0: models^mobaforest^3d^brush^_models.unity3d
+        Dependency_1: models^mobaforest^3d^brush^_models^materials.unity3d
+    Info_31:
+      Name: models^mobaforest^3d^brush^_models.unity3d
+      Dependencies:
+        Dependency_0: models^mobaforest^3d^brush^_models^materials.unity3d
+    Info_32:
+      Name: models^mobaforest^3d^brush^_models^materials.unity3d
+      Dependencies:
+        Dependency_0: models^mobaforest^3d^brush^_models^textures.unity3d
+    Info_33:
+      Name: models^mobaforest^3d^brush^_models^textures.unity3d
+      Dependencies: {}
+    Info_34:
+      Name: models^mobaforest^3d^chest.unity3d
+      Dependencies:
+        Dependency_0: models^mobaforest^3d^chest^_models.unity3d
+        Dependency_1: models^mobaforest^3d^chest^_models^materials.unity3d
+    Info_35:
+      Name: models^mobaforest^3d^chest^_models.unity3d
+      Dependencies:
+        Dependency_0: models^mobaforest^3d^chest^_models^materials.unity3d
+    Info_36:
+      Name: models^mobaforest^3d^chest^_models^materials.unity3d
+      Dependencies:
+        Dependency_0: models^mobaforest^3d^chest^_models^textures.unity3d
+    Info_37:
+      Name: models^mobaforest^3d^chest^_models^textures.unity3d
+      Dependencies: {}
+    Info_38:
+      Name: models^mobaforest^3d^inhibitor.unity3d
+      Dependencies:
+        Dependency_0: models^mobaforest^3d^inhibitor^_models.unity3d
+        Dependency_1: models^mobaforest^3d^inhibitor^_models^materials.unity3d
+    Info_39:
+      Name: models^mobaforest^3d^inhibitor^_models.unity3d
+      Dependencies:
+        Dependency_0: models^mobaforest^3d^inhibitor^_models^materials.unity3d
+    Info_40:
+      Name: models^mobaforest^3d^inhibitor^_models^materials.unity3d
+      Dependencies:
+        Dependency_0: models^mobaforest^3d^inhibitor^_models^textures.unity3d
+        Dependency_1: models^mobaforest^textures.unity3d
+    Info_41:
+      Name: models^mobaforest^3d^inhibitor^_models^textures.unity3d
+      Dependencies: {}
+    Info_42:
+      Name: models^mobaforest^3d^nexus.unity3d
+      Dependencies:
+        Dependency_0: models^mobaforest^3d^nexus^_models.unity3d
+        Dependency_1: models^mobaforest^3d^nexus^_models^materials.unity3d
+    Info_43:
+      Name: models^mobaforest^3d^nexus^_models.unity3d
+      Dependencies:
+        Dependency_0: models^mobaforest^3d^nexus^_models^materials.unity3d
+    Info_44:
+      Name: models^mobaforest^3d^nexus^_models^materials.unity3d
+      Dependencies:
+        Dependency_0: models^mobaforest^3d^nexus^_models^textures.unity3d
+        Dependency_1: models^mobaforest^textures.unity3d
+    Info_45:
+      Name: models^mobaforest^3d^nexus^_models^textures.unity3d
+      Dependencies: {}
+    Info_46:
+      Name: models^mobaforest^3d^rocks.unity3d
+      Dependencies:
+        Dependency_0: models^mobaforest^3d^rocks^_models.unity3d
+        Dependency_1: models^mobaforest^3d^rocks^_models^materials.unity3d
+    Info_47:
+      Name: models^mobaforest^3d^rocks^_models.unity3d
+      Dependencies:
+        Dependency_0: models^mobaforest^3d^rocks^_models^materials.unity3d
+    Info_48:
+      Name: models^mobaforest^3d^rocks^_models^materials.unity3d
+      Dependencies:
+        Dependency_0: models^mobaforest^3d^rocks^_models^textures.unity3d
+    Info_49:
+      Name: models^mobaforest^3d^rocks^_models^textures.unity3d
+      Dependencies: {}
+    Info_50:
+      Name: models^mobaforest^3d^torchs.unity3d
+      Dependencies:
+        Dependency_0: models^mobaforest^3d^torchs^_models.unity3d
+        Dependency_1: models^mobaforest^3d^torchs^_models^materials.unity3d
+    Info_51:
+      Name: models^mobaforest^3d^torchs^_models.unity3d
+      Dependencies:
+        Dependency_0: models^mobaforest^3d^torchs^_models^materials.unity3d
+    Info_52:
+      Name: models^mobaforest^3d^torchs^_models^materials.unity3d
+      Dependencies:
+        Dependency_0: models^mobaforest^3d^torchs^_models^textures.unity3d
+    Info_53:
+      Name: models^mobaforest^3d^torchs^_models^textures.unity3d
+      Dependencies: {}
+    Info_54:
+      Name: models^mobaforest^3d^tower.unity3d
+      Dependencies:
+        Dependency_0: models^mobaforest^3d^tower^_models.unity3d
+        Dependency_1: models^mobaforest^3d^tower^_models^materials.unity3d
+    Info_55:
+      Name: models^mobaforest^3d^tower^_models.unity3d
+      Dependencies:
+        Dependency_0: models^mobaforest^3d^tower^_models^materials.unity3d
+    Info_56:
+      Name: models^mobaforest^3d^tower^_models^materials.unity3d
+      Dependencies:
+        Dependency_0: models^mobaforest^3d^tower^_models^textures.unity3d
+        Dependency_1: models^mobaforest^textures.unity3d
+    Info_57:
+      Name: models^mobaforest^3d^tower^_models^textures.unity3d
+      Dependencies: {}
+    Info_58:
+      Name: models^mobaforest^3d^trees.unity3d
+      Dependencies:
+        Dependency_0: models^mobaforest^3d^trees^_models.unity3d
+        Dependency_1: models^mobaforest^3d^trees^_models^materials.unity3d
+    Info_59:
+      Name: models^mobaforest^3d^trees^_models.unity3d
+      Dependencies:
+        Dependency_0: models^mobaforest^3d^trees^_models^materials.unity3d
+    Info_60:
+      Name: models^mobaforest^3d^trees^_models^materials.unity3d
+      Dependencies:
+        Dependency_0: models^mobaforest^3d^trees^_models^textures.unity3d
+    Info_61:
+      Name: models^mobaforest^3d^trees^_models^textures.unity3d
+      Dependencies: {}
+    Info_62:
+      Name: models^mobaforest^3d^vegetation.unity3d
+      Dependencies:
+        Dependency_0: models^mobaforest^3d^vegetation^_models.unity3d
+        Dependency_1: models^mobaforest^3d^vegetation^_models^materials.unity3d
+    Info_63:
+      Name: models^mobaforest^3d^vegetation^_models.unity3d
+      Dependencies:
+        Dependency_0: models^mobaforest^3d^vegetation^_models^materials.unity3d
+    Info_64:
+      Name: models^mobaforest^3d^vegetation^_models^materials.unity3d
+      Dependencies:
+        Dependency_0: models^mobaforest^3d^vegetation^_models^textures.unity3d
+    Info_65:
+      Name: models^mobaforest^3d^vegetation^_models^textures.unity3d
+      Dependencies: {}
+    Info_66:
+      Name: models^mobaforest^3d^walls.unity3d
+      Dependencies:
+        Dependency_0: models^mobaforest^3d^walls^_models.unity3d
+        Dependency_1: models^mobaforest^3d^walls^_models^materials.unity3d
+    Info_67:
+      Name: models^mobaforest^3d^walls^_models.unity3d
+      Dependencies:
+        Dependency_0: models^mobaforest^3d^walls^_models^materials.unity3d
+    Info_68:
+      Name: models^mobaforest^3d^walls^_models^materials.unity3d
+      Dependencies:
+        Dependency_0: models^mobaforest^3d^walls^_models^textures.unity3d
+    Info_69:
+      Name: models^mobaforest^3d^walls^_models^textures.unity3d
+      Dependencies: {}
+    Info_70:
+      Name: models^mobaforest^standard assets^particles^dust.unity3d
+      Dependencies: {}
+    Info_71:
+      Name: models^mobaforest^standard assets^particles^fire.unity3d
+      Dependencies: {}
+    Info_72:
+      Name: models^mobaforest^standard assets^particles^legacy particles.unity3d
+      Dependencies:
+        Dependency_0: models^mobaforest^standard assets^particles^sources^animations.unity3d
+        Dependency_1: models^mobaforest^standard assets^particles^sources^materials.unity3d
+    Info_73:
+      Name: models^mobaforest^standard assets^particles^misc.unity3d
+      Dependencies: {}
+    Info_74:
+      Name: models^mobaforest^standard assets^particles^smoke.unity3d
+      Dependencies: {}
+    Info_75:
+      Name: models^mobaforest^standard assets^particles^sources^animations.unity3d
+      Dependencies: {}
+    Info_76:
+      Name: models^mobaforest^standard assets^particles^sources^materials.unity3d
+      Dependencies:
+        Dependency_0: models^mobaforest^standard assets^particles^sources^shaders.unity3d
+        Dependency_1: models^mobaforest^standard assets^particles^sources^textures.unity3d
+    Info_77:
+      Name: models^mobaforest^standard assets^particles^sources^shaders.unity3d
+      Dependencies: {}
+    Info_78:
+      Name: models^mobaforest^standard assets^particles^sources^textures.unity3d
+      Dependencies: {}
+    Info_79:
+      Name: models^mobaforest^standard assets^particles^sparkles.unity3d
+      Dependencies: {}
+    Info_80:
+      Name: models^mobaforest^standard assets^particles^water.unity3d
+      Dependencies: {}
+    Info_81:
+      Name: models^mobaforest^textures.unity3d
+      Dependencies: {}
+    Info_82:
+      Name: models^monsters^controllers.unity3d
+      Dependencies:
+        Dependency_0: models^monsters^models.unity3d
+    Info_83:
+      Name: models^monsters^materials.unity3d
+      Dependencies:
+        Dependency_0: models^monsters^textures.unity3d
+        Dependency_1: shaders^urp.unity3d
+    Info_84:
+      Name: models^monsters^models.unity3d
+      Dependencies:
+        Dependency_0: models^monsters^materials.unity3d
+        Dependency_1: models^monsters^textures.unity3d
+    Info_85:
+      Name: models^monsters^textures.unity3d
+      Dependencies: {}
+    Info_86:
+      Name: models^monster_xiong^controllers.unity3d
+      Dependencies:
+        Dependency_0: models^monster_xiong^models.unity3d
+    Info_87:
+      Name: models^monster_xiong^materials.unity3d
+      Dependencies:
+        Dependency_0: models^monster_xiong^textures.unity3d
+        Dependency_1: shaders^urp.unity3d
+    Info_88:
+      Name: models^monster_xiong^models.unity3d
+      Dependencies:
+        Dependency_0: models^monster_xiong^textures.unity3d
+    Info_89:
+      Name: models^monster_xiong^textures.unity3d
+      Dependencies: {}
+    Info_90:
+      Name: models^role^controllers.unity3d
+      Dependencies:
+        Dependency_0: models^kanna^models.unity3d
+        Dependency_1: models^role^models.unity3d
+        Dependency_2: models^shadow.unity3d
+    Info_91:
+      Name: models^role^materials.unity3d
+      Dependencies:
+        Dependency_0: models^common.unity3d
+        Dependency_1: models^role^textures.unity3d
+        Dependency_2: textures^button.unity3d
+    Info_92:
+      Name: models^role^models.unity3d
+      Dependencies:
+        Dependency_0: models^kanna^textures.unity3d
+        Dependency_1: models^role^textures.unity3d
+    Info_93:
+      Name: models^role^textures.unity3d
+      Dependencies: {}
+    Info_94:
+      Name: models^shadow.unity3d
+      Dependencies: {}
+    Info_95:
+      Name: models^toon_zombies_extended^animation.unity3d
+      Dependencies:
+        Dependency_0: models^toon_zombies_extended^animation^aggresive.unity3d
+        Dependency_1: models^toon_zombies_extended^animation^crawl.unity3d
+    Info_96:
+      Name: models^toon_zombies_extended^animation^aggresive.unity3d
+      Dependencies:
+        Dependency_0: models^toon_zombies_extended^models.unity3d
+    Info_97:
+      Name: models^toon_zombies_extended^animation^broken.unity3d
+      Dependencies:
+        Dependency_0: models^toon_zombies_extended^models.unity3d
+    Info_98:
+      Name: models^toon_zombies_extended^animation^calm.unity3d
+      Dependencies:
+        Dependency_0: models^toon_zombies_extended^models.unity3d
+    Info_99:
+      Name: models^toon_zombies_extended^animation^crawl.unity3d
+      Dependencies:
+        Dependency_0: models^toon_zombies_extended^models.unity3d
+    Info_100:
+      Name: models^toon_zombies_extended^animation^generic.unity3d
+      Dependencies:
+        Dependency_0: models^toon_zombies_extended^models.unity3d
+    Info_101:
+      Name: models^toon_zombies_extended^animation^generic^corpses.unity3d
+      Dependencies:
+        Dependency_0: models^toon_zombies_extended^models.unity3d
+    Info_102:
+      Name: models^toon_zombies_extended^models.unity3d
+      Dependencies:
+        Dependency_0: models^toon_zombies_extended^models^materials.unity3d
+    Info_103:
+      Name: models^toon_zombies_extended^models^corpses.unity3d
+      Dependencies:
+        Dependency_0: models^toon_zombies_extended^models^materials.unity3d
+    Info_104:
+      Name: models^toon_zombies_extended^models^materials.unity3d
+      Dependencies: {}
+    Info_105:
+      Name: models^toon_zombies_extended^models^single_mesh^female_civilians.unity3d
+      Dependencies:
+        Dependency_0: models^toon_zombies_extended^models^materials.unity3d
+    Info_106:
+      Name: models^toon_zombies_extended^models^single_mesh^male_civilians.unity3d
+      Dependencies:
+        Dependency_0: models^toon_zombies_extended^models^materials.unity3d
+    Info_107:
+      Name: models^toon_zombies_extended^models^single_mesh^specials.unity3d
+      Dependencies:
+        Dependency_0: models^toon_zombies_extended^models^materials.unity3d
+    Info_108:
+      Name: models^toon_zombies_extended^prefabs^female_civilians.unity3d
+      Dependencies:
+        Dependency_0: models^toon_zombies_extended^models.unity3d
+        Dependency_1: models^toon_zombies_extended^models^materials.unity3d
+    Info_109:
+      Name: models^toon_zombies_extended^prefabs^male_civilians.unity3d
+      Dependencies:
+        Dependency_0: models^toon_zombies_extended^models.unity3d
+        Dependency_1: models^toon_zombies_extended^models^materials.unity3d
+    Info_110:
+      Name: models^toon_zombies_extended^prefabs^specials.unity3d
+      Dependencies:
+        Dependency_0: models^toon_zombies_extended^models.unity3d
+        Dependency_1: models^toon_zombies_extended^models^materials.unity3d
+    Info_111:
+      Name: prefabs.unity3d
+      Dependencies: {}
+    Info_112:
+      Name: prefabs^avatars.unity3d
+      Dependencies:
+        Dependency_0: effect^materials.unity3d
+        Dependency_1: models^defendbuildings.unity3d
+        Dependency_2: models^defendbuildings^materials.unity3d
+        Dependency_3: models^kanna^controllers.unity3d
+        Dependency_4: models^kanna^materials.unity3d
+        Dependency_5: models^kanna^models.unity3d
+        Dependency_6: models^monsters^controllers.unity3d
+        Dependency_7: models^monsters^materials.unity3d
+        Dependency_8: models^monsters^models.unity3d
+        Dependency_9: models^monster_xiong^controllers.unity3d
+        Dependency_10: models^monster_xiong^materials.unity3d
+        Dependency_11: models^monster_xiong^models.unity3d
+        Dependency_12: models^role^controllers.unity3d
+        Dependency_13: models^role^materials.unity3d
+        Dependency_14: models^role^models.unity3d
+        Dependency_15: models^shadow.unity3d
+        Dependency_16: models^toon_zombies_extended^animation.unity3d
+        Dependency_17: models^toon_zombies_extended^models.unity3d
+        Dependency_18: models^toon_zombies_extended^models^materials.unity3d
+    Info_113:
+      Name: prefabs^core.unity3d
+      Dependencies:
+        Dependency_0: textures.unity3d
+    Info_114:
+      Name: prefabs^login.unity3d
+      Dependencies: {}
+    Info_115:
+      Name: prefabs^ui^drawcard.unity3d
+      Dependencies:
+        Dependency_0: textures^button.unity3d
+        Dependency_1: textures^drawcard.unity3d
+    Info_116:
+      Name: prefabs^ui^growup.unity3d
+      Dependencies:
+        Dependency_0: fonts.unity3d
+        Dependency_1: textures^button.unity3d
+        Dependency_2: textures^growup.unity3d
+    Info_117:
+      Name: prefabs^ui^mainmenu.unity3d
+      Dependencies:
+        Dependency_0: fonts.unity3d
+        Dependency_1: textures^mainmenu.unity3d
+    Info_118:
+      Name: prefabs^war.unity3d
+      Dependencies:
+        Dependency_0: fonts.unity3d
+        Dependency_1: textures.unity3d
+    Info_119:
+      Name: scenes^war.unity3d
+      Dependencies: {}
+    Info_120:
+      Name: shaders.unity3d
+      Dependencies: {}
+    Info_121:
+      Name: shaders^effect.unity3d
+      Dependencies: {}
+    Info_122:
+      Name: shaders^ui.unity3d
+      Dependencies: {}
+    Info_123:
+      Name: shaders^urp.unity3d
+      Dependencies: {}
+    Info_124:
+      Name: textures.unity3d
+      Dependencies: {}
+    Info_125:
+      Name: textures^button.unity3d
+      Dependencies: {}
+    Info_126:
+      Name: textures^drawcard.unity3d
+      Dependencies: {}
+    Info_127:
+      Name: textures^growup.unity3d
+      Dependencies: {}
+    Info_128:
+      Name: textures^mainmenu.unity3d
+      Dependencies: {}

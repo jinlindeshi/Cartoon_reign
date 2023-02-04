@@ -1,0 +1,23 @@
+ManifestFileVersion: 0
+CRC: 2578195865
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: e55c9c621caa1a03d8010641730cb2d1
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: b0363f7088f9761414f730641bf9a24b
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Res/Models/MobaForest/3D/walls/_models/textures/wall_big.png
+- Assets/Res/Models/MobaForest/3D/walls/_models/textures/wall_small_broken.png
+- Assets/Res/Models/MobaForest/3D/walls/_models/textures/wall_big_broken.png
+- Assets/Res/Models/MobaForest/3D/walls/_models/textures/wall_small.png
+- Assets/Res/Models/MobaForest/3D/walls/_models/textures/wall_link_small.png
+- Assets/Res/Models/MobaForest/3D/walls/_models/textures/wall_link_big.png
+- Assets/Res/Models/MobaForest/3D/walls/_models/textures/wall_link_broken.png
+Dependencies: []

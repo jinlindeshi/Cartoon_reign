@@ -1,0 +1,26 @@
+ManifestFileVersion: 0
+CRC: 1438938692
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: dfe9c60f2869ceef0a4343ec3ba05bf9
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 939e20ecac0e95a3f7c5cfb3e57acb1d
+HashAppended: 0
+ClassTypes:
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Res/Effects/Materials/sparkle_ADD.mat
+- Assets/Res/Effects/Materials/wave.mat
+- Assets/Res/Effects/Materials/Fire_01.mat
+- Assets/Res/Effects/Materials/glow.mat
+- Assets/Res/Effects/Materials/fx_xiong.mat
+Dependencies:
+- D:/Gitee/vivaFramework/Assets/StreamingAssets/effects^textures.unity3d

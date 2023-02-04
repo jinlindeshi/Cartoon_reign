@@ -1,0 +1,47 @@
+ManifestFileVersion: 0
+CRC: 2443682651
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 50f2005fa87dba190631951761cf4a50
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: d303bc8b19b23f845f6df398d419366d
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 74
+  Script: {instanceID: 0}
+- Class: 111
+  Script: {instanceID: 0}
+- Class: 137
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Res/Models/DefendBuildings/000jing_ling_bao_zha_001.FBX
+- Assets/Res/Models/DefendBuildings/000wang_ling_jian_zhu_003.FBX
+- Assets/Res/Models/DefendBuildings/000jing_ling_jian_zhu_005.FBX
+- Assets/Res/Models/DefendBuildings/000diao_su_004.FBX
+- Assets/Res/Models/DefendBuildings/000jing_ling_fang_yu_ta_001.FBX
+- Assets/Res/Models/DefendBuildings/000wang_ling_jian_zhu_001.FBX
+- Assets/Res/Models/DefendBuildings/000wang_ling_jian_zhu_004.FBX
+- Assets/Res/Models/DefendBuildings/000jing_ling_jian_zhu_001.FBX
+- Assets/Res/Models/DefendBuildings/000jing_ling_jian_zhu_003.FBX
+- Assets/Res/Models/DefendBuildings/000jing_ling_jian_zhu_002.FBX
+- Assets/Res/Models/DefendBuildings/000wang_ling_bao_zha_001.FBX
+- Assets/Res/Models/DefendBuildings/000wang_ling_jian_zhu_002.FBX
+- Assets/Res/Models/DefendBuildings/0000wang_ling_fang_yu_ta_001.FBX
+- Assets/Res/Models/DefendBuildings/000diao_su_003.FBX
+Dependencies:
+- D:/Gitee/vivaFramework/Assets/StreamingAssets/models^defendbuildings^materials.unity3d

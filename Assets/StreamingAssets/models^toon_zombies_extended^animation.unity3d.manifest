@@ -1,0 +1,21 @@
+ManifestFileVersion: 0
+CRC: 2343276214
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: a73e78e42a9cb7ce30c888d3449874d0
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: fdf6c57a251b9f6ec27bdd2fe01b033c
+HashAppended: 0
+ClassTypes:
+- Class: 74
+  Script: {instanceID: 0}
+- Class: 91
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Res/Models/Toon_Zombies_extended/animation/Test.controller
+Dependencies:
+- D:/Gitee/vivaFramework/Assets/StreamingAssets/models^toon_zombies_extended^animation^aggresive.unity3d
+- D:/Gitee/vivaFramework/Assets/StreamingAssets/models^toon_zombies_extended^animation^crawl.unity3d

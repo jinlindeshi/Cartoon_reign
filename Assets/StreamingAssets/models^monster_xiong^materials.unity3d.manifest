@@ -1,0 +1,23 @@
+ManifestFileVersion: 0
+CRC: 851650713
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 27e45dcd81bd6321461e880b23e5df15
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 939e20ecac0e95a3f7c5cfb3e57acb1d
+HashAppended: 0
+ClassTypes:
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Res/Models/monster_xiong/Materials/xiong.mat
+Dependencies:
+- D:/Gitee/vivaFramework/Assets/StreamingAssets/models^monster_xiong^textures.unity3d
+- D:/Gitee/vivaFramework/Assets/StreamingAssets/shaders^urp.unity3d

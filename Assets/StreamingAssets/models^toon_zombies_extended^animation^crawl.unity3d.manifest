@@ -1,0 +1,29 @@
+ManifestFileVersion: 0
+CRC: 4143219949
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 75c333c0c8977d36ebd752ad1b231468
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: de5b6614feb6f94b0a6e2f2cfc56359c
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 74
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Res/Models/Toon_Zombies_extended/animation/Crawl/TZ_crawl_attack_A.FBX
+- Assets/Res/Models/Toon_Zombies_extended/animation/Crawl/TZ_crawl_move.FBX
+- Assets/Res/Models/Toon_Zombies_extended/animation/Crawl/TZ_crawl_bite.FBX
+- Assets/Res/Models/Toon_Zombies_extended/animation/Crawl/TZ_crawl_attack_B.FBX
+- Assets/Res/Models/Toon_Zombies_extended/animation/Crawl/TZ_crawl_idle.FBX
+- Assets/Res/Models/Toon_Zombies_extended/animation/Crawl/TZ_crawl_death.FBX
+- Assets/Res/Models/Toon_Zombies_extended/animation/Crawl/TZ_crawl_damage.FBX
+- Assets/Res/Models/Toon_Zombies_extended/animation/Crawl/TZ_crawl_move_rm.FBX
+Dependencies:
+- D:/Gitee/vivaFramework/Assets/StreamingAssets/models^toon_zombies_extended^models.unity3d

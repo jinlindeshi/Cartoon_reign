@@ -1,0 +1,18 @@
+ManifestFileVersion: 0
+CRC: 1086314725
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 11e1cd762fb5c3160f28897912d61f1b
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 68c985bf88fecc38b460cdb825182138
+HashAppended: 0
+ClassTypes:
+- Class: 48
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Res/Models/MobaForest/Standard Assets/Particles/Sources/Shaders/Particle
+  Alpha Blend (Queue +100).shader
+Dependencies: []

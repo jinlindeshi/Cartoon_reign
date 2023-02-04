@@ -1,0 +1,22 @@
+ManifestFileVersion: 0
+CRC: 1699087038
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 2a9c314b0d76920e39e468646c590fa1
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: fdf6c57a251b9f6ec27bdd2fe01b033c
+HashAppended: 0
+ClassTypes:
+- Class: 74
+  Script: {instanceID: 0}
+- Class: 91
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Res/Models/Role/Controllers/Role_Battle.controller
+Dependencies:
+- D:/Gitee/vivaFramework/Assets/StreamingAssets/models^kanna^models.unity3d
+- D:/Gitee/vivaFramework/Assets/StreamingAssets/models^role^models.unity3d
+- D:/Gitee/vivaFramework/Assets/StreamingAssets/models^shadow.unity3d

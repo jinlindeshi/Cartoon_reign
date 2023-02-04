@@ -1,0 +1,43 @@
+ManifestFileVersion: 0
+CRC: 1501692508
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 0d5f1c0e7bf1786e3379ea70e896d23d
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 37fcc300baf8ab04c7b1784464433072
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 64
+  Script: {instanceID: 0}
+- Class: 198
+  Script: {instanceID: 0}
+- Class: 199
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Res/Effects/Prefabs/fx_die_xiong.prefab
+- Assets/Res/Effects/Prefabs/IceHit.prefab
+- Assets/Res/Effects/Prefabs/IceTrail.prefab
+Dependencies:
+- D:/Gitee/vivaFramework/Assets/StreamingAssets/effects^materials.unity3d
+- D:/Gitee/vivaFramework/Assets/StreamingAssets/effects^materials^geometric.unity3d
+- D:/Gitee/vivaFramework/Assets/StreamingAssets/effects^materials^glows.unity3d
+- D:/Gitee/vivaFramework/Assets/StreamingAssets/effects^materials^misc.unity3d
+- D:/Gitee/vivaFramework/Assets/StreamingAssets/effects^materials^water.unity3d
+- D:/Gitee/vivaFramework/Assets/StreamingAssets/effects^models.unity3d

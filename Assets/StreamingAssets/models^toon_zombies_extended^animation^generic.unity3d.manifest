@@ -1,0 +1,41 @@
+ManifestFileVersion: 0
+CRC: 2067470848
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 26fc7ce1c579eabb70e372e4f15fb10c
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: de5b6614feb6f94b0a6e2f2cfc56359c
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 74
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Res/Models/Toon_Zombies_extended/animation/Generic/TZ_jump_C_land.FBX
+- Assets/Res/Models/Toon_Zombies_extended/animation/Generic/TZ_death_A.FBX
+- Assets/Res/Models/Toon_Zombies_extended/animation/Generic/TZ_climb.FBX
+- Assets/Res/Models/Toon_Zombies_extended/animation/Generic/TZ_death_A_idle.FBX
+- Assets/Res/Models/Toon_Zombies_extended/animation/Generic/TZ_crouch_idle_A.FBX
+- Assets/Res/Models/Toon_Zombies_extended/animation/Generic/TZ_crouch_idle_B.FBX
+- Assets/Res/Models/Toon_Zombies_extended/animation/Generic/TZ_death_D.FBX
+- Assets/Res/Models/Toon_Zombies_extended/animation/Generic/TZ_death_C_wake.FBX
+- Assets/Res/Models/Toon_Zombies_extended/animation/Generic/TZ_crouch_eating.FBX
+- Assets/Res/Models/Toon_Zombies_extended/animation/Generic/TZ_death_B.FBX
+- Assets/Res/Models/Toon_Zombies_extended/animation/Generic/TZ_death_B_idle.FBX
+- Assets/Res/Models/Toon_Zombies_extended/animation/Generic/TZ_Hulk_charge_rm.FBX
+- Assets/Res/Models/Toon_Zombies_extended/animation/Generic/TZ_jump_B_air.FBX
+- Assets/Res/Models/Toon_Zombies_extended/animation/Generic/TZ_death_A_wake.FBX
+- Assets/Res/Models/Toon_Zombies_extended/animation/Generic/TZ_death_B_wake.FBX
+- Assets/Res/Models/Toon_Zombies_extended/animation/Generic/TZ_death_C_idle.FBX
+- Assets/Res/Models/Toon_Zombies_extended/animation/Generic/TZ_emerge.FBX
+- Assets/Res/Models/Toon_Zombies_extended/animation/Generic/TZ_death_C.FBX
+- Assets/Res/Models/Toon_Zombies_extended/animation/Generic/TZ_Hulk_charge.FBX
+- Assets/Res/Models/Toon_Zombies_extended/animation/Generic/TZ_jump_A_start.FBX
+Dependencies:
+- D:/Gitee/vivaFramework/Assets/StreamingAssets/models^toon_zombies_extended^models.unity3d

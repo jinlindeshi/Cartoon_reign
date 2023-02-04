@@ -1,0 +1,35 @@
+ManifestFileVersion: 0
+CRC: 1457407764
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: ed0ca5b70233a0d3b30b711b21f86c56
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 40df7f67bec2175d976f165e3a52230a
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Res/Models/MobaForest/3D/walls/wall_small_broken.prefab
+- Assets/Res/Models/MobaForest/3D/walls/wall_big.prefab
+- Assets/Res/Models/MobaForest/3D/walls/wall_small.prefab
+- Assets/Res/Models/MobaForest/3D/walls/wall_link_small.prefab
+- Assets/Res/Models/MobaForest/3D/walls/wall_link_broken.prefab
+- Assets/Res/Models/MobaForest/3D/walls/wall_big_broken.prefab
+- Assets/Res/Models/MobaForest/3D/walls/wall_link_big.prefab
+Dependencies:
+- D:/Gitee/vivaFramework/Assets/StreamingAssets/models^mobaforest^3d^walls^_models.unity3d
+- D:/Gitee/vivaFramework/Assets/StreamingAssets/models^mobaforest^3d^walls^_models^materials.unity3d

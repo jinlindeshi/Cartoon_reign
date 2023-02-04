@@ -1,0 +1,28 @@
+ManifestFileVersion: 0
+CRC: 2480360381
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 71de99639b462b1b6fd27d5a06b9b8f6
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: e6e651bdddca608c77d51fff2e12d033
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 89
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Res/Scenes/War/Lightmap-2_comp_light.exr
+- Assets/Res/Scenes/War/Lightmap-1_comp_shadowmask.png
+- Assets/Res/Scenes/War/Lightmap-2_comp_dir.png
+- Assets/Res/Scenes/War/Lightmap-0_comp_light.exr
+- Assets/Res/Scenes/War/Lightmap-0_comp_dir.png
+- Assets/Res/Scenes/War/Lightmap-2_comp_shadowmask.png
+- Assets/Res/Scenes/War/Lightmap-0_comp_shadowmask.png
+- Assets/Res/Scenes/War/ReflectionProbe-0.exr
+- Assets/Res/Scenes/War/Lightmap-1_comp_dir.png
+- Assets/Res/Scenes/War/Lightmap-1_comp_light.exr
+Dependencies: []

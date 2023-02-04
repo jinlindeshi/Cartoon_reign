@@ -1,0 +1,21 @@
+ManifestFileVersion: 0
+CRC: 2313922788
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 099092d8400ba9d77f97c049348b4680
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: b0363f7088f9761414f730641bf9a24b
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Res/Models/MobaForest/3D/inhibitor/_models/textures/inhibitor_blue.png
+- Assets/Res/Models/MobaForest/3D/inhibitor/_models/textures/inhibitor_blue_illumination.png
+- Assets/Res/Models/MobaForest/3D/inhibitor/_models/textures/inhibitor_broken.png
+- Assets/Res/Models/MobaForest/3D/inhibitor/_models/textures/inhibitor_red_illumination.png
+- Assets/Res/Models/MobaForest/3D/inhibitor/_models/textures/inhibitor_red.png
+Dependencies: []

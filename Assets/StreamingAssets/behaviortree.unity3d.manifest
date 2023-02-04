@@ -1,0 +1,23 @@
+ManifestFileVersion: 0
+CRC: 3775608264
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: a0093bf0c5ea61fddae3b34c14c8e2ab
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 55291247f8d8e8f579092fa0ebe807d7
+HashAppended: 0
+ClassTypes:
+- Class: 114
+  Script: {fileID: 11500000, guid: b23f08d2ae4cba14087c1ed36193d82b, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Res/BehaviorTree/GuardTowerAI.asset
+- Assets/Res/BehaviorTree/Follower.asset
+- Assets/Res/BehaviorTree/EnemyAI.asset
+- Assets/Res/BehaviorTree/Samples.asset
+- Assets/Res/BehaviorTree/MeAI.asset
+Dependencies: []

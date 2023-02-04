@@ -1,0 +1,34 @@
+ManifestFileVersion: 0
+CRC: 1859733061
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: f764093dd57bb365c28ea0e5b578ff59
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 939e20ecac0e95a3f7c5cfb3e57acb1d
+HashAppended: 0
+ClassTypes:
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Res/Models/DefendBuildings/Materials/texture_1.mat
+- Assets/Res/Models/DefendBuildings/Materials/jing_ling_fang_yu_001.tga
+- Assets/Res/Models/DefendBuildings/Materials/wang_ling_zhu_jian_zhu_001.tga
+- Assets/Res/Models/DefendBuildings/Materials/texture_2.tga
+- Assets/Res/Models/DefendBuildings/Materials/jing_ling_zhu_jian_zhu_001.mat
+- Assets/Res/Models/DefendBuildings/Materials/jing_ling_zhu_jian_zhu_001.tga
+- Assets/Res/Models/DefendBuildings/Materials/wang_ling_fang_yu_001.mat
+- Assets/Res/Models/DefendBuildings/Materials/texture_2.mat
+- Assets/Res/Models/DefendBuildings/Materials/wang_ling_fang_yu_001.tga
+- Assets/Res/Models/DefendBuildings/Materials/wang_lin_zhu_cheng_001.tga
+- Assets/Res/Models/DefendBuildings/Materials/wang_ling_zhu_jian_zhu_001.mat
+- Assets/Res/Models/DefendBuildings/Materials/texture_1.tga
+- Assets/Res/Models/DefendBuildings/Materials/jing_ling_fang_yu_001.mat
+- Assets/Res/Models/DefendBuildings/Materials/wang_lin_zhu_cheng_001.mat
+Dependencies: []

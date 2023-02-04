@@ -1,0 +1,20 @@
+ManifestFileVersion: 0
+CRC: 1315652294
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: a81a1280a7f3081054045cea0466acbd
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: b0363f7088f9761414f730641bf9a24b
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Res/Models/Kanna/Textures/DrawCall_0021.png
+- Assets/Res/Models/Kanna/Textures/www.element3ds.com_Mon_GhostW_01.png
+- Assets/Res/Models/Kanna/Textures/H_W_PC_fashion_601.png
+- Assets/Res/Models/Kanna/Textures/H_W_PC_face_601.png
+Dependencies: []

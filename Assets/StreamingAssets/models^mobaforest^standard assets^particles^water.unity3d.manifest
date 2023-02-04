@@ -1,0 +1,21 @@
+ManifestFileVersion: 0
+CRC: 1862039294
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: e671c5fb8e6df98770dbe1532b262d3f
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 27295f96fcdc2b917bd061e8817c7e02
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Res/Models/MobaForest/Standard Assets/Particles/Water/Water Fountain.prefab
+- Assets/Res/Models/MobaForest/Standard Assets/Particles/Water/WaterFall.prefab
+- Assets/Res/Models/MobaForest/Standard Assets/Particles/Water/Water Surface Splash.prefab
+Dependencies: []

@@ -1,0 +1,27 @@
+ManifestFileVersion: 0
+CRC: 2031256623
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: c941653f88cc491c0f83d401e9c89f42
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: c1488df686efba0fbb0ae722399a35b3
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 156
+  Script: {instanceID: 0}
+- Class: 850595691
+  Script: {instanceID: 0}
+- Class: 1953259897
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Res/Models/MobaForest/level_mobaSettings.lighting
+- Assets/Res/Models/MobaForest/level_moba_terrain.asset
+Dependencies:
+- D:/Gitee/vivaFramework/Assets/StreamingAssets/models^mobaforest^textures.unity3d

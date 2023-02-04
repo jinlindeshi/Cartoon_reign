@@ -1,0 +1,26 @@
+ManifestFileVersion: 0
+CRC: 1384946857
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: f9948b022106f25cce29ef5674ef08ab
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 939e20ecac0e95a3f7c5cfb3e57acb1d
+HashAppended: 0
+ClassTypes:
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Res/Models/MobaForest/3D/rocks/_models/Materials/rock_small_02.mat
+- Assets/Res/Models/MobaForest/3D/rocks/_models/Materials/rock_big_01.mat
+- Assets/Res/Models/MobaForest/3D/rocks/_models/Materials/rock_medium_01.mat
+- Assets/Res/Models/MobaForest/3D/rocks/_models/Materials/rock_small_01.mat
+- Assets/Res/Models/MobaForest/3D/rocks/_models/Materials/rock_small_03.mat
+Dependencies:
+- D:/Gitee/vivaFramework/Assets/StreamingAssets/models^mobaforest^3d^rocks^_models^textures.unity3d

@@ -1,0 +1,21 @@
+ManifestFileVersion: 0
+CRC: 100022075
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 2d435cee7230ca974e324dda76206c29
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: b0363f7088f9761414f730641bf9a24b
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Res/Models/MobaForest/3D/rocks/_models/textures/rock_small_03.png
+- Assets/Res/Models/MobaForest/3D/rocks/_models/textures/rock_big_01.png
+- Assets/Res/Models/MobaForest/3D/rocks/_models/textures/rock_small_01.png
+- Assets/Res/Models/MobaForest/3D/rocks/_models/textures/rock_small_02.png
+- Assets/Res/Models/MobaForest/3D/rocks/_models/textures/rock_medium_01.png
+Dependencies: []
