@@ -5,10 +5,10 @@
 --- 配置好行为的Avatar
 
 
-local Avatar = require("Modules.WarScene.View.AvatarBase.Avatar")
----@class BehaviorAvatar:Avatar
+local AvatarBase = require("Modules.WarScene.View.AvatarBase.AvatarBase")
+---@class BehaviorAvatar:AvatarBase
 ---@field New fun(prefabPath:string, parent:UnityEngine.Transform):BehaviorAvatar
-local BehaviorAvatar = class("BehaviorAvatar", Avatar)
+local BehaviorAvatar = class("BehaviorAvatar", AvatarBase)
 
 function BehaviorAvatar:Ctor(prefabPath, parent)
     BehaviorAvatar.super.Ctor(self, prefabPath, true, parent)
@@ -21,7 +21,6 @@ end
 
 
 function BehaviorAvatar:SetExternalBehavior(path)
-    --print("Avatar:SetExternalBehavior")
     self.b2Lua.ExternalBehavior = resMgr:LoadAssetsAtPath(path)
 end
 

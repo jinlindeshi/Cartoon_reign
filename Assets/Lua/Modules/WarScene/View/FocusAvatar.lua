@@ -5,13 +5,12 @@
 --- 相机焦点对象
 local WarAvatar = require("Modules.WarScene.View.WarAvatar")
 local BehaviorConstants = require("Modules.WarScene.Model.BehaviorConstants")
-local Avatar = require("Modules.WarScene.View.AvatarBase.Avatar")
-local WarData = require("Modules.WarScene.Model.WarData")
 ---@class FocusAvatar:WarAvatar
 ---@field New fun(prefabPath:string, data, parent:UnityEngine.Transform):FocusAvatar
 local FocusAvatar = class("FocusAvatar", WarAvatar)
 
 function FocusAvatar:Ctor(prefabPath, data, parent)
+    print("FocusAvatar:Ctor",  FocusAvatar.super.Ctor)
     FocusAvatar.super.Ctor(self, prefabPath, data, false, parent)
 
     self:RegisterAction(BehaviorConstants.NEW_WAVE_ENEMYS)

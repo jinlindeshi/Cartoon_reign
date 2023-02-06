@@ -56,9 +56,6 @@ function NewWaveEnemysAction:OnStart()
         avatar:AIStart()
     end
 
-    ---Test
-    --avatar:PlayAnimation(require("Modules.WarScene.View.AvatarBase.Avatar").ANI_ATTACK_NAME)
-
     --print("NewWaveEnemysAction:OnStart")
     self.cAction:SetUpdateStatus(TaskStatus.Success)
 end

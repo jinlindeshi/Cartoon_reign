@@ -5,9 +5,8 @@
 --- 走格子Avatar
 local BehaviorAvatar = require("Modules.WarScene.View.AvatarBase.BehaviorAvatar")
 local BehaviorConstants = require("Modules.WarScene.Model.BehaviorConstants")
-local Avatar = require("Modules.WarScene.View.AvatarBase.Avatar")
+local AvatarBase = require("Modules.WarScene.View.AvatarBase.AvatarBase")
 local WarData = require("Modules.WarScene.Model.WarData")
-local DamageManager = require("Modules.WarScene.Manager.DamageManager")
 ---@class WarAvatar:BehaviorAvatar
 ---@field New fun(prefabPath:string, data, static:boolean, parent:UnityEngine.Transform):WarAvatar
 local WarAvatar = class("WarAvatar", BehaviorAvatar)
@@ -212,7 +211,7 @@ function WarAvatar:PlayDead()
         return
     end
     self.playingDead = true
-    self:PlayAnimation(Avatar.ANI_DEAD_NAME, nil, function()
+    self:PlayAnimation(AvatarBase.ANI_DEAD_NAME, nil, function()
         local path = "Effects/Prefabs/fx_die_xiong.prefab"
         local dieEff = CreatePrefab(path, self.transform.parent)
         dieEff.transform.localPosition = self.transform.localPosition
@@ -287,11 +286,11 @@ function WarAvatar:Attack(callBack)
 
     self.aniEvent:SetListenerByMsg(ANI_EVENT_ATTACK_HIT, function()
         if  self.target then
-            self.target:GetHurt(DamageManager.GetHurtValue(self.data, self.target.data))
+            self.target:GetHurt(20)
         end
         self.aniEvent:SetListenerByMsg(ANI_EVENT_ATTACK_HIT, nil)
     end)
-    self:PlayAnimation(Avatar.ANI_ATTACK_NAME, nil, function()
+    self:PlayAnimation(AvatarBase.ANI_ATTACK_NAME, nil, function()
         if callBack then
             callBack()
         end
@@ -372,7 +371,7 @@ function WarAvatar:GetPath(path)
 
     --print("WarAvatar:GetPath 开始", nodeList.Count, self.data.id)
 
-    self:PlayAnimation(Avatar.ANI_MOVE_NAME, 0)
+    self:PlayAnimation(AvatarBase.ANI_MOVE_NAME, 0)
     --self.ani.speed = self.aiPath.maxSpeed
 end
 
@@ -381,7 +380,7 @@ function WarAvatar:MoveEnd(isForceStop)
     --    print("你妹 结束移动", self.data.id, self.x, self.z, isForceStop)
     --end
 
-    self:PlayAnimation(Avatar.ANI_IDLE_NAME, 0)
+    self:PlayAnimation(AvatarBase.ANI_IDLE_NAME, 0)
     self.moving = false
     --print("你妹 结束移动", self.data.id, self.moving)
     --self.ani.speed = 1
@@ -402,7 +401,6 @@ end
 
 function WarAvatar:OnDestroy()
     WarAvatar.super.OnDestroy(self)
-    --print("Avatar:OnDestroy")
 end
 
 return WarAvatar

@@ -271,7 +271,7 @@ Material:
     - _Outline: 0.15
     - _OutlineEnable: 0
     - _OutlineWidth: 0.4
-    - _Outline_Width: 1
+    - _Outline_Width: 0.5
     - _Parallax: 0.02
     - _QueueOffset: 0
     - _ReceiveShadows: 1
