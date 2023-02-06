@@ -20,5 +20,5 @@ UILayerName.top = "Top"
 ---@field layer string 页面层级 默认为panel
 
 UIPanelCfg = {} ---@type table<string, panelConfig>
-UIPanelCfg.mainMenu = {classPath = "Modules.UI.MainMenuPanel", prefabPath = "Prefabs/UI/MainMenu/MainMenu.prefab", layer = UILayerName.panel}
+UIPanelCfg.mainMenu = {classPath = "Modules.UI.MainMenu.MainMenuPanel", prefabPath = "Prefabs/UI/MainMenu/MainMenu.prefab", layer = UILayerName.panel}
 UIPanelCfg.growUp = {classPath = "Modules.UI.GrowUp.GrowUpPanel", prefabPath = "Prefabs/UI/GrowUp/GrowUpPanel.prefab"}

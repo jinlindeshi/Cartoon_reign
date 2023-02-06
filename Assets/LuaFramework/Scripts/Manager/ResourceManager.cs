@@ -68,6 +68,11 @@ namespace LuaFramework
             return LoadAnythingAtPath<Object>(assetPath);
         }
 
+        public Material LoadMaterialAtPath(string assetPath)
+        {
+            return LoadAnythingAtPath<Material>(assetPath);
+        }
+
         /// <summary>
         /// 载入素材
         /// </summary>

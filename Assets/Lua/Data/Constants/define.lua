@@ -35,7 +35,8 @@ TaskStatus = BehaviorDesigner.Runtime.Tasks.TaskStatus
 CameraExtension = UnityEngine.Rendering.Universal.CameraExtension ---@type UnityEngine.Rendering.Universal.CameraExtensions
 RectTransformUtility = UnityEngine.RectTransformUtility
 --Time = UnityEngine.Time
-
+DOTween = DG.Tweening.DOTween
+LuaObj = require("Prayer.Core.LuaObj")
 ---UI管理器
 UIMgr = require("Manager/UIManager")
 ---Panel基类
