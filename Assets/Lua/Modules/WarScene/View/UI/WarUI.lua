@@ -10,7 +10,7 @@ local WarUI = class("WarUI", luaObj)
 
 function WarUI:Ctor(funCall1)
 
-    WarUI.super.Ctor(self, "Prefabs/War/WarUI.prefab", nil, UIMgr.UILayer.top)
+    WarUI.super.Ctor(self, "Prefabs/War/WarUI.prefab", nil, UIMgr.GetLayer(UILayerName.top))
     --print("WarUI:Ctor", self.gameObject, self.transform)
     if funCall1 then
         Happy.BtnClickDownUP(self.transform:Find("LocVisibleButton").gameObject, funCall1)

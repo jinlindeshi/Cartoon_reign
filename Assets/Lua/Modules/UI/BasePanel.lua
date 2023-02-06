@@ -5,18 +5,28 @@
 --- panel基类
 local LuaObj = require("Prayer.Core.LuaObj")
 ---@class UI.BasePanel:LuaObj
----@field New fun(cfg:UIPanelCfg, layer:UnityEngine.Transform):LuaObj
----@field cfg UIPanelCfg 页面配置
----@field layer UnityEngine.Transform 所在UI层级
+---@field New fun():LuaObj
+---@field cfg panelConfig 页面配置
+---@field prefabPath string prefab文件路径
+---@field layer UnityEngine.Transform 所在涂层
 local BasePanel = class("UI.BasePanel", LuaObj)
-function BasePanel:Ctor(cfg, layer)
-    self.cfg = cfg
-    self.layer = layer or UIMgr.UILayer.panel
-    BasePanel.super.Ctor(self, cfg.prefabPath, nil, self.layer)
-    self:OnInitialize()
+function BasePanel:Ctor()
 end
 
-function BasePanel:OnInitialize()
+---页面初始化
+---@param cfg panelConfig 页面配置
+---@vararg any 构造参数
+function BasePanel:Init(cfg, ...)
+    self.cfg = cfg
+    self.prefabPath = cfg.prefabPath
+    self.layer = UIMgr.GetLayer(cfg.layer or UILayerName.panel)
+    self:BindGameObject(CreatePrefab(self.prefabPath, self.layer))
+    self:OnInit(...)
+end
+
+---在初始化后
+function BasePanel:OnInit()
+    ---自动添加关闭界面点击事件
     local BtnClose = self.transform:Find("BtnClose")
     if BtnClose ~= nil then
         self.BtnClose = BtnClose.gameObject
@@ -29,10 +39,12 @@ function BasePanel:RemoveListeners()
     RemoveButtonHandler(self.BtnClose, PointerHandler.CLICK, self.Close, self)
 end
 
+---关闭页面
 function BasePanel:Close()
     UIMgr.ClosePanel(self.cfg)
 end
 
+---页面销毁时
 function BasePanel:OnDestroy()
     BasePanel.super.OnDestroy(self)
     self:RemoveListeners()

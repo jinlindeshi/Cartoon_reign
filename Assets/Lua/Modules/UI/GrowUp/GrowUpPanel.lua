@@ -7,12 +7,10 @@
 ---@class UI.GrowUp.GrowUpPanel:UI.BasePanel
 ---@field New fun():UI.GrowUp.GrowUpPanel
 local GrowUpPanel = class("UI.GrowUp.GrowUpPanel", BasePanel)
-function GrowUpPanel:Ctor()
-    GrowUpPanel.super.Ctor(self, UIPanelCfg.growUp)
-end
 
-function GrowUpPanel:OnInitialize()
-    GrowUpPanel.super.OnInitialize(self)
+function GrowUpPanel:OnInit()
+    GrowUpPanel.super.OnInit(self)
+
 end
 
 function GrowUpPanel:RemoveListeners()

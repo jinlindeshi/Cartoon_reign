@@ -7,12 +7,9 @@
 ---@class UI.MainMenuPanel:UI.BasePanel
 ---@field New fun():UI.MainMenuPanel
 local MainMenuPanel = class("UI.MainMenuPanel", BasePanel)
-function MainMenuPanel:Ctor()
-    MainMenuPanel.super.Ctor(self, UIPanelCfg.mainMenu)
-end
 
-function MainMenuPanel:OnInitialize()
-    MainMenuPanel.super.OnInitialize(self)
+function MainMenuPanel:OnInit()
+    MainMenuPanel.super.OnInit(self)
     self.ItemIconObj = self.transform:Find("ItemIcon").gameObject
     self.infoButton = self.transform:Find("bottomRoot/infoButton").gameObject
 

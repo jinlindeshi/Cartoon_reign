@@ -11,7 +11,7 @@ local HpBar = class("HpBar", LuaObj)
 
 ---@param bindObj UnityEngine.GameObject
 function HpBar:Ctor(bindObj, offsetV2, data)
-    HpBar.super.Ctor(self, "Prefabs/War/HpBar.prefab", nil, UIMgr.UILayer.scene)
+    HpBar.super.Ctor(self, "Prefabs/War/HpBar.prefab", nil, UIMgr.GetLayer(UILayerName.scene))
     self.transform:SetAsFirstSibling()
     self.bindObj = bindObj
     self.offsetV2 = offsetV2 or Vector2.zero
