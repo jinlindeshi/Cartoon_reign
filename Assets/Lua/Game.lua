@@ -10,6 +10,7 @@ function Game.Init()
     require "Prayer.Constants"
     require "Prayer.Utils.MathUtil"
     require "Data.Config.UIPanelConfig"
+    require "Data.Config.DemoConfig"
 
     JSON = require("Prayer.Utils.JSON")
     require("Modules.Common.Happy")

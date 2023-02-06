@@ -36,13 +36,19 @@ function NewWaveEnemysAction:OnStart()
         end
     end
 
+    local pointList = SData.GetMonsterPointSData(DemoCfg.mapID)
+    local data = pointList[WarData.patrolNodeIndex]
+    if data == nil then
+        data = pointList[1]
+    end
     --for i = 1, 1 do
-    for i = 1, #SData.enemyList do
+    for i = 1, #data.monsters do
         WarData.avatarIdIndex = WarData.avatarIdIndex + 1
-        local enemyData = clone(SData.enemyList[i])
-        enemyData.data.id = WarData.avatarIdIndex
+        local enemyData = clone(SData.GetMonsterSData(data.monsters[i]))
+        enemyData.id = WarData.avatarIdIndex
+        enemyData.hp = enemyData.maxHp
         local avatar = WarAvatar.New(enemyData.prefab,
-                enemyData.data, false, WarData.scene.avatarConTran)
+                enemyData, false, WarData.scene.avatarConTran)
         avatar:SetExternalBehavior("BehaviorTree/EnemyAI.asset")
         WarData.AddAvatar(avatar, avatar.data)
         WarData.scene:PutInNode(avatar, gridList[i][1], gridList[i][2])

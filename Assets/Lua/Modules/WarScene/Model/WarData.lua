@@ -19,6 +19,7 @@ WarData.scene = nil ---@type WarScene
 
 WarData.avatarIdIndex = 0
 
+WarData.mainAvatar = nil ---@type FocusAvatar 当前的主角色
 
 function WarData.AddAvatarLoc(x,z)
     if not WarData.AvatarGrids[x] then

@@ -11,9 +11,9 @@ local WarData = require("Modules.WarScene.Model.WarData")
 local WarUI = require("Modules.WarScene.View.UI.WarUI")
 local SData = require("Modules.WarScene.Model.SData")
 
+
 ---@class WarScene:LuaScene
 local WarScene = class("WarScene", LuaScene)
-
 
 function WarScene:Ctor(scene)
     --print("WarScene:Ctor", scene)
@@ -40,25 +40,36 @@ end
 
 ---TEST 测试相机跟随Avatar
 function WarScene:TestFocusAvatar()
-    local me
-    --for i = 1, 2 do
-    for i = 1, #SData.myArmyList do
-        local myData = clone(SData.myArmyList[i])
-        local avatar = FocusAvatar.New(myData.prefab, myData.data, self.avatarConTran)
-        WarData.AddAvatar(avatar, avatar.data)
-        local loc = WarData.bornNodes[i]
-        self:PutInNode(avatar, loc[1], loc[2])
-        HappyFuns.SetLayerRecursive(avatar.gameObject, 11)
-        if i == 1 then
-            me = avatar
-            self.happyCam:SetAttachObj(me.gameObject)
-            avatar:SetExternalBehavior("BehaviorTree/MeAI.asset")
-        else
-            avatar:SetLeader(me)
-            avatar:SetExternalBehavior("BehaviorTree/Follower.asset")
-        end
-        avatar:AIStart()
-    end
+    --local me
+    --for i = 1, #SData.myArmyList do
+    --    local myData = clone(SData.myArmyList[i])
+    --    local avatar = FocusAvatar.New(myData.prefab, myData.data, self.avatarConTran)
+    --    WarData.AddAvatar(avatar, avatar.data)
+    --    local loc = WarData.bornNodes[i]
+    --    self:PutInNode(avatar, loc[1], loc[2])
+    --    HappyFuns.SetLayerRecursive(avatar.gameObject, 11)
+    --    if i == 1 then
+    --        me = avatar
+    --        self.happyCam:SetAttachObj(me.gameObject)
+    --        avatar:SetExternalBehavior("BehaviorTree/MeAI.asset")
+    --    else
+    --        avatar:SetLeader(me)
+    --        avatar:SetExternalBehavior("BehaviorTree/Follower.asset")
+    --    end
+    --    avatar:AIStart()
+    --end
+
+    local myData = clone(SData.GetAvatarSData(DemoCfg.mainAvatarID))
+    myData.hp = myData.maxHp
+    local avatar = FocusAvatar.New(myData.prefab, myData, self.avatarConTran)
+    WarData.AddAvatar(avatar, avatar.data)
+    WarData.mainAvatar = avatar
+    local loc = WarData.bornNodes[-DemoCfg.mainAvatarID]
+    self:PutInNode(avatar, loc[1], loc[2])
+    HappyFuns.SetLayerRecursive(avatar.gameObject, 11)
+    self.happyCam:SetAttachObj(avatar.gameObject)
+    avatar:SetExternalBehavior("BehaviorTree/MeAI.asset")
+    avatar:AIStart()
 end
 ---TEST
 
