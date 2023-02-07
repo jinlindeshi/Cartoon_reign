@@ -10,15 +10,10 @@ local CheckSafeAction = class("CheckSafeAction", BaseAction)
 
 function CheckSafeAction:Ctor(avatar, bToLua, cAction, paramFloat, paramBool)
     CheckSafeAction.super.Ctor(self, bToLua, cAction, paramFloat, paramBool)
-    --print("CheckSafeAction:Ctor", paramFloat, paramBool)
     self.avatar = avatar ---@type WarAvatar
-    self.static = paramBool ---是否为无法移动的单位
 end
 
 function CheckSafeAction:OnStart()
-
-    local grids = {}
-
     ---从Avatar列表里找出一个非我方的对象 设为敌方目标
     local mySide = self.avatar.data.side
     local target

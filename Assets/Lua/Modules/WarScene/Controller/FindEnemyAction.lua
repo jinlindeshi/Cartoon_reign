@@ -51,22 +51,7 @@ function FindEnemyAction:TryToFind()
     local data
     local x
     local z
-
-    ---TEST 打印周围格子坐标
-    --if self.avatar.data.id == -2 then
-    --    local str = ""
-    --    local num = 0
-    --    for x, tb in pairs(grids) do
-    --        for z, v in pairs(tb) do
-    --            str = str..x..","..z.." "
-    --            num = num + 1
-    --        end
-    --    end
-    --    print("你妹啊~1", self.avatar.x.."**"..self.avatar.z, "$$", num,"---", str)
-    --end
-    ---TEST
-
-
+    local distance
     for id, avatar in pairs(WarData.AvatarHash) do
         data = avatar.data
         ---找到一个没死的敌方
@@ -77,28 +62,23 @@ function FindEnemyAction:TryToFind()
 
                 x = gridNode.XCoordinateInGrid
                 z = gridNode.ZCoordinateInGrid
-                --print("你妹啊~2", x, z, self.viewRadius, grids[x])
             else
                 x = avatar.x
                 z = avatar.z
             end
             if grids[x] and grids[x][z] then
                 target = avatar
-                self.avatar:SetTarget(avatar)
-                --self.avatar:LookAtTarget()
-                --if self.avatar.data.id == -2 then
-                --    print("你妹 找到敌人了", avatar.data.id, x, z)
-                --end
-                self.cAction:SetUpdateStatus(TaskStatus.Success)
-                return
+                break
             end
         end
     end
-    if target == nil then--TODO
+
+    if target then
+        self.avatar:SetTarget(target)
+        self.cAction:SetUpdateStatus(TaskStatus.Success)
+    else
+
         self.cAction:SetUpdateStatus(TaskStatus.Failure)
-        --DelayedCall(0.5, function()
-        --    self:TryToFind()
-        --end)
     end
 end
 

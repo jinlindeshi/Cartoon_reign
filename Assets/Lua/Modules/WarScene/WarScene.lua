@@ -25,7 +25,7 @@ function WarScene:Ctor(scene)
     AstarPath.active.logPathResults = Pathfinding.PathLog.None
 
     self:GenerateGrids()
-    self.locContainer:SetActive(false) ---默认是否显示格子
+    --self.locContainer:SetActive(false) ---默认是否显示格子
     WarUI.New(function()
         self.locContainer:SetActive(not self.locContainer.activeSelf)
     end)
@@ -74,7 +74,7 @@ function WarScene:TestFocusAvatar()
 
     local followerData = clone(SData.GetAvatarSData(DemoCfg.followerID))
     followerData.hp = followerData.maxHp
-    local avatar = FocusAvatar.New(followerData.prefab, followerData, self.avatarConTran)
+    local avatar = WarAvatar.New(followerData.prefab, followerData, false, self.avatarConTran)
     WarData.AddAvatar(avatar, avatar.data)
     local loc = WarData.bornNodes[-DemoCfg.followerID]
     self:PutInNode(avatar, loc[1], loc[2])

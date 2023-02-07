@@ -23,6 +23,8 @@ function WarAvatar:Ctor(prefabPath, data, static, parent)
     self.moving = false
     self.static = static ---是否为不能移动的对象
 
+    self.gameObject.name = ""..data.id
+
     self:RegisterAction(BehaviorConstants.FIND_ENEMY)
     self:RegisterAction(BehaviorConstants.ATTACK)
     self:RegisterAction(BehaviorConstants.MOVE_TO_ENEMY)
@@ -43,6 +45,8 @@ function WarAvatar:Ctor(prefabPath, data, static, parent)
     self.aiPath.slowdownDistance = 0.1
     self.aiPath.endReachedDistance = 0.05
     self.aiPath.whenCloseToDestination = Pathfinding.CloseToDestinationMode.Stop
+    self.aiPath.rotationSpeed = 720
+    self.aiPath.slowWhenNotFacingTarget = false
     --self.aiPath.gravity = Vector3.zero
     self.aiPath:SetLuaCallBack(handler(self, self.MoveEnd))
 
@@ -213,6 +217,7 @@ function WarAvatar:PlayDead()
         return
     end
     self.playingDead = true
+    self:AIStop()
     self:PlayAnimation(AvatarBase.ANI_DEAD_NAME, nil, function()
         local path = "Effects/Prefabs/fx_die_xiong.prefab"
         local dieEff = CreatePrefab(path, self.transform.parent)
