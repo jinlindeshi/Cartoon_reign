@@ -26,7 +26,7 @@ function WarScene:Ctor(scene)
     AstarPath.active.logPathResults = Pathfinding.PathLog.None
 
     self:GenerateGrids()
-    self.locContainer:SetActive(false) ---默认是否显示格子
+    --self.locContainer:SetActive(false) ---默认是否显示格子
     WarUI.New(function()
         self.locContainer:SetActive(not self.locContainer.activeSelf)
     end)
@@ -74,6 +74,18 @@ function WarScene:TestFocusAvatar()
     HappyFuns.SetLayerRecursive(avatar.gameObject, 11)
     self.happyCam:SetAttachObj(avatar.gameObject)
     avatar:SetExternalBehavior("BehaviorTree/MeAI.asset")
+    avatar:AIStart()
+
+
+    local followerData = clone(SData.GetAvatarSData(DemoCfg.followerID))
+    followerData.hp = followerData.maxHp
+    local avatar = WarAvatar.New(followerData.prefab, followerData, false, self.avatarConTran)
+    WarData.AddAvatar(avatar, avatar.data)
+    local loc = WarData.bornNodes[-DemoCfg.followerID]
+    self:PutInNode(avatar, loc[1], loc[2])
+    HappyFuns.SetLayerRecursive(avatar.gameObject, 11)
+    avatar:SetLeader(WarData.mainAvatar)
+    avatar:SetExternalBehavior("BehaviorTree/Follower.asset")
     avatar:AIStart()
 end
 ---TEST

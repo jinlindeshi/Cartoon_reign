@@ -110,7 +110,7 @@ function WarData.GetAroundNearestGrid(myPosition, targetX, targetZ, radius, chec
         end
     end
 
-    return goalX,goalZ,goalPosition
+    return goalX,goalZ,goalPosition,grids
 end
 
 return WarData

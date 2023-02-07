@@ -31,10 +31,19 @@ function MoveToEnemyAction:OnStart()
 
     self.cAction:SetUpdateStatus(TaskStatus.Running)
 
-    local x,z,nearestPos = WarData.GetAroundNearestGrid(self.avatar.transform.position, self.avatar.target.x, self.avatar.target.z,
+    local x,z,nearestPos,grids = WarData.GetAroundNearestGrid(self.avatar.transform.position, self.avatar.target.x, self.avatar.target.z,
             nil, true, WarData.AvatarGrids)
     local nearestLoc = {x, z}
 
+    if x==nil or z==nil then
+        local str = ""
+        for x, tb in pairs(grids) do
+            for z, v in pairs(tb) do
+                str = str.." "..x..","..z
+            end
+        end
+        print("找不到敌人周围能去的格子啦", self.avatar.data.id,self.avatar.target.data.id,#grids,str)
+    end
     self.avatar:MoveAStar(nearestPos, function()
         ---TEST
         --local nowGrid = WarData.gridGraph:GetNearest(self.avatar.transform.position, Pathfinding.NNConstraint.None).node ---@type Pathfinding.GridNode
