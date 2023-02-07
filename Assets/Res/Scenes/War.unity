@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4494226, g: 0.4994927, b: 0.57569534, a: 1}
+  m_IndirectSpecularColor: {r: 0.17017706, g: 0.21357197, b: 0.29091176, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &4
 LightmapSettings:
@@ -48933,11 +48933,11 @@ MonoBehaviour:
   vRotateAngle: 0
   hRotateAngle: 0
   followParams:
-    offsetV: {x: -6, y: 17, z: -14}
+    offsetV: {x: -6, y: 18, z: -14}
     lookAt: 1
     globalReference: 1
     checkCover: 0
-    attachOffset: {x: 0, y: 2.3, z: 0}
+    attachOffset: {x: 0, y: 0, z: 0}
 --- !u!4 &1457200123 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 864550a001521b94abcc30a0aadbf0b3,

@@ -18,7 +18,7 @@ function WarAvatar:Ctor(prefabPath, data, static, parent)
     self.x = 0
     self.z = 0
     self.data = data or {id=0, hp=100, maxHp=100}
-    self.hpBar = require("Modules.WarScene.View.UI.HpBar").New(self, Vector2.New(0, 60), self.data)
+    self.hpBar = require("Modules.WarScene.View.UI.HpBar").New(self, Vector2.New(0, 80), self.data)
     self.hpBar:Hide()
     self.moving = false
     self.static = static ---是否为不能移动的对象
@@ -222,7 +222,7 @@ function WarAvatar:PlayDead()
 
         local avatarRender = self.gameObject:GetComponentInChildren(typeof(UnityEngine.Renderer)) ---@type UnityEngine.Renderer
         effRender.material.mainTexture = avatarRender.material.mainTexture
-        DelayedCall(1.5, function()
+        DelayedCall(2.5, function()
             RecyclePrefab(dieEff, path)
         end)
         self:Recycle()
