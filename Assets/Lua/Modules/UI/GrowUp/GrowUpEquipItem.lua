@@ -10,10 +10,33 @@ local GrowUpEquipItem = class("UI.GrowUp.GrowUpEquipItem", LuaObj)
 function GrowUpEquipItem:Ctor(gameObject, data)
     GrowUpEquipItem.super.Ctor(self, nil, gameObject)
     self.data = data
-    self.attrPic = self.transform:Find("AttrPic").gameObject
-    self.attrTextObj = self.transform:Find("Now").gameObject
-    self.attrText = GetComponent.Text(self.attrTextObj)
+    self.equipId = data.equipId
+    self.icon = self.transform:Find("Equip").gameObject
+    self.iconImg = GetComponent.Image(self.icon)
+    self:Refresh()
 end
 
+function GrowUpEquipItem:Refresh()
+    if self.data.equipId == 0 then
+        self.icon:SetActive(false)
+    else
+        self.icon:SetActive(true)
+    end
+end
+
+function GrowUpEquipItem:SetEquip(data)
+    if self.equipId ~= data.equipId then
+        self:Refresh()
+        self.equipId = data.equipId
+        local sequence = DOTween.Sequence()
+        sequence:AppendCallback(function()
+            local fx = CreatePrefab("Effect/Prefabs/fx_light_show_short.prefab", self.transform)
+            fx:Destroy(1)
+        end)
+        sequence:Append(self.icon.transform:DOScale(1.5, 0.25):SetEase(Happy.DOTWEEN_EASE.OutCubic))
+        sequence:Append(self.icon.transform:DOScale(1, 0.15):SetEase(Happy.DOTWEEN_EASE.Linear))
+
+    end
+end
 
 return GrowUpEquipItem

@@ -13,7 +13,7 @@ AvatarData.HeroInfo =
         starLv = 1,
         equips =
         {
-            {index = 1, equipId = 1},
+            {index = 1, equipId = 0},
             {index = 2, equipId = 0},
             {index = 3, equipId = 0},
             {index = 4, equipId = 0},
@@ -32,10 +32,30 @@ function AvatarData.GetHeroData(id)
     end
 end
 
+function AvatarData.GetHeroSData(id)
+    return SData.GetAvatarSData(id)
+end
+--获取角色属性
 function AvatarData.GetHeroAttr(id)
     local data = AvatarData.GetHeroData(id)
-    local SData = SData.GetAvatarSData(id)
-    
+    local orgData = SData.GetAvatarSData(id)
+    local rate = DemoCfg.starUpRateMap[data.starLv]
+    return {atk = orgData.atk * rate, def = orgData.def * rate, maxHp = orgData.maxHp * rate}
+end
+
+function AvatarData.UpStarLv(id)
+    local data = AvatarData.GetHeroData(id)
+    data.starLv = data.starLv + 1
+    for i = 1, #data.equips do
+        data.equips[i].equipId = 0
+    end
+end
+
+function AvatarData.AutoEquip(id)
+    local data = AvatarData.GetHeroData(id)
+    for i = 1, #data.equips do
+        data.equips[i].equipId = 1
+    end
 end
 
 return AvatarData
