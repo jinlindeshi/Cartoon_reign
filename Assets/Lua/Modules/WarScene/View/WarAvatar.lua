@@ -7,6 +7,7 @@ local BehaviorAvatar = require("Modules.WarScene.View.AvatarBase.BehaviorAvatar"
 local BehaviorConstants = require("Modules.WarScene.Model.BehaviorConstants")
 local AvatarBase = require("Modules.WarScene.View.AvatarBase.AvatarBase")
 local WarData = require("Modules.WarScene.Model.WarData")
+local DamageManager = require("Modules.WarScene.Manager.DamageManager")
 ---@class WarAvatar:BehaviorAvatar
 ---@field New fun(prefabPath:string, data, static:boolean, parent:UnityEngine.Transform):WarAvatar
 local WarAvatar = class("WarAvatar", BehaviorAvatar)
@@ -286,7 +287,7 @@ function WarAvatar:Attack(callBack)
 
     self.aniEvent:SetListenerByMsg(ANI_EVENT_ATTACK_HIT, function()
         if  self.target then
-            self.target:GetHurt(20)
+            self.target:GetHurt(DamageManager.GetHurtValue(self.data, self.target.data))
         end
         self.aniEvent:SetListenerByMsg(ANI_EVENT_ATTACK_HIT, nil)
     end)

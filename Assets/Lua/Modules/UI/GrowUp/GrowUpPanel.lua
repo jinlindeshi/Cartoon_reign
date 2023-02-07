@@ -15,8 +15,7 @@ function GrowUpPanel:OnInit()
     self.UpButton = self.transform:Find("AttrRoot/UpButton").gameObject
     self.UpButtonImg = GetComponent.Image(self.UpButton)
     self.grayMat = Tools.GetGrayMaterial()
-
-
+    self.UpButtonImg.material = self.grayMat
 end
 
 function GrowUpPanel:RemoveListeners()

@@ -7,6 +7,9 @@ function m:LoadPrefabAtPath(assetPath) end
 ---@param assetPath string
 ---@return UnityEngine.Object
 function m:LoadAssetsAtPath(assetPath) end
+---@param assetPath string
+---@return UnityEngine.Material
+function m:LoadMaterialAtPath(assetPath) end
 ---@param abname string
 ---@param async bool
 ---@param callBack LuaInterface.LuaFunction
