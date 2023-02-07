@@ -24,15 +24,17 @@ function GrowUpEquipItem:Refresh()
     end
 end
 
-function GrowUpEquipItem:SetEquip(data)
+function GrowUpEquipItem:SetEquip(data, isFx)
     if self.equipId ~= data.equipId then
         self:Refresh()
         self.equipId = data.equipId
         local sequence = DOTween.Sequence()
-        sequence:AppendCallback(function()
-            local fx = CreatePrefab("Effect/Prefabs/fx_light_show_short.prefab", self.transform)
-            fx:Destroy(1)
-        end)
+        if isFx then
+            sequence:AppendCallback(function()
+                local fx = CreatePrefab("Effect/Prefabs/fx_light_show_short.prefab", self.transform)
+                fx:Destroy(1)
+            end)
+        end
         sequence:Append(self.icon.transform:DOScale(1.5, 0.25):SetEase(Happy.DOTWEEN_EASE.OutCubic))
         sequence:Append(self.icon.transform:DOScale(1, 0.15):SetEase(Happy.DOTWEEN_EASE.Linear))
 
