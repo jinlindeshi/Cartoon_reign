@@ -131,3 +131,8 @@ function Happy.ClearBtnClick(gameObj)
     RemoveButtonHandler(gameObj, PointerHandler.UP, ExitL)
     RemoveEventListener(gameObj, Event.ON_DESTROY, DestryL)
 end
+
+---获取UI灰色材质球
+function Happy.GetGrayMat()
+    return resMgr:LoadMaterialAtPath("Materials/UI/gray2D.mat")
+end
