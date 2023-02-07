@@ -7,4 +7,7 @@ DemoCfg = {}
 DemoCfg.mainAvatarID = -1 ---主角色ID
 DemoCfg.mapID = 1 ---地图ID
 
+DemoCfg.followerID = -2 ---随从ID
+
+
 return DemoCfg

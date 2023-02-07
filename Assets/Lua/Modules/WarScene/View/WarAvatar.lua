@@ -38,7 +38,7 @@ function WarAvatar:Ctor(prefabPath, data, static, parent)
     self:RegisterAction(BehaviorConstants.FOLLOW)
 
     self.aiPath = AddOrGetComponent(self.gameObject, AIPathToLua) ---@type AIPathToLua
-    self.aiPath.maxSpeed = 3.5
+    self.aiPath.maxSpeed = 5
     self.aiPath.canSearch = false
     self.aiPath.slowdownDistance = 0.1
     self.aiPath.endReachedDistance = 0.05
@@ -111,7 +111,7 @@ function WarAvatar:EndFollow()
 end
 
 function WarAvatar:SetAvatarColor(color, tweenDur, callBack)
-    color = color or Color.white
+    color = color or WarAvatar.DEFAULT_COLOR
     if self.avatarColorTween then
         self.avatarColorTween:Kill()
         self.avatarColorTween = nil
@@ -120,20 +120,21 @@ function WarAvatar:SetAvatarColor(color, tweenDur, callBack)
     self.nowColor = color
     if not tweenDur then
         Happy.DoWithMaterials(self.gameObject, function(mat)
-            mat.color = color
-            --mat:SetColor("_EmissionColor", color)
+            --mat.color = color
+            mat:SetColor("_Emissive_Color", color)
         end, UnityEngine.SkinnedMeshRenderer)
     else
         self.avatarColorTween = Happy.DOTweenFloat(0, 1, tweenDur, function(value)
             Happy.DoWithMaterials(self.gameObject, function(mat)
-                --mat:SetColor("_EmissionColor", Color.Lerp(oldColor, color, value))
-                mat.color = color
+                mat:SetColor("_Emissive_Color", Color.Lerp(oldColor, color, value))
+                --mat.color = color
             end)
         end, callBack)
     end
 end
 
-WarAvatar.HURT_COLOR = Color.New(1, 0, 0, 1)
+WarAvatar.HURT_COLOR = Color.New(0.5, 0, 0, 1)
+WarAvatar.DEFAULT_COLOR = Color.black
 ---受伤
 function WarAvatar:GetHurt(loseHp)
     self.data.hp = math.max(0, self.data.hp - loseHp)
@@ -373,7 +374,7 @@ function WarAvatar:GetPath(path)
     --print("WarAvatar:GetPath 开始", nodeList.Count, self.data.id)
 
     self:PlayAnimation(AvatarBase.ANI_MOVE_NAME, 0)
-    --self.ani.speed = self.aiPath.maxSpeed
+    self.ani.speed = self.aiPath.maxSpeed/3.5
 end
 
 function WarAvatar:MoveEnd(isForceStop)
@@ -384,7 +385,7 @@ function WarAvatar:MoveEnd(isForceStop)
     self:PlayAnimation(AvatarBase.ANI_IDLE_NAME, 0)
     self.moving = false
     --print("你妹 结束移动", self.data.id, self.moving)
-    --self.ani.speed = 1
+    self.ani.speed = 1
     if self.movingEndCall then
         local fun = self.movingEndCall
         self.movingEndCall = nil
