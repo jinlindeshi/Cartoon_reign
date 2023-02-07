@@ -5,3 +5,4 @@ cartoon_reign.sln
 .idea
 Assets/StreamingAssets
 Temp
+*.csproj
