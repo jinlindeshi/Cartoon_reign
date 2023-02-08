@@ -3,19 +3,17 @@ from excel_exporter import *
 
 define = [
 	['ID', 'id', Int()],
-	['prefab路径', 'prefab', Str()],
+	['icon', 'icon', Str()],
 	['名称', 'name', Str()],
-	['最大血量', 'maxHp', Int()],
-	['攻击力', 'atk', Int()],
-	['防御力', 'def', Int()],
-	['阵营', 'side', Int()],
+	['部位', 'pos', Int()],
+	['品质', 'quality', Int()],
 ]
 
 config = {
-	"source": "怪物表.xlsx",
+	"source": "装备表.xlsx",
 	"sheet": "Sheet1",
 	"target": [
-		[ET_LUA_PATH + "monster.lua", "lua"],
+		[ET_LUA_PATH + "equip.lua", "lua"],
 		#["./test1.js", "js"],
 		#["./test1.json", "json"],
 		#["./test1.py", "py"],

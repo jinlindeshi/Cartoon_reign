@@ -20,6 +20,6 @@ UILayerName.top = "Top"
 ---@field layer string 页面层级 默认为panel
 
 UIPanelCfg = {} ---@type table<string, panelConfig>
-UIPanelCfg.mainMenu = {classPath = "Modules.UI.MainMenu.MainMenuPanel", prefabPath = "Prefabs/UI/MainMenu/MainMenu.prefab"}
-UIPanelCfg.growUp = {classPath = "Modules.UI.GrowUp.GrowUpPanel", prefabPath = "Prefabs/UI/GrowUp/GrowUpPanel.prefab"}
-UIPanelCfg.rewardAlert = {classPath = "Modules.UI.Reward.RewardAlertPanel", prefabPath = "Prefabs/UI/Common/RewardAlertPanel.prefab", layer = UILayerName.alert}
+UIPanelCfg.mainMenu = {classPath = "Modules.UI.MainMenu.MainMenuPanel", prefabPath = "Prefabs/Panel/MainMenu/MainMenu.prefab"}
+UIPanelCfg.growUp = {classPath = "Modules.UI.GrowUp.GrowUpPanel", prefabPath = "Prefabs/Panel/GrowUp/GrowUpPanel.prefab"}
+UIPanelCfg.rewardAlert = {classPath = "Modules.UI.Reward.RewardAlertPanel", prefabPath = "Prefabs/Panel/Common/RewardAlertPanel.prefab", layer = UILayerName.alert}

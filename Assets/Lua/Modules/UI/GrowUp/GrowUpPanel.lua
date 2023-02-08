@@ -180,6 +180,7 @@ function GrowUpPanel:UpStarLv()
             self.equipList[i]:SetEquip(self.heroData.equips[i])
         end
         self.mask:SetActive(false)
+        self:CheckCanUp()
     end)
     seq:Append(self.upLight:DOFade(0, 0.25))
     seq:Join(equipCg:DOFade(1, 0.25))
@@ -195,7 +196,6 @@ function GrowUpPanel:AutoEquip()
     end
 end
 
-
 function GrowUpPanel:OnEquipButtonClick()
     self:AutoEquip()
     self:CheckCanUp()
@@ -206,6 +206,7 @@ function GrowUpPanel:OnUpButtonClick()
         return
     end
     self:UpStarLv()
+    UIMgr.GetPanel(UIPanelCfg.mainMenu):ActiveBtnLight("info", false)
 end
 
 function GrowUpPanel:RemoveListeners()

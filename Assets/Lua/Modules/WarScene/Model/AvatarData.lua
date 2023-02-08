@@ -54,7 +54,7 @@ end
 function AvatarData.AutoEquip(id)
     local data = AvatarData.GetHeroData(id)
     for i = 1, #data.equips do
-        data.equips[i].equipId = 1
+        data.equips[i].equipId = data.equips[i].index ---临时处理 自动装备
     end
 end
 

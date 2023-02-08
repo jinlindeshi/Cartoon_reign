@@ -4,6 +4,7 @@ from excel_exporter import *
 define = [
 	['ID', 'id', Int()],
 	['prefab路径', 'prefab', Str()],
+	['名称', 'name', Str()],
 	['最大血量', 'maxHp', Int()],
 	['攻击力', 'atk', Int()],
 	['防御力', 'def', Int()],

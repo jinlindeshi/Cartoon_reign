@@ -20,7 +20,8 @@ DemoCfg.starUpRateMap =  ---星级提升 属性上升倍率
 DemoCfg.rewardData =
 {
     {vid = 1, id = 1},{vid = 2, id = 2},{vid = 3, id = 3},
-    {vid = 4, id = 4},{vid = 5, id = 5},{vid = 6, id = 6}
+    {vid = 4, id = 4},{vid = 5, id = 5},{vid = 6, id = 6},
+    {vid = 7, id = 7},{vid = 8, id = 8},
 }
 
 DemoCfg.equipIconPath = "Textures/equip/"

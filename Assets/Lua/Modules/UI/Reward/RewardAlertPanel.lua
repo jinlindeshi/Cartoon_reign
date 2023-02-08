@@ -48,14 +48,15 @@ function RewardAlertPanel:InitItemList(initHide)
 end
 
 function RewardAlertPanel:ShowItemList(callBack)
+    local count = #self.itemList
     local seq = DOTween.Sequence()
-    for i = 1, #self.itemList do
+    for i = 1, count do
         local item = self.itemList[i]
         seq:AppendCallback(function()
             item:Show()
             item.transform.localScale = Vector3.New(0.8,0.8,0.8)
         end)
-        seq:Append(item.transform:DOScale(1, 0.15))
+        seq:Append(item.transform:DOScale(1, 0.15 * ((count - i)/count)))
     end
     if callBack then
         seq:AppendCallback(callBack)
@@ -66,23 +67,44 @@ end
 function RewardAlertPanel:OnYesButtonClick()
     local mainMenuPanel = UIMgr.GetPanel(UIPanelCfg.mainMenu) ---@type UI.MainMenuPanel
     mainMenuPanel:ActiveBtnLight("reward", false)
-    local fakeList = GameObject.Instantiate(self.listRoot.gameObject, UIMgr.GetLayer(UILayerName.alert))
+    local fakeList = GameObject.Instantiate(self.listRoot.gameObject, UIMgr.GetLayer(UILayerName.alert)) ---@type UnityEngine.GameObject
     fakeList.transform.position = self.listRoot.position
     local endPos = mainMenuPanel.infoButton.transform.position
+    local childCount = fakeList.transform.childCount
     local seq = DOTween.Sequence()
     seq:Append(GetComponent.CanvasGroup(self.gameObject):DOFade(0, 0.2))
-    seq:Append(fakeList.transform:DOMove(endPos, 0.35):SetEase(Happy.DOTWEEN_EASE.InCubic))
-    seq:Join(fakeList.transform:DOScale(0, 0.35):SetEase(Happy.DOTWEEN_EASE.InCubic))
-    seq:AppendCallback(function()
-        self:Close()
-        fakeList:Destroy()
-        local fx = CreatePrefab("Effect/Prefabs/fx_light_show_short.prefab", mainMenuPanel.infoButton.transform)
-        fx:Destroy(1)
-    end)
-    seq:AppendInterval(0.5)
-    seq:AppendCallback(function()
-        mainMenuPanel:ActiveBtnLight("info", true)
-    end)
+    for i = 1, childCount do
+        local item = fakeList.transform:GetChild(i-1)
+        if i == childCount then
+            ---最后一次
+            seq:AppendCallback(function()
+                local itemSeq = DOTween.Sequence()
+                itemSeq:Append(item:DOMove(endPos, 0.35):SetEase(Happy.DOTWEEN_EASE.InCubic))
+                itemSeq:Join(item:DOScale(0, 0.35):SetEase(Happy.DOTWEEN_EASE.InCubic))
+                itemSeq:AppendCallback(function()
+                    local fx = CreatePrefab("Effect/Prefabs/fx_light_show_short.prefab", mainMenuPanel.infoButton.transform)
+                    fx:Destroy(1)
+                    self:Close()
+                    fakeList:Destroy()
+                end)
+                itemSeq:AppendInterval(0.5)
+                itemSeq:AppendCallback(function()
+                    mainMenuPanel:ActiveBtnLight("info", true)
+                end)
+            end)
+        else
+            seq:AppendCallback(function()
+                local itemSeq = DOTween.Sequence()
+                itemSeq:Append(item:DOMove(endPos, 0.35):SetEase(Happy.DOTWEEN_EASE.InCubic))
+                itemSeq:Join(item:DOScale(0.3, 0.35):SetEase(Happy.DOTWEEN_EASE.InCubic))
+                itemSeq:AppendCallback(function()
+                    local fx = CreatePrefab("Effect/Prefabs/fx_light_show_short.prefab", mainMenuPanel.infoButton.transform)
+                    fx:Destroy(1)
+                end)
+            end)
+            seq:AppendInterval(0.2 *  ((childCount - i)/childCount))
+        end
+    end
 end
 
 function RewardAlertPanel:RemoveListeners()
