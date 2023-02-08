@@ -18,17 +18,26 @@ function MoveToEnemyAction:OnStart()
     if not self.avatar.target then
         return
     end
-    self.avatar:EndFollow()
-    self.avatar:StopMoving()
-    ---Check攻击范围
+
+    if self.avatar.target:CheckDead() == true then ---目标已经死了，不用过去了
+        print("目标已经死了，不用过去了")
+        self.cAction:SetUpdateStatus(TaskStatus.Failure)
+        return
+    end
+
     local grids = WarData.GetAroundGrids(self.avatar.x, self.avatar.z, self.avatar.attackRadius)
     --print("MoveToEnemyAction:OnStart", self.avatar.target.x, self.avatar.target.z, grids[self.avatar.target.x])
     if  grids[self.avatar.target.x] and grids[self.avatar.target.x][self.avatar.target.z] then
-        --print("敌人能打到，不用走")
+        --if self.avatar.data.id == -2 then
+        --    print("敌人能打到，不用走")
+        --end
         self.cAction:SetUpdateStatus(TaskStatus.Success)
         return
     end
 
+
+    self.avatar:EndFollow()
+    self.avatar:StopMoving()
     self.cAction:SetUpdateStatus(TaskStatus.Running)
 
     local x,z,nearestPos,grids = WarData.GetAroundNearestGrid(self.avatar.transform.position, self.avatar.target.x, self.avatar.target.z,
@@ -43,25 +52,13 @@ function MoveToEnemyAction:OnStart()
             end
         end
         print("找不到敌人周围能去的格子啦", self.avatar.data.id,self.avatar.target.data.id,#grids,str)
+        self.avatar.target = nil
+        self.cAction:SetUpdateStatus(TaskStatus.Failure)
+        return
     end
     self.avatar:MoveAStar(nearestPos, function()
-        ---TEST
-        --local nowGrid = WarData.gridGraph:GetNearest(self.avatar.transform.position, Pathfinding.NNConstraint.None).node ---@type Pathfinding.GridNode
-        --if nowGrid.XCoordinateInGrid ~= self.avatar.x or nowGrid.ZCoordinateInGrid ~= self.avatar.z then
-        --    print("移动出错啦~", self.avatar.data.id, nowGrid.XCoordinateInGrid, nowGrid.ZCoordinateInGrid, self.avatar.x, self.avatar.z)
-        --end
-        --
-        --self.avatar.transform.position = SeekerToLua.IntToVector(WarData.gridGraph:GetNode(self.avatar.x, self.avatar.z).position)
-        --if self.avatar.data.id < -1 then
-        --    print("你妹啊", self.avatar.data.id, self.avatar.transform.position.x,
-        --            self.avatar.transform.position.z, self.avatar.x, self.avatar.z)
-        --end
-        ---TEST
         self.cAction:SetUpdateStatus(TaskStatus.Success)
     end, nearestLoc)
-    --DelayedCall(1, function()
-    --    self.avatar:StopMoving()
-    --end)
 
 end
 

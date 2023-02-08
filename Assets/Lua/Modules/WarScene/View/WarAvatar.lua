@@ -42,10 +42,10 @@ function WarAvatar:Ctor(prefabPath, data, static, parent)
     self.aiPath = AddOrGetComponent(self.gameObject, AIPathToLua) ---@type AIPathToLua
     self.aiPath.maxSpeed = 5
     self.aiPath.canSearch = false
-    self.aiPath.slowdownDistance = 0.1
-    self.aiPath.endReachedDistance = 0.05
+    self.aiPath.slowdownDistance = 0
+    self.aiPath.endReachedDistance = 0.5
     self.aiPath.whenCloseToDestination = Pathfinding.CloseToDestinationMode.Stop
-    self.aiPath.rotationSpeed = 720
+    self.aiPath.rotationSpeed = 3000
     self.aiPath.slowWhenNotFacingTarget = false
     --self.aiPath.gravity = Vector3.zero
     self.aiPath:SetLuaCallBack(handler(self, self.MoveEnd))
@@ -290,6 +290,7 @@ function WarAvatar:Attack(callBack)
         return
     end
     self:LookAtTarget()
+    --self.attackUpdate = AddEventListener(Stage, Event.UPDATE, handler(self, self.LookAtTarget))
 
     self.aniEvent:SetListenerByMsg(ANI_EVENT_ATTACK_HIT, function()
         if  self.target then
@@ -298,6 +299,7 @@ function WarAvatar:Attack(callBack)
         self.aniEvent:SetListenerByMsg(ANI_EVENT_ATTACK_HIT, nil)
     end)
     self:PlayAnimation(AvatarBase.ANI_ATTACK_NAME, nil, function()
+         --RemoveEventListener(Stage, Event.UPDATE, self.attackUpdate)
         if callBack then
             callBack()
         end
@@ -378,6 +380,8 @@ function WarAvatar:GetPath(path)
 
     --print("WarAvatar:GetPath 开始", nodeList.Count, self.data.id)
 
+    self.aiPath.updateRotation = true
+    self.aiPath.updatePosition = true
     self:PlayAnimation(AvatarBase.ANI_MOVE_NAME, 0)
     self.ani.speed = self.aiPath.maxSpeed/3.5
 end
@@ -387,6 +391,8 @@ function WarAvatar:MoveEnd(isForceStop)
     --    print("你妹 结束移动", self.data.id, self.x, self.z, isForceStop)
     --end
 
+    self.aiPath.updateRotation = false
+    self.aiPath.updatePosition = false
     self:PlayAnimation(AvatarBase.ANI_IDLE_NAME, 0)
     self.moving = false
     --print("你妹 结束移动", self.data.id, self.moving)

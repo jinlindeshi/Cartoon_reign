@@ -25,7 +25,7 @@ function WarScene:Ctor(scene)
     AstarPath.active.logPathResults = Pathfinding.PathLog.None
 
     self:GenerateGrids()
-    --self.locContainer:SetActive(false) ---默认是否显示格子
+    self.locContainer:SetActive(false) ---默认是否显示格子
     WarUI.New(function()
         self.locContainer:SetActive(not self.locContainer.activeSelf)
     end)
