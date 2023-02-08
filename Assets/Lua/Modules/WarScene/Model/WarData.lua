@@ -46,10 +46,12 @@ function WarData.RemoveAvatar(avatar)
     avatar:PlayDead()
 end
 
+---@return WarAvatar
 function WarData.GetAvatarById(id)
     return WarData.AvatarHash[id]
 end
 
+---@return WarAvatar
 function WarData.GetAvatarByLoc(x,z)
     --print("你妹啊~",x,z)
     if not WarData.AvatarGrids[x] or not WarData.AvatarGrids[x][z] then
