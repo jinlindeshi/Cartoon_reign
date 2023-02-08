@@ -17,6 +17,7 @@ function LuaObj:Ctor(prefabPath, gameObject, parent)
     if prefabPath then
         self:BindGameObject(CreatePrefab(prefabPath, parent))
     elseif gameObject and not tolua.isnull(gameObject) then
+        gameObject.transform:SetParent(parent)
         self:BindGameObject(gameObject)
     end
 end

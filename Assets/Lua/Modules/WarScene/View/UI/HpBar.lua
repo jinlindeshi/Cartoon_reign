@@ -6,15 +6,11 @@
 
 local LuaObj = require("Prayer.Core.LuaObj")
 ---@class HpBar:LuaObj
----@field New fun(bindObj:UnityEngine.GameObject, offsetV2:Vector2, data):HpBar
 local HpBar = class("HpBar", LuaObj)
 
----@param bindObj UnityEngine.GameObject
-function HpBar:Ctor(bindObj, offsetV2, data)
-    HpBar.super.Ctor(self, "Prefabs/War/HpBar.prefab", nil, UIMgr.GetLayer(UILayerName.scene))
+function HpBar:Ctor(data, parent)
+    HpBar.super.Ctor(self, "Prefabs/War/HpBar.prefab", nil, parent)
     self.transform:SetAsFirstSibling()
-    self.bindObj = bindObj
-    self.offsetV2 = offsetV2 or Vector2.zero
     self.rect = GetComponent.RectTransform(self.gameObject)
 
     self.img = GetComponent.Image(self.transform:Find("progress").gameObject)
@@ -41,24 +37,6 @@ function HpBar:ChangeHp(hp, maxHp, tween)
     self.autoHide = DelayedCall(3, function()
         self:Hide()
     end)
-end
-
-function HpBar:Update()
-    if self.destroyed == true then
-        return
-    end
-    local cam = Camera.main
-    local screenP = cam:WorldToScreenPoint(self.bindObj.transform.position)
-
-    local hehe, p = RectTransformUtility.ScreenPointToLocalPointInRectangle(self.rect.parent, screenP, nil, Vector2.zero)
-
-    self.rect.anchoredPosition = p + self.offsetV2
-    --print("HpBar:Update", p.x, p.y)
-end
-
-function HpBar:Show()
-    HpBar.super.Show(self)
-    self:Update()
 end
 
 return HpBar

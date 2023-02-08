@@ -18,8 +18,10 @@ function WarAvatar:Ctor(prefabPath, data, static, parent)
     self.x = 0
     self.z = 0
     self.data = data or {id=0, hp=100, maxHp=100, side=-1}
-    self.hpBar = require("Modules.WarScene.View.UI.HpBar").New(self, Vector2.New(0, 80), self.data)
+    self.headUI = require("Modules.WarScene.View.UI.HeadUI").New(self, Vector2.New(0, 80))
+    self.hpBar = require("Modules.WarScene.View.UI.HpBar").New(self.data, self.headUI.transform)
     self.hpBar:Hide()
+
     self.moving = false
     self.static = static ---是否为不能移动的对象
     self.skillMarkTime = nil ---上次施法的时间
@@ -64,6 +66,14 @@ end
 function WarAvatar:RegisterAction(name)
     --print("BehaviorAvatar:RegisterAction", name, require("Modules.WarScene.Controller."..name.."Action"))
     WarAvatar.super.RegisterAction(self, name, require("Modules.WarScene.Controller."..name.."Action"))
+end
+
+---施放技能
+function WarAvatar:PlaySkillName()
+    if not self.skill then
+        return
+    end
+    self.headUI:SkillNameShow()
 end
 
 ---设置可跟随的队长

@@ -16,6 +16,7 @@ local SKILL_TOTAL_TIME = 2
 function SkillWhirlwind:Begin(avatar, callBack)
     SkillWhirlwind.super.Begin(self, avatar, callBack)
 
+    self.avatar:PlaySkillName()
     self.avatar:PlayAnimation(AvatarBase.ANI_SKILL_NAME)
 
     local grids = WarData.GetAroundGrids(self.avatar.x, self.avatar.z, nil, true)
