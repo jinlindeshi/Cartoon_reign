@@ -22,7 +22,7 @@ function HeadUI:SkillNameShow(name)
     local prefabPath = "Prefabs/War/SkillName.prefab"
     local gObj = CreatePrefab(prefabPath, self.transform)
     --GetComponent.Image(gObj).sprite = --TODO
-    gObj.transform.localPosition = Vector3.zero
+    gObj.transform.localPosition = Vector3.New(0, 30,0)
     gObj:SetActive(false)
     gObj:SetActive(true)
     DelayedCall(1.5, function()
