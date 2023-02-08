@@ -136,7 +136,6 @@ function WarScene:PutInNode(avatar, x, z, obstacle, radius)
     --print("WarScene:PutInNode", pos.x, pos.y, pos.z)
     avatar.transform.position = Vector3.New(pos.x, pos.y + 0.01, pos.z)
     if obstacle == true then
-        WarData.AddAvatarLoc(x,z)
         local moreGrids = WarData.GetAroundGrids(x,z,radius)
         for moreX, moreZs in pairs(moreGrids) do
             for moreZ, hehe in pairs(moreZs) do

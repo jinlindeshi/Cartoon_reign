@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 1d33db20ddef01840a9a44abd205b0a3
+guid: c1effb9a8d1286f4db28f8313079ab1b
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable:
@@ -95,9 +95,15 @@ ModelImporter:
     second: Bip001 Spine1
   - first:
       1: 100060
-    second: Bone008
+    second: Bone005
   - first:
       1: 100062
+    second: Bone006
+  - first:
+      1: 100064
+    second: Bone008
+  - first:
+      1: 100066
     second: //RootNode
   - first:
       4: 400000
@@ -191,13 +197,19 @@ ModelImporter:
     second: Bip001 Spine1
   - first:
       4: 400060
-    second: Bone008
+    second: Bone005
   - first:
       4: 400062
+    second: Bone006
+  - first:
+      4: 400064
+    second: Bone008
+  - first:
+      4: 400066
     second: //RootNode
   - first:
       74: 7400000
-    second: skill
+    second: skill1
   - first:
       95: 9500000
     second: //RootNode
@@ -230,18 +242,18 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: skill
+      name: skill1
       takeName: Take 001
       internalID: 0
       firstFrame: 0
-      lastFrame: 12
+      lastFrame: 40
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
+      loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0

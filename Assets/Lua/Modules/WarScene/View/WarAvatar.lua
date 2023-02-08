@@ -17,17 +17,19 @@ function WarAvatar:Ctor(prefabPath, data, static, parent)
     WarAvatar.super.Ctor(self, prefabPath, parent)
     self.x = 0
     self.z = 0
-    self.data = data or {id=0, hp=100, maxHp=100}
+    self.data = data or {id=0, hp=100, maxHp=100, side=-1}
     self.hpBar = require("Modules.WarScene.View.UI.HpBar").New(self, Vector2.New(0, 80), self.data)
     self.hpBar:Hide()
     self.moving = false
     self.static = static ---是否为不能移动的对象
+    self.skillMarkTime = nil ---上次施法的时间
+    self.skill = nil ---@type SkillBase
 
     self.gameObject.name = ""..data.id
 
     self:RegisterAction(BehaviorConstants.FIND_ENEMY)
     self:RegisterAction(BehaviorConstants.ATTACK)
-    self:RegisterAction(BehaviorConstants.MOVE_TO_ENEMY)
+    self:RegisterAction(BehaviorConstants.TRY_TO_CAST_SKILL)
 
     self.aniEvent = GetComponent.AnimationEvent(self.gameObject)
 
@@ -37,6 +39,7 @@ function WarAvatar:Ctor(prefabPath, data, static, parent)
         return
     end
 
+    self:RegisterAction(BehaviorConstants.MOVE_TO_ENEMY)
     self:RegisterAction(BehaviorConstants.FOLLOW)
 
     self.aiPath = AddOrGetComponent(self.gameObject, AIPathToLua) ---@type AIPathToLua
@@ -254,7 +257,7 @@ end
 function WarAvatar:SetLoc(x, z)
     self.x = x
     self.z = z
-    WarData.AddAvatarLoc(self.x, self.z)
+    WarData.AddAvatarLoc(self.x, self.z, self.data.id)
 end
 
 ---设置目标对象

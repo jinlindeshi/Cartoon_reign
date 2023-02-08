@@ -10,11 +10,13 @@ local BehaviorConstants = require("Modules.WarScene.Model.BehaviorConstants")
 local FocusAvatar = class("FocusAvatar", WarAvatar)
 
 function FocusAvatar:Ctor(prefabPath, data, parent)
-    print("FocusAvatar:Ctor",  FocusAvatar.super.Ctor)
+    --print("FocusAvatar:Ctor",  FocusAvatar.super.Ctor)
     FocusAvatar.super.Ctor(self, prefabPath, data, false, parent)
 
     self:RegisterAction(BehaviorConstants.NEW_WAVE_ENEMYS)
     self:RegisterAction(BehaviorConstants.CHECK_SAFE)
+
+    self.skill = require("Modules.WarScene.Controller.Skill.SkillWhirlwind").New()
 end
 
 return FocusAvatar

@@ -12,6 +12,7 @@ local AvatarBase = class("AvatarBase", LuaObj)
 AvatarBase.ANI_MOVE_NAME="move"
 AvatarBase.ANI_IDLE_NAME="idle"
 AvatarBase.ANI_ATTACK_NAME="attack"
+AvatarBase.ANI_SKILL_NAME="skill"
 AvatarBase.ANI_DEAD_NAME="dead"
 function AvatarBase:Ctor(prefabPath, noController, parent)
     prefabPath = prefabPath or "Models/TestZombie.prefab"

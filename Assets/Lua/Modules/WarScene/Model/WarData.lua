@@ -21,11 +21,11 @@ WarData.avatarIdIndex = 0
 
 WarData.mainAvatar = nil ---@type FocusAvatar 当前的主角色
 
-function WarData.AddAvatarLoc(x,z)
+function WarData.AddAvatarLoc(x,z, id)
     if not WarData.AvatarGrids[x] then
         WarData.AvatarGrids[x] = {}
     end
-    WarData.AvatarGrids[x][z] = true
+    WarData.AvatarGrids[x][z] = id
 end
 
 function WarData.RemoveAvatarLoc(x,z)
@@ -44,6 +44,18 @@ function WarData.RemoveAvatar(avatar)
 
     WarData.AvatarHash[avatar.data.id] = nil
     avatar:PlayDead()
+end
+
+function WarData.GetAvatarById(id)
+    return WarData.AvatarHash[id]
+end
+
+function WarData.GetAvatarByLoc(x,z)
+    --print("你妹啊~",x,z)
+    if not WarData.AvatarGrids[x] or not WarData.AvatarGrids[x][z] then
+        return nil
+    end
+    return WarData.AvatarHash[WarData.AvatarGrids[x][z]]
 end
 
 ---返回两个Avatar之间的距离

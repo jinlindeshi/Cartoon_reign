@@ -15,33 +15,20 @@ function TryToCastSkillAction:Ctor(avatar, bToLua, cAction, paramFloat, paramBoo
 end
 
 function TryToCastSkillAction:OnStart()
+    if not self.avatar.skill then
+        print("技能没配~")
+        self.cAction:SetUpdateStatus(TaskStatus.Failure)
+    end
+    if self.avatar.skillMarkTime and os.clock() - self.avatar.skillMarkTime < self.skillCD then
+        --print("技能CD中")
+        self.cAction:SetUpdateStatus(TaskStatus.Failure)
+        return
+    end
     self.cAction:SetUpdateStatus(TaskStatus.Running)
-    self:AttackToDeath()
-end
-
-function TryToCastSkillAction:AttackToDeath()
-    if self.avatar:CheckDead() == true then
-        --print("我死了不打了", self.avatar.data.id)
-        return
-    end
-    if not self.avatar.target or self.avatar.target:CheckDead() == true then
-        self.avatar.target = nil
+    self.avatar.skill:Begin(self.avatar, function()
         self.cAction:SetUpdateStatus(TaskStatus.Success)
-        --local list = self.bToLua:GetActiveTasks()
-        --print("TryToCastSkillAction:AttackToDeath 已击杀目标~~", list.Length)
-        return
-    end
-    if self.paused == true then
-        print("暂停了", self.avatar.id)
-        return
-    end
-    if self.avatar.target.moving == true then ---目标移动中先不打，等一会儿再来看看
-    self.avatar:LookAtTarget()
-        self.waitCall = DelayedCall(0.5, handler(self, self.AttackToDeath))
-        return
-    end
+    end)
 
-    self.avatar:Attack(handler(self, self.AttackToDeath))
 end
 
 function TryToCastSkillAction:OnPause(paused)
