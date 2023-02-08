@@ -12,17 +12,21 @@ function GrowUpAttrItem:Ctor(gameObject, data)
     self.attrPic = self.transform:Find("AttrPic").gameObject
     self.attrTextObj = self.transform:Find("Now").gameObject
     self.attrText = GetComponent.Text(self.attrTextObj)
+    self.attrText.text = self.data.value
 end
 
 ---属性值增加表现
 function GrowUpAttrItem:AddRefresh(data)
     local floatTween = Happy.DOTweenFloat(self.data.value, data.value, 0.6, function(value)
-        self.attrText.text = value
+        self.attrText.text = math.floor(value)
     end, function()
         self.attrText.text = data.value
         self.data.value = data.value
     end)
     local sequence = DOTween.Sequence()
+    sequence:Append(self.attrTextObj.transform:DOScale(1.5, 0.25))
+    sequence:Append(floatTween)
+    sequence:Append(self.attrTextObj.transform:DOScale(1, 0.15))
 end
 
 return GrowUpAttrItem

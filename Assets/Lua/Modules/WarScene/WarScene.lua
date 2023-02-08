@@ -10,6 +10,7 @@ local LuaScene = require("Prayer.Core.LuaScene")
 local WarData = require("Modules.WarScene.Model.WarData")
 local WarUI = require("Modules.WarScene.View.UI.WarUI")
 local SData = require("Modules.WarScene.Model.SData")
+local AvatarData = require("Modules.WarScene.Model.AvatarData")
 
 
 ---@class WarScene:LuaScene
@@ -60,7 +61,11 @@ function WarScene:TestFocusAvatar()
     --end
 
     local myData = clone(SData.GetAvatarSData(DemoCfg.mainAvatarID))
-    myData.hp = myData.maxHp
+    local attr = AvatarData.GetHeroAttr(DemoCfg.mainAvatarID)
+    myData.hp = attr.maxHp
+    myData.maxHp = attr.maxHp
+    myData.atk = attr.atk
+    myData.def = attr.def
     local avatar = FocusAvatar.New(myData.prefab, myData, self.avatarConTran)
     WarData.AddAvatar(avatar, avatar.data)
     WarData.mainAvatar = avatar

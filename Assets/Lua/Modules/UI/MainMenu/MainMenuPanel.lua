@@ -14,11 +14,11 @@ function MainMenuPanel:OnInit()
     self.infoButton = self.transform:Find("bottomRoot/infoButton").gameObject
 
     self.ItemIconObj:SetActive(false)
-    AddButtonHandler(self.infoButton, PointerHandler.CLICK, self.OnInfoButtonClick)
+    AddButtonHandler(self.infoButton, PointerHandler.CLICK, self.OnInfoButtonClick, self)
 end
 
 function MainMenuPanel:RemoveListeners()
-    RemoveButtonHandler(self.infoButton, PointerHandler.CLICK, self.OnInfoButtonClick)
+    RemoveButtonHandler(self.infoButton, PointerHandler.CLICK, self.OnInfoButtonClick, self)
 end
 
 function MainMenuPanel:OnInfoButtonClick()

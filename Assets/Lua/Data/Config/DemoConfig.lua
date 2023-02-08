@@ -6,8 +6,15 @@
 DemoCfg = {}
 DemoCfg.mainAvatarID = -1 ---主角色ID
 DemoCfg.mapID = 1 ---地图ID
-
 DemoCfg.followerID = -2 ---随从ID
 
+DemoCfg.starUpRateMap =  ---星级提升 属性上升倍率
+{
+    [1] = 1,
+    [2] = 1.5,
+    [3] = 1.8,
+    [4] = 2.2,
+    [5] = 2.5
+}
 
 return DemoCfg

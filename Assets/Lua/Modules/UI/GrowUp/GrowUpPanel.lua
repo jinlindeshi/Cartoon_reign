@@ -3,22 +3,210 @@
 --- Created by sunshuo.
 --- DateTime: 2023/2/3 17:23
 --- 角色养成界面
+local GrowUpAttrItem = require("Modules.UI.GrowUp.GrowUpAttrItem")
+local GrowUpEquipItem = require("Modules.UI.GrowUp.GrowUpEquipItem")
+local AvatarData = require("Modules.WarScene.Model.AvatarData")
 
+local equipCount = 6 --装备数量
+local starCount = 5 --星级上限
 ---@class UI.GrowUp.GrowUpPanel:UI.BasePanel
 ---@field New fun():UI.GrowUp.GrowUpPanel
 local GrowUpPanel = class("UI.GrowUp.GrowUpPanel", BasePanel)
 
 function GrowUpPanel:OnInit()
     GrowUpPanel.super.OnInit(self)
-    self.nameText = GetComponent.Text(self.transform:Find("AttrRoot/Name").gameObject)
+    self.heroRoot = self.transform:Find("heroRoot")
+    self.equipRoot = self.transform:Find("heroRoot/Equip")
+    self.mask = self.transform:Find("mask").gameObject
     self.EquipButton = self.transform:Find("heroRoot/EquipButton").gameObject
+    self.nameText = GetComponent.Text(self.transform:Find("AttrRoot/Name").gameObject)
     self.UpButton = self.transform:Find("AttrRoot/UpButton").gameObject
     self.UpButtonImg = GetComponent.Image(self.UpButton)
-    self.grayMat = Happy.GetGrayMaterial()
-    self.UpButtonImg.material = self.grayMat
+    self.upLight = GetComponent.CanvasGroup(self.transform:Find("HeroLight").gameObject)
+    self.StarFx = self.transform:Find("heroRoot/StarFx").gameObject
+    self.icon_light = self.transform:Find("heroRoot/icon_light").gameObject
+    self.grayMat = Happy.GetGrayMat()
+    self.mask:SetActive(false)
+    self.StarFx:SetActive(false)
+
+    AddButtonHandler(self.EquipButton, PointerHandler.CLICK, self.OnEquipButtonClick, self)
+    AddButtonHandler(self.UpButton, PointerHandler.CLICK, self.OnUpButtonClick, self)
+
+    self.heroSData = AvatarData.GetHeroSData(DemoCfg.mainAvatarID)
+    self.heroData = AvatarData.GetHeroData(DemoCfg.mainAvatarID)
+    self.attrData = AvatarData.GetHeroAttr(DemoCfg.mainAvatarID)
+
+    self.nameText.text = self.heroSData.name
+    self.equipList = {} ---@type table<number, UI.GrowUp.GrowUpEquipItem>
+    self.attrList = {} ---@type table<number, UI.GrowUp.GrowUpAttrItem>
+    self.starList = {} ---@type table<number, UnityEngine.GameObject>
+    for i = 1, equipCount do
+        local tra = self.equipRoot:Find("BtnEquip"..i)
+        if tra then
+            table.insert(self.equipList, GrowUpEquipItem.New(tra.gameObject, self.heroData.equips[i]))
+        end
+    end
+    for k, v in pairs(self.attrData) do
+        local tra = self.transform:Find("AttrRoot/attrItem_"..k)
+        if tra then
+            self.attrList[k] = GrowUpAttrItem.New(tra.gameObject, {type = k, value = v})
+        end
+    end
+    for i = 1, starCount do
+        local tra = self.transform:Find("AttrRoot/Star/StarBG"..i)
+        if tra then
+            table.insert(self.starList, tra:Find("Star").gameObject)
+        end
+    end
+    self:ShowStarLv()
+    self:CheckCanUp()
+end
+
+---显示星级
+function GrowUpPanel:ShowStarLv()
+    for i = 1, #self.starList do
+        if i > self.heroData.starLv then
+            self.starList[i]:SetActive(false)
+        end
+    end
+end
+
+---检测是否可以晋升
+function GrowUpPanel:CheckCanUp()
+    self.canUp = true
+    if self.heroData.starLv >= starCount then
+        self.canUp = false
+    else
+        for i = 1, #self.equipList do
+            if self.equipList[i].data.equipId == 0 then
+                self.canUp = false
+                break
+            end
+        end
+    end
+    if self.canUp then
+        self.UpButtonImg.material = nil
+    else
+        self.UpButtonImg.material = self.grayMat
+    end
+end
+
+---星级提升
+function GrowUpPanel:UpStarLv()
+    AvatarData.UpStarLv(DemoCfg.mainAvatarID)
+    self.attrData = AvatarData.GetHeroAttr(DemoCfg.mainAvatarID)
+    local star = self.starList[self.heroData.starLv] --新的星星
+    local endPos = Vector3.New(0,200,0)
+    local equipCg = GetComponent.CanvasGroup(self.equipRoot.gameObject)
+    local cg1 = GetComponent.CanvasGroup(self.EquipButton)
+    local cg2 = GetComponent.CanvasGroup(self.UpButton)
+    local tempList = {} ---@type table<number,UnityEngine.GameObject>  装备图标list
+    local lightList = {} ---@type table<number,UnityEngine.GameObject> 图标闪光list
+    ---生成飞行图标
+    for i = 1, #self.equipList do
+        local equip = self.equipList[i]
+        local light = GameObject.Instantiate(self.icon_light, self.heroRoot)
+        local equipTemp = GameObject.Instantiate(equip.icon, self.heroRoot) ---@type UnityEngine.GameObject
+
+        equipTemp.transform.position = equip.icon.transform.position
+        light.transform.position = equip.icon.transform.position
+        equipTemp.transform.localScale = equip.icon.transform.localScale
+        table.insert(tempList, equipTemp)
+        table.insert(lightList, light)
+    end
+    self.mask:SetActive(true)
+    local seq = DOTween.Sequence()
+    seq:Append(equipCg:DOFade(0, 0.25))
+    seq:Join(self.upLight:DOFade(0.6, 0.25))
+    seq:Join(cg1:DOFade(0, 0.25))
+    seq:Join(cg2:DOFade(0, 0.25))
+    seq:AppendInterval(0.25)
+    seq:AppendCallback(function()
+        ---图标闪光
+        for i = 1, #lightList do
+            local lightSeq = DOTween.Sequence()
+            lightSeq:Append(GetComponent.CanvasGroup(lightList[i]):DOFade(1, 0.2))
+            lightSeq:AppendInterval(0.25)
+            lightSeq:Append(GetComponent.CanvasGroup(lightList[i]):DOFade(0, 0.15))
+        end
+    end)
+    seq:AppendInterval(0.6)
+    for i = 1, #tempList do
+        if i == 1 then
+            seq:Append(tempList[i].transform:DOLocalMove(endPos, 0.25))
+        else
+            seq:Join(tempList[i].transform:DOLocalMove(endPos, 0.25))
+            seq:Join(tempList[i].transform:DOScale(0.3, 0.25))
+        end
+    end
+    seq:AppendCallback(function()
+        ---装备合成
+        self.StarFx:SetActive(true)
+        self.StarFx.transform.localPosition = endPos
+        for i = 1, #tempList do
+            tempList[i]:Destroy()
+        end
+        for i = 1, #lightList do
+            lightList[i]:Destroy()
+        end
+    end)
+    seq:Append(self.StarFx.transform:DOScale(1.2, 0.25))
+    seq:Append(self.StarFx.transform:DOScale(1, 0.15))
+    seq:AppendInterval(0.2)
+    seq:Append(self.StarFx.transform:DOMove(star.transform.position, 0.5):SetEase(Happy.DOTWEEN_EASE.OutCubic))
+    seq:Join(self.StarFx.transform:DOScale(1, 0.5):SetEase(Happy.DOTWEEN_EASE.OutCubic))
+    seq:AppendCallback(function()
+        ---星星出现
+        star:SetActive(true)
+        self.StarFx:SetActive(false)
+        self.StarFx.transform.localPosition = endPos
+        local fx = CreatePrefab("Effect/Prefabs/fx_chouka_huoxing.prefab", star.transform)
+        fx:Destroy(0.5)
+    end)
+    seq:AppendInterval(0.5)
+    seq:AppendCallback(function()
+        ---属性提升
+        for k, v in pairs(self.attrData) do
+            self.attrList[k]:AddRefresh({type = k, value = v})
+        end
+    end)
+    seq:AppendInterval(0.5)
+    seq:AppendCallback(function()
+        for i = 1, equipCount do
+            self.equipList[i]:SetEquip(self.heroData.equips[i])
+        end
+        self.mask:SetActive(false)
+    end)
+    seq:Append(self.upLight:DOFade(0, 0.25))
+    seq:Join(equipCg:DOFade(1, 0.25))
+    seq:Join(cg1:DOFade(1, 0.25))
+    seq:Join(cg2:DOFade(1, 0.25))
+end
+
+---一键装备
+function GrowUpPanel:AutoEquip()
+    AvatarData.AutoEquip(DemoCfg.mainAvatarID)
+    for i = 1, equipCount do
+        self.equipList[i]:SetEquip(self.heroData.equips[i], true)
+    end
+end
+
+
+function GrowUpPanel:OnEquipButtonClick()
+    self:AutoEquip()
+    self:CheckCanUp()
+end
+
+function GrowUpPanel:OnUpButtonClick()
+    if not self.canUp then
+        return
+    end
+    self:UpStarLv()
 end
 
 function GrowUpPanel:RemoveListeners()
+    RemoveButtonHandler(self.EquipButton, PointerHandler.CLICK, self.OnEquipButtonClick, self)
+    RemoveButtonHandler(self.UpButton, PointerHandler.CLICK, self.OnUpButtonClick, self)
 end
 
 return GrowUpPanel
