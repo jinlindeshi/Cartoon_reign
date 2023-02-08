@@ -11,6 +11,7 @@ local SData = {}
 SData.avatar = require("Data.Excel.avatar") --角色表数据
 SData.monster = require("Data.Excel.monster") --怪物表数据
 SData.monsterPoint = require("Data.Excel.monsterPoint") --刷怪点表数据
+SData.equip = require("Data.Excel.equip") --装备表数据
 
 function SData.GetAvatarSData(id)
     return SData.avatar[id]
@@ -18,6 +19,10 @@ end
 
 function SData.GetMonsterSData(id)
     return SData.monster[id]
+end
+
+function SData.GetEquipSData(id)
+    return SData.equip[id]
 end
 
 SData.mapSData = {} --地图数据缓存

@@ -12,17 +12,38 @@ function MainMenuPanel:OnInit()
     MainMenuPanel.super.OnInit(self)
     self.ItemIconObj = self.transform:Find("ItemIcon").gameObject
     self.infoButton = self.transform:Find("bottomRoot/infoButton").gameObject
-
+    self.rewardButton = self.transform:Find("bottomRoot/rewardButton").gameObject
     self.ItemIconObj:SetActive(false)
+
+    self.btnLight =
+    {
+        ["info"] = self.transform:Find("bottomRoot/infoLight").gameObject,
+        ["reward"] = self.transform:Find("bottomRoot/rewardLight").gameObject,
+    }
+    self:ActiveBtnLight("info", false)
+    self:ActiveBtnLight("reward", true)
     AddButtonHandler(self.infoButton, PointerHandler.CLICK, self.OnInfoButtonClick, self)
+    AddButtonHandler(self.rewardButton, PointerHandler.CLICK, self.OnRewardButtonClick, self)
 end
 
-function MainMenuPanel:RemoveListeners()
-    RemoveButtonHandler(self.infoButton, PointerHandler.CLICK, self.OnInfoButtonClick, self)
+function MainMenuPanel:ActiveBtnLight(type, flag)
+    if self.btnLight[type] then
+        self.btnLight[type]:SetActive(flag)
+    end
 end
 
 function MainMenuPanel:OnInfoButtonClick()
     UIMgr.OpenPanel(UIPanelCfg.growUp)
+end
+
+function MainMenuPanel:OnRewardButtonClick()
+    UIMgr.OpenPanel(UIPanelCfg.rewardAlert, DemoCfg.rewardData)
+end
+
+function MainMenuPanel:RemoveListeners()
+    MainMenuPanel.super.RemoveListeners(self)
+    RemoveButtonHandler(self.infoButton, PointerHandler.CLICK, self.OnInfoButtonClick, self)
+    RemoveButtonHandler(self.rewardButton, PointerHandler.CLICK, self.OnRewardButtonClick, self)
 end
 
 return MainMenuPanel

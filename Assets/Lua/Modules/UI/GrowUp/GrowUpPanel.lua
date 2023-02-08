@@ -60,6 +60,11 @@ function GrowUpPanel:OnInit()
     end
     self:ShowStarLv()
     self:CheckCanUp()
+
+    --打开动画
+    GetComponent.CanvasGroup(self.gameObject).alpha = 0
+    local seq = DOTween.Sequence()
+    seq:Append(GetComponent.CanvasGroup(self.gameObject):DOFade(1, 0.2))
 end
 
 ---显示星级
@@ -125,12 +130,10 @@ function GrowUpPanel:UpStarLv()
         ---图标闪光
         for i = 1, #lightList do
             local lightSeq = DOTween.Sequence()
-            lightSeq:Append(GetComponent.CanvasGroup(lightList[i]):DOFade(1, 0.2))
-            lightSeq:AppendInterval(0.25)
-            lightSeq:Append(GetComponent.CanvasGroup(lightList[i]):DOFade(0, 0.15))
+            lightSeq:Append(GetComponent.CanvasGroup(lightList[i]):DOFade(1, 0.35))
         end
     end)
-    seq:AppendInterval(0.6)
+    seq:AppendInterval(0.5)
     for i = 1, #tempList do
         if i == 1 then
             seq:Append(tempList[i].transform:DOLocalMove(endPos, 0.25))
@@ -138,6 +141,7 @@ function GrowUpPanel:UpStarLv()
             seq:Join(tempList[i].transform:DOLocalMove(endPos, 0.25))
             seq:Join(tempList[i].transform:DOScale(0.3, 0.25))
         end
+        seq:Join(lightList[i].transform:DOLocalMove(endPos, 0.25))
     end
     seq:AppendCallback(function()
         ---装备合成
@@ -170,7 +174,7 @@ function GrowUpPanel:UpStarLv()
             self.attrList[k]:AddRefresh({type = k, value = v})
         end
     end)
-    seq:AppendInterval(0.5)
+    seq:AppendInterval(1)
     seq:AppendCallback(function()
         for i = 1, equipCount do
             self.equipList[i]:SetEquip(self.heroData.equips[i])
@@ -205,6 +209,7 @@ function GrowUpPanel:OnUpButtonClick()
 end
 
 function GrowUpPanel:RemoveListeners()
+    GrowUpPanel.super.RemoveListeners(self)
     RemoveButtonHandler(self.EquipButton, PointerHandler.CLICK, self.OnEquipButtonClick, self)
     RemoveButtonHandler(self.UpButton, PointerHandler.CLICK, self.OnUpButtonClick, self)
 end

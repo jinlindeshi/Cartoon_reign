@@ -27,9 +27,9 @@ function WarScene:Ctor(scene)
 
     self:GenerateGrids()
     self.locContainer:SetActive(false) ---默认是否显示格子
-    WarUI.New(function()
-        self.locContainer:SetActive(not self.locContainer.activeSelf)
-    end)
+    --WarUI.New(function()
+    --    self.locContainer:SetActive(not self.locContainer.activeSelf)
+    --end)
     self.happyCam = GetComponent.HappyCamera(Camera.main.gameObject)
 
     self.avatarConTran = self:GetRootObjByName("AvatarCon").transform

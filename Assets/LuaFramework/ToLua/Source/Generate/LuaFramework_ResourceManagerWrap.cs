@@ -11,6 +11,7 @@ public class LuaFramework_ResourceManagerWrap
 		L.RegFunction("LoadPrefabAtPath", LoadPrefabAtPath);
 		L.RegFunction("LoadAssetsAtPath", LoadAssetsAtPath);
 		L.RegFunction("LoadMaterialAtPath", LoadMaterialAtPath);
+		L.RegFunction("LoadSpriteAtPath", LoadSpriteAtPath);
 		L.RegFunction("LoadAssetBundle", LoadAssetBundle);
 		L.RegFunction("GetLoadingRequestInfo", GetLoadingRequestInfo);
 		L.RegFunction("GetLoadingDependsList", GetLoadingDependsList);
@@ -81,6 +82,24 @@ public class LuaFramework_ResourceManagerWrap
 			string arg0 = ToLua.CheckString(L, 2);
 			UnityEngine.Material o = obj.LoadMaterialAtPath(arg0);
 			ToLua.Push(L, o);
+			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int LoadSpriteAtPath(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			LuaFramework.ResourceManager obj = (LuaFramework.ResourceManager)ToLua.CheckObject<LuaFramework.ResourceManager>(L, 1);
+			string arg0 = ToLua.CheckString(L, 2);
+			UnityEngine.Sprite o = obj.LoadSpriteAtPath(arg0);
+			ToLua.PushSealed(L, o);
 			return 1;
 		}
 		catch (Exception e)

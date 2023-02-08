@@ -10,6 +10,9 @@ function m:LoadAssetsAtPath(assetPath) end
 ---@param assetPath string
 ---@return UnityEngine.Material
 function m:LoadMaterialAtPath(assetPath) end
+---@param assetPath string
+---@return UnityEngine.Sprite
+function m:LoadSpriteAtPath(assetPath) end
 ---@param abname string
 ---@param async bool
 ---@param callBack LuaInterface.LuaFunction

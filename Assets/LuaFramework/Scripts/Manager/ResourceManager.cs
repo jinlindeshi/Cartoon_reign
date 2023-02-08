@@ -72,7 +72,10 @@ namespace LuaFramework
         {
             return LoadAnythingAtPath<Material>(assetPath);
         }
-
+        public Sprite LoadSpriteAtPath(string assetPath)
+        {
+            return LoadAnythingAtPath<Sprite>(assetPath);
+        }
         /// <summary>
         /// 载入素材
         /// </summary>

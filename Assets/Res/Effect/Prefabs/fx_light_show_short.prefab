@@ -4862,7 +4862,7 @@ MonoBehaviour:
   m_IsTrail: 0
   m_IgnoreCanvasScaler: 1
   m_Scale: 100
-  m_Scale3D: {x: 100, y: 100, z: 100}
+  m_Scale3D: {x: 90, y: 90, z: 90}
   m_AnimatableProperties: []
   m_Particles:
   - {fileID: 198437275785695160}

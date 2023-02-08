@@ -31,7 +31,7 @@ function GrowUpEquipItem:SetEquip(data, isFx)
         local sequence = DOTween.Sequence()
         if isFx then
             sequence:AppendCallback(function()
-                local fx = CreatePrefab("Effect/Prefabs/fx_light_show_short.prefab", self.transform)
+                local fx = CreatePrefab("Effect/Prefabs/fx_pur_light_show.prefab", self.transform)
                 fx:Destroy(1)
             end)
         end
