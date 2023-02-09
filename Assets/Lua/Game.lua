@@ -215,6 +215,9 @@ end
 ---移除按钮相关事件
 ---@param go UnityEngine.GameObject
 function RemoveButtonHandler(go, type, callBack)
+    if not go or isnull(go) == true then
+        return
+    end
     local pointerHandler = GetComponent.PointerHandler(go)
     if not pointerHandler then
         return

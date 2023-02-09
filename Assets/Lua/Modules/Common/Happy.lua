@@ -136,3 +136,58 @@ end
 function Happy.GetGrayMat()
     return resMgr:LoadMaterialAtPath("Materials/UI/gray2D.mat")
 end
+
+
+---名字路径找对象 支持active = false 无递归
+function Happy.FindGameObject(name)
+    local rootName = name
+    local HappyFuns = HappyCode.HappyFuns
+    if not string.find(name, "/") then
+        local list = HappyFuns.FindRootObj(rootName)
+        if list.Length > 0 then
+            return list[0]
+        else
+            return nil
+        end
+    end
+    rootName = string.sub(name, 1, string.find(name, "/") - 1)
+    local otherName = string.sub(name, string.find(name, "/") + 1, string.len(name))
+    local rootObj = nil
+    if HappyFuns.FindRootObj(rootName).Length > 0 then
+        rootObj = HappyFuns.FindRootObj(rootName)[0]
+    else
+        return nil
+    end
+
+    if not rootObj or isnull(rootObj) then
+        return nil
+    end
+
+    local childT = rootObj.transform:Find(otherName)
+    if not childT or isnull(childT) then
+        return nil
+    end
+    return childT.gameObject
+end
+
+---从父级 递归找对象
+---@param parent UnityEngine.Transform
+---@return UnityEngine.Transform
+function Happy.FindGameObjectLoopFromParent(name, parent)
+    local childCount = parent.childCount
+    local goal
+    for i = 0, childCount-1 do
+        local child = parent:GetChild(i)
+        if child.name == name then
+            goal = child
+        else
+            goal = Happy.FindGameObjectLoopFromParent(name, child)
+        end
+
+        if goal then
+            return goal
+        end
+    end
+end
+
+return Happy

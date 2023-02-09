@@ -163,9 +163,19 @@ function WarAvatar:GetHurt(loseHp)
     end)
 
     local effPath = "Effect/Prefabs/fx_role_hit_01.prefab"
-    local eff = CreatePrefab(effPath, self.transform.parent)
-    eff.transform.localPosition = self.transform.localPosition + Vector3.New(0,1,0)
-    eff.transform.localScale = Vector3.one * 0.7
+    if not self.hitParent then
+        self.hitParent = Happy.FindGameObjectLoopFromParent("hit", self.gameObject.transform)
+        if not self.hitParent then
+            local hitParent = GameObject.New().transform ---@type UnityEngine.Transform
+            hitParent.name = "hit"
+            hitParent:SetParent(self.transform)
+            hitParent.localPosition = Vector3.New(0,1,0)
+            self.hitParent = hitParent
+        end
+    end
+    local eff = CreatePrefab(effPath, self.hitParent)
+    eff.transform.localPosition = Vector3.zero
+    eff.transform.localScale = Vector3.one * 1
     DelayedCall(0.6, function()
         RecyclePrefab(eff, effPath)
     end)
