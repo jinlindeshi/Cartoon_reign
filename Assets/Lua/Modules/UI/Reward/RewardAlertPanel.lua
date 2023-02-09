@@ -20,11 +20,13 @@ function RewardAlertPanel:OnInit(dataList)
     self.itemList = {} ---@type table<number, LuaObj>
     self:InitItemList(true)
     ---打开动画
+    self.transform.localScale = Vector3.New(0.5,0.5,0.5)
     GetComponent.CanvasGroup(self.gameObject).alpha = 0
     self.yesCg.alpha = 0
     self.closeCg.alpha = 0
     local seq = DOTween.Sequence()
-    seq:Append(GetComponent.CanvasGroup(self.gameObject):DOFade(1, 0.2))
+    seq:Append(GetComponent.CanvasGroup(self.gameObject):DOFade(1, 0.25))
+    seq:Join(self.transform:DOScale(1, 0.25))
     seq:AppendCallback(function()
         AddButtonHandler(self.YesButton, PointerHandler.CLICK, self.OnYesButtonClick, self)
         self:ShowItemList(function()

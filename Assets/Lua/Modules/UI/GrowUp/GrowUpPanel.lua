@@ -130,18 +130,18 @@ function GrowUpPanel:UpStarLv()
         ---图标闪光
         for i = 1, #lightList do
             local lightSeq = DOTween.Sequence()
-            lightSeq:Append(GetComponent.CanvasGroup(lightList[i]):DOFade(1, 0.35))
+            lightSeq:Append(GetComponent.CanvasGroup(lightList[i]):DOFade(1, 0.25))
         end
     end)
     seq:AppendInterval(0.5)
     for i = 1, #tempList do
         if i == 1 then
-            seq:Append(tempList[i].transform:DOLocalMove(endPos, 0.25))
+            seq:Append(tempList[i].transform:DOLocalMove(endPos, 0.5):SetEase(Happy.DOTWEEN_EASE.InCubic))
         else
-            seq:Join(tempList[i].transform:DOLocalMove(endPos, 0.25))
-            seq:Join(tempList[i].transform:DOScale(0.3, 0.25))
+            seq:Join(tempList[i].transform:DOLocalMove(endPos, 0.5):SetEase(Happy.DOTWEEN_EASE.InCubic))
+            seq:Join(tempList[i].transform:DOScale(0.3, 0.5):SetEase(Happy.DOTWEEN_EASE.InCubic))
         end
-        seq:Join(lightList[i].transform:DOLocalMove(endPos, 0.25))
+        seq:Join(lightList[i].transform:DOLocalMove(endPos, 0.5):SetEase(Happy.DOTWEEN_EASE.InCubic))
     end
     seq:AppendCallback(function()
         ---装备合成
@@ -154,7 +154,7 @@ function GrowUpPanel:UpStarLv()
             lightList[i]:Destroy()
         end
     end)
-    seq:Append(self.StarFx.transform:DOScale(1.2, 0.25))
+    seq:Append(self.StarFx.transform:DOScale(1.5, 0.25))
     seq:Append(self.StarFx.transform:DOScale(1, 0.15))
     seq:AppendInterval(0.2)
     seq:Append(self.StarFx.transform:DOMove(star.transform.position, 0.5):SetEase(Happy.DOTWEEN_EASE.OutCubic))

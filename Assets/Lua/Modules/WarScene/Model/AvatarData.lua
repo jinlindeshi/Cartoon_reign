@@ -4,6 +4,7 @@
 --- DateTime: 2023/2/7 13:26
 --- 角色数据
 local SData = require("Modules.WarScene.Model.SData")
+local WarData = require("Modules.WarScene.Model.WarData")
 local AvatarData = {}
 
 AvatarData.HeroInfo =
@@ -46,6 +47,11 @@ end
 function AvatarData.UpStarLv(id)
     local data = AvatarData.GetHeroData(id)
     data.starLv = data.starLv + 1
+    local afterAttr = AvatarData.GetHeroAttr(id)
+    local avatar = WarData.GetAvatarById(id)
+    avatar.data.maxHp = afterAttr.maxHp
+    avatar.data.atk = afterAttr.atk
+    avatar.data.def = afterAttr.def
     for i = 1, #data.equips do
         data.equips[i].equipId = 0
     end

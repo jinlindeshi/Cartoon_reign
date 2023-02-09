@@ -24,7 +24,7 @@ function GrowUpAttrItem:AddRefresh(data)
         self.data.value = data.value
     end)
     local sequence = DOTween.Sequence()
-    sequence:Append(self.attrTextObj.transform:DOScale(1.5, 0.25))
+    sequence:Append(self.attrTextObj.transform:DOScale(1.8, 0.25))
     sequence:Append(floatTween)
     sequence:Append(self.attrTextObj.transform:DOScale(1, 0.15))
 end

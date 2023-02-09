@@ -45,7 +45,7 @@ function GrowUpEquipItem:SetEquip(data, isFx)
             end)
         end
         sequence:Append(self.icon.transform:DOScale(1.5, 0.25):SetEase(Happy.DOTWEEN_EASE.OutCubic))
-        sequence:Append(self.icon.transform:DOScale(1, 0.15):SetEase(Happy.DOTWEEN_EASE.Linear))
+        sequence:Append(self.icon.transform:DOScale(1, 0.15):SetEase(Happy.DOTWEEN_EASE.InCubic))
 
     end
 end

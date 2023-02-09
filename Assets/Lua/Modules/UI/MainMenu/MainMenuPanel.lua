@@ -13,6 +13,9 @@ function MainMenuPanel:OnInit()
     self.ItemIconObj = self.transform:Find("ItemIcon").gameObject
     self.infoButton = self.transform:Find("bottomRoot/infoButton").gameObject
     self.rewardButton = self.transform:Find("bottomRoot/rewardButton").gameObject
+    self.notice = self.transform:Find("Notice").gameObject
+    self.noticeText = GetComponent.Text(self.transform:Find("Notice/Text").gameObject)
+    self.noticePos = GetComponent.RectTransform(self.notice).anchoredPosition
     self.ItemIconObj:SetActive(false)
 
     self.btnLight =
@@ -22,6 +25,9 @@ function MainMenuPanel:OnInit()
     }
     self:ActiveBtnLight("info", false)
     self:ActiveBtnLight("reward", true)
+
+    self:ShowNotice("挂机奖励可以领取了！")
+
     AddButtonHandler(self.infoButton, PointerHandler.CLICK, self.OnInfoButtonClick, self)
     AddButtonHandler(self.rewardButton, PointerHandler.CLICK, self.OnRewardButtonClick, self)
 end
@@ -30,6 +36,16 @@ function MainMenuPanel:ActiveBtnLight(type, flag)
     if self.btnLight[type] then
         self.btnLight[type]:SetActive(flag)
     end
+end
+
+function MainMenuPanel:ShowNotice(notice, time)
+    local xPos = self.noticePos.x + 380
+    self.noticeText.text = notice
+    local sequence = DOTween.Sequence()
+    sequence:AppendInterval(2)
+    sequence:Append(GetComponent.RectTransform(self.notice):DOAnchorPosX(xPos, 0.5))
+    sequence:AppendInterval(time or 2)
+    sequence:Append(GetComponent.RectTransform(self.notice):DOAnchorPosX(self.noticePos.x, 0.25))
 end
 
 function MainMenuPanel:OnInfoButtonClick()
