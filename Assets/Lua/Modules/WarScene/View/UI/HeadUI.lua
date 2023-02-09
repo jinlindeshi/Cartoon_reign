@@ -28,7 +28,7 @@ function HeadUI:SkillNameShow(name)
     gObj.transform:SetAsLastSibling()
     gObj:SetActive(false)
     gObj:SetActive(true)
-    DelayedCall(1.5, function()
+    DelayedCall(2, function()
         RecyclePrefab(gObj, prefabPath)
     end)
 end
