@@ -10,7 +10,6 @@ local HpBar = class("HpBar", LuaObj)
 
 function HpBar:Ctor(data, parent)
     HpBar.super.Ctor(self, "Prefabs/War/HpBar.prefab", nil, parent)
-    self.transform:SetAsFirstSibling()
     self.transform.localPosition = Vector3.zero
     self.rect = GetComponent.RectTransform(self.gameObject)
 
@@ -38,6 +37,11 @@ function HpBar:ChangeHp(hp, maxHp, tween)
     self.autoHide = DelayedCall(3, function()
         self:Hide()
     end)
+end
+
+function HpBar:Show()
+    HpBar.super.Show(self)
+    self.transform:SetAsFirstSibling()
 end
 
 return HpBar

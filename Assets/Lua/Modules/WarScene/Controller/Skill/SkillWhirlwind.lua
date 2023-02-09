@@ -19,6 +19,11 @@ function SkillWhirlwind:Begin(avatar, callBack)
     self.avatar:PlaySkillName()
     self.avatar:PlayAnimation(AvatarBase.ANI_SKILL_NAME)
 
+    local effPath = "Effect/Prefabs/fx_xuznahuanjian.prefab"
+    local eff = CreatePrefab(effPath, self.avatar.transform)
+    eff.transform.localScale = Vector3.one
+    eff.transform.localPosition = Vector3.zero
+
     local grids = WarData.GetAroundGrids(self.avatar.x, self.avatar.z, nil, true)
     local checkAndHurt
     checkAndHurt = function()
@@ -38,6 +43,7 @@ function SkillWhirlwind:Begin(avatar, callBack)
 
     DelayedCall(SKILL_TOTAL_TIME, function()
         StopDelayedCall(self.loopFun)
+        RecyclePrefab(eff, effPath)
         self.avatar:PlayAnimation(AvatarBase.ANI_IDLE_NAME)
         self:Over()
     end)
