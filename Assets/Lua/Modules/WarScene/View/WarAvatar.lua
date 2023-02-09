@@ -162,10 +162,10 @@ function WarAvatar:GetHurt(loseHp)
         self:SetAvatarColor(nil, 0.1)
     end)
 
-    local effPath = "Effect/Prefabs/fx_blood.prefab"
+    local effPath = "Effect/Prefabs/fx_role_hit_01.prefab"
     local eff = CreatePrefab(effPath, self.transform.parent)
     eff.transform.localPosition = self.transform.localPosition + Vector3.New(0,1,0)
-    eff.transform.localScale = Vector3.one * 0.1
+    eff.transform.localScale = Vector3.one * 0.7
     DelayedCall(0.6, function()
         RecyclePrefab(eff, effPath)
     end)
