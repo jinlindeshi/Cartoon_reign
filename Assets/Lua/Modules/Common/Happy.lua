@@ -137,6 +137,120 @@ function Happy.GetGrayMat()
     return resMgr:LoadMaterialAtPath("Materials/UI/gray2D.mat")
 end
 
+---UI变灰
+---type 0Image Text都起效  1Image  2Text
+function Happy.ChangeUIGray(gameObject, gray, withChildren, type)
+    --logWarning("======  "..gameObject.name.."   "..tostring(gray))
+    local setMat = gray and Happy.GetGrayMat() or nil
+    if type ~= 2 then
+        if GetComponent.Image(gameObject) then
+            GetComponent.Image(gameObject).material = setMat
+        end
+    end
+
+    if type ~= 1 then
+        if GetComponent.Text(gameObject) then
+            GetComponent.Text(gameObject).material = setMat
+        end
+    end
+    if withChildren == true then
+        local tran = gameObject.transform
+        for i = 1, tran.childCount do
+            Happy.ChangeUIGray(tran:GetChild(i-1).gameObject, gray, withChildren, type)
+        end
+    end
+end
+
+
+local objs = {}
+local shakeHandler
+shakeHandler = function()
+    local empty = true
+    local disabledObjs = {}
+    local endObjs = {}
+    for obj, info in pairs(objs) do
+        local endCheck = (Time.time - info.startTime) > info.duration
+        if isnull(obj) == true then
+            table.insert(disabledObjs, obj)
+        elseif endCheck == true then
+            table.insert(endObjs, obj)
+        else
+            empty = false
+            info.shakeFun(info)
+        end
+    end
+    --print("你妹啊 shakeHandler", empty, #endObjs)
+
+    for i = 1, #disabledObjs do
+        Happy.StopShake(disabledObjs[i])
+    end
+    for i = 1, #endObjs do
+        local info = Happy.StopShake(endObjs[i])
+        if info.callBack then
+            info.callBack()
+        end
+    end
+    if empty == true then
+        RemoveEventListener(Stage, Event.LATE_UPDATE, shakeHandler)
+    end
+end
+
+---震动 默认震动主相机
+---@param obj UnityEngine.GameObject
+function Happy.Shake(duration, callBack, obj, range, notCamera)
+    duration = duration or 0.5
+
+    range = range or 1
+    if notCamera == true then
+        range = range * 30
+    end
+    if not obj then
+        obj = Camera.main.gameObject
+    end
+
+    if not obj then
+        return
+    end
+
+    local startTime = Time.time
+    if objs[obj] then
+        Happy.StopShake(obj)
+    end
+
+    local doShake = function(info)
+        local tran = info.tran
+        tran.position = tran.position - info.sv
+        --print("哦呵呵呵", cameraT.position.x, cameraT.position.y, cameraT.position.z)
+        info.sv = Vector3.New(info.range * (0.1 * math.random(0, 1)),
+                info.range * (0.1 * math.random(0, 1)),
+                info.range * (0.1 * math.random(0, 1)))
+
+        --print("你妹啊 doShake", sv.x, sv.y, sv.z)
+        tran.position = tran.position + info.sv
+    end
+
+    objs[obj] = {tran = obj.transform, orgPos=obj.transform.position, range = range, duration = duration, startTime = startTime,
+                 callBack = callBack, sv = Vector3.zero, shakeFun = doShake}
+    AddEventListener(Stage, Event.LATE_UPDATE, shakeHandler)
+end
+
+---@param obj UnityEngine.GameObject
+function Happy.StopShake(obj)
+    if not obj then
+        obj = Camera.main.gameObject
+    end
+
+    if not obj then
+        return nil
+    end
+    local info = objs[obj]
+    objs[obj] = nil
+    if info and isnull(info.tran) ~= true then
+        info.tran.position = info.tran.position - info.sv
+    end
+    return info
+end
+
 
 ---名字路径找对象 支持active = false 无递归
 function Happy.FindGameObject(name)

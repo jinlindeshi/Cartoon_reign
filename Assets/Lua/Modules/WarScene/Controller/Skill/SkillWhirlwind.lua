@@ -34,6 +34,7 @@ function SkillWhirlwind:Begin(avatar, callBack)
                 if enemy and enemy.data.side ~= self.avatar.data.side and enemy.moving ~= true then
                     --print("你妹啊~")
                     enemy:GetHurt(DamageManager.GetHurtValue(self.avatar.data, enemy.data)/2)
+                    Happy.Shake(0.2, nil, enemy.gameObject, 0.015, true)
                 end
             end
         end

@@ -8,4 +8,5 @@ Constants = {}
 Event = {}
 Event.UPDATE = "Update"
 Event.FIXED_UPDATE = "FixedUpdate"
+Event.LATE_UPDATE = "LateUpdate"
 Event.ON_DESTROY = "OnDestroy"
