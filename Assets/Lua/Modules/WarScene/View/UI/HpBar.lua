@@ -11,6 +11,7 @@ local HpBar = class("HpBar", LuaObj)
 function HpBar:Ctor(data, parent)
     HpBar.super.Ctor(self, "Prefabs/War/HpBar.prefab", nil, parent)
     self.transform:SetAsFirstSibling()
+    self.transform.localPosition = Vector3.zero
     self.rect = GetComponent.RectTransform(self.gameObject)
 
     self.img = GetComponent.Image(self.transform:Find("progress").gameObject)
