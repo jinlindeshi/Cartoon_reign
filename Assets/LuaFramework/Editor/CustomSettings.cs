@@ -231,7 +231,8 @@ public static class CustomSettings
         _GT(typeof(ExternalBehaviorTree)),
 
 
-        _GT(typeof(LuaObj)),
+        _GT(typeof(ManagerHandler)),
+        _GT(typeof(OnDestroyHandler)),
 
         _GT(typeof(GameManager)),
         _GT(typeof(LuaManager)),

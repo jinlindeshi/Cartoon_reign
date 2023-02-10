@@ -26,7 +26,13 @@ function Game.Init()
 
 
     --print("Game.Init", require("cjson"), JSON)
-    Game.Manager = require("Prayer.Core.LuaObj").New(nil, GameObject.Find("GameManager")) ---@type LuaObj
+    Game.Manager = {}
+    local component = AddOrGetComponent(GameObject.Find("GameManager"), Prayer.ManagerHandler)
+    component.checkCall = function(funName)
+        if Game.Manager[funName] then
+            Game.Manager[funName](Game.Manager)
+        end
+    end
     Game.behaviorCalls = {}
 end
 

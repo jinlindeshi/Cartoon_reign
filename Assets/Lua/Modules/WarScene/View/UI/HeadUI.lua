@@ -11,6 +11,7 @@ local HeadUI = class("HeadUI",LuaObj)
 
 function HeadUI:Ctor(avatar, offsetV2)
     local gameObj = GameObject.New()
+    gameObj.name = "HeadUI"
     --local img = AddOrGetComponent(gameObj, UnityEngine.UI.Image) ---@type UnityEngine.UI.Image
     --img.color = Color.New(1,1,1,0.3)
     self.rect = AddOrGetComponent(gameObj, UnityEngine.RectTransform)
@@ -38,9 +39,7 @@ function HeadUI:Update()
     if self.destroyed == true or self.gameObject.activeSelf == false then
         return
     end
-    --if self.destroyed == true then
-    --    return
-    --end
+
     local cam = Camera.main
     local screenP = cam:WorldToScreenPoint(self.avatar.transform.position)
 
