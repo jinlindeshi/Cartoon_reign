@@ -36,6 +36,7 @@ CameraExtension = UnityEngine.Rendering.Universal.CameraExtension ---@type Unity
 RectTransformUtility = UnityEngine.RectTransformUtility
 --Time = UnityEngine.Time
 DOTween = DG.Tweening.DOTween
+LuaObj = require("Prayer.Core.LuaObj")
 ---UI管理器
 UIMgr = require("Manager/UIManager")
 ---Panel基类

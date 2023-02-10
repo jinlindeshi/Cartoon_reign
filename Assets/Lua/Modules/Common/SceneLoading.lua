@@ -4,7 +4,6 @@
 --- DateTime: 2020-05-06 11:45
 --- 场景加载进度界面
 ---@class SceneLoading
-local LuaObj = require("Prayer.Core.LuaObj")
 local SceneLoading = class("SceneLoading", LuaObj)
 
 function SceneLoading:Ctor()

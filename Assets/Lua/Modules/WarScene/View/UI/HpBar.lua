@@ -4,7 +4,6 @@
 --- DateTime: 2021/12/7 11:44
 --- 血条
 
-local LuaObj = require("Prayer.Core.LuaObj")
 ---@class HpBar:LuaObj
 local HpBar = class("HpBar", LuaObj)
 

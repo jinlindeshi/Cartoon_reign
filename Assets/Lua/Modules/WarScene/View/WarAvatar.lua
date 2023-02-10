@@ -434,9 +434,4 @@ function WarAvatar:StopMoving(noMoveEndFun)
     end
 end
 
-
-function WarAvatar:OnDestroy()
-    WarAvatar.super.OnDestroy(self)
-end
-
 return WarAvatar

@@ -3,7 +3,6 @@
 --- Created by sunshuo.
 --- DateTime: 2023/2/3 10:34
 --- panel基类
-local LuaObj = require("Prayer.Core.LuaObj")
 ---@class UI.BasePanel:LuaObj
 ---@field New fun():LuaObj
 ---@field cfg panelConfig 页面配置
@@ -46,7 +45,6 @@ end
 
 ---页面销毁时
 function BasePanel:OnDestroy()
-    BasePanel.super.OnDestroy(self)
     self:RemoveListeners()
     UIMgr.CheckPanelClean(self.cfg)
 end

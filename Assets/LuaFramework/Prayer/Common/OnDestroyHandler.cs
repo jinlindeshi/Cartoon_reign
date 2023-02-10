@@ -9,7 +9,10 @@ namespace Prayer
         public LuaFunction checkCall;
         void OnDestroy()
         {
-            checkCall.Call();
+            if (checkCall.GetLuaState() != null)
+            {
+                checkCall.Call();
+            }
         }
     }
 }

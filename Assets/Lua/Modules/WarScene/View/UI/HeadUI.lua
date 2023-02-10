@@ -4,7 +4,6 @@
 --- DateTime: 2023/2/8 16:31
 --- 角色头顶UI容器
 
-local LuaObj = require("Prayer.Core.LuaObj")
 ---@class HeadUI:LuaObj
 local HeadUI = class("HeadUI",LuaObj)
 

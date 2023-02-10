@@ -5,8 +5,7 @@
 --- 战争UI
 
 local WarData = require("Modules.WarScene.Model.WarData")
-local luaObj = require("Prayer.Core.LuaObj")
-local WarUI = class("WarUI", luaObj)
+local WarUI = class("WarUI", LuaObj)
 
 function WarUI:Ctor(funCall1)
 
