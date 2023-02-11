@@ -34,7 +34,6 @@ function WarScene:Ctor(scene)
 
     self.avatarConTran = self:GetRootObjByName("AvatarCon").transform
 
-    --self:TestGuardTower()
     self:TestFocusAvatar()
     UIMgr.OpenPanel(UIPanelCfg.mainMenu)
 end
@@ -87,42 +86,6 @@ function WarScene:TestFocusAvatar()
     --avatar:SetLeader(WarData.mainAvatar)
     --avatar:SetExternalBehavior("BehaviorTree/Follower.asset")
     --avatar:AIStart()
-end
----TEST
-
----TEST 测试防御塔
-function WarScene:TestGuardTower()
-
-    local enemy = WarAvatar.New("Prefabs/Avatars/Crystal.prefab", {id=-1, hp=300, maxHp=300, side=2}, true)
-    enemy:SetExternalBehavior("BehaviorTree/GuardTowerAI.asset")
-    WarData.AddAvatar(enemy, enemy.data)
-    self:PutInNode(enemy, 45, 68, nil, 1)
-    enemy:SetRangedAttackInfo("Effects/Prefabs/IceTrail.prefab",
-            "Effects/Prefabs/IceHit.prefab", 4)
-    enemy:AIStart()
-
-
-
-    self.terrain = self:GetRootObjByName("Terrain")
-    AddButtonHandler(self.terrain, PointerHandler.DOUBLE_CLICK, function (eventData)
-        local ray = Camera.main:ScreenPointToRay(eventData.position)
-        local success, hit = Physics.Raycast(ray, UnityEngine.RaycastHit.out,
-                100,  HappyFuns.GetLayerMask(8))
-
-        local info = WarData.gridGraph:GetNearest(hit.point, Pathfinding.NNConstraint.None)
-        local gridNode = info.node ---@type Pathfinding.GridNode
-        --print("木哈哈", gridNode.XCoordinateInGrid, gridNode.ZCoordinateInGrid)
-        WarData.avatarIdIndex = WarData.avatarIdIndex + 1
-        local avatar = WarAvatar.New("Prefabs/Avatars/TestZombie.prefab",
-                {id=WarData.avatarIdIndex, hp=60, maxHp=60, side=1}, false)
-        avatar:SetExternalBehavior("BehaviorTree/EnemyAI.asset")
-        WarData.AddAvatar(avatar, avatar.data)
-        self:PutInNode(avatar, gridNode.XCoordinateInGrid, gridNode.ZCoordinateInGrid)
-        avatar.transform.localScale = Vector3.one
-        HappyFuns.SetLayerRecursive(avatar.gameObject, 11)
-        avatar:AIStart()
-
-    end)
 end
 ---TEST
 
