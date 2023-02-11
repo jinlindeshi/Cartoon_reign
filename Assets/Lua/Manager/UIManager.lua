@@ -45,13 +45,29 @@ function UIMgr.OpenPanel(cfg, ...)
         LogWarning(classPath.." 此页面已经打开")
         return
     end
-    local class = require(classPath)
+    local class = require(classPath) ---@type UI.BasePanel
     if class == nil then
         return
     end
-    local panel = class.New()
-    panel:Init(cfg, ...)
+    local panel = class.New(cfg, ...)
     panelContainer[classPath] = panel
+end
+
+---获取页面
+---@param cfg panelConfig 页面配置
+---@return UI.BasePanel
+function UIMgr.GetPanel(cfg)
+    if cfg == nil then
+        LogError("GetPanel 页面配置为空")
+        return
+    end
+    local classPath = cfg.classPath
+    if cfg.classPath == nil then
+        LogError("GetPanel 没有配置classPath")
+        return
+    end
+    return panelContainer[classPath]
+
 end
 
 ---关闭界面
@@ -59,30 +75,16 @@ end
 function UIMgr.ClosePanel(cfg)
     local panel = UIMgr.GetPanel(cfg)
     if panel then
-        panel:Destroy()
+        if isnull(panel.gameObject) then
+            LogWarning("ClosePanel 界面的gameObject为null")
+        else
+            panel.gameObject:Destroy()
+        end
+        panel = nil
         panelContainer[cfg.classPath] = nil
     else
         LogWarning(cfg.classPath.." 此页面未打开")
     end
-end
-
----获取页面
----@param cfg panelConfig 页面配置
-function UIMgr.GetPanel(cfg)
-    if cfg == nil then
-        LogError("GetPanel 页面配置为空")
-        return
-    end
-    local classPath = cfg.classPath
-    if classPath == nil then
-        LogError("GetPanel 没有配置classPath")
-        return
-    end
-    local panel = panelContainer[classPath]
-    if panel == nil then
-        return
-    end
-    return panelContainer[classPath]
 end
 
 ---检查页面引用是否清除
@@ -90,6 +92,7 @@ end
 function UIMgr.CheckPanelClean(cfg)
     local panel = UIMgr.GetPanel(cfg)
     if panel then
+        panel = nil
         panelContainer[cfg.classPath] = nil
     end
 end

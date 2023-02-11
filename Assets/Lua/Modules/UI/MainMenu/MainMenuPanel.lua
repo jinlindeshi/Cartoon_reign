@@ -8,7 +8,7 @@
 ---@field New fun():UI.MainMenuPanel
 local MainMenuPanel = class("UI.MainMenuPanel", BasePanel)
 
-function MainMenuPanel:OnInit()
+function MainMenuPanel:Init()
     MainMenuPanel.super.OnInit(self)
     self.ItemIconObj = self.transform:Find("ItemIcon").gameObject
     self.infoButton = self.transform:Find("bottomRoot/infoButton").gameObject
