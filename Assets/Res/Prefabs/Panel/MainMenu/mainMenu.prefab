@@ -525,6 +525,7 @@ GameObject:
   - component: {fileID: 56171112976893426}
   - component: {fileID: 6922806085644705990}
   - component: {fileID: 8305318609382289162}
+  - component: {fileID: 293312789182053014}
   m_Layer: 5
   m_Name: rewardButton
   m_TagString: Untagged
@@ -634,6 +635,22 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &293312789182053014
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2172125914840125040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32192103c3f5d4bee824631da01226d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  normalScale: {x: 0, y: 0, z: 0}
+  downScale: 0.95
+  enterScale: 1
+  tweenDuration: 0.06
 --- !u!1 &3260725400272749106
 GameObject:
   m_ObjectHideFlags: 0
@@ -1260,6 +1277,7 @@ GameObject:
   - component: {fileID: 1931542550005714116}
   - component: {fileID: 1821302364646760043}
   - component: {fileID: 3621379503643607384}
+  - component: {fileID: 3703691378429792019}
   m_Layer: 5
   m_Name: infoButton
   m_TagString: Untagged
@@ -1369,6 +1387,22 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &3703691378429792019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7167614276915935691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32192103c3f5d4bee824631da01226d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  normalScale: {x: 0, y: 0, z: 0}
+  downScale: 0.95
+  enterScale: 1
+  tweenDuration: 0.06
 --- !u!1 &7471695209087488724
 GameObject:
   m_ObjectHideFlags: 0
