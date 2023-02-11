@@ -7,9 +7,9 @@
 
 local WarData = {}
 
-WarData.bornNodes = {{56,47},{56,46},{57,47},{57,46},{55,46}} ---我方出生点
+WarData.bornNodes = {{45,62},{45,63},{45,61},{46,62},{44,62}} ---我方出生点
 
-WarData.patrolNodePath = {{46,49},{68,38},{48,32},{29,40},{9,46},{25,69},{44,76}} ---刷怪点
+WarData.patrolNodePath = {{44,56},{68,38},{48,32},{29,40},{9,46},{25,69},{44,76}} ---刷怪点
 WarData.patrolNodeIndex = -1
 
 WarData.AvatarHash = {}

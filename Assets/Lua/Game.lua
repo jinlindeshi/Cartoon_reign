@@ -76,9 +76,11 @@ function AddEventListener(target, behaviorName, callBack)
     table.insert(list, {obj=target, callBack=callBack})
     if not Game.Manager[behaviorName] then
         Game.Manager[behaviorName] = function()
-            local cloneList = clone(list)
-            for i = 1, #cloneList do
-                cloneList[i].callBack()
+            --local cloneList = clone(list)
+            for i = 1, #list do
+                if list[i] then
+                    list[i].callBack()
+                end
             end
         end
     end

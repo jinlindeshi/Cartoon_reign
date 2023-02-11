@@ -241,7 +241,7 @@ function WarAvatar:PlayDead()
     end
     self.playingDead = true
     self:AIStop()
-    self:PlayAnimation(AvatarBase.ANI_DEAD_NAME, nil, function()
+    --self:PlayAnimation(AvatarBase.ANI_DEAD_NAME, nil, function()
         local path = "Effects/Prefabs/fx_die_xiong.prefab"
         local dieEff = CreatePrefab(path, self.transform.parent)
         dieEff.transform.localPosition = self.transform.localPosition
@@ -249,13 +249,13 @@ function WarAvatar:PlayDead()
 
         local effRender = GetComponent.Renderer(dieEff.transform:Find("Flagments").gameObject)
 
-        local avatarRender = self.gameObject:GetComponentInChildren(typeof(UnityEngine.Renderer)) ---@type UnityEngine.Renderer
+        local avatarRender = self.gameObject:GetComponentInChildren(typeof(UnityEngine.SkinnedMeshRenderer)) ---@type UnityEngine.Renderer
         effRender.material.mainTexture = avatarRender.material.mainTexture
         DelayedCall(2.5, function()
             RecyclePrefab(dieEff, path)
         end)
         self:Recycle()
-    end)
+    --end)
 end
 
 function WarAvatar:Recycle()
