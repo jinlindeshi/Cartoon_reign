@@ -13,7 +13,7 @@ local starCount = 5 --星级上限
 ---@field New fun():UI.GrowUp.GrowUpPanel
 local GrowUpPanel = class("UI.GrowUp.GrowUpPanel", BasePanel)
 
-function GrowUpPanel:OnInit()
+function GrowUpPanel:Init()
     GrowUpPanel.super.OnInit(self)
     self.heroRoot = self.transform:Find("heroRoot")
     self.equipRoot = self.transform:Find("heroRoot/Equip")
@@ -60,11 +60,6 @@ function GrowUpPanel:OnInit()
     end
     self:ShowStarLv()
     self:CheckCanUp()
-
-    --打开动画
-    GetComponent.CanvasGroup(self.gameObject).alpha = 0
-    local seq = DOTween.Sequence()
-    seq:Append(GetComponent.CanvasGroup(self.gameObject):DOFade(1, 0.2))
 end
 
 ---显示星级

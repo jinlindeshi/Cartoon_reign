@@ -9,7 +9,7 @@ local SData = require("Modules.WarScene.Model.SData")
 ---@field New fun():UI.RewardAlertPanel
 local RewardAlertPanel = class("UI.RewardAlertPanel", BasePanel)
 
-function RewardAlertPanel:OnInit(dataList)
+function RewardAlertPanel:Init(dataList)
     RewardAlertPanel.super.OnInit(self)
     self.listRoot = self.transform:Find("Root/InfoBG/listRoot")
     self.YesButton = self.transform:Find("Root/buttonRoot/YesButton").gameObject
@@ -19,20 +19,15 @@ function RewardAlertPanel:OnInit(dataList)
     self.dataList = dataList
     self.itemList = {} ---@type table<number, LuaObj>
     self:InitItemList(true)
-    ---打开动画
-    self.transform.localScale = Vector3.New(0.5,0.5,0.5)
-    GetComponent.CanvasGroup(self.gameObject).alpha = 0
     self.yesCg.alpha = 0
     self.closeCg.alpha = 0
-    local seq = DOTween.Sequence()
-    seq:Append(GetComponent.CanvasGroup(self.gameObject):DOFade(1, 0.25))
-    seq:Join(self.transform:DOScale(1, 0.25))
-    seq:AppendCallback(function()
-        AddButtonHandler(self.YesButton, PointerHandler.CLICK, self.OnYesButtonClick, self)
-        self:ShowItemList(function()
-            self.yesCg:DOFade(1, 0.2)
-            self.closeCg:DOFade(1, 0.2)
-        end)
+end
+
+function RewardAlertPanel:OnInit()
+    AddButtonHandler(self.YesButton, PointerHandler.CLICK, self.OnYesButtonClick, self)
+    self:ShowItemList(function()
+        self.yesCg:DOFade(1, 0.2)
+        self.closeCg:DOFade(1, 0.2)
     end)
 end
 
