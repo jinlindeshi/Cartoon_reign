@@ -7,12 +7,13 @@
 ---@field New fun(prefabPath:string, gameObject:UnityEngine.GameObject, parent:UnityEngine.Transform):LuaObj
 ---@field transform UnityEngine.Transform
 ---@field gameObject UnityEngine.GameObject
----@field component Prayer.LuaObj
+---@field component Prayer.OnDestroyHandler
 local LuaObj = class("LuaObj")
 
 ---
-function LuaObj:Ctor(prefabPath, gameObject, parent)
+function LuaObj:Ctor(prefabPath, gameObject, parent, log)
     --print("LuaObj:Ctor", prefabPath)
+    self.log = log
     self.prefabPath = prefabPath
     if prefabPath then
         self:BindGameObject(CreatePrefab(prefabPath, parent))
@@ -34,11 +35,38 @@ function LuaObj:BindGameObject(gameObject, parent)
         self.transform.localScale = scale
         self.transform.localEulerAngles = angel
     end
-    self.component = AddOrGetComponent(self.gameObject, Prayer.LuaObj) ---@type Prayer.LuaObj
-    self.component.checkCall = function(funName)
-        if self[funName] then
-            self[funName](self)
+
+    ---检查是否需要注册 OnDestroy
+    self.behaviorHandlers = {}
+    local needOnDestroy = false
+    for i, behaviorFunName in pairs(Event) do
+        if self[behaviorFunName] then
+            needOnDestroy = true
+            if self.log then
+                print("你妹啊~", behaviorFunName)
+            end
+            if behaviorFunName ~= Event.ON_DESTROY then
+                table.insert(self.behaviorHandlers, {funName=behaviorFunName,
+                                         handler=AddEventListener(Stage,behaviorFunName,handler(self, self[behaviorFunName]))})
+            end
         end
+    end
+    if needOnDestroy == false then
+        return
+    end
+    self.component = AddOrGetComponent(self.gameObject, Prayer.OnDestroyHandler) ---@type Prayer.OnDestroyHandler
+    self.component.checkCall = function()
+        self:RemoveBehaviorHandlers()
+        if self.OnDestroy then
+            self:OnDestroy()
+        end
+    end
+end
+
+---清理 BehaviorHandlers
+function LuaObj:RemoveBehaviorHandlers()
+    for i = 1, #self.behaviorHandlers do
+        RemoveEventListener(Stage, self.behaviorHandlers[i].funName, self.behaviorHandlers[i].handler)
     end
 end
 
@@ -56,16 +84,13 @@ function LuaObj:Recycle()
         RecyclePrefab(self.gameObject, self.prefabPath)
     end
     self.destroyed = true
+    self:RemoveBehaviorHandlers()
 end
 
 function LuaObj:Destroy()
     --GameObject.Destroy(self.component)
     GameObject.Destroy(self.gameObject)
     self.destroyed = true
-end
-
-function LuaObj:OnDestroy()
-
 end
 
 return LuaObj

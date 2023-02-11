@@ -4,7 +4,6 @@
 --- DateTime: 2020-06-01 14:46
 --- 测试用 多格拖放包裹
 
-local LuaObj = require("Prayer.Core.LuaObj")
 local TestBag = class("TestBag", LuaObj)
 
 

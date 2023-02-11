@@ -237,7 +237,8 @@ public static class LuaBinder
 		L.EndModule();
 		L.EndModule();
 		L.BeginModule("Prayer");
-		Prayer_LuaObjWrap.Register(L);
+		Prayer_ManagerHandlerWrap.Register(L);
+		Prayer_OnDestroyHandlerWrap.Register(L);
 		Prayer_PointerHandlerWrap.Register(L);
 		Prayer_DragHandlerWrap.Register(L);
 		Prayer_OperateHandlerWrap.Register(L);

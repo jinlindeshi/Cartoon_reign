@@ -3,7 +3,6 @@
 --- Created by VIVA.
 --- DateTime: 2023/2/6 22:13
 ---
-local LuaObj = require("Prayer.Core.LuaObj")
 ---@class AvatarBase:LuaObj
 ---@field transform UnityEngine.Transform
 ---@field gameObject UnityEngine.GameObject

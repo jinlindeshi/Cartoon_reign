@@ -3,7 +3,6 @@
 --- Created by likai.
 --- DateTime: 2020-05-05 14:59
 --- 登录模块
-local LuaObj = require("Prayer.Core.LuaObj")
 local Login = class("Login", LuaObj)
 
 function Login:Ctor()

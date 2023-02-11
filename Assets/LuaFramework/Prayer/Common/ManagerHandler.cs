@@ -4,7 +4,7 @@ using LuaInterface;
 
 namespace Prayer
 {
-    public class LuaObj : MonoBehaviour
+    public class ManagerHandler : MonoBehaviour
     {
         public LuaFunction checkCall;
 
@@ -41,36 +41,6 @@ namespace Prayer
         void OnDestroy()
         {
             CallLua("OnDestroy");
-        }
-
-        private void OnMouseDown()
-        {
-            CallLua("OnMouseDown");
-        }
-
-        private void OnMouseEnter()
-        {
-            CallLua("OnMouseEnter");
-        }
-
-        private void OnMouseDrag()
-        {
-            CallLua("OnMouseDrag");
-        }
-        
-        private void OnMouseUp()
-        {
-            CallLua("OnMouseUp");
-        }
-
-        private void OnMouseOver()
-        {
-            CallLua("OnMouseOver");
-        }
-
-        private void OnMouseExit()
-        {
-            CallLua("OnMouseExit");
         }
     }
 }
