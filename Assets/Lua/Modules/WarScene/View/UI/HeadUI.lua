@@ -25,7 +25,7 @@ function HeadUI:SkillNameShow(name)
     local gObj = CreatePrefab(prefabPath, self.transform)
     --GetComponent.Image(gObj).sprite = --TODO
     gObj.transform.localPosition = Vector3.New(0, 30,0)
-    gObj.transform:SetAsLastSibling()
+    self.transform:SetAsLastSibling()
     gObj:SetActive(false)
     gObj:SetActive(true)
     DelayedCall(2, function()
