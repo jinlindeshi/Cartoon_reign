@@ -23,7 +23,7 @@ function HeadUI:SkillNameShow(name)
     name = name or "xuanfeng"
     local prefabPath = "Prefabs/War/SkillName.prefab"
     local gObj = CreatePrefab(prefabPath, self.transform)
-    --GetComponent.Image(gObj).sprite = --TODO
+    GetComponent.Image(gObj).sprite = resMgr:LoadSpriteAtPath("Textures/war/"..name..".png")
     gObj.transform.localPosition = Vector3.New(0, 30,0)
     self.transform:SetAsLastSibling()
     gObj:SetActive(false)
@@ -41,8 +41,8 @@ function HeadUI:Update()
 
     local cam = Camera.main
     local screenP = cam:WorldToScreenPoint(self.avatar.transform.position)
-
-    local hehe, p = RectTransformUtility.ScreenPointToLocalPointInRectangle(self.rect.parent, screenP, nil, Vector2.zero)
+    local uiCamera = GetComponent.Canvas(Game.UICanvas).worldCamera
+    local hehe, p = RectTransformUtility.ScreenPointToLocalPointInRectangle(self.rect.parent, screenP, uiCamera, Vector2.zero)
 
     self.rect.anchoredPosition = p + self.offsetV2
 end
