@@ -26,7 +26,7 @@ function MainMenuPanel:Init()
     self:ActiveBtnLight("info", false)
     self:ActiveBtnLight("reward", true)
 
-    self:ShowNotice("挂机奖励可以领取了！")
+    --self:ShowNotice("挂机奖励可以领取了！")
 
     AddButtonHandler(self.infoButton, PointerHandler.CLICK, self.OnInfoButtonClick, self)
     AddButtonHandler(self.rewardButton, PointerHandler.CLICK, self.OnRewardButtonClick, self)
