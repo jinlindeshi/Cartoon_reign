@@ -6,6 +6,7 @@ using System;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Text;
+using UnityEngine.Rendering.Universal;
 using Object = UnityEngine.Object;
 
 namespace LuaFramework {
@@ -316,22 +317,7 @@ namespace LuaFramework {
         {
             return new Ping(host);
         }
-        /// <summary>
-        /// 添加系统日志事件
-        /// </summary>
-        public static void AddLogMessageReceived(GameObject go, LuaFunction luaFunc)
-        {
-            if (go == null || luaFunc == null)
-                return;
-            Application.logMessageReceived +=
-                delegate (string condidion, string stackTrace, LogType type)
-                {
-                    if (go && LogType.Log == type)
-                    {
-                        luaFunc.Call(go, condidion, stackTrace);
-                    }
-                };
-        }
+        
         /// <summary>
         /// 获取一个世界坐标点到指定Collider边界框之间的最小距离
         /// </summary>
@@ -365,6 +351,37 @@ namespace LuaFramework {
             {
                 blurRange = range;
             }
+        }
+
+        /***
+         * 把一个Overlay模式相机 加入 指定Base模式相机的栈列表
+         */
+        public static bool AddCameraToStackList(Camera baseCam, Camera overlayCam, bool checkRepeat = true)
+        {
+            UniversalAdditionalCameraData baseData = CameraExtensions.GetUniversalAdditionalCameraData(baseCam);
+            if (baseData.renderType != CameraRenderType.Base)
+            {
+                return false;
+            }
+            UniversalAdditionalCameraData overlayData = CameraExtensions.GetUniversalAdditionalCameraData(overlayCam);
+            if (baseData.renderType != CameraRenderType.Overlay)
+            {
+                return false;
+            }
+
+            List<Camera> cameraStack = baseData.cameraStack;
+            if (checkRepeat == true)
+            {
+                for (int i = 0; i < cameraStack.Count - 1; i++)
+                {
+                    if (cameraStack[i] == overlayCam)
+                    {
+                        return false;
+                    }
+                }
+            }
+            cameraStack.Add(overlayCam);
+            return true;
         }
     }
 }
