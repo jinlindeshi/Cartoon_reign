@@ -6,3 +6,4 @@ Assets/StreamingAssets
 Temp
 *.csproj
 UserSettings/EditorUserSettings.asset
+LuaAPI

@@ -31,10 +31,10 @@ public class LuaFramework_LuaHelperWrap
 		L.RegFunction("Bit_Or", Bit_Or);
 		L.RegFunction("Bit_And", Bit_And);
 		L.RegFunction("NewPing", NewPing);
-		L.RegFunction("AddLogMessageReceived", AddLogMessageReceived);
 		L.RegFunction("ColliderDistance", ColliderDistance);
 		L.RegFunction("SetDontDestroyOnLoad", SetDontDestroyOnLoad);
 		L.RegFunction("DrawBlurTextureToggle", DrawBlurTextureToggle);
+		L.RegFunction("AddCameraToStackList", AddCameraToStackList);
 		L.RegVar("blurDrawing", get_blurDrawing, set_blurDrawing);
 		L.RegVar("blurRange", get_blurRange, set_blurRange);
 		L.EndStaticLibs();
@@ -463,23 +463,6 @@ public class LuaFramework_LuaHelperWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int AddLogMessageReceived(IntPtr L)
-	{
-		try
-		{
-			ToLua.CheckArgsCount(L, 2);
-			UnityEngine.GameObject arg0 = (UnityEngine.GameObject)ToLua.CheckObject(L, 1, typeof(UnityEngine.GameObject));
-			LuaFunction arg1 = ToLua.CheckLuaFunction(L, 2);
-			LuaFramework.LuaHelper.AddLogMessageReceived(arg0, arg1);
-			return 0;
-		}
-		catch (Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int ColliderDistance(IntPtr L)
 	{
 		try
@@ -536,6 +519,41 @@ public class LuaFramework_LuaHelperWrap
 			else
 			{
 				return LuaDLL.luaL_throw(L, "invalid arguments to method: LuaFramework.LuaHelper.DrawBlurTextureToggle");
+			}
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int AddCameraToStackList(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+
+			if (count == 2)
+			{
+				UnityEngine.Camera arg0 = (UnityEngine.Camera)ToLua.CheckObject(L, 1, typeof(UnityEngine.Camera));
+				UnityEngine.Camera arg1 = (UnityEngine.Camera)ToLua.CheckObject(L, 2, typeof(UnityEngine.Camera));
+				bool o = LuaFramework.LuaHelper.AddCameraToStackList(arg0, arg1);
+				LuaDLL.lua_pushboolean(L, o);
+				return 1;
+			}
+			else if (count == 3)
+			{
+				UnityEngine.Camera arg0 = (UnityEngine.Camera)ToLua.CheckObject(L, 1, typeof(UnityEngine.Camera));
+				UnityEngine.Camera arg1 = (UnityEngine.Camera)ToLua.CheckObject(L, 2, typeof(UnityEngine.Camera));
+				bool arg2 = LuaDLL.luaL_checkboolean(L, 3);
+				bool o = LuaFramework.LuaHelper.AddCameraToStackList(arg0, arg1, arg2);
+				LuaDLL.lua_pushboolean(L, o);
+				return 1;
+			}
+			else
+			{
+				return LuaDLL.luaL_throw(L, "invalid arguments to method: LuaFramework.LuaHelper.AddCameraToStackList");
 			}
 		}
 		catch (Exception e)
