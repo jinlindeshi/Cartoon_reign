@@ -179,13 +179,25 @@ end
 
 local prefabsPool = {}
 
+---实例化
+---@param pathOrGO string|UnityEngine.GameObject prefab路径或者GameObject
+---@param parent UnityEngine.Transform 父节点
+---@param noPool boolean 是否加入缓存池
 ---@return UnityEngine.GameObject
-function CreatePrefab(path, parent, noPool)
+function CreatePrefab(pathOrGO, parent, noPool)
+    local path, prefab
+    if type(pathOrGO) == "string" then
+        path = pathOrGO
+        prefab = resMgr:LoadPrefabAtPath(path)
+    else
+        path = pathOrGO.name
+        prefab = pathOrGO
+    end
     if not prefabsPool[path] then
         prefabsPool[path] = {}
     end
     if #prefabsPool[path] == 0 or noPool then
-        return GameObject.Instantiate(resMgr:LoadPrefabAtPath(path), parent)
+        return GameObject.Instantiate(prefab, parent)
     else
         local obj = prefabsPool[path][1] ---@type UnityEngine.GameObject
         obj.transform:SetParent(parent)

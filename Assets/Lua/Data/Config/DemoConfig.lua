@@ -39,5 +39,6 @@ DemoCfg.qualityBgMap =
     [DemoCfg.equipQuality.purple] = "Textures/item/bg_baowu_pur_02.png" ,
 }
 
+DemoCfg.goldNum = 0 --金币数量
 
 return DemoCfg

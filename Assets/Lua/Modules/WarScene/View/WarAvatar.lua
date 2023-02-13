@@ -239,6 +239,9 @@ function WarAvatar:PlayDead()
     if self.playingDead == true then
         return
     end
+    if self.data.side ~= 1 then
+        EventMgr.DispatchEvent("MonsterDead", {pos = self.transform.position})
+    end
     self.playingDead = true
     self:AIStop()
     --self:PlayAnimation(AvatarBase.ANI_DEAD_NAME, nil, function()

@@ -16,6 +16,8 @@ function MainMenuPanel:Init()
     self.notice = self.transform:Find("Notice").gameObject
     self.noticeText = GetComponent.Text(self.transform:Find("Notice/Text").gameObject)
     self.noticePos = GetComponent.RectTransform(self.notice).anchoredPosition
+    self.res_gold = self.transform:Find("Res_gold")
+    self.goldText = GetComponent.Text(self.transform:Find("Res_gold/Text").gameObject)
     self.ItemIconObj:SetActive(false)
 
     self.btnLight =
@@ -30,6 +32,7 @@ function MainMenuPanel:Init()
 
     AddButtonHandler(self.infoButton, PointerHandler.CLICK, self.OnInfoButtonClick, self)
     AddButtonHandler(self.rewardButton, PointerHandler.CLICK, self.OnRewardButtonClick, self)
+    EventMgr.AddEventListener("MonsterDead", self.OnMonsterDead, self)
 end
 
 function MainMenuPanel:ActiveBtnLight(type, flag)
@@ -56,10 +59,66 @@ function MainMenuPanel:OnRewardButtonClick()
     UIMgr.OpenPanel(UIPanelCfg.rewardAlert, DemoCfg.rewardData)
 end
 
+---怪物死亡事件
+function MainMenuPanel:OnMonsterDead(event)
+    local pos = event.data.pos
+    local addNum = math.random(1,3)
+    self:IconScenePosToUIPos(pos,addNum)
+end
+
+---图标动效
+local startTime = 0.2
+local flyTime = 0.5
+local gapTime = 0.15
+function MainMenuPanel:IconScenePosToUIPos(pos, num, picUrl)
+    local orgPos = Happy.WorldPointToRectTransform(pos, self.transform.parent)
+    local targetPos = Vector2.New(self.res_gold.localPosition.x - 50, self.res_gold.localPosition.y)
+    local seq = DOTween.Sequence()
+    for i = 1, num do
+        local item = CreatePrefab(self.ItemIconObj, self.ItemIconObj.transform.parent)
+        local rect = GetComponent.RectTransform(item)
+        if num == 1 then
+            rect.anchoredPosition = orgPos
+        else
+            rect.anchoredPosition = Vector2.New(orgPos.x+math.random(-30,30),
+                    orgPos.y+math.random(-20,-20))
+        end
+        item.transform.localScale = Vector2.one
+        local icon = item.transform:Find("Icon").gameObject
+        local iconBg = item.transform:Find("Bg").gameObject
+        if picUrl then
+            GetComponent.Image(icon).sprite = resMgr:LoadSpriteAtPath(picUrl)
+        end
+        icon.transform.localScale = Vector2.zero
+        iconBg.transform.localScale = Vector2.zero
+        item:SetActive(true)
+        seq:AppendCallback(function()
+            local itemSeq = DOTween.Sequence()
+            itemSeq:Append(icon.transform:DOScale(1.2, startTime))
+            itemSeq:Append(iconBg.transform:DOScale(1.2, startTime))
+            itemSeq:Append(item.transform:DOLocalMove(targetPos, flyTime):SetEase(Happy.DOTWEEN_EASE.InCubic))
+            itemSeq:Join(iconBg.transform:DOScale(0, flyTime/2))
+            itemSeq:Join(icon.transform:DOScale(0.5, flyTime))
+            itemSeq:AppendCallback(function()
+                RecyclePrefab(item, item.name)
+                local resSeq = DOTween.Sequence()
+                resSeq:Append(self.res_gold.transform:DOScale(1.25, 0.15))
+                resSeq:Append(self.res_gold.transform:DOScale(1, 0.1))
+                resSeq:AppendCallback(function()
+                    DemoCfg.goldNum = DemoCfg.goldNum + 1
+                    self.goldText.text = DemoCfg.goldNum
+                end)
+            end)
+        end)
+        seq:AppendInterval(gapTime)
+    end
+end
+
 function MainMenuPanel:RemoveListeners()
     MainMenuPanel.super.RemoveListeners(self)
     RemoveButtonHandler(self.infoButton, PointerHandler.CLICK, self.OnInfoButtonClick, self)
     RemoveButtonHandler(self.rewardButton, PointerHandler.CLICK, self.OnRewardButtonClick, self)
+    EventMgr.RemoveEventListener("MonsterDead", self.OnMonsterDead, self)
 end
 
 return MainMenuPanel

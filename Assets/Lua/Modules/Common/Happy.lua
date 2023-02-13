@@ -50,8 +50,9 @@ end
 ---@return Vector2
 function Happy.WorldPointToRectTransform(worldP, rectParent)
     local screenP = Camera.main:WorldToScreenPoint(worldP)
+    local uiCamera = GetComponent.Canvas(Game.UICanvas).worldCamera
     local hehe, p = RectTransformUtility.ScreenPointToLocalPointInRectangle(rectParent,
-            screenP, nil, Vector2.zero)
+            screenP, uiCamera, Vector2.zero)
     return p
 end
 
