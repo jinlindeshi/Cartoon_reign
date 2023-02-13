@@ -58,21 +58,31 @@ end
 ---主相机模糊开关
 ---@param enabled boolean
 ---@param dynamic boolean 是否动态每帧都截图
----@param range boolean 模糊强度
-function Happy.MainCameraBlurToggle(enabled, dynamic, range)
-    dynamic = dynamic or true
+---@param range number 模糊强度
+function Happy.MainCameraBlurToggle(enabled, range)
     range = range or 2
     if not Happy.blurImg then
         local obj = GameObject.New() ---@type UnityEngine.GameObject
-        obj.transform:SetParent(Game.UICanvas.transform)
+        obj.name = "blurScreen"
+        obj.transform:SetParent(UIMgr.GetLayer(UILayerName.scene))
+        obj.transform:SetAsFirstSibling()
+        obj.layer = LayerMask.NameToLayer("UI")
         local rect = AddOrGetComponent(obj, UnityEngine.RectTransform) ---@type UnityEngine.RectTransform
+        rect.anchorMin = Vector2.zero
+        rect.anchorMax = Vector2.one
+        rect.offsetMax = Vector2.zero
+        rect.offsetMin = Vector2.zero
         rect.anchoredPosition3D = Vector3.zero
         rect.localScale = Vector3.one
         rect.localEulerAngles = Vector3.zero
+
         Happy.blurImg = AddOrGetComponent(obj, UnityEngine.UI.RawImage) ---@type UnityEngine.UI.RawImage
-        --Happy.blurImg.
+
+        Happy.blurImg.texture = UnityEngine.Resources.Load("RenderTexture/blurTex")
     end
-    LuaHelper.DrawBlurTextureToggle(enabled)
+    LuaHelper.DrawBlurTextureToggle(enabled, range)
+    Happy.blurImg.gameObject:SetActive(enabled)
+    return Happy.blurImg
 end
 
 Happy.btnEffObjs = {}

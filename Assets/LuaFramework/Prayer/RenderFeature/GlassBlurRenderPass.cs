@@ -34,11 +34,12 @@ public class GlassBlurRenderPass : ScriptableRenderPass
     public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
     {
         if (renderingData.cameraData.isSceneViewCamera) return;
+        // Debug.Log("噢咯咯过1 " + LuaHelper.blurDrawing);
         //如果cullingMask包含UI层的camera，返回
         if ((renderingData.cameraData.camera.cullingMask & 1<<LayerMask.NameToLayer("UI"))>0)
             return;
         
-//        Debug.Log("噢咯咯过 " + LuaHelper.blurDrawing);
+        // Debug.Log("噢咯咯过2 " + LuaHelper.blurDrawing);
         if (LuaHelper.blurDrawing != true)
         {
             return;
