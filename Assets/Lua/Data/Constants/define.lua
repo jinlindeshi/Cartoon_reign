@@ -39,5 +39,7 @@ DOTween = DG.Tweening.DOTween
 LuaObj = require("Prayer.Core.LuaObj")
 ---UI管理器
 UIMgr = require("Manager/UIManager")
+---Event管理器
+EventMgr = require("Manager/EventManager")
 ---Panel基类
 BasePanel = require("Modules.UI.BasePanel")

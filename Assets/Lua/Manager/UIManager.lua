@@ -3,6 +3,8 @@
 --- Created by sunshuo.
 --- DateTime: 2023/2/2 17:51
 --- UI管理器
+
+---@class UIManager
 local UIMgr = {}
 
 ---UI层级容器
