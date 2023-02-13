@@ -40,12 +40,12 @@ function WarScene:Ctor(scene)
     self:TestFocusAvatar()
     UIMgr.OpenPanel(UIPanelCfg.mainMenu)
 
-    DelayedCall(1, function()
-        Happy.MainCameraBlurToggle(true, 1)
-        DelayedCall(3, function()
-            Happy.MainCameraBlurToggle(false, 1)
-        end)
-    end)
+    --DelayedCall(1, function()
+    --    Happy.MainCameraBlurToggle(true, 1)
+    --    DelayedCall(3, function()
+    --        Happy.MainCameraBlurToggle(false, 1)
+    --    end)
+    --end)
 end
 
 ---TEST 测试相机跟随Avatar
