@@ -14,7 +14,7 @@ AvatarBase.ANI_ATTACK_NAME="attack"
 AvatarBase.ANI_SKILL_NAME="skill"
 AvatarBase.ANI_DEAD_NAME="dead"
 function AvatarBase:Ctor(prefabPath, noController, parent)
-    prefabPath = prefabPath or "Models/TestZombie.prefab"
+    prefabPath = prefabPath or "Prefabs/Avatars/Role.prefab"
     AvatarBase.super.Ctor(self, prefabPath, nil, parent)
 
     self.speed = 0

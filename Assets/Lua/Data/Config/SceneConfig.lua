@@ -6,6 +6,5 @@
 SceneConfig = {}
 
 SceneConfig.War = {
-    --sceneName = "War",
     sceneName = "Scene01",
 }
