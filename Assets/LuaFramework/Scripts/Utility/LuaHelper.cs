@@ -358,13 +358,17 @@ namespace LuaFramework {
          */
         public static bool AddCameraToStackList(Camera baseCam, Camera overlayCam, bool checkRepeat = true)
         {
+            if (baseCam == null || overlayCam == null)
+            {
+                return false;
+            }
             UniversalAdditionalCameraData baseData = CameraExtensions.GetUniversalAdditionalCameraData(baseCam);
             if (baseData.renderType != CameraRenderType.Base)
             {
                 return false;
             }
             UniversalAdditionalCameraData overlayData = CameraExtensions.GetUniversalAdditionalCameraData(overlayCam);
-            if (baseData.renderType != CameraRenderType.Overlay)
+            if (overlayData.renderType != CameraRenderType.Overlay)
             {
                 return false;
             }

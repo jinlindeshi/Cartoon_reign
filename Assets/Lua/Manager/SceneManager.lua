@@ -95,6 +95,7 @@ function SceneManager:AddScene(sceneConfName, sceneClass, callBack, showLoading)
     end
 
     local fun = function()
+        ---@param scene UnityEngine.SceneManagement.Scene
         sceneMgr:LoadSceneAsync(sceneConf.sceneName, function (scene)
             print("SceneManager:AddScene", sceneConf.sceneName, callBack, showLoading, scene)
             if showLoading == true then

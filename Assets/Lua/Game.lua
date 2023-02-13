@@ -38,7 +38,8 @@ end
 
 function Game.InitUICanvas()
     --print("Game.InitUICanvas")
-    Game.UICanvas = GameObject.Instantiate(resMgr:LoadPrefabAtPath("Prefabs/UICanvas.prefab")) ---@type UnityEngine.GameObject
+    --Game.UICanvas = GameObject.Instantiate(resMgr:LoadPrefabAtPath("Prefabs/UICanvas.prefab")) ---@type UnityEngine.GameObject
+    Game.UICanvas = GameObject.Instantiate(resMgr:LoadPrefabAtPath("Prefabs/UICanvas3D.prefab")) ---@type UnityEngine.GameObject
     Game.UICanvas.name = "UICanvas"
     LuaHelper.SetDontDestroyOnLoad(Game.UICanvas)
     UIMgr.InitLayer(Game.UICanvas)
