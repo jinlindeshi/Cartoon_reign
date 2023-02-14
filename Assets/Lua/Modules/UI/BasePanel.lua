@@ -48,7 +48,7 @@ end
 ---播放页面打开动画之后
 function BasePanel:OnInit()
     ---自动添加关闭界面点击事件
-    local BtnClose = self.transform:Find("BtnClose")
+    local BtnClose = Happy.FindGameObjectLoopFromParent("BtnClose", self.transform)
     if BtnClose ~= nil then
         self.BtnClose = BtnClose.gameObject
         AddButtonHandler(self.BtnClose, PointerHandler.CLICK, self.Close, self)

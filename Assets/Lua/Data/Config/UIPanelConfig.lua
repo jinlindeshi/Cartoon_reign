@@ -7,9 +7,9 @@
 ---UI层级名称
 UILayerName = {}
 UILayerName.scene = "Scene"
-UILayerName.UI = "UI"
+UILayerName.ui = "UI"
 UILayerName.panel = "Panel"
-UILayerName.UITop = "UITop"
+UILayerName.uiTop = "UITop"
 UILayerName.alert = "Alert"
 UILayerName.guide = "Guide"
 UILayerName.top = "Top"

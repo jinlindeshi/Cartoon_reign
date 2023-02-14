@@ -14,9 +14,9 @@ local layer = {} ---@type table<string, UnityEngine.Transform>
 ---@param UICanvas UnityEngine.Transform
 function UIMgr.InitLayer(UICanvas)
     layer[UILayerName.scene] = UICanvas.transform:Find(UILayerName.scene)
-    layer[UILayerName.UI] = UICanvas.transform:Find(UILayerName.UI)
+    layer[UILayerName.ui] = UICanvas.transform:Find(UILayerName.ui)
     layer[UILayerName.panel] = UICanvas.transform:Find(UILayerName.panel)
-    layer[UILayerName.UITop] = UICanvas.transform:Find(UILayerName.UITop)
+    layer[UILayerName.uiTop] = UICanvas.transform:Find(UILayerName.uiTop)
     layer[UILayerName.alert] = UICanvas.transform:Find(UILayerName.alert)
     layer[UILayerName.guide] = UICanvas.transform:Find(UILayerName.guide)
     layer[UILayerName.top] = UICanvas.transform:Find(UILayerName.top)
