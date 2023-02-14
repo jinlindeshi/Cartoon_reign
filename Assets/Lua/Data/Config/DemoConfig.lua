@@ -40,5 +40,5 @@ DemoCfg.qualityBgMap =
 }
 
 DemoCfg.goldNum = 0 --金币数量
-
+DemoCfg.killCount = 0 --击杀数量
 return DemoCfg

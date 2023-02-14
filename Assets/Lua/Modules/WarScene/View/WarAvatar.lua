@@ -54,7 +54,6 @@ function WarAvatar:Ctor(prefabPath, data, static, parent)
     self.aiPath.slowWhenNotFacingTarget = false
     --self.aiPath.gravity = Vector3.zero
     self.aiPath:SetLuaCallBack(handler(self, self.MoveEnd))
-
     --Happy.DoWithMaterials(self.gameObject, function(mat)
     --    mat:EnableKeyword("_EMISSION")
     --    mat:SetColor("_EmissionColor", Color.black)
@@ -239,10 +238,10 @@ function WarAvatar:PlayDead()
     if self.playingDead == true then
         return
     end
+    self.playingDead = true
     if self.data.side ~= 1 then
         EventMgr.DispatchEvent("MonsterDead", {pos = self.transform.position})
     end
-    self.playingDead = true
     self:AIStop()
     --self:PlayAnimation(AvatarBase.ANI_DEAD_NAME, nil, function()
         local path = "Effects/Prefabs/fx_die_xiong.prefab"

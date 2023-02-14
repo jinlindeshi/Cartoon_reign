@@ -27,7 +27,7 @@ function EventManager.AddEventListener(type, callback, caller)
     local list = eventMap[type]
     if next(list) ~= nil then
         for i = 1, #list do
-            local item = list[i] ---@type EventListener
+            local item = list[i] ---@type Event.EventListener
             if item.callback == callback and item.caller == caller then
                 LogError("事件监听重复注册 type:", type)
                 return

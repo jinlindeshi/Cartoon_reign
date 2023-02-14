@@ -23,6 +23,7 @@ function UIMgr.InitLayer(UICanvas)
 end
 
 ---获取UI层级
+---@return UnityEngine.Transform
 function UIMgr.GetLayer(name)
     return layer[name]
 end

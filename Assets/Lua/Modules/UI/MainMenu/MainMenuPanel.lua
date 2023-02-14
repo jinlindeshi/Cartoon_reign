@@ -18,6 +18,8 @@ function MainMenuPanel:Init()
     self.noticePos = GetComponent.RectTransform(self.notice).anchoredPosition
     self.res_gold = self.transform:Find("Res_gold")
     self.goldText = GetComponent.Text(self.transform:Find("Res_gold/Text").gameObject)
+    self.killCount = GetComponent.Text(self.transform:Find("KillCount/count").gameObject)
+
     self.ItemIconObj:SetActive(false)
 
     self.btnLight =
@@ -29,7 +31,8 @@ function MainMenuPanel:Init()
     self:ActiveBtnLight("reward", true)
 
     --self:ShowNotice("挂机奖励可以领取了！")
-
+    self:RefreshKillCount()
+    self.goldText.text = DemoCfg.goldNum
     AddButtonHandler(self.infoButton, PointerHandler.CLICK, self.OnInfoButtonClick, self)
     AddButtonHandler(self.rewardButton, PointerHandler.CLICK, self.OnRewardButtonClick, self)
     EventMgr.AddEventListener("MonsterDead", self.OnMonsterDead, self)
@@ -59,11 +62,16 @@ function MainMenuPanel:OnRewardButtonClick()
     UIMgr.OpenPanel(UIPanelCfg.rewardAlert, DemoCfg.rewardData)
 end
 
+function MainMenuPanel:RefreshKillCount()
+    self.killCount.text = DemoCfg.killCount
+end
 ---怪物死亡事件
 function MainMenuPanel:OnMonsterDead(event)
     local pos = event.data.pos
     local addNum = math.random(1,3)
     self:IconScenePosToUIPos(pos,addNum)
+    DemoCfg.killCount = DemoCfg.killCount + 1
+    self:RefreshKillCount()
 end
 
 ---图标动效
