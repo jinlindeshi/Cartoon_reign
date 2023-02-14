@@ -31,8 +31,28 @@ function Talk:Ctor()
     self.contentLabel.text = ""
     self.featureC = self.transform:Find("featureC")
     self.lightFor3DGo = self.transform:Find("LightFor3D").gameObject
+    self.arrow = self.transform:Find("Bg/arrow").gameObject
 
+    self.waitingForClick = false
+    AddButtonHandler(self.gameObject, PointerHandler.CLICK, handler(self, self.ClickHandler))
     Talk.instance = self
+end
+
+function Talk:ClickHandler()
+    if self.waitingForClick == true then
+        if self.afterTalkCall then
+            self.afterTalkCall(handler(self, self.PlayContent), self.playContentIdx)
+        else
+            self:PlayContent()
+        end
+    elseif self.textTween then
+        self.textTween.timeScale = 20
+        DelayedFrameCall(function()
+            if self.textTween then
+                self.textTween.timeScale = 1
+            end
+        end)
+    end
 end
 
 local UILayer = LayerMask.NameToLayer("UI")
@@ -87,6 +107,8 @@ end
 
 ---播放文本内容
 function Talk:PlayContent()
+    self.arrow:SetActive(false)
+    self.waitingForClick = false
     self.playContentIdx = self.playContentIdx + 1
     if #self.contentList < self.playContentIdx then
         self:Hide()
@@ -101,13 +123,11 @@ function Talk:PlayContent()
     local playFun = function()
         self.contentLabel.text = ""
         local content = self.contentList[self.playContentIdx]
-        self.contentLabel:DOText(content, string.len(content)/40):SetEase(DOTWEEN_EASE.Linear):OnComplete(function()
-            if self.afterTalkCall then
-                self.afterTalkCall(handler(self, self.PlayContent), self.playContentIdx)
-            else
-                self:PlayContent()
-            end
-        end)
+        self.textTween = self.contentLabel:DOText(content, string.len(content)/30):SetEase(DOTWEEN_EASE.Linear):OnComplete(function()
+            self.arrow:SetActive(true)
+            self.textTween = nil
+            self.waitingForClick = true
+        end) ---@type DG.Tweening.Core.TweenerCore
     end
     if self.beforeTalkCall then
         self.beforeTalkCall(playFun, self.playContentIdx)
