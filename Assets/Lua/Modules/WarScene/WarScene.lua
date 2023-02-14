@@ -46,6 +46,11 @@ function WarScene:Ctor(scene)
     --        Happy.MainCameraBlurToggle(false, 1)
     --    end)
     --end)
+    --DelayedCall(1, function()
+    --    Talk.Play(TalkerConfig.Bear, {"你妹啊你妹啊你妹啊你妹啊你妹啊你妹啊你妹啊你妹啊你妹啊你妹啊你妹啊你妹啊你妹啊你妹啊"}, function()
+    --        print("播放完毕~")
+    --    end)
+    --end)
 end
 
 ---TEST 测试相机跟随Avatar

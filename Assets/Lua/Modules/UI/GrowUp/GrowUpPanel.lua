@@ -131,12 +131,12 @@ function GrowUpPanel:UpStarLv()
     seq:AppendInterval(0.5)
     for i = 1, #tempList do
         if i == 1 then
-            seq:Append(tempList[i].transform:DOLocalMove(endPos, 0.5):SetEase(Happy.DOTWEEN_EASE.InCubic))
+            seq:Append(tempList[i].transform:DOLocalMove(endPos, 0.5):SetEase(DOTWEEN_EASE.InCubic))
         else
-            seq:Join(tempList[i].transform:DOLocalMove(endPos, 0.5):SetEase(Happy.DOTWEEN_EASE.InCubic))
-            seq:Join(tempList[i].transform:DOScale(0.3, 0.5):SetEase(Happy.DOTWEEN_EASE.InCubic))
+            seq:Join(tempList[i].transform:DOLocalMove(endPos, 0.5):SetEase(DOTWEEN_EASE.InCubic))
+            seq:Join(tempList[i].transform:DOScale(0.3, 0.5):SetEase(DOTWEEN_EASE.InCubic))
         end
-        seq:Join(lightList[i].transform:DOLocalMove(endPos, 0.5):SetEase(Happy.DOTWEEN_EASE.InCubic))
+        seq:Join(lightList[i].transform:DOLocalMove(endPos, 0.5):SetEase(DOTWEEN_EASE.InCubic))
     end
     seq:AppendCallback(function()
         ---装备合成

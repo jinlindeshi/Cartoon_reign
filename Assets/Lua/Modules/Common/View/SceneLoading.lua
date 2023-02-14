@@ -8,7 +8,7 @@ local SceneLoading = class("SceneLoading", LuaObj)
 
 function SceneLoading:Ctor()
     --print("SceneLoading:Ctor")
-    SceneLoading.super.Ctor(self, "Prefabs/Core/SceneLoading.prefab", nil, Game.ALERT_LAYER)
+    SceneLoading.super.Ctor(self, "Prefabs/Common/SceneLoading.prefab", nil, UIMgr.GetLayer(UILayerName.UITop))
 
     self.bar = self.transform:Find("bg/bar").gameObject:GetComponent("Image") ---@type UnityEngine.UI.Image
 

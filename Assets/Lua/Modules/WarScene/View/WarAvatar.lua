@@ -213,10 +213,10 @@ function WarAvatar:GetHurt(loseHp)
         end)
     else
         labelRt.localScale = Vector3.one * 0.7
-        labelRt:DOScale(Vector3.one, 0.1):SetEase(Happy.DOTWEEN_EASE.OutQuint)
+        labelRt:DOScale(Vector3.one, 0.1):SetEase(DOTWEEN_EASE.OutQuint)
 
-        labelRt:DOAnchorPos(randomFixFun(labelRt.anchoredPosition), 0.2):SetEase(Happy.DOTWEEN_EASE.OutQuint):OnComplete(function()
-        --labelRt:DOAnchorPosY(labelRt.anchoredPosition.y + 20, 0.3):SetEase(Happy.DOTWEEN_EASE.OutQuint):OnComplete(function()
+        labelRt:DOAnchorPos(randomFixFun(labelRt.anchoredPosition), 0.2):SetEase(DOTWEEN_EASE.OutQuint):OnComplete(function()
+        --labelRt:DOAnchorPosY(labelRt.anchoredPosition.y + 20, 0.3):SetEase(DOTWEEN_EASE.OutQuint):OnComplete(function()
             DelayedCall(0.2, function()
                 cg:DOFade(0, 0.1):OnComplete(function()
                     cg.alpha = 1
