@@ -230,7 +230,7 @@ Material:
     - _Is_BakedNormal: 0
     - _Is_BlendAddToHiColor: 0
     - _Is_BlendAddToMatCap: 1
-    - _Is_BlendBaseColor: 0
+    - _Is_BlendBaseColor: 1
     - _Is_ColorShift: 0
     - _Is_Filter_HiCutPointLightColor: 1
     - _Is_Filter_LightColor: 0
@@ -354,7 +354,7 @@ Material:
     - _utsVersionZ: 1
     m_Colors:
     - _1stShadowColor: {r: 1, g: 1, b: 1, a: 1}
-    - _1st_ShadeColor: {r: 0, g: 0, b: 0, a: 1}
+    - _1st_ShadeColor: {r: 0.16037738, g: 0.1564436, b: 0.1564436, a: 1}
     - _2ndShadowColor: {r: 1, g: 0.9758255, b: 0.7028302, a: 1}
     - _2nd_ShadeColor: {r: 1, g: 1, b: 1, a: 1}
     - _AngelRing_Color: {r: 1, g: 1, b: 1, a: 1}

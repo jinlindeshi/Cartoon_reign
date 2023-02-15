@@ -76,11 +76,10 @@ function Talk:Show(featureInfo, contentList, callBack, beforeTalkCall, afterTalk
         local props = featureInfo.featureList[i] ---@type TalkerProp
         ---3D模型
         if self.use3d == true then
-            --print("你妹啊~", props.path)
             local featureGo = CreatePrefab(props.path, self.featureC)
+            props.oldScale = featureGo.transform.localScale
             featureGo.name = "feature"..i
             props.oldLayer = featureGo.layer
-            props.oldScale = featureGo.transform.localScale
             Happy.ChangeLayer(featureGo, UILayer, true)
             for propName, propValue in pairs(props.transformProps) do
                 featureGo.transform[propName] = propValue
@@ -146,9 +145,10 @@ function Talk:ClearFeatures()
         local featureGo = self.featureC:GetChild(0).gameObject
         if self.use3d == true then
             local props = self.featureInfo.featureList[i] ---@type TalkerProp
-            Happy.ChangeLayer(featureGo, props.oldLayer, true)
-            featureGo.transform.localScale = props.oldScale
             RecyclePrefab(featureGo, props.path)
+            Happy.ChangeLayer(featureGo, props.oldLayer, true)
+            --print("你妹啊~", featureGo.transform.parent.name, props.oldScale.x, props.oldScale.y, props.oldScale.z)
+            featureGo.transform.localScale = props.oldScale
             i = i + 1
         else
             DestroyImmediate(featureGo)
