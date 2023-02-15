@@ -18381,7 +18381,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 818738853}
   m_LocalRotation: {x: -0.41335693, y: -0.4856222, z: 0.27969632, w: -0.7176888}
-  m_LocalPosition: {x: -35.39583, y: 15.6, z: 25.38154}
+  m_LocalPosition: {x: -35.39583, y: 12, z: 25.38154}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -18408,7 +18408,7 @@ MonoBehaviour:
   vRotateAngle: 0
   hRotateAngle: 0
   followParams:
-    offsetV: {x: 0, y: 14, z: -12}
+    offsetV: {x: 0, y: 9.5, z: -11.5}
     lookAt: 1
     globalReference: 1
     checkCover: 0
