@@ -46,7 +46,7 @@ function Talk:ClickHandler()
             self:PlayContent()
         end
     elseif self.textTween then
-        self.textTween.timeScale = 20
+        self.textTween.timeScale = 100
         DelayedFrameCall(function()
             if self.textTween then
                 self.textTween.timeScale = 1
@@ -80,6 +80,7 @@ function Talk:Show(featureInfo, contentList, callBack, beforeTalkCall, afterTalk
             local featureGo = CreatePrefab(props.path, self.featureC)
             featureGo.name = "feature"..i
             props.oldLayer = featureGo.layer
+            props.oldScale = featureGo.transform.localScale
             Happy.ChangeLayer(featureGo, UILayer, true)
             for propName, propValue in pairs(props.transformProps) do
                 featureGo.transform[propName] = propValue
@@ -90,11 +91,13 @@ function Talk:Show(featureInfo, contentList, callBack, beforeTalkCall, afterTalk
             imgGo.name = "feature"..i
             local img = AddOrGetComponent(imgGo, UnityEngine.UI.Image) ---@type UnityEngine.UI.Image
             img.sprite = resMgr:LoadSpriteAtPath(props.path)
+            img:SetNativeSize()
             local imgRect = AddOrGetComponent(imgGo, UnityEngine.RectTransform) ---@type UnityEngine.RectTransform
             imgRect:SetParent(self.featureC)
             imgRect.localPosition = Vector3.zero
             imgRect.localEulerAngles = Vector3.zero
             imgRect.localScale = Vector3.one
+            Happy.ChangeLayer(imgGo, UILayer)
             for propName, propValue in pairs(props.transformProps) do
                 imgRect[propName] = propValue
             end
@@ -144,6 +147,7 @@ function Talk:ClearFeatures()
         if self.use3d == true then
             local props = self.featureInfo.featureList[i] ---@type TalkerProp
             Happy.ChangeLayer(featureGo, props.oldLayer, true)
+            featureGo.transform.localScale = props.oldScale
             RecyclePrefab(featureGo, props.path)
             i = i + 1
         else

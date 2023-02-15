@@ -15,6 +15,39 @@ local TalkerConfig = {}
 ---@field path string 资源路径
 ---@field transformProps table 各种transform参数
 
+
+---主角
+TalkerConfig.Me = {
+    use3d=true,
+    name="勇士",
+    featureList=
+    {
+        {
+            path = "Prefabs/Avatars/Role.prefab",
+            transformProps = {
+                localPosition = Vector3.New(102, -226.6, -173.8),
+                localEulerAngles = Vector3.New(-20.526, 164.511, 5.55),
+                localScale = Vector3.one * 12000,
+            },
+        },
+    },
+}
+
+---主角2D
+TalkerConfig.Me2D = {
+    name="勇士",
+    featureList=
+    {
+        {
+            path = "Textures/feature/me.png",
+            transformProps = {
+                anchoredPosition = Vector2.New(110,148),
+                sizeDelta = Vector2.New(295,295),
+            },
+        },
+    },
+}
+
 ---熊BOSS
 TalkerConfig.Bear = {
     use3d=true,
@@ -23,7 +56,6 @@ TalkerConfig.Bear = {
     {
         {
             path = "Prefabs/Avatars/monster_xiong.prefab",
-            ---@type UnityEngine.Transform
             transformProps = {
                 localPosition = Vector3.New(78.51028, 7.594116, -79.76547),
                 localEulerAngles = Vector3.New(-9.748, 141.496, 2.636),
