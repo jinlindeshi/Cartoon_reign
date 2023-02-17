@@ -9,6 +9,7 @@ public class BehaviorDesigner_Runtime_Tasks_LuaActionWrap
 		L.BeginClass(typeof(BehaviorDesigner.Runtime.Tasks.LuaAction), typeof(BehaviorDesigner.Runtime.Tasks.Action));
 		L.RegFunction("SetUpdateStatus", SetUpdateStatus);
 		L.RegFunction("GetUpdateStatus", GetUpdateStatus);
+		L.RegFunction("CheckUpdateStatus", CheckUpdateStatus);
 		L.RegFunction("OnAwake", OnAwake);
 		L.RegFunction("OnStart", OnStart);
 		L.RegFunction("OnUpdate", OnUpdate);
@@ -74,6 +75,24 @@ public class BehaviorDesigner_Runtime_Tasks_LuaActionWrap
 			BehaviorDesigner.Runtime.Tasks.LuaAction obj = (BehaviorDesigner.Runtime.Tasks.LuaAction)ToLua.CheckObject<BehaviorDesigner.Runtime.Tasks.LuaAction>(L, 1);
 			BehaviorDesigner.Runtime.Tasks.TaskStatus o = obj.GetUpdateStatus();
 			ToLua.Push(L, o);
+			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int CheckUpdateStatus(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			BehaviorDesigner.Runtime.Tasks.LuaAction obj = (BehaviorDesigner.Runtime.Tasks.LuaAction)ToLua.CheckObject<BehaviorDesigner.Runtime.Tasks.LuaAction>(L, 1);
+			BehaviorDesigner.Runtime.Tasks.TaskStatus arg0 = (BehaviorDesigner.Runtime.Tasks.TaskStatus)ToLua.CheckObject(L, 2, typeof(BehaviorDesigner.Runtime.Tasks.TaskStatus));
+			bool o = obj.CheckUpdateStatus(arg0);
+			LuaDLL.lua_pushboolean(L, o);
 			return 1;
 		}
 		catch (Exception e)

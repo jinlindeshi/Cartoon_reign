@@ -9,6 +9,7 @@ public class BehaviorToLuaWrap
 		L.BeginClass(typeof(BehaviorToLua), typeof(BehaviorDesigner.Runtime.BehaviorTree));
 		L.RegFunction("EditorInit", EditorInit);
 		L.RegFunction("Pause", Pause);
+		L.RegFunction("Resume", Resume);
 		L.RegFunction("Stop", Stop);
 		L.RegFunction("RegisterLuaFun", RegisterLuaFun);
 		L.RegFunction("InvokeFun", InvokeFun);
@@ -41,6 +42,22 @@ public class BehaviorToLuaWrap
 			ToLua.CheckArgsCount(L, 1);
 			BehaviorToLua obj = (BehaviorToLua)ToLua.CheckObject<BehaviorToLua>(L, 1);
 			obj.Pause();
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int Resume(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			BehaviorToLua obj = (BehaviorToLua)ToLua.CheckObject<BehaviorToLua>(L, 1);
+			obj.Resume();
 			return 0;
 		}
 		catch (Exception e)

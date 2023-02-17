@@ -49,9 +49,7 @@ end
 function AttackAction:OnPause(paused)
     --print("AttackAction:OnPause", paused)
     self.paused = paused
-    if paused == false then
-        self:AttackToDeath()
-    end
+
 end
 
 function AttackAction:OnBehaviorComplete()

@@ -85,6 +85,9 @@ end
 function FindEnemyAction:OnPause(paused)
     --print("FindEnemyAction:OnPause", paused)
     self.paused = paused
+    if self.paused then
+        self.avatar:SetTarget(nil)
+    end
 end
 
 return FindEnemyAction

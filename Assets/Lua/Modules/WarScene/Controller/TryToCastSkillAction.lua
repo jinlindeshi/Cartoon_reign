@@ -15,12 +15,18 @@ function TryToCastSkillAction:Ctor(avatar, bToLua, cAction, paramFloat, paramBoo
 end
 
 function TryToCastSkillAction:OnStart()
+    --print("TryToCastSkillAction OnStart")
     if not self.avatar.skill then
         print("技能没配~")
         self.cAction:SetUpdateStatus(TaskStatus.Failure)
+        return
     end
+    if not self.avatar.target or self.avatar.target:CheckDead() == true then
+        self.cAction:SetUpdateStatus(TaskStatus.Failure)
+        return
+    end
+
     if self.avatar.skillMarkTime and os.clock() - self.avatar.skillMarkTime < self.skillCD then
-        --print("技能CD中")
         self.cAction:SetUpdateStatus(TaskStatus.Failure)
         return
     end
@@ -34,8 +40,8 @@ end
 function TryToCastSkillAction:OnPause(paused)
     --print("TryToCastSkillAction:OnPause", paused)
     self.paused = paused
-    if paused == false then
-        self:AttackToDeath()
+    if self.paused then
+        self.avatar.skill:Over()
     end
 end
 

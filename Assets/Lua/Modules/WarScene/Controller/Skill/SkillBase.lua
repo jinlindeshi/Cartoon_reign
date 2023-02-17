@@ -11,10 +11,11 @@ local SkillBase = class("SkillBase")
 function SkillBase:Begin(avatar, callback)
     self.avatar = avatar ---@type WarAvatar
     self.callback = callback
-    self.avatar.skillMarkTime = os.clock()
+
 end
 
 function SkillBase:Over()
+    self.avatar.skillMarkTime = os.clock()
     if self.callback then
         self.callback()
     end

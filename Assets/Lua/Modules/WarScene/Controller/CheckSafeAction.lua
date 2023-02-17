@@ -14,12 +14,11 @@ function CheckSafeAction:Ctor(avatar, bToLua, cAction, paramFloat, paramBool)
 end
 
 function CheckSafeAction:OnStart()
-
+    --print("CheckSafeAction OnStart")
     if self.avatar.target and self.avatar.target:CheckDead() ~= true then
         self.cAction:SetUpdateStatus(TaskStatus.Failure)
         return
     end
-
     ---从Avatar列表里找出一个非我方的对象 设为敌方目标
     local mySide = self.avatar.data.side
     local target
@@ -47,6 +46,9 @@ end
 function CheckSafeAction:OnPause(paused)
     --print("CheckSafeAction:OnPause", paused)
     self.paused = paused
+    if self.paused then
+        self.avatar:SetTarget(nil)
+    end
 end
 
 return CheckSafeAction

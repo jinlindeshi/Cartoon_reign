@@ -32,6 +32,12 @@ public class BehaviorToLua:BehaviorTree
     {
         DisableBehavior(true);
     }
+    //恢复
+    public void Resume()
+    {
+        // EnableBehavior();
+        BehaviorManager.instance.EnableBehavior(this);
+    }
 
     //停止
     public void Stop()

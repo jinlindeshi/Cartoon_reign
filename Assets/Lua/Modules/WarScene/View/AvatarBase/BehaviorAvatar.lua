@@ -53,6 +53,9 @@ function BehaviorAvatar:AIPause()
     self.b2Lua:Pause()
 end
 
+function BehaviorAvatar:AIResume()
+    self.b2Lua:Resume()
+end
 
 function BehaviorAvatar:AIStop()
     self.b2Lua:Stop()

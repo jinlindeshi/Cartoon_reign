@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using BehaviorDesigner.Runtime.Tasks.Basic.UnityString;
+using UnityEngine;
 
 namespace BehaviorDesigner.Runtime.Tasks
 {
@@ -10,7 +11,7 @@ namespace BehaviorDesigner.Runtime.Tasks
         private BehaviorToLua btl;
 
         private TaskStatus _updateStatus;
-
+        private bool inPause = false; //记录是否在暂停中
         public void SetUpdateStatus(TaskStatus status)
         {
             _updateStatus = status;
@@ -19,7 +20,10 @@ namespace BehaviorDesigner.Runtime.Tasks
         {
             return　_updateStatus;
         }
-
+        public bool CheckUpdateStatus(TaskStatus status)
+        {
+            return _updateStatus == status;
+        }
 
         private void InvokeFun(string funName, bool paused = false)
         {
@@ -35,7 +39,6 @@ namespace BehaviorDesigner.Runtime.Tasks
         public override void OnStart()
         {
             base.OnStart();
-//            _updateStatus = TaskStatus.Success;
             InvokeFun("OnStart");
         }
 
@@ -45,10 +48,19 @@ namespace BehaviorDesigner.Runtime.Tasks
             InvokeFun("OnUpdate");
             return _updateStatus;
         }
-
+        
          public override void OnPause(bool paused)
         {
-            InvokeFun("OnPause", paused);
+            if (paused && _updateStatus != TaskStatus.Inactive)
+            {
+                inPause = true;
+                InvokeFun("OnPause", paused);
+            }
+            else if (paused == false && inPause)
+            {
+                inPause = false;
+                InvokeFun("OnPause", paused);
+            }
         }
         
         public override void OnEnd()

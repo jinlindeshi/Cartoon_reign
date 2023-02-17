@@ -56,10 +56,12 @@ end
 
 function MainMenuPanel:OnInfoButtonClick()
     UIMgr.OpenPanel(UIPanelCfg.growUp)
+    --require("Modules.WarScene.Model.WarData"):PauseAllAvatarAI()
 end
 
 function MainMenuPanel:OnRewardButtonClick()
     UIMgr.OpenPanel(UIPanelCfg.rewardAlert, DemoCfg.rewardData)
+    --require("Modules.WarScene.Model.WarData"):StartAllAvatarAI()
 end
 
 function MainMenuPanel:RefreshKillCount()

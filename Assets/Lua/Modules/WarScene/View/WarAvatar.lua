@@ -310,10 +310,10 @@ function WarAvatar:Attack(callBack)
     if not self.target then
         return
     end
-    if self.attackRadius then ---远程攻击
-        self:RangedAttack(callBack)
-        return
-    end
+    --if self.attackRadius then ---远程攻击
+    --    self:RangedAttack(callBack)
+    --    return
+    --end
     self:LookAtTarget()
     --self.attackUpdate = AddEventListener(Stage, Event.UPDATE, handler(self, self.LookAtTarget))
 

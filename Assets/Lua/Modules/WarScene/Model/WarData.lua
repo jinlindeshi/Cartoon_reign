@@ -14,7 +14,7 @@ WarData.bornNodes = {{82,113},{83,113},{81,113},{82,112},{82,114}} ---我方出�
 WarData.patrolNodePath = {{98,104},{99,86},{77,72},{60,78},{48,92},{72,110}} ---刷怪点 Scene01场景
 WarData.patrolNodeIndex = -1
 
-WarData.AvatarHash = {}
+WarData.AvatarHash = {} ---@type table<number, WarAvatar>
 WarData.AvatarGrids = {}
 WarData.gridGraph = nil ---@type Pathfinding.GridGraph
 WarData.scene = nil ---@type WarScene
@@ -127,6 +127,22 @@ function WarData.GetAroundNearestGrid(myPosition, targetX, targetZ, radius, chec
     end
 
     return goalX,goalZ,goalPosition,grids
+end
+
+function WarData.GetGridByPos(pos)
+
+end
+
+function WarData:PauseAllAvatarAI()
+    for id, avatar in pairs(WarData.AvatarHash) do
+        avatar:AIPause()
+    end
+end
+
+function WarData:StartAllAvatarAI()
+    for id, avatar in pairs(WarData.AvatarHash) do
+        avatar:AIResume()
+    end
 end
 
 return WarData

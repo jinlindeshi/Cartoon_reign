@@ -15,6 +15,7 @@ function MoveToEnemyAction:Ctor(avatar, bToLua, cAction, paramFloat, paramBool)
 end
 
 function MoveToEnemyAction:OnStart()
+    --print("MoveToEnemyAction OnStart")
     if not self.avatar.target then
         return
     end
@@ -25,19 +26,29 @@ function MoveToEnemyAction:OnStart()
         return
     end
 
-    local grids = WarData.GetAroundGrids(self.avatar.x, self.avatar.z, self.avatar.attackRadius)
-    --print("MoveToEnemyAction:OnStart", self.avatar.target.x, self.avatar.target.z, grids[self.avatar.target.x])
-    if  grids[self.avatar.target.x] and grids[self.avatar.target.x][self.avatar.target.z] then
-        --if self.avatar.data.id == -2 then
-        --    print("敌人能打到，不用走")
-        --end
+    ---如果目标还在攻击范围内 用距离判断
+    local dis = Vector3.Distance(self.avatar.transform.position, self.avatar.target.transform.position)
+    local atkRadius = math.cos(math.rad(45)) * WarData.gridGraph.nodeSize * 2 --检测距离
+    if dis <= atkRadius then
+        --print("目标还在攻击范围内")
         self.cAction:SetUpdateStatus(TaskStatus.Success)
         return
     end
 
+    --local grids = WarData.GetAroundGrids(self.avatar.x, self.avatar.z, self.avatar.attackRadius)
+    --if grids[self.avatar.target.x] and grids[self.avatar.target.x][self.avatar.target.z] and dis <= atkRadius then
+    --    print("敌人能打到，不用走")
+    --    self.cAction:SetUpdateStatus(TaskStatus.Success)
+    --    return
+    --end
+
 
     self.avatar:EndFollow()
     self.avatar:StopMoving()
+    self:MoveToEnemy()
+end
+
+function MoveToEnemyAction:MoveToEnemy()
     self.cAction:SetUpdateStatus(TaskStatus.Running)
 
     local x,z,nearestPos,grids = WarData.GetAroundNearestGrid(self.avatar.transform.position, self.avatar.target.x, self.avatar.target.z,
@@ -59,12 +70,15 @@ function MoveToEnemyAction:OnStart()
     self.avatar:MoveAStar(nearestPos, function()
         self.cAction:SetUpdateStatus(TaskStatus.Success)
     end, nearestLoc)
-
 end
 
 function MoveToEnemyAction:OnPause(paused)
-    print("MoveToEnemyAction:OnPause", paused)
+    --print("MoveToEnemyAction:OnPause", paused)
     self.paused = paused
+    if self.paused then
+        self.avatar:StopMoving()
+        self.avatar:EndFollow()
+    end
 end
 
 return MoveToEnemyAction

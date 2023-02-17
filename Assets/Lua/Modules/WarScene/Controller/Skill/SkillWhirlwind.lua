@@ -23,31 +23,45 @@ function SkillWhirlwind:Begin(avatar, callBack)
     local eff = CreatePrefab(effPath, self.avatar.transform)
     eff.transform.localScale = Vector3.one
     eff.transform.localPosition = Vector3.zero
-
+    self.recycleEff = function()
+        RecyclePrefab(eff, effPath)
+    end
     local grids = WarData.GetAroundGrids(self.avatar.x, self.avatar.z, nil, true)
     local checkAndHurt
     checkAndHurt = function()
         local enemy ---@type WarAvatar
+        local allDead = true ---周围目标是否全部死亡
         for x, tb in pairs(grids) do
             for z, v in pairs(tb) do
                 enemy = WarData.GetAvatarByLoc(x,z)
-                if enemy and enemy.data.side ~= self.avatar.data.side and enemy.moving ~= true then
+                if enemy and enemy.data.side ~= self.avatar.data.side and enemy.moving ~= true and not enemy:CheckDead() then
                     --print("你妹啊~")
                     enemy:GetHurt(DamageManager.GetHurtValue(self.avatar.data, enemy.data)/2)
                     Happy.Shake(0.2, nil, enemy.gameObject, 0.02, true)
+                    allDead = false
                 end
             end
         end
-        self.loopFun = DelayedCall(HURT_GAP_TIME,checkAndHurt)
+        self.dur = self.dur + HURT_GAP_TIME
+        if allDead or self.dur >= SKILL_TOTAL_TIME then
+            self:Over()
+        end
     end
-    checkAndHurt()
+    self.dur = 0 --技能持续的时间
+    self.timer = Timer.New(checkAndHurt, HURT_GAP_TIME, -1)
+    self.timer:Start()
+end
 
-    DelayedCall(SKILL_TOTAL_TIME, function()
-        StopDelayedCall(self.loopFun)
-        RecyclePrefab(eff, effPath)
-        self.avatar:PlayAnimation(AvatarBase.ANI_IDLE_NAME)
-        self:Over()
-    end)
+function SkillWhirlwind:Over()
+    if self.timer and self.timer.running then
+        self.timer:Stop()
+        self.timer = nil
+    end
+    if self.recycleEff then
+        self.recycleEff()
+    end
+    self.avatar:PlayAnimation(AvatarBase.ANI_IDLE_NAME)
+    SkillWhirlwind.super.Over(self)
 end
 
 return SkillWhirlwind
