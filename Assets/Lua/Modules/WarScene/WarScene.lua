@@ -46,14 +46,14 @@ function WarScene:Ctor(scene)
     --        Happy.MainCameraBlurToggle(false, 1)
     --    end)
     --end)
-    DelayedCall(1, function()
-        Talk.Play(TalkerConfig.Bear, {"我是杀不完的"
-        ,"一波一波无穷尽"}, function()
-            Talk.Play(TalkerConfig.Me2D, {"跟你拼啦！"}, function()
-                print("播放完毕~")
-            end)
-        end)
-    end)
+    --DelayedCall(1, function()
+    --    Talk.Play(TalkerConfig.Bear, {"我是杀不完的"
+    --    ,"一波一波无穷尽"}, function()
+    --        Talk.Play(TalkerConfig.Me2D, {"跟你拼啦！"}, function()
+    --            print("播放完毕~")
+    --        end)
+    --    end)
+    --end)
 end
 
 ---TEST 测试相机跟随Avatar

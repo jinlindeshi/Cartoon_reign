@@ -9,7 +9,7 @@
 local MainMenuPanel = class("UI.MainMenuPanel", BasePanel)
 
 function MainMenuPanel:Init()
-    MainMenuPanel.super.OnInit(self)
+    MainMenuPanel.super.Init(self)
     self.ItemIconObj = self.transform:Find("ItemIcon").gameObject
     self.infoButton = self.transform:Find("bottomRoot/infoButton").gameObject
     self.rewardButton = self.transform:Find("bottomRoot/rewardButton").gameObject
@@ -19,6 +19,7 @@ function MainMenuPanel:Init()
     self.res_gold = self.transform:Find("Res_gold")
     self.goldText = GetComponent.Text(self.transform:Find("Res_gold/Text").gameObject)
     self.killCount = GetComponent.Text(self.transform:Find("KillCount/count").gameObject)
+    self.drawButton = self.transform:Find("bottomRoot/drawButton").gameObject
 
     self.ItemIconObj:SetActive(false)
 
@@ -35,6 +36,7 @@ function MainMenuPanel:Init()
     self.goldText.text = DemoCfg.goldNum
     AddButtonHandler(self.infoButton, PointerHandler.CLICK, self.OnInfoButtonClick, self)
     AddButtonHandler(self.rewardButton, PointerHandler.CLICK, self.OnRewardButtonClick, self)
+    AddButtonHandler(self.drawButton, PointerHandler.CLICK, self.OnDrawButtonClick, self)
     EventMgr.AddEventListener("MonsterDead", self.OnMonsterDead, self)
 end
 
@@ -62,6 +64,10 @@ end
 function MainMenuPanel:OnRewardButtonClick()
     UIMgr.OpenPanel(UIPanelCfg.rewardAlert, DemoCfg.rewardData)
     --require("Modules.WarScene.Model.WarData"):StartAllAvatarAI()
+end
+
+function MainMenuPanel:OnDrawButtonClick()
+    UIMgr.OpenPanel(UIPanelCfg.drawCard)
 end
 
 function MainMenuPanel:RefreshKillCount()

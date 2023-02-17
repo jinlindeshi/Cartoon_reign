@@ -10,7 +10,7 @@ local SData = require("Modules.WarScene.Model.SData")
 local RewardAlertPanel = class("UI.RewardAlertPanel", BasePanel)
 
 function RewardAlertPanel:Init(dataList)
-    RewardAlertPanel.super.OnInit(self)
+    RewardAlertPanel.super.Init(self)
     self.listRoot = self.transform:Find("Root/InfoBG/listRoot")
     self.YesButton = self.transform:Find("Root/buttonRoot/YesButton").gameObject
     self.yesCg = GetComponent.CanvasGroup(self.YesButton)
@@ -24,6 +24,7 @@ function RewardAlertPanel:Init(dataList)
 end
 
 function RewardAlertPanel:OnInit()
+    RewardAlertPanel.super.OnInit(self)
     AddButtonHandler(self.YesButton, PointerHandler.CLICK, self.OnYesButtonClick, self)
     self:ShowItemList(function()
         self.yesCg:DOFade(1, 0.2)

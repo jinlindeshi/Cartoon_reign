@@ -14,7 +14,7 @@ local starCount = 5 --星级上限
 local GrowUpPanel = class("UI.GrowUp.GrowUpPanel", BasePanel)
 
 function GrowUpPanel:Init()
-    GrowUpPanel.super.OnInit(self)
+    GrowUpPanel.super.Init(self)
     self.heroRoot = self.transform:Find("heroRoot")
     self.equipRoot = self.transform:Find("heroRoot/Equip")
     self.mask = self.transform:Find("mask").gameObject
