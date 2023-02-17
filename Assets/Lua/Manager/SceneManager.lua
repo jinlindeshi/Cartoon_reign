@@ -77,7 +77,7 @@ function SceneManager:AddScene(sceneConfName, sceneClass, callBack, showLoading)
     ---加载时显示进度条界面
     if showLoading == true then
         if not SM.loadingUI then
-            SM.loadingUI = require("Modules.Common.SceneLoading").New() ---@type SceneLoading
+            SM.loadingUI = require("Modules.Common.View.SceneLoading").New() ---@type SceneLoading
         end
         SM.loadingUI:Show(mainAbName)
 

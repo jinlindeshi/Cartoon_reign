@@ -268,6 +268,18 @@ function isnull(go)
     return tolua.isnull(go)
 end
 
+---销毁 GameObject
+---@param go UnityEngine.GameObject
+---@param delay number
+function Destroy(go, delay)
+    GameObject.Destroy(go, delay)
+end
+---立即销毁 GameObject
+---@param go UnityEngine.GameObject
+function DestroyImmediate(go)
+    GameObject.DestroyImmediate(go)
+end
+
 GetComponent = {}
 
 ---获得 RectTransform 组件

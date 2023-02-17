@@ -6,8 +6,17 @@
 
 Happy = {}
 
-Happy.DOTWEEN_EASE = DG.Tweening.Ease ---@type DG.Tweening.Ease
-Happy.DOTWEEN_LOOP_TYPE = DG.Tweening.LoopType ---@type DG.Tweening.LoopType
+---@param go UnityEngine.GameObject
+---@param layer number
+---@param withChildren boolean
+function Happy.ChangeLayer(go, layer, withChildren)
+    go.layer = layer
+    if withChildren == true then
+        for i = 0, go.transform.childCount - 1 do
+            Happy.ChangeLayer(go.transform:GetChild(i).gameObject, layer, withChildren)
+        end
+    end
+end
 
 ---处理对象下面所有指定type的材质球
 function Happy.DoWithMaterials(gameObj, fun, type)
@@ -36,7 +45,7 @@ function Happy.DOTweenFloat(startValue, endValue, duration, setFloatFun, callBac
     end
     local getter = DG.Tweening.Core.DOGetter_float(getFunc)
     local setter = DG.Tweening.Core.DOSetter_float(setFunc)
-    ease = ease or Happy.DOTWEEN_EASE.Linear
+    ease = ease or DOTWEEN_EASE.Linear
     local DOTween = DG.Tweening.DOTween ---@type DG.Tweening.DOTween
     return DOTween.To(getter, setter, endValue, duration):SetEase(ease):OnComplete(function ()
         if callBack then

@@ -12,9 +12,6 @@ EditorBuildSettings:
     path: Assets/Res/Scenes/BaseScene.unity
     guid: 9027130495a054d2281789936b0a8132
   - enabled: 1
-    path: Assets/Res/Scenes/War.unity
-    guid: 10c2f4ce6305ea643be801b9bb3e62c5
-  - enabled: 1
     path: Assets/Res/Scenes/Scene01.unity
     guid: a13a8dd945b17c743ac7d3d220dbdbea
   m_configObjects: {}

@@ -223,7 +223,7 @@ Material:
     - _Is_BakedNormal: 0
     - _Is_BlendAddToHiColor: 0
     - _Is_BlendAddToMatCap: 1
-    - _Is_BlendBaseColor: 0
+    - _Is_BlendBaseColor: 1
     - _Is_ColorShift: 0
     - _Is_Filter_HiCutPointLightColor: 1
     - _Is_Filter_LightColor: 0
@@ -263,7 +263,7 @@ Material:
     - _Outline: 0.057
     - _OutlineEnable: 0
     - _OutlineWidth: 0.4
-    - _Outline_Width: 2
+    - _Outline_Width: 4
     - _Parallax: 0.02
     - _QueueOffset: 0
     - _ReceiveShadows: 1
@@ -339,7 +339,7 @@ Material:
     - _utsVersionY: 5
     - _utsVersionZ: 1
     m_Colors:
-    - _1st_ShadeColor: {r: 0.3018868, g: 0.3018868, b: 0.3018868, a: 1}
+    - _1st_ShadeColor: {r: 0, g: 0, b: 0, a: 1}
     - _2nd_ShadeColor: {r: 1, g: 1, b: 1, a: 1}
     - _AngelRing_Color: {r: 1, g: 1, b: 1, a: 1}
     - _Ap_RimLightColor: {r: 1, g: 1, b: 1, a: 1}
