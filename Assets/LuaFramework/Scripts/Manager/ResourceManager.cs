@@ -151,7 +151,7 @@ namespace LuaFramework
             else
             {
                 bundles.TryGetValue(abname, out bundle);
-                Debug.Log("LoadAssetBundle 资源已经存在" + abname + " " + async + " " + bundle);
+                // Debug.Log("LoadAssetBundle 资源已经存在" + abname + " " + async + " " + bundle);
                 if (callBack != null)
                 {
                     callBack.Call();
