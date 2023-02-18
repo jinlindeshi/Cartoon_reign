@@ -25,6 +25,7 @@ public class DelegateFactory
 		dict.Add(typeof(System.Func<int,int>), factory.System_Func_int_int);
 		dict.Add(typeof(UnityEngine.Camera.CameraCallback), factory.UnityEngine_Camera_CameraCallback);
 		dict.Add(typeof(UnityEngine.RectTransform.ReapplyDrivenProperties), factory.UnityEngine_RectTransform_ReapplyDrivenProperties);
+		dict.Add(typeof(UnityEngine.Events.UnityAction<UnityEngine.SpriteRenderer>), factory.UnityEngine_Events_UnityAction_UnityEngine_SpriteRenderer);
 		dict.Add(typeof(DG.Tweening.TweenCallback), factory.DG_Tweening_TweenCallback);
 		dict.Add(typeof(DG.Tweening.TweenCallback<int>), factory.DG_Tweening_TweenCallback_int);
 		dict.Add(typeof(DG.Tweening.Core.DOGetter<string>), factory.DG_Tweening_Core_DOGetter_string);
@@ -64,6 +65,7 @@ public class DelegateFactory
 		dict.Add(typeof(System.Action<bool>), factory.System_Action_bool);
 		dict.Add(typeof(System.Action<string>), factory.System_Action_string);
 		dict.Add(typeof(System.Func<bool>), factory.System_Func_bool);
+		dict.Add(typeof(System.Action<UnityEngine.PhysicsScene,Unity.Collections.NativeArray<UnityEngine.ModifiableContactPair>>), factory.System_Action_UnityEngine_PhysicsScene_Unity_Collections_NativeArray_UnityEngine_ModifiableContactPair);
 		dict.Add(typeof(UnityEngine.AudioClip.PCMReaderCallback), factory.UnityEngine_AudioClip_PCMReaderCallback);
 		dict.Add(typeof(UnityEngine.AudioClip.PCMSetPositionCallback), factory.UnityEngine_AudioClip_PCMSetPositionCallback);
 		dict.Add(typeof(System.Action<UnityEngine.AsyncOperation>), factory.System_Action_UnityEngine_AsyncOperation);
@@ -87,6 +89,7 @@ public class DelegateFactory
 		DelegateTraits<System.Func<int,int>>.Init(factory.System_Func_int_int);
 		DelegateTraits<UnityEngine.Camera.CameraCallback>.Init(factory.UnityEngine_Camera_CameraCallback);
 		DelegateTraits<UnityEngine.RectTransform.ReapplyDrivenProperties>.Init(factory.UnityEngine_RectTransform_ReapplyDrivenProperties);
+		DelegateTraits<UnityEngine.Events.UnityAction<UnityEngine.SpriteRenderer>>.Init(factory.UnityEngine_Events_UnityAction_UnityEngine_SpriteRenderer);
 		DelegateTraits<DG.Tweening.TweenCallback>.Init(factory.DG_Tweening_TweenCallback);
 		DelegateTraits<DG.Tweening.TweenCallback<int>>.Init(factory.DG_Tweening_TweenCallback_int);
 		DelegateTraits<DG.Tweening.Core.DOGetter<string>>.Init(factory.DG_Tweening_Core_DOGetter_string);
@@ -126,6 +129,7 @@ public class DelegateFactory
 		DelegateTraits<System.Action<bool>>.Init(factory.System_Action_bool);
 		DelegateTraits<System.Action<string>>.Init(factory.System_Action_string);
 		DelegateTraits<System.Func<bool>>.Init(factory.System_Func_bool);
+		DelegateTraits<System.Action<UnityEngine.PhysicsScene,Unity.Collections.NativeArray<UnityEngine.ModifiableContactPair>>>.Init(factory.System_Action_UnityEngine_PhysicsScene_Unity_Collections_NativeArray_UnityEngine_ModifiableContactPair);
 		DelegateTraits<UnityEngine.AudioClip.PCMReaderCallback>.Init(factory.UnityEngine_AudioClip_PCMReaderCallback);
 		DelegateTraits<UnityEngine.AudioClip.PCMSetPositionCallback>.Init(factory.UnityEngine_AudioClip_PCMSetPositionCallback);
 		DelegateTraits<System.Action<UnityEngine.AsyncOperation>>.Init(factory.System_Action_UnityEngine_AsyncOperation);
@@ -149,6 +153,7 @@ public class DelegateFactory
 		TypeTraits<System.Func<int,int>>.Init(factory.Check_System_Func_int_int);
 		TypeTraits<UnityEngine.Camera.CameraCallback>.Init(factory.Check_UnityEngine_Camera_CameraCallback);
 		TypeTraits<UnityEngine.RectTransform.ReapplyDrivenProperties>.Init(factory.Check_UnityEngine_RectTransform_ReapplyDrivenProperties);
+		TypeTraits<UnityEngine.Events.UnityAction<UnityEngine.SpriteRenderer>>.Init(factory.Check_UnityEngine_Events_UnityAction_UnityEngine_SpriteRenderer);
 		TypeTraits<DG.Tweening.TweenCallback>.Init(factory.Check_DG_Tweening_TweenCallback);
 		TypeTraits<DG.Tweening.TweenCallback<int>>.Init(factory.Check_DG_Tweening_TweenCallback_int);
 		TypeTraits<DG.Tweening.Core.DOGetter<string>>.Init(factory.Check_DG_Tweening_Core_DOGetter_string);
@@ -188,6 +193,7 @@ public class DelegateFactory
 		TypeTraits<System.Action<bool>>.Init(factory.Check_System_Action_bool);
 		TypeTraits<System.Action<string>>.Init(factory.Check_System_Action_string);
 		TypeTraits<System.Func<bool>>.Init(factory.Check_System_Func_bool);
+		TypeTraits<System.Action<UnityEngine.PhysicsScene,Unity.Collections.NativeArray<UnityEngine.ModifiableContactPair>>>.Init(factory.Check_System_Action_UnityEngine_PhysicsScene_Unity_Collections_NativeArray_UnityEngine_ModifiableContactPair);
 		TypeTraits<UnityEngine.AudioClip.PCMReaderCallback>.Init(factory.Check_UnityEngine_AudioClip_PCMReaderCallback);
 		TypeTraits<UnityEngine.AudioClip.PCMSetPositionCallback>.Init(factory.Check_UnityEngine_AudioClip_PCMSetPositionCallback);
 		TypeTraits<System.Action<UnityEngine.AsyncOperation>>.Init(factory.Check_System_Action_UnityEngine_AsyncOperation);
@@ -211,6 +217,7 @@ public class DelegateFactory
 		StackTraits<System.Func<int,int>>.Push = factory.Push_System_Func_int_int;
 		StackTraits<UnityEngine.Camera.CameraCallback>.Push = factory.Push_UnityEngine_Camera_CameraCallback;
 		StackTraits<UnityEngine.RectTransform.ReapplyDrivenProperties>.Push = factory.Push_UnityEngine_RectTransform_ReapplyDrivenProperties;
+		StackTraits<UnityEngine.Events.UnityAction<UnityEngine.SpriteRenderer>>.Push = factory.Push_UnityEngine_Events_UnityAction_UnityEngine_SpriteRenderer;
 		StackTraits<DG.Tweening.TweenCallback>.Push = factory.Push_DG_Tweening_TweenCallback;
 		StackTraits<DG.Tweening.TweenCallback<int>>.Push = factory.Push_DG_Tweening_TweenCallback_int;
 		StackTraits<DG.Tweening.Core.DOGetter<string>>.Push = factory.Push_DG_Tweening_Core_DOGetter_string;
@@ -250,6 +257,7 @@ public class DelegateFactory
 		StackTraits<System.Action<bool>>.Push = factory.Push_System_Action_bool;
 		StackTraits<System.Action<string>>.Push = factory.Push_System_Action_string;
 		StackTraits<System.Func<bool>>.Push = factory.Push_System_Func_bool;
+		StackTraits<System.Action<UnityEngine.PhysicsScene,Unity.Collections.NativeArray<UnityEngine.ModifiableContactPair>>>.Push = factory.Push_System_Action_UnityEngine_PhysicsScene_Unity_Collections_NativeArray_UnityEngine_ModifiableContactPair;
 		StackTraits<UnityEngine.AudioClip.PCMReaderCallback>.Push = factory.Push_UnityEngine_AudioClip_PCMReaderCallback;
 		StackTraits<UnityEngine.AudioClip.PCMSetPositionCallback>.Push = factory.Push_UnityEngine_AudioClip_PCMSetPositionCallback;
 		StackTraits<System.Action<UnityEngine.AsyncOperation>>.Push = factory.Push_System_Action_UnityEngine_AsyncOperation;
@@ -833,6 +841,63 @@ public class DelegateFactory
 	}
 
 	void Push_UnityEngine_RectTransform_ReapplyDrivenProperties(IntPtr L, UnityEngine.RectTransform.ReapplyDrivenProperties o)
+	{
+		ToLua.Push(L, o);
+	}
+
+	class UnityEngine_Events_UnityAction_UnityEngine_SpriteRenderer_Event : LuaDelegate
+	{
+		public UnityEngine_Events_UnityAction_UnityEngine_SpriteRenderer_Event(LuaFunction func) : base(func) { }
+		public UnityEngine_Events_UnityAction_UnityEngine_SpriteRenderer_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+
+		public void Call(UnityEngine.SpriteRenderer param0)
+		{
+			func.BeginPCall();
+			func.PushSealed(param0);
+			func.PCall();
+			func.EndPCall();
+		}
+
+		public void CallWithSelf(UnityEngine.SpriteRenderer param0)
+		{
+			func.BeginPCall();
+			func.Push(self);
+			func.PushSealed(param0);
+			func.PCall();
+			func.EndPCall();
+		}
+	}
+
+	public UnityEngine.Events.UnityAction<UnityEngine.SpriteRenderer> UnityEngine_Events_UnityAction_UnityEngine_SpriteRenderer(LuaFunction func, LuaTable self, bool flag)
+	{
+		if (func == null)
+		{
+			UnityEngine.Events.UnityAction<UnityEngine.SpriteRenderer> fn = delegate(UnityEngine.SpriteRenderer param0) { };
+			return fn;
+		}
+
+		if(!flag)
+		{
+			UnityEngine_Events_UnityAction_UnityEngine_SpriteRenderer_Event target = new UnityEngine_Events_UnityAction_UnityEngine_SpriteRenderer_Event(func);
+			UnityEngine.Events.UnityAction<UnityEngine.SpriteRenderer> d = target.Call;
+			target.method = d.Method;
+			return d;
+		}
+		else
+		{
+			UnityEngine_Events_UnityAction_UnityEngine_SpriteRenderer_Event target = new UnityEngine_Events_UnityAction_UnityEngine_SpriteRenderer_Event(func, self);
+			UnityEngine.Events.UnityAction<UnityEngine.SpriteRenderer> d = target.CallWithSelf;
+			target.method = d.Method;
+			return d;
+		}
+	}
+
+	bool Check_UnityEngine_Events_UnityAction_UnityEngine_SpriteRenderer(IntPtr L, int pos)
+	{
+		return TypeChecker.CheckDelegateType(typeof(UnityEngine.Events.UnityAction<UnityEngine.SpriteRenderer>), L, pos);
+	}
+
+	void Push_UnityEngine_Events_UnityAction_UnityEngine_SpriteRenderer(IntPtr L, UnityEngine.Events.UnityAction<UnityEngine.SpriteRenderer> o)
 	{
 		ToLua.Push(L, o);
 	}
@@ -3102,6 +3167,65 @@ public class DelegateFactory
 	}
 
 	void Push_System_Func_bool(IntPtr L, System.Func<bool> o)
+	{
+		ToLua.Push(L, o);
+	}
+
+	class System_Action_UnityEngine_PhysicsScene_Unity_Collections_NativeArray_UnityEngine_ModifiableContactPair_Event : LuaDelegate
+	{
+		public System_Action_UnityEngine_PhysicsScene_Unity_Collections_NativeArray_UnityEngine_ModifiableContactPair_Event(LuaFunction func) : base(func) { }
+		public System_Action_UnityEngine_PhysicsScene_Unity_Collections_NativeArray_UnityEngine_ModifiableContactPair_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+
+		public void Call(UnityEngine.PhysicsScene param0, Unity.Collections.NativeArray<UnityEngine.ModifiableContactPair> param1)
+		{
+			func.BeginPCall();
+			func.PushValue(param0);
+			func.PushValue(param1);
+			func.PCall();
+			func.EndPCall();
+		}
+
+		public void CallWithSelf(UnityEngine.PhysicsScene param0, Unity.Collections.NativeArray<UnityEngine.ModifiableContactPair> param1)
+		{
+			func.BeginPCall();
+			func.Push(self);
+			func.PushValue(param0);
+			func.PushValue(param1);
+			func.PCall();
+			func.EndPCall();
+		}
+	}
+
+	public System.Action<UnityEngine.PhysicsScene,Unity.Collections.NativeArray<UnityEngine.ModifiableContactPair>> System_Action_UnityEngine_PhysicsScene_Unity_Collections_NativeArray_UnityEngine_ModifiableContactPair(LuaFunction func, LuaTable self, bool flag)
+	{
+		if (func == null)
+		{
+			System.Action<UnityEngine.PhysicsScene,Unity.Collections.NativeArray<UnityEngine.ModifiableContactPair>> fn = delegate(UnityEngine.PhysicsScene param0, Unity.Collections.NativeArray<UnityEngine.ModifiableContactPair> param1) { };
+			return fn;
+		}
+
+		if(!flag)
+		{
+			System_Action_UnityEngine_PhysicsScene_Unity_Collections_NativeArray_UnityEngine_ModifiableContactPair_Event target = new System_Action_UnityEngine_PhysicsScene_Unity_Collections_NativeArray_UnityEngine_ModifiableContactPair_Event(func);
+			System.Action<UnityEngine.PhysicsScene,Unity.Collections.NativeArray<UnityEngine.ModifiableContactPair>> d = target.Call;
+			target.method = d.Method;
+			return d;
+		}
+		else
+		{
+			System_Action_UnityEngine_PhysicsScene_Unity_Collections_NativeArray_UnityEngine_ModifiableContactPair_Event target = new System_Action_UnityEngine_PhysicsScene_Unity_Collections_NativeArray_UnityEngine_ModifiableContactPair_Event(func, self);
+			System.Action<UnityEngine.PhysicsScene,Unity.Collections.NativeArray<UnityEngine.ModifiableContactPair>> d = target.CallWithSelf;
+			target.method = d.Method;
+			return d;
+		}
+	}
+
+	bool Check_System_Action_UnityEngine_PhysicsScene_Unity_Collections_NativeArray_UnityEngine_ModifiableContactPair(IntPtr L, int pos)
+	{
+		return TypeChecker.CheckDelegateType(typeof(System.Action<UnityEngine.PhysicsScene,Unity.Collections.NativeArray<UnityEngine.ModifiableContactPair>>), L, pos);
+	}
+
+	void Push_System_Action_UnityEngine_PhysicsScene_Unity_Collections_NativeArray_UnityEngine_ModifiableContactPair(IntPtr L, System.Action<UnityEngine.PhysicsScene,Unity.Collections.NativeArray<UnityEngine.ModifiableContactPair>> o)
 	{
 		ToLua.Push(L, o);
 	}

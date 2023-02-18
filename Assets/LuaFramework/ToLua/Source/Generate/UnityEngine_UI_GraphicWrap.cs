@@ -12,6 +12,7 @@ public class UnityEngine_UI_GraphicWrap
 		L.RegFunction("SetLayoutDirty", SetLayoutDirty);
 		L.RegFunction("SetVerticesDirty", SetVerticesDirty);
 		L.RegFunction("SetMaterialDirty", SetMaterialDirty);
+		L.RegFunction("SetRaycastDirty", SetRaycastDirty);
 		L.RegFunction("OnCullingChanged", OnCullingChanged);
 		L.RegFunction("Rebuild", Rebuild);
 		L.RegFunction("LayoutComplete", LayoutComplete);
@@ -104,6 +105,22 @@ public class UnityEngine_UI_GraphicWrap
 			ToLua.CheckArgsCount(L, 1);
 			UnityEngine.UI.Graphic obj = (UnityEngine.UI.Graphic)ToLua.CheckObject<UnityEngine.UI.Graphic>(L, 1);
 			obj.SetMaterialDirty();
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int SetRaycastDirty(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			UnityEngine.UI.Graphic obj = (UnityEngine.UI.Graphic)ToLua.CheckObject<UnityEngine.UI.Graphic>(L, 1);
+			obj.SetRaycastDirty();
 			return 0;
 		}
 		catch (Exception e)

@@ -10,12 +10,13 @@ public class UnityEngine_Rendering_VolumeWrap
 		L.RegFunction("HasInstantiatedProfile", HasInstantiatedProfile);
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
-		L.RegVar("isGlobal", get_isGlobal, set_isGlobal);
 		L.RegVar("priority", get_priority, set_priority);
 		L.RegVar("blendDistance", get_blendDistance, set_blendDistance);
 		L.RegVar("weight", get_weight, set_weight);
 		L.RegVar("sharedProfile", get_sharedProfile, set_sharedProfile);
+		L.RegVar("isGlobal", get_isGlobal, set_isGlobal);
 		L.RegVar("profile", get_profile, set_profile);
+		L.RegVar("colliders", get_colliders, null);
 		L.EndClass();
 	}
 
@@ -51,25 +52,6 @@ public class UnityEngine_Rendering_VolumeWrap
 		catch (Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int get_isGlobal(IntPtr L)
-	{
-		object o = null;
-
-		try
-		{
-			o = ToLua.ToObject(L, 1);
-			UnityEngine.Rendering.Volume obj = (UnityEngine.Rendering.Volume)o;
-			bool ret = obj.isGlobal;
-			LuaDLL.lua_pushboolean(L, ret);
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index isGlobal on a nil value");
 		}
 	}
 
@@ -150,6 +132,25 @@ public class UnityEngine_Rendering_VolumeWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_isGlobal(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.Rendering.Volume obj = (UnityEngine.Rendering.Volume)o;
+			bool ret = obj.isGlobal;
+			LuaDLL.lua_pushboolean(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index isGlobal on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int get_profile(IntPtr L)
 	{
 		object o = null;
@@ -169,7 +170,7 @@ public class UnityEngine_Rendering_VolumeWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int set_isGlobal(IntPtr L)
+	static int get_colliders(IntPtr L)
 	{
 		object o = null;
 
@@ -177,13 +178,13 @@ public class UnityEngine_Rendering_VolumeWrap
 		{
 			o = ToLua.ToObject(L, 1);
 			UnityEngine.Rendering.Volume obj = (UnityEngine.Rendering.Volume)o;
-			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
-			obj.isGlobal = arg0;
-			return 0;
+			System.Collections.Generic.List<UnityEngine.Collider> ret = obj.colliders;
+			ToLua.PushSealed(L, ret);
+			return 1;
 		}
 		catch(Exception e)
 		{
-			return LuaDLL.toluaL_exception(L, e, o, "attempt to index isGlobal on a nil value");
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index colliders on a nil value");
 		}
 	}
 
@@ -260,6 +261,25 @@ public class UnityEngine_Rendering_VolumeWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index sharedProfile on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_isGlobal(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.Rendering.Volume obj = (UnityEngine.Rendering.Volume)o;
+			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
+			obj.isGlobal = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index isGlobal on a nil value");
 		}
 	}
 

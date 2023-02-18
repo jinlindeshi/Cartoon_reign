@@ -31,6 +31,15 @@ public class UnityEngine_EventSystems_PointerEventDataWrap
 		L.RegVar("useDragThreshold", get_useDragThreshold, set_useDragThreshold);
 		L.RegVar("dragging", get_dragging, set_dragging);
 		L.RegVar("button", get_button, set_button);
+		L.RegVar("pressure", get_pressure, set_pressure);
+		L.RegVar("tangentialPressure", get_tangentialPressure, set_tangentialPressure);
+		L.RegVar("altitudeAngle", get_altitudeAngle, set_altitudeAngle);
+		L.RegVar("azimuthAngle", get_azimuthAngle, set_azimuthAngle);
+		L.RegVar("twist", get_twist, set_twist);
+		L.RegVar("radius", get_radius, set_radius);
+		L.RegVar("radiusVariance", get_radiusVariance, set_radiusVariance);
+		L.RegVar("fullyExited", get_fullyExited, set_fullyExited);
+		L.RegVar("reentered", get_reentered, set_reentered);
 		L.RegVar("enterEventCamera", get_enterEventCamera, null);
 		L.RegVar("pressEventCamera", get_pressEventCamera, null);
 		L.RegVar("pointerPress", get_pointerPress, set_pointerPress);
@@ -475,6 +484,177 @@ public class UnityEngine_EventSystems_PointerEventDataWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_pressure(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.EventSystems.PointerEventData obj = (UnityEngine.EventSystems.PointerEventData)o;
+			float ret = obj.pressure;
+			LuaDLL.lua_pushnumber(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index pressure on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_tangentialPressure(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.EventSystems.PointerEventData obj = (UnityEngine.EventSystems.PointerEventData)o;
+			float ret = obj.tangentialPressure;
+			LuaDLL.lua_pushnumber(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index tangentialPressure on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_altitudeAngle(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.EventSystems.PointerEventData obj = (UnityEngine.EventSystems.PointerEventData)o;
+			float ret = obj.altitudeAngle;
+			LuaDLL.lua_pushnumber(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index altitudeAngle on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_azimuthAngle(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.EventSystems.PointerEventData obj = (UnityEngine.EventSystems.PointerEventData)o;
+			float ret = obj.azimuthAngle;
+			LuaDLL.lua_pushnumber(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index azimuthAngle on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_twist(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.EventSystems.PointerEventData obj = (UnityEngine.EventSystems.PointerEventData)o;
+			float ret = obj.twist;
+			LuaDLL.lua_pushnumber(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index twist on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_radius(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.EventSystems.PointerEventData obj = (UnityEngine.EventSystems.PointerEventData)o;
+			UnityEngine.Vector2 ret = obj.radius;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index radius on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_radiusVariance(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.EventSystems.PointerEventData obj = (UnityEngine.EventSystems.PointerEventData)o;
+			UnityEngine.Vector2 ret = obj.radiusVariance;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index radiusVariance on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_fullyExited(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.EventSystems.PointerEventData obj = (UnityEngine.EventSystems.PointerEventData)o;
+			bool ret = obj.fullyExited;
+			LuaDLL.lua_pushboolean(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index fullyExited on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_reentered(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.EventSystems.PointerEventData obj = (UnityEngine.EventSystems.PointerEventData)o;
+			bool ret = obj.reentered;
+			LuaDLL.lua_pushboolean(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index reentered on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int get_enterEventCamera(IntPtr L)
 	{
 		object o = null;
@@ -870,6 +1050,177 @@ public class UnityEngine_EventSystems_PointerEventDataWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index button on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_pressure(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.EventSystems.PointerEventData obj = (UnityEngine.EventSystems.PointerEventData)o;
+			float arg0 = (float)LuaDLL.luaL_checknumber(L, 2);
+			obj.pressure = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index pressure on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_tangentialPressure(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.EventSystems.PointerEventData obj = (UnityEngine.EventSystems.PointerEventData)o;
+			float arg0 = (float)LuaDLL.luaL_checknumber(L, 2);
+			obj.tangentialPressure = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index tangentialPressure on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_altitudeAngle(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.EventSystems.PointerEventData obj = (UnityEngine.EventSystems.PointerEventData)o;
+			float arg0 = (float)LuaDLL.luaL_checknumber(L, 2);
+			obj.altitudeAngle = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index altitudeAngle on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_azimuthAngle(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.EventSystems.PointerEventData obj = (UnityEngine.EventSystems.PointerEventData)o;
+			float arg0 = (float)LuaDLL.luaL_checknumber(L, 2);
+			obj.azimuthAngle = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index azimuthAngle on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_twist(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.EventSystems.PointerEventData obj = (UnityEngine.EventSystems.PointerEventData)o;
+			float arg0 = (float)LuaDLL.luaL_checknumber(L, 2);
+			obj.twist = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index twist on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_radius(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.EventSystems.PointerEventData obj = (UnityEngine.EventSystems.PointerEventData)o;
+			UnityEngine.Vector2 arg0 = ToLua.ToVector2(L, 2);
+			obj.radius = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index radius on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_radiusVariance(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.EventSystems.PointerEventData obj = (UnityEngine.EventSystems.PointerEventData)o;
+			UnityEngine.Vector2 arg0 = ToLua.ToVector2(L, 2);
+			obj.radiusVariance = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index radiusVariance on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_fullyExited(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.EventSystems.PointerEventData obj = (UnityEngine.EventSystems.PointerEventData)o;
+			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
+			obj.fullyExited = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index fullyExited on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_reentered(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.EventSystems.PointerEventData obj = (UnityEngine.EventSystems.PointerEventData)o;
+			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
+			obj.reentered = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index reentered on a nil value");
 		}
 	}
 

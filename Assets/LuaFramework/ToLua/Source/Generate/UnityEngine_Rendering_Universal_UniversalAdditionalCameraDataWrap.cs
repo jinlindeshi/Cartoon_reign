@@ -25,6 +25,8 @@ public class UnityEngine_Rendering_Universal_UniversalAdditionalCameraDataWrap
 		L.RegVar("scriptableRenderer", get_scriptableRenderer, null);
 		L.RegVar("volumeLayerMask", get_volumeLayerMask, set_volumeLayerMask);
 		L.RegVar("volumeTrigger", get_volumeTrigger, set_volumeTrigger);
+		L.RegVar("requiresVolumeFrameworkUpdate", get_requiresVolumeFrameworkUpdate, null);
+		L.RegVar("volumeStack", get_volumeStack, set_volumeStack);
 		L.RegVar("renderPostProcessing", get_renderPostProcessing, set_renderPostProcessing);
 		L.RegVar("antialiasing", get_antialiasing, set_antialiasing);
 		L.RegVar("antialiasingQuality", get_antialiasingQuality, set_antialiasingQuality);
@@ -346,6 +348,44 @@ public class UnityEngine_Rendering_Universal_UniversalAdditionalCameraDataWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_requiresVolumeFrameworkUpdate(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.Rendering.Universal.UniversalAdditionalCameraData obj = (UnityEngine.Rendering.Universal.UniversalAdditionalCameraData)o;
+			bool ret = obj.requiresVolumeFrameworkUpdate;
+			LuaDLL.lua_pushboolean(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index requiresVolumeFrameworkUpdate on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_volumeStack(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.Rendering.Universal.UniversalAdditionalCameraData obj = (UnityEngine.Rendering.Universal.UniversalAdditionalCameraData)o;
+			UnityEngine.Rendering.VolumeStack ret = obj.volumeStack;
+			ToLua.PushSealed(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index volumeStack on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int get_renderPostProcessing(IntPtr L)
 	{
 		object o = null;
@@ -608,6 +648,25 @@ public class UnityEngine_Rendering_Universal_UniversalAdditionalCameraDataWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index volumeTrigger on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_volumeStack(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.Rendering.Universal.UniversalAdditionalCameraData obj = (UnityEngine.Rendering.Universal.UniversalAdditionalCameraData)o;
+			UnityEngine.Rendering.VolumeStack arg0 = (UnityEngine.Rendering.VolumeStack)ToLua.CheckObject(L, 2, typeof(UnityEngine.Rendering.VolumeStack));
+			obj.volumeStack = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index volumeStack on a nil value");
 		}
 	}
 

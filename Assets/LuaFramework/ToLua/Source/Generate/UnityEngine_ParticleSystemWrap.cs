@@ -163,11 +163,28 @@ public class UnityEngine_ParticleSystemWrap
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 1);
-			UnityEngine.ParticleSystem obj = (UnityEngine.ParticleSystem)ToLua.CheckObject(L, 1, typeof(UnityEngine.ParticleSystem));
-			UnityEngine.ParticleSystem.Trails o = obj.GetTrails();
-			ToLua.PushValue(L, o);
-			return 1;
+			int count = LuaDLL.lua_gettop(L);
+
+			if (count == 1)
+			{
+				UnityEngine.ParticleSystem obj = (UnityEngine.ParticleSystem)ToLua.CheckObject(L, 1, typeof(UnityEngine.ParticleSystem));
+				UnityEngine.ParticleSystem.Trails o = obj.GetTrails();
+				ToLua.PushValue(L, o);
+				return 1;
+			}
+			else if (count == 2)
+			{
+				UnityEngine.ParticleSystem obj = (UnityEngine.ParticleSystem)ToLua.CheckObject(L, 1, typeof(UnityEngine.ParticleSystem));
+				UnityEngine.ParticleSystem.Trails arg0 = StackTraits<UnityEngine.ParticleSystem.Trails>.Check(L, 2);
+				int o = obj.GetTrails(ref arg0);
+				LuaDLL.lua_pushinteger(L, o);
+				ToLua.PushValue(L, arg0);
+				return 2;
+			}
+			else
+			{
+				return LuaDLL.luaL_throw(L, "invalid arguments to method: UnityEngine.ParticleSystem.GetTrails");
+			}
 		}
 		catch (Exception e)
 		{

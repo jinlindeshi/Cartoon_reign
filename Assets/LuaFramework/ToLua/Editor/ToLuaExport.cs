@@ -157,6 +157,7 @@ public static class ToLuaExport
         "Texture.imageContentsHash",
         "QualitySettings.streamingMipmapsMaxLevelReduction",
         "QualitySettings.streamingMipmapsRenderersPerFrame",
+        "QualitySettings.GetAllRenderPipelineAssetsForPlatform",
 
         //NGUI
         "UIInput.ProcessEvent",
@@ -180,6 +181,23 @@ public static class ToLuaExport
         "MeshRenderer.scaleInLightmap",
         "MeshRenderer.stitchLightmapSeams",
         "MeshRenderer.receiveGI",
+        // Unity 2021
+        "Shader.DisableKeyword",
+        "Shader.EnableKeyword",
+        "Shader.IsKeywordEnabled",
+        "Shader.SetKeyword",
+        "Material.EnableKeyword",
+        "Material.DisableKeyword",
+        "Material.IsKeywordEnabled",
+        "Material.SetKeyword",
+        "Screen.MoveMainWindowTo",
+        "AudioSource.PlayOnGamepad",
+        "AudioSource.DisableGamepadOutput",
+        "AudioSource.SetGamepadSpeakerMixLevel",
+        "AudioSource.SetGamepadSpeakerMixLevelDefault",
+        "AudioSource.SetGamepadSpeakerRestrictedAudio",
+        "AudioSource.GamepadSpeakerSupportsOutputType",
+        "AudioSource.gamepadSpeakerOutputType",
     };
 
     class _MethodBase

@@ -23,7 +23,7 @@ public class UnityEngine_Texture2DWrap
 		L.RegFunction("GetPixelBilinear", GetPixelBilinear);
 		L.RegFunction("LoadRawTextureData", LoadRawTextureData);
 		L.RegFunction("Apply", Apply);
-		L.RegFunction("Resize", Resize);
+		L.RegFunction("Reinitialize", Reinitialize);
 		L.RegFunction("ReadPixels", ReadPixels);
 		L.RegFunction("GenerateAtlas", GenerateAtlas);
 		L.RegFunction("SetPixels32", SetPixels32);
@@ -31,6 +31,7 @@ public class UnityEngine_Texture2DWrap
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegVar("format", get_format, null);
+		L.RegVar("ignoreMipmapLimit", get_ignoreMipmapLimit, set_ignoreMipmapLimit);
 		L.RegVar("whiteTexture", get_whiteTexture, null);
 		L.RegVar("blackTexture", get_blackTexture, null);
 		L.RegVar("redTexture", get_redTexture, null);
@@ -638,7 +639,7 @@ public class UnityEngine_Texture2DWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int Resize(IntPtr L)
+	static int Reinitialize(IntPtr L)
 	{
 		try
 		{
@@ -649,7 +650,7 @@ public class UnityEngine_Texture2DWrap
 				UnityEngine.Texture2D obj = (UnityEngine.Texture2D)ToLua.CheckObject(L, 1, typeof(UnityEngine.Texture2D));
 				int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
 				int arg1 = (int)LuaDLL.luaL_checknumber(L, 3);
-				bool o = obj.Resize(arg0, arg1);
+				bool o = obj.Reinitialize(arg0, arg1);
 				LuaDLL.lua_pushboolean(L, o);
 				return 1;
 			}
@@ -660,7 +661,7 @@ public class UnityEngine_Texture2DWrap
 				int arg1 = (int)LuaDLL.luaL_checknumber(L, 3);
 				UnityEngine.TextureFormat arg2 = (UnityEngine.TextureFormat)ToLua.ToObject(L, 4);
 				bool arg3 = LuaDLL.lua_toboolean(L, 5);
-				bool o = obj.Resize(arg0, arg1, arg2, arg3);
+				bool o = obj.Reinitialize(arg0, arg1, arg2, arg3);
 				LuaDLL.lua_pushboolean(L, o);
 				return 1;
 			}
@@ -671,13 +672,13 @@ public class UnityEngine_Texture2DWrap
 				int arg1 = (int)LuaDLL.luaL_checknumber(L, 3);
 				UnityEngine.Experimental.Rendering.GraphicsFormat arg2 = (UnityEngine.Experimental.Rendering.GraphicsFormat)ToLua.ToObject(L, 4);
 				bool arg3 = LuaDLL.lua_toboolean(L, 5);
-				bool o = obj.Resize(arg0, arg1, arg2, arg3);
+				bool o = obj.Reinitialize(arg0, arg1, arg2, arg3);
 				LuaDLL.lua_pushboolean(L, o);
 				return 1;
 			}
 			else
 			{
-				return LuaDLL.luaL_throw(L, "invalid arguments to method: UnityEngine.Texture2D.Resize");
+				return LuaDLL.luaL_throw(L, "invalid arguments to method: UnityEngine.Texture2D.Reinitialize");
 			}
 		}
 		catch (Exception e)
@@ -833,6 +834,25 @@ public class UnityEngine_Texture2DWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index format on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_ignoreMipmapLimit(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.Texture2D obj = (UnityEngine.Texture2D)o;
+			bool ret = obj.ignoreMipmapLimit;
+			LuaDLL.lua_pushboolean(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index ignoreMipmapLimit on a nil value");
 		}
 	}
 
@@ -1107,6 +1127,25 @@ public class UnityEngine_Texture2DWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index loadedMipmapLevel on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_ignoreMipmapLimit(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			UnityEngine.Texture2D obj = (UnityEngine.Texture2D)o;
+			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
+			obj.ignoreMipmapLimit = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index ignoreMipmapLimit on a nil value");
 		}
 	}
 

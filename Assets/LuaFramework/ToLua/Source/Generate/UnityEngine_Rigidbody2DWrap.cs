@@ -34,6 +34,7 @@ public class UnityEngine_Rigidbody2DWrap
 		L.RegFunction("GetContacts", GetContacts);
 		L.RegFunction("GetAttachedColliders", GetAttachedColliders);
 		L.RegFunction("Cast", Cast);
+		L.RegFunction("GetShapes", GetShapes);
 		L.RegFunction("DOLocalPath", DOLocalPath);
 		L.RegFunction("DOPath", DOPath);
 		L.RegFunction("DOJump", DOJump);
@@ -850,6 +851,24 @@ public class UnityEngine_Rigidbody2DWrap
 			{
 				return LuaDLL.luaL_throw(L, "invalid arguments to method: UnityEngine.Rigidbody2D.Cast");
 			}
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int GetShapes(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			UnityEngine.Rigidbody2D obj = (UnityEngine.Rigidbody2D)ToLua.CheckObject(L, 1, typeof(UnityEngine.Rigidbody2D));
+			UnityEngine.PhysicsShapeGroup2D arg0 = (UnityEngine.PhysicsShapeGroup2D)ToLua.CheckObject<UnityEngine.PhysicsShapeGroup2D>(L, 2);
+			int o = obj.GetShapes(arg0);
+			LuaDLL.lua_pushinteger(L, o);
+			return 1;
 		}
 		catch (Exception e)
 		{
