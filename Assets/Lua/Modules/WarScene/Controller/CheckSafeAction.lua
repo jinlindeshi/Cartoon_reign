@@ -43,12 +43,4 @@ function CheckSafeAction:OnStart()
     end
 end
 
-function CheckSafeAction:OnPause(paused)
-    --print("CheckSafeAction:OnPause", paused)
-    self.paused = paused
-    if self.paused then
-        self.avatar:SetTarget(nil)
-    end
-end
-
 return CheckSafeAction

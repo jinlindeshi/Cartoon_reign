@@ -63,7 +63,11 @@ public class BehaviorToLua:BehaviorTree
             Debug.Log("BehaviorToLua 未注册的LuaAction - " + name);
             return;
         }
-        _dic[name].Call(action, statusFunName, paramFloat, paramBool, paused);
+
+        if (_dic[name].IsAlive == true)
+        {
+            _dic[name].Call(action, statusFunName, paramFloat, paramBool, paused);
+        }
     }
     
     

@@ -58,7 +58,7 @@ end
 
 function MainMenuPanel:OnInfoButtonClick()
     UIMgr.OpenPanel(UIPanelCfg.growUp)
-    --require("Modules.WarScene.Model.WarData"):PauseAllAvatarAI()
+    --require("Modules.WarScene.Model.WarData"):StopAllAvatarAI()
 end
 
 function MainMenuPanel:OnRewardButtonClick()

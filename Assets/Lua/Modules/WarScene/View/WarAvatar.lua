@@ -331,6 +331,12 @@ function WarAvatar:Attack(callBack)
     end)
 end
 
+---取消正在进行的攻击
+function WarAvatar:CancelAttack()
+    self.aniEvent:SetListenerByMsg(ANI_EVENT_ATTACK_HIT, nil)
+    self:PlayAnimation(AvatarBase.ANI_IDLE_NAME)
+end
+
 ---远程攻击相关信息
 function WarAvatar:SetRangedAttackInfo(trailPrefabPath, hitPrefabPath, attackRadius)
     self.trailPrefabPath = trailPrefabPath

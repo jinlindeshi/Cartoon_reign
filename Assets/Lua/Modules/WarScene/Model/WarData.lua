@@ -139,10 +139,24 @@ function WarData:PauseAllAvatarAI()
     end
 end
 
-function WarData:StartAllAvatarAI()
+function WarData:ResumeAllAvatarAI()
     for id, avatar in pairs(WarData.AvatarHash) do
         avatar:AIResume()
     end
 end
+
+function WarData:StopAllAvatarAI()
+    for id, avatar in pairs(WarData.AvatarHash) do
+        avatar:AIStop()
+        avatar:SetTarget(nil)
+    end
+end
+
+function WarData:StartAllAvatarAI()
+    for id, avatar in pairs(WarData.AvatarHash) do
+        avatar:AIStart()
+    end
+end
+
 
 return WarData

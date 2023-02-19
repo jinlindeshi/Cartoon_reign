@@ -39,22 +39,17 @@ end
 
 function TryToCastSkillAction:OnPause(paused)
     --print("TryToCastSkillAction:OnPause", paused)
-    self.paused = paused
-    if self.paused then
-        self.avatar.skill:Over()
-    end
-end
-
-function TryToCastSkillAction:OnBehaviorComplete()
-    --print("TryToCastSkillAction:OnBehaviorComplete")
 end
 
 function TryToCastSkillAction:OnBehaviorRestart()
     --print("TryToCastSkillAction:OnBehaviorRestart")
 end
 
-function TryToCastSkillAction:OnEnd()
-    --print("TryToCastSkillAction:OnEnd")
+function TryToCastSkillAction:OnBehaviorComplete()
+    --print("TryToCastSkillAction:OnBehaviorComplete", self.cAction:GetUpdateStatus())
+    if self.cAction:GetUpdateStatus() == TaskStatus.Running then
+        self.avatar.skill:Over()
+    end
 end
 
 return TryToCastSkillAction

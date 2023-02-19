@@ -53,7 +53,9 @@ function AttackAction:OnPause(paused)
 end
 
 function AttackAction:OnBehaviorComplete()
-    --print("AttackAction:OnBehaviorComplete")
+    if self.cAction:GetUpdateStatus() == TaskStatus.Running then
+        self.avatar:CancelAttack()
+    end
 end
 
 function AttackAction:OnBehaviorRestart()

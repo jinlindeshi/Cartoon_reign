@@ -26,21 +26,21 @@ function MoveToEnemyAction:OnStart()
         return
     end
 
-    ---如果目标还在攻击范围内 用距离判断
-    local dis = Vector3.Distance(self.avatar.transform.position, self.avatar.target.transform.position)
-    local atkRadius = math.cos(math.rad(45)) * WarData.gridGraph.nodeSize * 2 --检测距离
-    if dis <= atkRadius then
-        --print("目标还在攻击范围内")
-        self.cAction:SetUpdateStatus(TaskStatus.Success)
-        return
-    end
-
-    --local grids = WarData.GetAroundGrids(self.avatar.x, self.avatar.z, self.avatar.attackRadius)
-    --if grids[self.avatar.target.x] and grids[self.avatar.target.x][self.avatar.target.z] and dis <= atkRadius then
-    --    print("敌人能打到，不用走")
+    ---如果目标还在攻击范围内 用距离判断(只能判断两格以内近战)
+    --local dis = Vector3.Distance(self.avatar.transform.position, self.avatar.target.transform.position)
+    --local atkRadius = math.cos(math.rad(45)) * WarData.gridGraph.nodeSize * 2 --检测距离
+    --if dis <= atkRadius then
+    --    --print("目标还在攻击范围内")
     --    self.cAction:SetUpdateStatus(TaskStatus.Success)
     --    return
     --end
+
+    local grids = WarData.GetAroundGrids(self.avatar.x, self.avatar.z, self.avatar.attackRadius)
+    if grids[self.avatar.target.x] and grids[self.avatar.target.x][self.avatar.target.z] then
+        --print("敌人能打到，不用走")
+        self.cAction:SetUpdateStatus(TaskStatus.Success)
+        return
+    end
 
 
     self.avatar:EndFollow()
@@ -75,7 +75,12 @@ end
 function MoveToEnemyAction:OnPause(paused)
     --print("MoveToEnemyAction:OnPause", paused)
     self.paused = paused
-    if self.paused then
+end
+
+function MoveToEnemyAction:OnBehaviorComplete()
+    if self.cAction:GetUpdateStatus() == TaskStatus.Running then
+        local nowGrid = WarData.gridGraph:GetNearest(self.avatar.transform.position, Pathfinding.NNConstraint.None).node
+        self.avatar:SetLoc(nowGrid.XCoordinateInGrid, nowGrid.ZCoordinateInGrid)
         self.avatar:StopMoving()
         self.avatar:EndFollow()
     end
