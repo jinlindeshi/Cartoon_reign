@@ -285,15 +285,18 @@ def export_excel(define_path, export_all):
 
 
 def main():
-	import argparse
-	parser = argparse.ArgumentParser(description=u'Excel Expoter')
-	parser.add_argument('-p', '--path', type=str, required=True, help=u"指定导表定义文件的路径，可以是具体的文件，也可以是一个目录")
-	parser.add_argument('-a', '--all', type=int, default=False, help=u"是否全导，如果不，则只导修改过的文件")
-	args = parser.parse_args()
+	# import argparse
+	# parser = argparse.ArgumentParser(description=u'Excel Expoter')
+	# parser.add_argument('-p', '--path', type=str, required=True, help=u"指定导表定义文件的路径，可以是具体的文件，也可以是一个目录")
+	# parser.add_argument('-a', '--all', type=int, default=False, help=u"是否全导，如果不，则只导修改过的文件")
+	# args = parser.parse_args()
 
 	debuglog("开始导出")
-	export_excel(args.path, args.all)
+	# export_excel(args.path, args.all)
+	url = os.path.join(os.path.dirname(os.path.dirname(__file__)),"Excel")
+	export_excel(url, -1)
 	debuglog("导出完毕!!!")
+	
 
 
 if __name__ == "__main__":
