@@ -209,28 +209,28 @@
 #if !defined(ADDITIONAL_LIGHT_CALCULATE_SHADOWS)
                 return 1.0h;
 #endif
-# if (SHADER_LIBRARY_VERSION_MAJOR >= 13 && UNITY_VERSION >= 202220 )
-                ShadowSamplingData shadowSamplingData = GetAdditionalLightShadowSamplingData(lightIndex);
-# else
+// # if (SHADER_LIBRARY_VERSION_MAJOR >= 13 && UNITY_VERSION >= 202220 )
+//                 ShadowSamplingData shadowSamplingData = GetAdditionalLightShadowSamplingData(lightIndex);
+// # else
                 ShadowSamplingData shadowSamplingData = GetAdditionalLightShadowSamplingData();
-# endif
+// # endif
 
-#if USE_STRUCTURED_BUFFER_FOR_LIGHT_DATA
-                lightIndex = _AdditionalShadowsIndices[lightIndex];
-
-                // We have to branch here as otherwise we would sample buffer with lightIndex == -1.
-                // However this should be ok for platforms that store light in SSBO.
-                UNITY_BRANCH
-                    if (lightIndex < 0)
-                        return 1.0;
-
-                float4 shadowCoord = mul(_AdditionalShadowsBuffer[lightIndex].worldToShadowMatrix, float4(positionWS, 1.0));
-#else
-                float4 shadowCoord = mul(_AdditionalLightsWorldToShadow[lightIndex], float4(positionWS, 1.0));
-#endif
+// #if USE_STRUCTURED_BUFFER_FOR_LIGHT_DATA
+//                 lightIndex = _AdditionalShadowsIndices[lightIndex];
+//
+//                 // We have to branch here as otherwise we would sample buffer with lightIndex == -1.
+//                 // However this should be ok for platforms that store light in SSBO.
+//                 UNITY_BRANCH
+//                     if (lightIndex < 0)
+//                         return 1.0;
+//
+//                 float4 shadowCoord = mul(_AdditionalShadowsBuffer[lightIndex].worldToShadowMatrix, float4(positionWS, 1.0));
+// #else
+//                 float4 shadowCoord = mul(_AdditionalLightsWorldToShadow[lightIndex], float4(positionWS, 1.0));
+// #endif
 
                 half4 shadowParams = GetAdditionalLightShadowParams(lightIndex);
-                return SampleShadowmap(TEXTURE2D_ARGS(_AdditionalLightsShadowmapTexture, sampler_AdditionalLightsShadowmapTexture), shadowCoord, shadowSamplingData, shadowParams, true);
+                return SampleShadowmap(TEXTURE2D_ARGS(_AdditionalLightsShadowmapTexture, sampler_AdditionalLightsShadowmapTexture), (1,1,1,1), shadowSamplingData, shadowParams, true);
             }
 
 
