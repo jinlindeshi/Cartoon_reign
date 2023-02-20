@@ -3,8 +3,8 @@
 --- Created by sunshuo.
 --- DateTime: 2023/2/17 16:15
 --- 普通抽奖页面
----@class UI.DrawCard.PoolView:LuaObj
----@field New fun():UI.DrawCard.PoolView
+---@class UI.DrawCard.PoolControl:LuaObj
+---@field New fun():UI.DrawCard.PoolControl
 local PoolControl = class("UI.DrawCard.PoolControl", LuaObj)
 function PoolControl:Ctor(parent, poolId)
     self.poolId = poolId
@@ -20,11 +20,11 @@ function PoolControl:Ctor(parent, poolId)
 end
 
 function PoolControl:OnBtnOnceClick()
-
+    EventMgr.DispatchEvent("DrawCardOne")
 end
 
 function PoolControl:OnBtnTenthClick()
-
+    EventMgr.DispatchEvent("DrawCardTen")
 end
 
 function PoolControl:OnDestroy()

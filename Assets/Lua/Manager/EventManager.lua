@@ -29,7 +29,7 @@ function EventManager.AddEventListener(type, callback, caller)
         for i = 1, #list do
             local item = list[i] ---@type Event.EventListener
             if item.callback == callback and item.caller == caller then
-                LogError("事件监听重复注册 type:", type)
+                LogWarning("事件监听重复注册 type:", type)
                 return
             end
         end
@@ -45,7 +45,7 @@ end
 function EventManager.RemoveEventListener(type, callback, caller)
     local list = eventMap[type]
     if list == nil then
-        LogError("事件监听未被注册 type:", type)
+        LogWarning("事件监听未被注册 type:", type)
         return
     end
 
@@ -62,7 +62,7 @@ end
 function EventManager.DispatchEvent(type, data)
     local list = eventMap[type]
     if list == nil then
-        LogError("事件监听未被注册 type:", type)
+        LogWarning("事件监听未被注册 type:", type)
         return
     end
 
