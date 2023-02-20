@@ -91,8 +91,10 @@ def convert_lua_simple(table, save_path, define_module):
 	sheet = define_module.config.get("sheet", "Sheet1")
 	s = "-- %s:%s\n" % (excel_path, sheet)
 	s = s + get_col_desc() + "\n\n"
-	s = s + 'local ' + basename + ' = ' + write_obj(table, True)
-	s = s + '\nreturn ' + basename
+	s = s + 'local ' + basename + ' = {}\n\n'
+	s = s + basename + '.Data = ' + write_obj(table, True)
+	s = s + '\n\nfunction %s.GetData(id) \n    return %s.Data[id] \nend'% (basename, basename)
+	s = s + '\n\nreturn ' + basename
 
 	with open(save_path, 'wb') as f:
 		f.write(s.encode("utf-8"))

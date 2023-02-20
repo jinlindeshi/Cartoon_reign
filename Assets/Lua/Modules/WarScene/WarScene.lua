@@ -77,7 +77,7 @@ function WarScene:TestFocusAvatar()
     --    avatar:AIStart()
     --end
 
-    local myData = clone(SData.GetAvatarSData(DemoCfg.mainAvatarID))
+    local myData = clone(SData.avatar.GetData(DemoCfg.mainAvatarID))
     local attr = AvatarData.GetHeroAttr(DemoCfg.mainAvatarID)
     myData.hp = attr.maxHp
     myData.maxHp = attr.maxHp

@@ -34,12 +34,12 @@ function AvatarData.GetHeroData(id)
 end
 
 function AvatarData.GetHeroSData(id)
-    return SData.GetAvatarSData(id)
+    return SData.avatar.GetData(id)
 end
 --获取角色属性
 function AvatarData.GetHeroAttr(id)
     local data = AvatarData.GetHeroData(id)
-    local orgData = SData.GetAvatarSData(id)
+    local orgData = SData.avatar.GetData(id)
     local rate = DemoCfg.starUpRateMap[data.starLv]
     return {atk = orgData.atk * rate, def = orgData.def * rate, maxHp = orgData.maxHp * rate}
 end

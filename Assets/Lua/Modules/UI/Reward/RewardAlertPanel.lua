@@ -36,7 +36,7 @@ function RewardAlertPanel:InitItemList(initHide)
     for i = 1, #self.dataList do
         local data = self.dataList[i]
         local itemData = clone(data)
-        itemData.sData = SData.GetEquipSData(itemData.id)
+        itemData.sData = SData.equip.GetData(itemData.id)
         local item = CommonItem.New(self.listRoot, itemData)
         table.insert(self.itemList, item)
         if initHide then

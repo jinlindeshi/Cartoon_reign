@@ -25,7 +25,7 @@ function GrowUpEquipItem:Refresh()
         self.icon:SetActive(false)
         self.qualityBg:SetActive(false)
     else
-        self.sData = SData.GetEquipSData(self.data.equipId)
+        self.sData = SData.equip.GetData(self.data.equipId)
         self.icon:SetActive(true)
         self.qualityBg:SetActive(true)
         self.iconImg.sprite = resMgr:LoadSpriteAtPath(string.format("%s%s.png", DemoCfg.equipIconPath, self.sData.icon))

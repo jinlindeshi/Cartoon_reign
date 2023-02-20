@@ -7,9 +7,16 @@
 -- def = 防御力
 -- side = 阵营
 
-local monster = {
+local monster = {}
+
+monster.Data = {
 	[1] = {atk = 20, def = 0, id = 1, maxHp = 150, name = "熊", prefab = "Prefabs/Avatars/monster_xiong.prefab", side = 2}, 
 	[2] = {atk = 15, def = 0, id = 2, maxHp = 100, name = "狗", prefab = "Prefabs/Avatars/monster_01.prefab", side = 2}, 
 	[3] = {atk = 15, def = 0, id = 3, maxHp = 100, name = "花", prefab = "Prefabs/Avatars/monster_02.prefab", side = 2}, 
 }
+
+function monster.GetData(id) 
+    return monster.Data[id] 
+end
+
 return monster

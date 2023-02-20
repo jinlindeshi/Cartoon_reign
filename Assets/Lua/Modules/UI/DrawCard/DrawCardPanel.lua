@@ -4,7 +4,8 @@
 --- DateTime: 2023/2/17 15:44
 ---
 local PoolSelectBtn = require("Modules.UI.DrawCard.PoolSelectBtn")
-local PoolView = require("Modules.UI.DrawCard.PoolView")
+local PoolControl = require("Modules.UI.DrawCard.PoolControl")
+
 ---@class UI.DrawCard.DrawCardPanel:UI.BasePanel
 ---@field New fun():UI.DrawCard.DrawCardPanel
 local DrawCardPanel = class("UI.DrawCard.DrawCardPanel", BasePanel)
@@ -14,10 +15,11 @@ function DrawCardPanel:Init()
     self.PoolRoot = self.transform:Find("PoolRoot")
     self.SelectPoolRoot = self.transform:Find("SelectPoolRoot")
     self.SelectRoot = self.transform:Find("SelectPoolRoot/Scroll View/Viewport/Content")
-    self.poolIdList = {1, 2, 3, 4, 5}
+    self.poolIdList = SData.GetOpenPools()
     self.poolMap = {}
     self:InitSelectPool()
-    self:SelectPool(self.poolIdList[1])
+    EventMgr.AddEventListener("DrawCardPoolSelect", self.OnDrawCardPoolSelect, self)
+    EventMgr.DispatchEvent("DrawCardPoolSelect", {id = self.poolIdList[1]})
 end
 
 ---卡池选择scrollView配置
@@ -52,19 +54,23 @@ function DrawCardPanel:SelectPool(poolId)
     end
     self.selectPoolId = poolId
     if self.poolMap[poolId] == nil then
-        self.poolMap[poolId] = PoolView.New(self.PoolRoot, poolId)
-    else
-        for id, view in pairs(self.poolMap) do
-            if id == poolId then
-                view:Show()
-            else
-                view:Hide()
-            end
+        self.poolMap[poolId] = PoolControl.New(self.PoolRoot, poolId)
+    end
+    for id, view in pairs(self.poolMap) do
+        if id == poolId then
+            view:Show()
+        else
+            view:Hide()
         end
     end
 end
 
+function DrawCardPanel:OnDrawCardPoolSelect(event)
+    self:SelectPool(event.data.id)
+end
+
 function DrawCardPanel:RemoveListeners()
     DrawCardPanel.super.RemoveListeners(self)
+    EventMgr.RemoveEventListener("DrawCardPoolSelect", self.OnDrawCardPoolSelect, self)
 end
 return DrawCardPanel

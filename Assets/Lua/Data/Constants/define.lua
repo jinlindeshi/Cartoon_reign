@@ -71,3 +71,6 @@ BasePanel = require("Modules.UI.BasePanel")
 
 Talk = require("Modules.Common.View.Talk")
 TalkerConfig = require("Modules.Common.Model.TalkerConfig")
+
+---表格数据
+SData = require("Modules.WarScene.Model.SData")

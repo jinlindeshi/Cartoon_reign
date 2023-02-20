@@ -44,7 +44,7 @@ function NewWaveEnemysAction:OnStart()
     --for i = 1, 1 do
     for i = 1, #data.monsters do
         WarData.avatarIdIndex = WarData.avatarIdIndex + 1
-        local enemyData = clone(SData.GetMonsterSData(data.monsters[i]))
+        local enemyData = clone(SData.monster.GetData(data.monsters[i]))
         enemyData.id = WarData.avatarIdIndex
         enemyData.hp = enemyData.maxHp
         local avatar = WarAvatar.New(enemyData.prefab,

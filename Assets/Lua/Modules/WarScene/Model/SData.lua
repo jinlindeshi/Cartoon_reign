@@ -12,25 +12,15 @@ SData.avatar = require("Data.Excel.avatar") --角色表数据
 SData.monster = require("Data.Excel.monster") --怪物表数据
 SData.monsterPoint = require("Data.Excel.monsterPoint") --刷怪点表数据
 SData.equip = require("Data.Excel.equip") --装备表数据
+SData.pools = require("Data.Excel.pools") --奖池表
 
-function SData.GetAvatarSData(id)
-    return SData.avatar[id]
-end
-
-function SData.GetMonsterSData(id)
-    return SData.monster[id]
-end
-
-function SData.GetEquipSData(id)
-    return SData.equip[id]
-end
-
+---获取地图数据
 SData.mapSData = {} --地图数据缓存
 function SData.GetMonsterPointSData(mapID)
     if SData.mapSData[mapID] == nil then
         local list = {}
-        for i = 1, #SData.monsterPoint do
-            local info = SData.monsterPoint[i]
+        for i = 1, #SData.monsterPoint.Data do
+            local info = SData.monsterPoint.Data[i]
             if info.mapID == mapID then
                 insert(list, info)
             end
@@ -41,6 +31,18 @@ function SData.GetMonsterPointSData(mapID)
         end
     end
     return SData.mapSData[mapID]
+end
+
+---获取已经开启的奖池ID
+function SData.GetOpenPools()
+    local list = {}
+    for i = 1, #SData.pools.Data do
+        local info = SData.pools.Data[i]
+        if info.flag == 1 then
+            insert(list, info.id)
+        end
+    end
+    return list
 end
 
 return SData
