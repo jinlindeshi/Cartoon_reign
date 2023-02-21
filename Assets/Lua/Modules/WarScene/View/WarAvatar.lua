@@ -310,16 +310,20 @@ function WarAvatar:Attack(callBack)
     if not self.target then
         return
     end
+    self:LookAtTarget()
     --if self.attackRadius then ---远程攻击
     --    self:RangedAttack(callBack)
     --    return
     --end
-    self:LookAtTarget()
-    --self.attackUpdate = AddEventListener(Stage, Event.UPDATE, handler(self, self.LookAtTarget))
 
     self.aniEvent:SetListenerByMsg(ANI_EVENT_ATTACK_HIT, function()
         if  self.target then
-            self.target:GetHurt(DamageManager.GetHurtValue(self.data, self.target.data))
+
+            if self.attackRadius then ---远程攻击
+                self:RangedAttack()
+            else
+                self.target:GetHurt(DamageManager.GetHurtValue(self.data, self.target.data))
+            end
         end
         self.aniEvent:SetListenerByMsg(ANI_EVENT_ATTACK_HIT, nil)
     end)
@@ -338,17 +342,18 @@ function WarAvatar:CancelAttack()
 end
 
 ---远程攻击相关信息
-function WarAvatar:SetRangedAttackInfo(trailPrefabPath, hitPrefabPath, attackRadius)
-    self.trailPrefabPath = trailPrefabPath
-    self.hitPrefabPath = hitPrefabPath
+function WarAvatar:SetRangedAttackInfo(attackRadius, trailPrefabPath, hitPrefabPath)
     self.attackRadius = attackRadius
+    self.trailPrefabPath = trailPrefabPath or "Effect/Prefabs/fx_jian_01.prefab"
+    self.hitPrefabPath = hitPrefabPath or "Effects/Prefabs/IceHit.prefab"
 end
 ---远程攻击
 function WarAvatar:RangedAttack(callBack)
+    self.rangeCallBack = callBack
     self.trail = CreatePrefab(self.trailPrefabPath)
     self.trail.transform.position = Vector3.New(self.transform.position.x, 1, self.transform.position.z)
+    self.trail.transform.localScale = Vector3.one
     self.trail.transform.forward = self.target.transform.position - self.transform.position
-    self.rangeCallBack = callBack
 end
 
 function WarAvatar:TrailHit()
@@ -361,12 +366,14 @@ function WarAvatar:TrailHit()
     end)
     hit.transform.position = trail.transform.position
     hit.transform.forward = trail.transform.forward
-    self.target:GetHurt(10)
+    self.target:GetHurt(DamageManager.GetHurtValue(self.data, self.target.data))
 
     DelayedCall(1, function()
         RecyclePrefab(hit, self.hitPrefabPath)
         if self.rangeCallBack then
-            self.rangeCallBack()
+            local callBack = self.rangeCallBack
+            self.rangeCallBack = nil
+            callBack()
         end
     end)
 end
@@ -378,7 +385,7 @@ function WarAvatar:Update()
         local targetPos = self.target.transform.position
         targetPos.y = 0.5
         local dis = Vector3.Distance(nowPos, targetPos)
-        local frameSpeed = Time.deltaTime * 4
+        local frameSpeed = Time.deltaTime * 2
         if dis < frameSpeed then
             self.trail.transform.position = targetPos
             self:TrailHit()

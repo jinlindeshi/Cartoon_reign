@@ -52,7 +52,7 @@ function MoveToEnemyAction:MoveToEnemy()
     self.cAction:SetUpdateStatus(TaskStatus.Running)
 
     local x,z,nearestPos,grids = WarData.GetAroundNearestGrid(self.avatar.transform.position, self.avatar.target.x, self.avatar.target.z,
-            nil, true, WarData.AvatarGrids)
+            self.avatar.attackRadius, true, WarData.AvatarGrids)
     local nearestLoc = {x, z}
 
     if x==nil or z==nil then

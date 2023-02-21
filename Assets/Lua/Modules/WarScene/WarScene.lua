@@ -98,6 +98,7 @@ function WarScene:TestFocusAvatar()
     --local followerData = clone(SData.avatar.GetData(DemoCfg.followerID))
     --followerData.hp = followerData.maxHp
     --local avatar = WarAvatar.New(followerData.prefab, followerData, false, self.avatarConTran)
+    --avatar:SetRangedAttackInfo(3)
     --WarData.AddAvatar(avatar, avatar.data)
     --local loc = WarData.bornNodes[-DemoCfg.followerID]
     --self:PutInNode(avatar, loc[1], loc[2])

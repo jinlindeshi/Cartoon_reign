@@ -16,10 +16,11 @@ end
 
 function AttackAction:OnStart()
     self.cAction:SetUpdateStatus(TaskStatus.Running)
-    self:AttackToDeath()
+    self.avatar:MoveEnd(true)
+    self:Attack()
 end
 
-function AttackAction:AttackToDeath()
+function AttackAction:Attack()
     if self.avatar:CheckDead() == true then
         --print("我死了不打了", self.avatar.data.id)
         return
