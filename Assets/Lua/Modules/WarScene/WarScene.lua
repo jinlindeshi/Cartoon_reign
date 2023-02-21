@@ -94,7 +94,8 @@ function WarScene:TestFocusAvatar()
     avatar:AIStart()
 
 
-    --local followerData = clone(SData.GetAvatarSData(DemoCfg.followerID))
+    ---随从测试代码
+    --local followerData = clone(SData.avatar.GetData(DemoCfg.followerID))
     --followerData.hp = followerData.maxHp
     --local avatar = WarAvatar.New(followerData.prefab, followerData, false, self.avatarConTran)
     --WarData.AddAvatar(avatar, avatar.data)

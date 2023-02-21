@@ -17,7 +17,7 @@ MonoBehaviour:
     renderEvent: 550
     layerMask:
       serializedVersion: 2
-      m_Bits: 4294967295
+      m_Bits: 1052439
     blurMat: {fileID: 2100000, guid: 8ae84a32a13a7294cbac22bfbfe4dc4f, type: 2}
     textureName: _BlurTexture
     cmdName: blurCmd
@@ -83,7 +83,7 @@ MonoBehaviour:
   m_AccurateGbufferNormals: 0
   m_ClusteredRendering: 0
   m_TileSize: 32
-  m_IntermediateTextureMode: 1
+  m_IntermediateTextureMode: 0
 --- !u!114 &1393470026620697809
 MonoBehaviour:
   m_ObjectHideFlags: 0
