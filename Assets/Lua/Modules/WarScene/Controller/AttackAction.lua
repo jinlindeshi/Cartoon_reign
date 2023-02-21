@@ -10,6 +10,7 @@ local AttackAction = class("AttackAction", BaseAction)
 
 function AttackAction:Ctor(avatar, bToLua, cAction, paramFloat, paramBool)
     AttackAction.super.Ctor(self, bToLua, cAction, paramFloat, paramBool)
+    self.AttackAction = "hehe"
     self.avatar = avatar ---@type WarAvatar
 
 end
@@ -22,49 +23,39 @@ end
 
 function AttackAction:Attack()
     if self.avatar:CheckDead() == true then
-        --print("我死了不打了", self.avatar.data.id)
+        if self.avatar.data.id == -2 then
+            print("我死了不打了")
+        end
         return
     end
+
     if not self.avatar.target or self.avatar.target:CheckDead() == true then
         self.avatar.target = nil
         self.cAction:SetUpdateStatus(TaskStatus.Success)
+
+        if self.avatar.data.id == -2 then
+            print("目标死啦~")
+        end
         --local list = self.bToLua:GetActiveTasks()
         --print("AttackAction:AttackToDeath 已击杀目标~~", list.Length)
         return
     end
-    if self.paused == true then
-        print("暂停了", self.avatar.id)
-        return
-    end
+
     if self.avatar.target.moving == true then ---目标移动中先不打，等一会儿再来看看
         self.avatar:LookAtTarget()
-        self.waitCall = DelayedCall(0.5, handler(self, self.AttackToDeath))
+        self.cAction:SetUpdateStatus(TaskStatus.Success)
+        print("目标移动中先不打，等一会儿再来看看")
         return
     end
-
     self.avatar:Attack(function()
         self.cAction:SetUpdateStatus(TaskStatus.Success)
     end)
-end
-
-function AttackAction:OnPause(paused)
-    --print("AttackAction:OnPause", paused)
-    self.paused = paused
-
 end
 
 function AttackAction:OnBehaviorComplete()
     if self.cAction:GetUpdateStatus() == TaskStatus.Running then
         self.avatar:CancelAttack()
     end
-end
-
-function AttackAction:OnBehaviorRestart()
-    --print("AttackAction:OnBehaviorRestart")
-end
-
-function AttackAction:OnEnd()
-    --print("AttackAction:OnEnd")
 end
 
 return AttackAction

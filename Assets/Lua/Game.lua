@@ -135,6 +135,7 @@ function DelayedCall(delayTime, callBack)
             --print("DelayedCall2", os.clock(), delayTime)
             RemoveEventListener(Stage, Event.UPDATE, delayCheck)
             delayinfos[delayCheck] = nil
+            --print("DelayedCall2", callBack)
             callBack()
         end
     end

@@ -1496,7 +1496,7 @@ GameObject:
   - component: {fileID: 1706287459032197426}
   - component: {fileID: 1706287459031067634}
   m_Layer: 11
-  m_Name: gong
+  m_Name: bow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -58,55 +58,8 @@ end
 
 ---TEST 测试相机跟随Avatar
 function WarScene:TestFocusAvatar()
-    --local me
-    --for i = 1, #SData.myArmyList do
-    --    local myData = clone(SData.myArmyList[i])
-    --    local avatar = FocusAvatar.New(myData.prefab, myData.data, self.avatarConTran)
-    --    WarData.AddAvatar(avatar, avatar.data)
-    --    local loc = WarData.bornNodes[i]
-    --    self:PutInNode(avatar, loc[1], loc[2])
-    --    HappyFuns.SetLayerRecursive(avatar.gameObject, 11)
-    --    if i == 1 then
-    --        me = avatar
-    --        self.happyCam:SetAttachObj(me.gameObject)
-    --        avatar:SetExternalBehavior("BehaviorTree/MeAI.asset")
-    --    else
-    --        avatar:SetLeader(me)
-    --        avatar:SetExternalBehavior("BehaviorTree/Follower.asset")
-    --    end
-    --    avatar:AIStart()
-    --end
-
-    --local myData = clone(SData.avatar.GetData(DemoCfg.mainAvatarID))
-    --local attr = AvatarData.GetHeroAttr(DemoCfg.mainAvatarID)
-    --myData.hp = attr.maxHp
-    --myData.maxHp = attr.maxHp
-    --myData.atk = attr.atk
-    --myData.def = attr.def
-    --local avatar = FocusAvatar.New(myData.prefab, myData, self.avatarConTran)
-    --WarData.AddAvatar(avatar, avatar.data)
-    --WarData.mainAvatar = avatar
-    --local loc = WarData.bornNodes[-DemoCfg.mainAvatarID]
-    --self:PutInNode(avatar, loc[1], loc[2])
-    --HappyFuns.SetLayerRecursive(avatar.gameObject, 11)
-    --self.happyCam:SetAttachObj(avatar.gameObject)
-    --avatar:SetExternalBehavior("BehaviorTree/MeAI.asset")
-    --avatar:AIStart()
-
-
-    ---随从测试代码
-    --local followerData = clone(SData.avatar.GetData(DemoCfg.followerID))
-    --followerData.hp = followerData.maxHp
-    --local avatar = WarAvatar.New(followerData.prefab, followerData, false, self.avatarConTran)
-    --avatar:SetRangedAttackInfo(3)
-    --WarData.AddAvatar(avatar, avatar.data)
-    --local loc = WarData.bornNodes[-DemoCfg.followerID]
-    --self:PutInNode(avatar, loc[1], loc[2])
-    --HappyFuns.SetLayerRecursive(avatar.gameObject, 11)
-    --avatar:SetLeader(WarData.mainAvatar)
-    --avatar:SetExternalBehavior("BehaviorTree/Follower.asset")
-    --avatar:AIStart()
     self:AddAvatar(DemoCfg.mainAvatarID, true)
+    self:AddAvatar(DemoCfg.followerID)
 end
 ---TEST
 
@@ -119,7 +72,7 @@ function WarScene:AddAvatar(id, isMainRole)
     myData.maxHp = attr.maxHp
     myData.atk = attr.atk
     myData.def = attr.def
-    local avatar
+    local avatar---@type WarAvatar
     if isMainRole then
         avatar = FocusAvatar.New(myData.prefab, myData, self.avatarConTran)
         WarData.mainAvatar = avatar
@@ -128,6 +81,8 @@ function WarScene:AddAvatar(id, isMainRole)
     else
         avatar = WarAvatar.New(myData.prefab, myData, false, self.avatarConTran)
         avatar:SetLeader(WarData.mainAvatar)
+        avatar:SetRangedAttackInfo(2)
+        --avatar:SetRangedAttackInfo(2, "Effect/Prefabs/TestArrow.prefab")
         avatar:SetExternalBehavior("BehaviorTree/Follower.asset")
     end
     WarData.AddAvatar(avatar, avatar.data)

@@ -16,7 +16,7 @@ public class AnimationEvent : MonoBehaviour
     
     void AniEvent(string msg)
     {
-        Debug.Log("AniEvent - hehe " + gameObject.name); 
+        // Debug.Log("AniEvent - hehe " + gameObject.name); 
         if (_callBackDic[msg] != null)
         {
             _callBackDic[msg].Call(msg);

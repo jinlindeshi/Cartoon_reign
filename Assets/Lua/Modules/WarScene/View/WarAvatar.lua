@@ -12,6 +12,7 @@ local DamageManager = require("Modules.WarScene.Manager.DamageManager")
 ---@field New fun(prefabPath:string, data, static:boolean, parent:UnityEngine.Transform):WarAvatar
 local WarAvatar = class("WarAvatar", BehaviorAvatar)
 
+
 local ANI_EVENT_ATTACK_HIT = "attackHit"
 function WarAvatar:Ctor(prefabPath, data, static, parent)
     WarAvatar.super.Ctor(self, prefabPath, parent)
@@ -348,12 +349,14 @@ function WarAvatar:SetRangedAttackInfo(attackRadius, trailPrefabPath, hitPrefabP
     self.hitPrefabPath = hitPrefabPath or "Effects/Prefabs/IceHit.prefab"
 end
 ---远程攻击
-function WarAvatar:RangedAttack(callBack)
-    self.rangeCallBack = callBack
+function WarAvatar:RangedAttack()
+    if not self.bowTran then
+        self.bowTran = Happy.FindGameObjectLoopFromParent("bow", self.transform)
+    end
     self.trail = CreatePrefab(self.trailPrefabPath)
-    self.trail.transform.position = Vector3.New(self.transform.position.x, 1, self.transform.position.z)
     self.trail.transform.localScale = Vector3.one
     self.trail.transform.forward = self.target.transform.position - self.transform.position
+    self.trail.transform.position = self.bowTran.position
 end
 
 function WarAvatar:TrailHit()
@@ -366,26 +369,25 @@ function WarAvatar:TrailHit()
     end)
     hit.transform.position = trail.transform.position
     hit.transform.forward = trail.transform.forward
-    self.target:GetHurt(DamageManager.GetHurtValue(self.data, self.target.data))
+    if self.target:CheckDead() ~= true then
+        self.target:GetHurt(DamageManager.GetHurtValue(self.data, self.target.data))
+    end
 
     DelayedCall(1, function()
         RecyclePrefab(hit, self.hitPrefabPath)
-        if self.rangeCallBack then
-            local callBack = self.rangeCallBack
-            self.rangeCallBack = nil
-            callBack()
-        end
     end)
 end
 
 function WarAvatar:Update()
     if self.trail then
+        local lockY = self.trail.transform.position.y
         local nowPos = self.trail.transform.position
-        nowPos.y = 0.5
+        nowPos.y = lockY
         local targetPos = self.target.transform.position
-        targetPos.y = 0.5
+        targetPos.y = lockY
         local dis = Vector3.Distance(nowPos, targetPos)
-        local frameSpeed = Time.deltaTime * 2
+        local frameSpeed = Time.deltaTime * 10
+        self.trail.transform.forward = targetPos - nowPos
         if dis < frameSpeed then
             self.trail.transform.position = targetPos
             self:TrailHit()

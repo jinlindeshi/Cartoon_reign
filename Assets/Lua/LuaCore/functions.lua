@@ -258,6 +258,9 @@ function import(moduleName, currentModuleName)
 end
 
 function handler(obj, method)
+    if method == nil then
+        print("handler", obj.AttackAction)
+    end
     return function(...)
         return method(obj, ...)
     end
