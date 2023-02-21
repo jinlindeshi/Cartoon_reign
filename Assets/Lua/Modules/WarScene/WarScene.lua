@@ -36,7 +36,7 @@ function WarScene:Ctor(scene)
     self.happyCam = GetComponent.HappyCamera(Camera.main.gameObject)
 
     self.avatarConTran = self:GetRootObjByName("AvatarCon").transform
-
+    self.avatarList = {} --角色列表
     self:TestFocusAvatar()
     UIMgr.OpenPanel(UIPanelCfg.mainMenu)
 
@@ -77,21 +77,21 @@ function WarScene:TestFocusAvatar()
     --    avatar:AIStart()
     --end
 
-    local myData = clone(SData.avatar.GetData(DemoCfg.mainAvatarID))
-    local attr = AvatarData.GetHeroAttr(DemoCfg.mainAvatarID)
-    myData.hp = attr.maxHp
-    myData.maxHp = attr.maxHp
-    myData.atk = attr.atk
-    myData.def = attr.def
-    local avatar = FocusAvatar.New(myData.prefab, myData, self.avatarConTran)
-    WarData.AddAvatar(avatar, avatar.data)
-    WarData.mainAvatar = avatar
-    local loc = WarData.bornNodes[-DemoCfg.mainAvatarID]
-    self:PutInNode(avatar, loc[1], loc[2])
-    HappyFuns.SetLayerRecursive(avatar.gameObject, 11)
-    self.happyCam:SetAttachObj(avatar.gameObject)
-    avatar:SetExternalBehavior("BehaviorTree/MeAI.asset")
-    avatar:AIStart()
+    --local myData = clone(SData.avatar.GetData(DemoCfg.mainAvatarID))
+    --local attr = AvatarData.GetHeroAttr(DemoCfg.mainAvatarID)
+    --myData.hp = attr.maxHp
+    --myData.maxHp = attr.maxHp
+    --myData.atk = attr.atk
+    --myData.def = attr.def
+    --local avatar = FocusAvatar.New(myData.prefab, myData, self.avatarConTran)
+    --WarData.AddAvatar(avatar, avatar.data)
+    --WarData.mainAvatar = avatar
+    --local loc = WarData.bornNodes[-DemoCfg.mainAvatarID]
+    --self:PutInNode(avatar, loc[1], loc[2])
+    --HappyFuns.SetLayerRecursive(avatar.gameObject, 11)
+    --self.happyCam:SetAttachObj(avatar.gameObject)
+    --avatar:SetExternalBehavior("BehaviorTree/MeAI.asset")
+    --avatar:AIStart()
 
 
     ---随从测试代码
@@ -105,8 +105,37 @@ function WarScene:TestFocusAvatar()
     --avatar:SetLeader(WarData.mainAvatar)
     --avatar:SetExternalBehavior("BehaviorTree/Follower.asset")
     --avatar:AIStart()
+    self:AddAvatar(DemoCfg.mainAvatarID, true)
 end
 ---TEST
+
+---@param id number 角色ID
+---@param isMainRole boolean 是否是主要角色
+function WarScene:AddAvatar(id, isMainRole)
+    local myData = clone(SData.avatar.GetData(id))
+    local attr = AvatarData.GetHeroAttr(id)
+    myData.hp = attr.maxHp
+    myData.maxHp = attr.maxHp
+    myData.atk = attr.atk
+    myData.def = attr.def
+    local avatar
+    if isMainRole then
+        avatar = FocusAvatar.New(myData.prefab, myData, self.avatarConTran)
+        WarData.mainAvatar = avatar
+        self.happyCam:SetAttachObj(avatar.gameObject)
+        avatar:SetExternalBehavior("BehaviorTree/MeAI.asset")
+    else
+        avatar = WarAvatar.New(myData.prefab, myData, false, self.avatarConTran)
+        avatar:SetLeader(WarData.mainAvatar)
+        avatar:SetExternalBehavior("BehaviorTree/Follower.asset")
+    end
+    WarData.AddAvatar(avatar, avatar.data)
+    local loc = WarData.bornNodes[-id]
+    self:PutInNode(avatar, loc[1], loc[2])
+    HappyFuns.SetLayerRecursive(avatar.gameObject, 11)
+    avatar:AIStart()
+end
+
 
 ---@param avatar WarAvatar
 function WarScene:PutInNode(avatar, x, z, obstacle, radius)
