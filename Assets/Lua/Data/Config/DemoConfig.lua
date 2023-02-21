@@ -41,4 +41,24 @@ DemoCfg.qualityBgMap =
 
 DemoCfg.goldNum = 0 --金币数量
 DemoCfg.killCount = 0 --击杀数量
+
+DemoCfg.cardQuality = ---卡牌品质
+{
+    white = 1, --白卡
+    purple = 2, --紫卡
+    orange = 3, --橙卡
+}
+
+DemoCfg.cardColorCfg = ---品质颜色
+{
+    [DemoCfg.cardQuality.white] = Color.white,
+    [DemoCfg.cardQuality.purple] = Color.New(186/255, 0, 1),
+    [DemoCfg.cardQuality.orange] = Color.New(1, 140/255, 0),
+}
+
+DemoCfg.cardType= ---卡牌类型
+{
+    equip = "equip", --装备
+    hero = "hero", --角色
+}
 return DemoCfg

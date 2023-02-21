@@ -20,6 +20,9 @@ local eventMap = {} ---@type table<string, Event.EventListener[]> 事件监听�
 local eventPool = {} ---@type table<number, Event.Event> 事件缓存池
 
 ---添加事件监听
+---@param type string 事件类型
+---@param callback fun() 事件回调
+---@param caller any 事件回调执行域 若没有则不传
 function EventManager.AddEventListener(type, callback, caller)
     if eventMap[type] == nil then
         eventMap[type] = {}
@@ -42,6 +45,9 @@ function EventManager.AddEventListener(type, callback, caller)
 end
 
 ---移除事件监听
+---@param type string 事件类型
+---@param callback fun() 事件回调
+---@param caller any 事件回调执行域 若没有则不传
 function EventManager.RemoveEventListener(type, callback, caller)
     local list = eventMap[type]
     if list == nil then
@@ -59,7 +65,10 @@ function EventManager.RemoveEventListener(type, callback, caller)
 end
 
 ---派发事件
-function EventManager.DispatchEvent(type, data)
+---@param type string 事件类型
+---@param data any 事件数据
+---@param isRecycle boolean 是否需要回收事件 默认为true
+function EventManager.DispatchEvent(type, data, isRecycle)
     local list = eventMap[type]
     if list == nil then
         LogWarning("事件监听未被注册 type:", type)
@@ -87,9 +96,12 @@ function EventManager.DispatchEvent(type, data)
     end
 
     ---回收event
-    event.type = nil
-    event.data = nil
-    table.insert(eventPool, event)
+    if isRecycle == nil then isRecycle = true end --默认为true
+    if isRecycle then
+        event.type = nil
+        event.data = nil
+        table.insert(eventPool, event)
+    end
 end
 
 ---打印事件管理相关数据

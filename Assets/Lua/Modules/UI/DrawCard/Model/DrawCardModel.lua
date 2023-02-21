@@ -4,5 +4,20 @@
 --- DateTime: 2023/2/20 17:56
 ---
 local DrawCardModel = {}
+DrawCardModel.eventDefine =
+{
+    oneDraw = "DrawCardOne", --单抽
+    tenDraw = "DrawCardTen", --十连
+    selectPool = "DrawCardPoolSelect", --选择卡池
+    checkOpen = "DrawCardCheckOpen", --检测是否所有的卡都已经翻开
+}
+
+function DrawCardModel.GetOneDrawData()
+    return 5
+end
+
+function DrawCardModel.GetTenDrawData()
+    return {13,14,15,16,13,7,14,19,18,17}
+end
 
 return DrawCardModel
