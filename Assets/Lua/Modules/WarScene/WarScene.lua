@@ -42,7 +42,7 @@ function WarScene:Ctor(scene)
 
     --DelayedCall(1, function()
     --    Happy.MainCameraBlurToggle(true, 1)
-    --    DelayedCall(3, function()
+    --    DelayedCall(4, function()
     --        Happy.MainCameraBlurToggle(false, 1)
     --    end)
     --end)
