@@ -1,0 +1,137 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Archer_gong
+  m_Shader: {fileID: 4800000, guid: 11de468f55e59e14f81dc3b3170ef01b, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _BaseMap:
+        m_Texture: {fileID: 2800000, guid: f9cf216b11f51534ea6ae20a7ebd5399, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BumpMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailAlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailNormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: f9cf216b11f51534ea6ae20a7ebd5399, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NoiseTex:
+        m_Texture: {fileID: 2800000, guid: 7d7a0f2de1e67874988927720f4f0cc3, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OcclusionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ParallaxMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _RampTex:
+        m_Texture: {fileID: 2800000, guid: f3b8d796aacca254aa5f2ca43e58d594, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ToonShade:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _Alpha: 1
+    - _BrightLight: 1.35
+    - _Brightness: 1
+    - _BumpScale: 1
+    - _Contrast: 1
+    - _Cull: 2
+    - _Cutoff: 0.5
+    - _DarkLight: 0.75
+    - _DetailNormalMapScale: 1
+    - _DissolveDir: 0.3
+    - _DstBlend: 0
+    - _ENABLE_ALPHA_TEST: 0
+    - _EdgeLength: 0.006
+    - _EdgeSmoothness: 0.983
+    - _Gloss: 29
+    - _GlossMapScale: 1
+    - _Glossiness: 0.5
+    - _GlossyReflections: 1
+    - _Metallic: 0
+    - _Mode: 0
+    - _OLWVWD: 0
+    - _OcclusionStrength: 1
+    - _Outline: 0.003
+    - _OutlineEnable: 1
+    - _OutlineWidth: 0.4
+    - _Parallax: 0.02
+    - _RimPower: 4
+    - _RimThreshold: 0.35
+    - _Saturarion: 1
+    - _Saturation: 1
+    - _ShadowBrightness: 0.6
+    - _ShadowThreshold: 0.2
+    - _SmoothnessTextureChannel: 0
+    - _SpecularHighlights: 1
+    - _SpecularPower: 0.44
+    - _SpecularRange: 0.597
+    - _SpecularScale: 0.02
+    - _Split: 0.525
+    - _SrcBlend: 1
+    - _SurroundAlpha: 0.1
+    - _SurroundPower: 0.4
+    - _SurroundRange: 0.98
+    - _SurroundScale: 0
+    - _Threshold: 1
+    - _UVSec: 0
+    - _WindQuality: 0
+    - _ZWrite: 1
+    m_Colors:
+    - _BrightLightColor: {r: 1, g: 0.9675143, b: 0.6933962, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _DarkLightColor: {r: 1, g: 1, b: 1, a: 1}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _HueVariation: {r: 1, g: 0.5, b: 0, a: 0.1}
+    - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
+    - _RimColor: {r: 1, g: 1, b: 1, a: 1}
+    - _Specular: {r: 1, g: 1, b: 1, a: 1}
+    - _SpecularColor: {r: 1, g: 0.98485017, b: 0.9386792, a: 1}
+    - _SurroundColor: {r: 1, g: 1, b: 1, a: 0}
+  m_BuildTextureStacks: []
