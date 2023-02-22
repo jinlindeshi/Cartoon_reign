@@ -16,7 +16,6 @@ function FocusAvatar:Ctor(prefabPath, data, parent)
     self:RegisterAction(BehaviorConstants.NEW_WAVE_ENEMYS)
     self:RegisterAction(BehaviorConstants.CHECK_SAFE)
 
-    self.skill = require("Modules.WarScene.Controller.Skill.SkillWhirlwind").New()
 end
 
 return FocusAvatar

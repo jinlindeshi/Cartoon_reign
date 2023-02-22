@@ -5,6 +5,7 @@
 --- 攻击
 
 local BaseAction = require("Prayer.Core.BaseAction")
+local WarData = require("Modules.WarScene.Model.WarData")
 ---@class AttackAction:BaseAction
 local AttackAction = class("AttackAction", BaseAction)
 
@@ -23,9 +24,9 @@ end
 
 function AttackAction:Attack()
     if self.avatar:CheckDead() == true then
-        if self.avatar.data.id == -2 then
-            print("我死了不打了")
-        end
+        --if self.avatar.data.id == -2 then
+        --    print("我死了不打了")
+        --end
         return
     end
 
@@ -33,23 +34,33 @@ function AttackAction:Attack()
         self.avatar.target = nil
         self.cAction:SetUpdateStatus(TaskStatus.Success)
 
-        if self.avatar.data.id == -2 then
-            print("目标死啦~")
-        end
+        --if self.avatar.data.id == -2 then
+        --    print("目标死啦~")
+        --end
         --local list = self.bToLua:GetActiveTasks()
         --print("AttackAction:AttackToDeath 已击杀目标~~", list.Length)
         return
     end
 
     if self.avatar.target.moving == true then ---目标移动中先不打，等一会儿再来看看
-        self.avatar:LookAtTarget()
-        self.cAction:SetUpdateStatus(TaskStatus.Success)
-        print("目标移动中先不打，等一会儿再来看看")
-        return
+        --if self:CheckMoveNear(self.avatar.target) ~= true then
+            self.avatar:LookAtTarget()
+            self.cAction:SetUpdateStatus(TaskStatus.Success)
+            --if self.avatar.data.id == -2 then
+            --    print("目标移动中先不打，等一会儿再来看看")
+            --end
+            return
+        --end
     end
     self.avatar:Attack(function()
         self.cAction:SetUpdateStatus(TaskStatus.Success)
     end)
+end
+
+---@param avatar WarAvatar
+function AttackAction:CheckMoveNear(avatar)
+    local node = WarData.gridGraph:GetNode(avatar.x, avatar.z)
+    return Vector3.Distance(SeekerToLua.IntToVector(node.position), avatar.transform.position) < WarData.gridGraph.nodeSize * 2
 end
 
 function AttackAction:OnBehaviorComplete()

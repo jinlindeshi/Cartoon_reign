@@ -58,13 +58,15 @@ end
 
 ---TEST 测试相机跟随Avatar
 function WarScene:TestFocusAvatar()
-    self:AddAvatar(DemoCfg.mainAvatarID, true)
-    self:AddAvatar(DemoCfg.followerID)
+    self:AddAvatar(DemoCfg.mainAvatarID, true).skill = require("Modules.WarScene.Controller.Skill.SkillWhirlwind").New()
+    self:AddAvatar(DemoCfg.followerID):SetRangedAttackInfo(2)
+
 end
 ---TEST
 
 ---@param id number 角色ID
 ---@param isMainRole boolean 是否是主要角色
+---@return WarAvatar
 function WarScene:AddAvatar(id, isMainRole)
     local myData = clone(SData.avatar.GetData(id))
     local attr = AvatarData.GetHeroAttr(id)
@@ -81,8 +83,6 @@ function WarScene:AddAvatar(id, isMainRole)
     else
         avatar = WarAvatar.New(myData.prefab, myData, false, self.avatarConTran)
         avatar:SetLeader(WarData.mainAvatar)
-        avatar:SetRangedAttackInfo(2)
-        --avatar:SetRangedAttackInfo(2, "Effect/Prefabs/TestArrow.prefab")
         avatar:SetExternalBehavior("BehaviorTree/Follower.asset")
     end
     WarData.AddAvatar(avatar, avatar.data)
@@ -90,6 +90,8 @@ function WarScene:AddAvatar(id, isMainRole)
     self:PutInNode(avatar, loc[1], loc[2])
     HappyFuns.SetLayerRecursive(avatar.gameObject, 11)
     avatar:AIStart()
+
+    return avatar
 end
 
 

@@ -364,9 +364,7 @@ function WarAvatar:TrailHit()
     local trail = self.trail
     self.trail = nil
 
-    DelayedCall(0.2,function()
-        RecyclePrefab(trail, self.trailPrefabPath)
-    end)
+    RecyclePrefab(trail, self.trailPrefabPath)
     hit.transform.position = trail.transform.position
     hit.transform.forward = trail.transform.forward
     if self.target:CheckDead() ~= true then
@@ -386,7 +384,7 @@ function WarAvatar:Update()
         local targetPos = self.target.transform.position
         targetPos.y = lockY
         local dis = Vector3.Distance(nowPos, targetPos)
-        local frameSpeed = Time.deltaTime * 10
+        local frameSpeed = Time.deltaTime * 16
         self.trail.transform.forward = targetPos - nowPos
         if dis < frameSpeed then
             self.trail.transform.position = targetPos

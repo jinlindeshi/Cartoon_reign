@@ -35,16 +35,19 @@ function MoveToEnemyAction:OnStart()
     --    return
     --end
 
+    self.avatar:EndFollow()
+    self.avatar:StopMoving()
+
     local grids = WarData.GetAroundGrids(self.avatar.x, self.avatar.z, self.avatar.attackRadius)
     if grids[self.avatar.target.x] and grids[self.avatar.target.x][self.avatar.target.z] then
-        --print("敌人能打到，不用走")
+        --if self.avatar.data.id == -2 then
+        --    print("敌人能打到，不用走")
+        --end
         self.cAction:SetUpdateStatus(TaskStatus.Success)
         return
     end
 
 
-    self.avatar:EndFollow()
-    self.avatar:StopMoving()
     self:MoveToEnemy()
 end
 
