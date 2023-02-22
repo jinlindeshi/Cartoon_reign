@@ -8,7 +8,6 @@ local WarAvatar = require("Modules.WarScene.View.WarAvatar")
 local FocusAvatar = require("Modules.WarScene.View.FocusAvatar")
 local LuaScene = require("Prayer.Core.LuaScene")
 local WarData = require("Modules.WarScene.Model.WarData")
-local WarUI = require("Modules.WarScene.View.UI.WarUI")
 local SData = require("Modules.WarScene.Model.SData")
 local AvatarData = require("Modules.WarScene.Model.AvatarData")
 
@@ -28,11 +27,11 @@ function WarScene:Ctor(scene)
     --AstarPath.active.logPathResults = Pathfinding.PathLog.Normal
     AstarPath.active.logPathResults = Pathfinding.PathLog.None
 
-    self:GenerateGrids()
+    ---编辑器模式下生成坐标展示
+    if Application.isEditor == true then
+        self:GenerateGrids()
+    end
     self.locContainer:SetActive(false) ---默认是否显示格子
-    --WarUI.New(function()
-    --    self.locContainer:SetActive(not self.locContainer.activeSelf)
-    --end)
     self.happyCam = GetComponent.HappyCamera(Camera.main.gameObject)
 
     self.avatarConTran = self:GetRootObjByName("AvatarCon").transform
@@ -63,6 +62,11 @@ function WarScene:TestFocusAvatar()
 
 end
 ---TEST
+
+---挑战BOSS
+function WarScene:ChallengeBoss()
+    print("WarScene:ChallengeBoss 挑战BOSS")
+end
 
 ---@param id number 角色ID
 ---@param isMainRole boolean 是否是主要角色
