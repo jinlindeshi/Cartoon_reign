@@ -7,8 +7,15 @@ local SData = require("Modules.WarScene.Model.SData")
 local WarData = require("Modules.WarScene.Model.WarData")
 local AvatarData = {}
 
-AvatarData.HeroInfo =
-{
+AvatarData.HeroInfo = {}
+
+--添加角色数据
+function AvatarData.AddHeroData(id)
+    if AvatarData.HeroInfo[id] then
+        LogWarning("AddHeroData 数据重复添加 ID：", id)
+        return
+    end
+    AvatarData.HeroInfo[id] =
     {
         id = -1,
         starLv = 1,
@@ -21,29 +28,12 @@ AvatarData.HeroInfo =
             {index = 5, equipId = 0},
             {index = 6, equipId = 0},
         }
-    },
-    {
-        id = -2,
-        starLv = 1,
-        equips =
-        {
-            {index = 1, equipId = 0},
-            {index = 2, equipId = 0},
-            {index = 3, equipId = 0},
-            {index = 4, equipId = 0},
-            {index = 5, equipId = 0},
-            {index = 6, equipId = 0},
-        }
-    },
-}
+    }
+end
 
 --获取角色数据
 function AvatarData.GetHeroData(id)
-    for i = 1, #AvatarData.HeroInfo do
-        if AvatarData.HeroInfo[i].id == id then
-            return AvatarData.HeroInfo[i]
-        end
-    end
+    return AvatarData.HeroInfo[id]
 end
 
 function AvatarData.GetHeroSData(id)

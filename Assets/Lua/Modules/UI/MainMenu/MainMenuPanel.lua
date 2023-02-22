@@ -22,7 +22,7 @@ function MainMenuPanel:Init()
     self.goldText = GetComponent.Text(self.transform:Find("Res_gold/Text").gameObject)
     self.killCount = GetComponent.Text(self.transform:Find("KillCount/count").gameObject)
     self.drawButton = self.transform:Find("bottomRoot/drawButton").gameObject
-
+    self.teamButton = self.transform:Find("bottomRoot/teamButton").gameObject
     self.ItemIconObj:SetActive(false)
 
     self.btnLight =
@@ -40,6 +40,7 @@ function MainMenuPanel:Init()
     AddButtonHandler(self.rewardButton, PointerHandler.CLICK, self.OnRewardButtonClick, self)
     AddButtonHandler(self.drawButton, PointerHandler.CLICK, self.OnDrawButtonClick, self)
     AddButtonHandler(self.bossBtn, PointerHandler.CLICK, self.OnBossBtnClick, self)
+    AddButtonHandler(self.teamButton, PointerHandler.CLICK, self.OnTeamButtonClick, self)
     EventMgr.AddEventListener("MonsterDead", self.OnMonsterDead, self)
 
 
@@ -95,6 +96,10 @@ function MainMenuPanel:OnBossBtnClick()
     end)
 
     WarData.scene:ChallengeBoss()
+end
+
+function MainMenuPanel:OnTeamButtonClick()
+    
 end
 
 function MainMenuPanel:RefreshKillCount()
@@ -162,6 +167,8 @@ function MainMenuPanel:RemoveListeners()
     RemoveButtonHandler(self.infoButton, PointerHandler.CLICK, self.OnInfoButtonClick, self)
     RemoveButtonHandler(self.bossBtn, PointerHandler.CLICK, self.OnBossBtnClick, self)
     RemoveButtonHandler(self.rewardButton, PointerHandler.CLICK, self.OnRewardButtonClick, self)
+    RemoveButtonHandler(self.teamButton, PointerHandler.CLICK, self.OnTeamButtonClick, self)
+    RemoveButtonHandler(self.bossBtn, PointerHandler.CLICK, self.OnBossBtnClick, self)
     EventMgr.RemoveEventListener("MonsterDead", self.OnMonsterDead, self)
 end
 

@@ -59,7 +59,6 @@ end
 function WarScene:TestFocusAvatar()
     self:AddAvatar(DemoCfg.mainAvatarID, true).skill = require("Modules.WarScene.Controller.Skill.SkillWhirlwind").New()
     --self:AddAvatar(DemoCfg.followerID):SetRangedAttackInfo(2)
-
 end
 ---TEST
 
@@ -120,7 +119,8 @@ function WarScene:AddAvatar(id, isMainRole, bornLoc, delayAITime)
         avatar:SetExternalBehavior("BehaviorTree/Follower.asset")
     end
     WarData.AddAvatar(avatar, avatar.data)
-    WarData:TeamAddAvatar(avatar)
+    AvatarData.AddHeroData(id)
+    WarData.TeamAddAvatar(avatar)
     local loc = bornLoc or WarData.bornNodes[-id]
     self:PutInNode(avatar, loc[1], loc[2])
     local bornFx = CreatePrefab("Effect/Prefabs/fx_Itemborn.prefab")
@@ -138,13 +138,12 @@ function WarScene:AddAvatar(id, isMainRole, bornLoc, delayAITime)
     return avatar
 end
 
----添加新avatar进入队伍
+---添加新角色进入队伍
 function WarScene:TeamAddAvatar(id)
     if WarData.mainAvatar == nil then
         LogError("TeamAddAvatar 没有找到主角色 无法添加新角色进入队伍")
         return
     end
-
     local nowGrid = WarData.gridGraph:GetNearest(WarData.mainAvatar.transform.position, Pathfinding.NNConstraint.None).node
     local grids = WarData.GetAroundGrids(nowGrid.XCoordinateInGrid, nowGrid.ZCoordinateInGrid, 2) --主角两格距离内格子
     local targetList = {}
@@ -173,6 +172,18 @@ function WarScene:TeamAddAvatar(id)
         LogError("TeamAddAvatar 没有找到合适的出生位置 出生在默认出生点")
     end
     self:AddAvatar(id, false, loc)
+end
+
+---从队伍中移除角色
+function WarScene:TeamRemoveAvatar(id)
+    if WarData.avatarTeam[id] == nil then
+        return
+    end
+    local avatar = WarData.avatarTeam[id]
+    avatar:AIStop()
+    avatar:Recycle()
+    WarData.RemoveAvatar(avatar, false)
+    WarData.TeamRemoveAvatar(avatar)
 end
 
 ---@param avatar WarAvatar

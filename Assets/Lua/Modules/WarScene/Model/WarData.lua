@@ -45,10 +45,12 @@ function WarData.AddAvatar(avatar, data)
 end
 
 ---@param avatar WarAvatar
-function WarData.RemoveAvatar(avatar)
-
+function WarData.RemoveAvatar(avatar, isPlayDead)
     WarData.AvatarHash[avatar.data.id] = nil
-    avatar:PlayDead()
+    if isPlayDead == nil then isPlayDead = true end
+    if isPlayDead then
+        avatar:PlayDead()
+    end
 end
 
 ---@return WarAvatar
@@ -160,17 +162,18 @@ end
 
 ---添加进队伍
 ---@param avatar WarAvatar
-function WarData:TeamAddAvatar(avatar)
+function WarData.TeamAddAvatar(avatar)
     local id = avatar.data.id
-    if WarData.avatarTeam[id] == nil then
-        LogError("TeamAddAvatar 队伍中已经有该成员 ID：", id)
+    if WarData.avatarTeam[id] then
+        LogError("TeamAddAvatar 队伍中已经有该成员 ID："..id)
+        return
     end
     WarData.avatarTeam[avatar.data.id] = avatar
 end
 
 ---从队伍中移除
 ---@param avatar WarAvatar
-function WarData:TeamRemoveAvatar(avatar)
+function WarData.TeamRemoveAvatar(avatar)
     WarData.avatarTeam[avatar.data.id] = nil
 end
 
