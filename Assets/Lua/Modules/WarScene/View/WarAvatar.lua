@@ -270,6 +270,7 @@ function WarAvatar:Recycle()
     --print("WarAvatar:Recycle 你妹啊", self.x, self.z)
     self.target = nil
     self.hpBar:Recycle()
+    self.headUI:Destroy()
 end
 
 ---验证是否死亡

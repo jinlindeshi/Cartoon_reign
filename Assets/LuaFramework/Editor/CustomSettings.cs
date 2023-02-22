@@ -123,6 +123,8 @@ public static class CustomSettings
         _GT(typeof(EaseFactory)),
         _GT(typeof(TweenParams)),
         _GT(typeof(ABSSequentiable)),
+        _GT(typeof(DOTweenAnimation)),
+        _GT(typeof(DOTweenVisualManager)),
 
         _GT(typeof(Ease)),
         _GT(typeof(LoopType)),

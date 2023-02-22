@@ -7,11 +7,13 @@
 ---@class UI.MainMenuPanel:UI.BasePanel
 ---@field New fun():UI.MainMenuPanel
 local MainMenuPanel = class("UI.MainMenuPanel", BasePanel)
+local WarData = require("Modules.WarScene.Model.WarData")
 
 function MainMenuPanel:Init()
     MainMenuPanel.super.Init(self)
     self.ItemIconObj = self.transform:Find("ItemIcon").gameObject
     self.infoButton = self.transform:Find("bottomRoot/infoButton").gameObject
+    self.bossBtn = self.transform:Find("bottomRoot/bossBtn").gameObject
     self.rewardButton = self.transform:Find("bottomRoot/rewardButton").gameObject
     self.notice = self.transform:Find("Notice").gameObject
     self.noticeText = GetComponent.Text(self.transform:Find("Notice/Text").gameObject)
@@ -37,7 +39,20 @@ function MainMenuPanel:Init()
     AddButtonHandler(self.infoButton, PointerHandler.CLICK, self.OnInfoButtonClick, self)
     AddButtonHandler(self.rewardButton, PointerHandler.CLICK, self.OnRewardButtonClick, self)
     AddButtonHandler(self.drawButton, PointerHandler.CLICK, self.OnDrawButtonClick, self)
+    AddButtonHandler(self.bossBtn, PointerHandler.CLICK, self.OnBossBtnClick, self)
     EventMgr.AddEventListener("MonsterDead", self.OnMonsterDead, self)
+
+
+    ---TEST
+    --DelayedCall(3, function()
+    --    self.bossBtn:SetActive(true)
+    --    local cg = GetComponent.CanvasGroup(self.bossBtn)
+    --    cg.blocksRaycasts = false
+    --    self.bossBtn.transform:DOPunchScale(Vector3.one*0.3, 0.5, 0, 0):SetLoops(2, DOTWEEN_LOOP_TYPE.Restart):OnComplete(function()
+    --
+    --        cg.blocksRaycasts = true
+    --    end)
+    --end)
 end
 
 function MainMenuPanel:ActiveBtnLight(type, flag)
@@ -68,6 +83,18 @@ end
 
 function MainMenuPanel:OnDrawButtonClick()
     UIMgr.OpenPanel(UIPanelCfg.drawCard)
+end
+
+function MainMenuPanel:OnBossBtnClick()
+    local cg = GetComponent.CanvasGroup(self.bossBtn)
+    cg.blocksRaycasts = false
+    cg:DOFade(0, 0.5):SetDelay(0.5):OnComplete(function()
+        self.bossBtn:SetActive(false)
+        cg.blocksRaycasts = true
+        cg.alpha = 1
+    end)
+
+    WarData.scene:ChallengeBoss()
 end
 
 function MainMenuPanel:RefreshKillCount()
@@ -133,6 +160,7 @@ end
 function MainMenuPanel:RemoveListeners()
     MainMenuPanel.super.RemoveListeners(self)
     RemoveButtonHandler(self.infoButton, PointerHandler.CLICK, self.OnInfoButtonClick, self)
+    RemoveButtonHandler(self.bossBtn, PointerHandler.CLICK, self.OnBossBtnClick, self)
     RemoveButtonHandler(self.rewardButton, PointerHandler.CLICK, self.OnRewardButtonClick, self)
     EventMgr.RemoveEventListener("MonsterDead", self.OnMonsterDead, self)
 end

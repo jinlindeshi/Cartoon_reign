@@ -152,6 +152,8 @@ public static class LuaBinder
 		DG_Tweening_DOVirtualWrap.Register(L);
 		DG_Tweening_EaseFactoryWrap.Register(L);
 		DG_Tweening_TweenParamsWrap.Register(L);
+		DG_Tweening_DOTweenAnimationWrap.Register(L);
+		DG_Tweening_DOTweenVisualManagerWrap.Register(L);
 		DG_Tweening_EaseWrap.Register(L);
 		DG_Tweening_LoopTypeWrap.Register(L);
 		DG_Tweening_PathModeWrap.Register(L);
@@ -178,6 +180,7 @@ public static class LuaBinder
 		DG_Tweening_Plugins_Options_QuaternionWrap.Register(L);
 		DG_Tweening_Plugins_Options_RectWrap.Register(L);
 		DG_Tweening_Core_ABSSequentiableWrap.Register(L);
+		DG_Tweening_Core_ABSAnimationComponentWrap.Register(L);
 		L.RegFunction("DOGetter_string", DG_Tweening_Core_DOGetter_string);
 		L.RegFunction("DOSetter_string", DG_Tweening_Core_DOSetter_string);
 		L.RegFunction("DOGetter_float", DG_Tweening_Core_DOGetter_float);
@@ -280,6 +283,7 @@ public static class LuaBinder
 		L.RegFunction("Comparison_int", System_Comparison_int);
 		L.RegFunction("Func_int_int", System_Func_int_int);
 		L.RegFunction("Func_UnityEngine_LogType_object_bool", System_Func_UnityEngine_LogType_object_bool);
+		L.RegFunction("Action_DG_Tweening_DOTweenAnimation", System_Action_DG_Tweening_DOTweenAnimation);
 		L.RegFunction("Action_bool", System_Action_bool);
 		L.RegFunction("Action_string", System_Action_string);
 		L.RegFunction("Func_bool", System_Func_bool);
@@ -1782,6 +1786,33 @@ public static class LuaBinder
 			{
 				LuaTable self = ToLua.CheckLuaTable(L, 2);
 				Delegate arg1 = DelegateTraits<System.Func<UnityEngine.LogType,object,bool>>.Create(func, self);
+				ToLua.Push(L, arg1);
+			}
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int System_Action_DG_Tweening_DOTweenAnimation(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
+
+			if (count == 1)
+			{
+				Delegate arg1 = DelegateTraits<System.Action<DG.Tweening.DOTweenAnimation>>.Create(func);
+				ToLua.Push(L, arg1);
+			}
+			else
+			{
+				LuaTable self = ToLua.CheckLuaTable(L, 2);
+				Delegate arg1 = DelegateTraits<System.Action<DG.Tweening.DOTweenAnimation>>.Create(func, self);
 				ToLua.Push(L, arg1);
 			}
 			return 1;

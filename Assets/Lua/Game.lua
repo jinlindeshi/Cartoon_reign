@@ -452,4 +452,18 @@ function GetComponent.Renderer(go)
     return go:GetComponent(typeof(UnityEngine.Renderer))
 end
 
+---获得 DOTweenAnimation 组件
+---@param go UnityEngine.GameObject
+---@return DG.Tweening.DOTweenAnimation
+function GetComponent.DOTweenAnimation(go)
+    return go:GetComponent(typeof(DG.Tweening.DOTweenAnimation))
+end
+
+---获得 DOTweenVisualManager 组件
+---@param go UnityEngine.GameObject
+---@return DG.Tweening.DOTweenVisualManager
+function GetComponent.DOTweenVisualManager(go)
+    return go:GetComponent(typeof(DG.Tweening.DOTweenVisualManager))
+end
+
 return Game
