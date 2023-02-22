@@ -18,6 +18,8 @@ WarData.AvatarGrids = {}
 WarData.gridGraph = nil ---@type Pathfinding.GridGraph
 WarData.scene = nil ---@type WarScene
 
+WarData.bossFighting = false ---正在打BOSS
+
 WarData.avatarIdIndex = 0
 
 WarData.mainAvatar = nil ---@type FocusAvatar 当前的主角色
@@ -145,6 +147,7 @@ function WarData.StopAllAvatarAI()
     for id, avatar in pairs(WarData.AvatarHash) do
         avatar:AIStop()
         avatar:SetTarget(nil)
+        avatar:EndFollow()
     end
 end
 

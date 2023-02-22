@@ -28,7 +28,6 @@ function WarAvatar:Ctor(prefabPath, data, static, parent)
     self.static = static ---是否为不能移动的对象
     self.skillMarkTime = nil ---上次施法的时间
     self.skill = nil ---@type SkillBase
-    self.moveEndSpeedResume = true
 
     self.gameObject.name = ""..data.id
 
@@ -352,7 +351,7 @@ end
 function WarAvatar:SetRangedAttackInfo(attackRadius, trailPrefabPath, hitPrefabPath)
     self.attackRadius = attackRadius
     self.trailPrefabPath = trailPrefabPath or "Effect/Prefabs/fx_jian_01.prefab"
-    self.hitPrefabPath = hitPrefabPath or "Effects/Prefabs/IceHit.prefab"
+    self.hitPrefabPath = hitPrefabPath
 end
 ---远程攻击
 function WarAvatar:RangedAttack()
@@ -366,20 +365,22 @@ function WarAvatar:RangedAttack()
 end
 
 function WarAvatar:TrailHit()
-    local hit = CreatePrefab(self.hitPrefabPath)
     local trail = self.trail
     self.trail = nil
 
     RecyclePrefab(trail, self.trailPrefabPath)
-    hit.transform.position = trail.transform.position
-    hit.transform.forward = trail.transform.forward
     if self.target:CheckDead() ~= true then
         self.target:GetHurt(DamageManager.GetHurtValue(self.data, self.target.data))
     end
 
-    DelayedCall(1, function()
-        RecyclePrefab(hit, self.hitPrefabPath)
-    end)
+    if self.hitPrefabPath then
+        local hit = CreatePrefab(self.hitPrefabPath)
+        hit.transform.position = trail.transform.position
+        hit.transform.forward = trail.transform.forward
+        DelayedCall(1, function()
+            RecyclePrefab(hit, self.hitPrefabPath)
+        end)
+    end
 end
 
 function WarAvatar:Update()
@@ -430,14 +431,10 @@ function WarAvatar:GetPath(path)
     self.ani.speed = self.aiPath.maxSpeed/3.5
 end
 
-function WarAvatar:MoveEnd(isForceStop)
+function WarAvatar:MoveEnd()
     --if self.data.id < -1 then
     --    print("你妹 结束移动", self.data.id, self.x, self.z, isForceStop)
     --end
-
-    if self.moveEndSpeedResume == true then
-        self.aiPath.maxSpeed = BASE_MOVE_SPEED
-    end
     self.aiPath.updateRotation = false
     self.aiPath.updatePosition = false
     self:PlayAnimation(AvatarBase.ANI_IDLE_NAME, 0)
@@ -454,7 +451,7 @@ end
 function WarAvatar:StopMoving(noMoveEndFun)
     self.aiPath:StopMove()
     if noMoveEndFun ~= true then
-        self:MoveEnd(true)
+        self:MoveEnd()
     end
 end
 

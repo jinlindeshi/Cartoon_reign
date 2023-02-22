@@ -39,6 +39,13 @@ function CheckSafeAction:OnStart()
         self.avatar:SetTarget(target)
         self.cAction:SetUpdateStatus(TaskStatus.Failure)
     else
+        ---战胜了BOSS
+        if WarData.bossFighting == true then
+            WarData.bossFighting = false
+            for id, avatar in pairs(WarData.AvatarHash) do
+                avatar:SetMoveSpeedScale(1)
+            end
+        end
         self.cAction:SetUpdateStatus(TaskStatus.Success)
     end
 end
