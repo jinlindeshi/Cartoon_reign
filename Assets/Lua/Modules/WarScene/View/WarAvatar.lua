@@ -14,6 +14,7 @@ local WarAvatar = class("WarAvatar", BehaviorAvatar)
 
 
 local ANI_EVENT_ATTACK_HIT = "attackHit"
+local BASE_MOVE_SPEED = 5
 function WarAvatar:Ctor(prefabPath, data, static, parent)
     WarAvatar.super.Ctor(self, prefabPath, parent)
     self.x = 0
@@ -27,6 +28,7 @@ function WarAvatar:Ctor(prefabPath, data, static, parent)
     self.static = static ---是否为不能移动的对象
     self.skillMarkTime = nil ---上次施法的时间
     self.skill = nil ---@type SkillBase
+    self.moveEndSpeedResume = true
 
     self.gameObject.name = ""..data.id
 
@@ -46,7 +48,7 @@ function WarAvatar:Ctor(prefabPath, data, static, parent)
     self:RegisterAction(BehaviorConstants.FOLLOW)
 
     self.aiPath = AddOrGetComponent(self.gameObject, AIPathToLua) ---@type AIPathToLua
-    self.aiPath.maxSpeed = 5
+    self.aiPath.maxSpeed = BASE_MOVE_SPEED
     self.aiPath.canSearch = false
     self.aiPath.slowdownDistance = 0
     self.aiPath.endReachedDistance = 0.5
@@ -62,6 +64,9 @@ function WarAvatar:Ctor(prefabPath, data, static, parent)
     self:SetAvatarColor()
 end
 
+function WarAvatar:SetMoveSpeedScale(scale)
+    self.aiPath.maxSpeed = BASE_MOVE_SPEED * scale
+end
 
 function WarAvatar:RegisterAction(name)
     --print("BehaviorAvatar:RegisterAction", name, require("Modules.WarScene.Controller."..name.."Action"))
@@ -430,6 +435,9 @@ function WarAvatar:MoveEnd(isForceStop)
     --    print("你妹 结束移动", self.data.id, self.x, self.z, isForceStop)
     --end
 
+    if self.moveEndSpeedResume == true then
+        self.aiPath.maxSpeed = BASE_MOVE_SPEED
+    end
     self.aiPath.updateRotation = false
     self.aiPath.updatePosition = false
     self:PlayAnimation(AvatarBase.ANI_IDLE_NAME, 0)

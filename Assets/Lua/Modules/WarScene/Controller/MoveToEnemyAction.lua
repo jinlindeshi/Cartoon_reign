@@ -36,7 +36,6 @@ function MoveToEnemyAction:OnStart()
     --end
 
     self.avatar:EndFollow()
-    self.avatar:StopMoving()
 
     local grids = WarData.GetAroundGrids(self.avatar.x, self.avatar.z, self.avatar.attackRadius)
     if grids[self.avatar.target.x] and grids[self.avatar.target.x][self.avatar.target.z] then

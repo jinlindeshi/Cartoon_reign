@@ -14,7 +14,7 @@ function HpBar:Ctor(data, parent)
 
     self.img = GetComponent.Image(self.transform:Find("progress").gameObject)
     GetComponent.Text(self.transform:Find("idText").gameObject).text = data.id
-    self:ChangeHp(data.hp, data.maxHp)
+    self:ChangeHp(data.hp or data.maxHp, data.maxHp)
 end
 
 function HpBar:ChangeHp(hp, maxHp, tween)

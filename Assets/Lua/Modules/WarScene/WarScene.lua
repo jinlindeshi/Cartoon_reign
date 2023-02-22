@@ -63,9 +63,37 @@ function WarScene:TestFocusAvatar()
 end
 ---TEST
 
+local testBossData = {atk = 75, def = 5, hp = 10000, maxHp = 10000, name = "金刚熊", prefab = "Prefabs/Avatars/monster_xiong.prefab", side = 2}
 ---挑战BOSS
 function WarScene:ChallengeBoss()
     print("WarScene:ChallengeBoss 挑战BOSS")
+    WarData.StopAllAvatarAI()
+
+    ---@param avatar WarAvatar
+    for id, avatar in pairs(WarData.AvatarHash) do
+        if avatar.data.side ~= WarData.mainAvatar.data.side then
+            DelayedFrameCall(function()
+                WarData.RemoveAvatar(avatar)
+            end)
+        else
+            avatar:SetMoveSpeedScale(3)
+            avatar.moveEndSpeedResume = true
+        end
+    end
+
+    WarData.avatarIdIndex = WarData.avatarIdIndex + 1
+    testBossData.id = WarData.avatarIdIndex
+    local avatar = WarAvatar.New(testBossData.prefab,
+            testBossData, false, WarData.scene.avatarConTran)
+    avatar:SetExternalBehavior("BehaviorTree/EnemyAI.asset")
+    WarData.AddAvatar(avatar, avatar.data)
+    WarData.scene:PutInNode(avatar, WarData.bossNode[1], WarData.bossNode[2])
+    avatar.transform.localScale = avatar.transform.localScale * 1.5
+    HappyFuns.SetLayerRecursive(avatar.gameObject, 11)
+
+    DelayedCall(2, function()
+        WarData.StartAllAvatarAI()
+    end)
 end
 
 ---@param id number 角色ID
