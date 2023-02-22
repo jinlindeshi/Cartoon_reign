@@ -80,7 +80,7 @@ function Talk:Show(featureInfo, contentList, callBack, beforeTalkCall, afterTalk
             props.oldScale = featureGo.transform.localScale
             featureGo.name = "feature"..i
             props.oldLayer = featureGo.layer
-            Happy.ChangeLayer(featureGo, UILayer, true)
+            HappyFuns.SetLayerRecursive(featureGo, UILayer)
             for propName, propValue in pairs(props.transformProps) do
                 featureGo.transform[propName] = propValue
             end
@@ -96,7 +96,7 @@ function Talk:Show(featureInfo, contentList, callBack, beforeTalkCall, afterTalk
             imgRect.localPosition = Vector3.zero
             imgRect.localEulerAngles = Vector3.zero
             imgRect.localScale = Vector3.one
-            Happy.ChangeLayer(imgGo, UILayer)
+            HappyFuns.SetLayerRecursive(imgGo, UILayer)
             for propName, propValue in pairs(props.transformProps) do
                 imgRect[propName] = propValue
             end
@@ -146,7 +146,7 @@ function Talk:ClearFeatures()
         if self.use3d == true then
             local props = self.featureInfo.featureList[i] ---@type TalkerProp
             RecyclePrefab(featureGo, props.path)
-            Happy.ChangeLayer(featureGo, props.oldLayer, true)
+            HappyFuns.SetLayerRecursive(featureGo, props.oldLayer)
             --print("你妹啊~", featureGo.transform.parent.name, props.oldScale.x, props.oldScale.y, props.oldScale.z)
             featureGo.transform.localScale = props.oldScale
             i = i + 1

@@ -6,18 +6,6 @@
 
 Happy = {}
 
----@param go UnityEngine.GameObject
----@param layer number
----@param withChildren boolean
-function Happy.ChangeLayer(go, layer, withChildren)
-    go.layer = layer
-    if withChildren == true then
-        for i = 0, go.transform.childCount - 1 do
-            Happy.ChangeLayer(go.transform:GetChild(i).gameObject, layer, withChildren)
-        end
-    end
-end
-
 ---处理对象下面所有指定type的材质球
 function Happy.DoWithMaterials(gameObj, fun, type)
     type = type or UnityEngine.Renderer

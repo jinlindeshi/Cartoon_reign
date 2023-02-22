@@ -14,6 +14,7 @@ local WarAvatar = class("WarAvatar", BehaviorAvatar)
 
 
 local ANI_EVENT_ATTACK_HIT = "attackHit"
+local BASE_MOVE_SPEED = 5
 function WarAvatar:Ctor(prefabPath, data, static, parent)
     WarAvatar.super.Ctor(self, prefabPath, parent)
     self.x = 0
@@ -46,7 +47,7 @@ function WarAvatar:Ctor(prefabPath, data, static, parent)
     self:RegisterAction(BehaviorConstants.FOLLOW)
 
     self.aiPath = AddOrGetComponent(self.gameObject, AIPathToLua) ---@type AIPathToLua
-    self.aiPath.maxSpeed = 5
+    self.aiPath.maxSpeed = BASE_MOVE_SPEED
     self.aiPath.canSearch = false
     self.aiPath.slowdownDistance = 0
     self.aiPath.endReachedDistance = 0.5
@@ -62,6 +63,9 @@ function WarAvatar:Ctor(prefabPath, data, static, parent)
     self:SetAvatarColor()
 end
 
+function WarAvatar:SetMoveSpeedScale(scale)
+    self.aiPath.maxSpeed = BASE_MOVE_SPEED * scale
+end
 
 function WarAvatar:RegisterAction(name)
     --print("BehaviorAvatar:RegisterAction", name, require("Modules.WarScene.Controller."..name.."Action"))
@@ -347,7 +351,7 @@ end
 function WarAvatar:SetRangedAttackInfo(attackRadius, trailPrefabPath, hitPrefabPath)
     self.attackRadius = attackRadius
     self.trailPrefabPath = trailPrefabPath or "Effect/Prefabs/fx_jian_01.prefab"
-    self.hitPrefabPath = hitPrefabPath or "Effects/Prefabs/IceHit.prefab"
+    self.hitPrefabPath = hitPrefabPath
 end
 ---远程攻击
 function WarAvatar:RangedAttack()
@@ -361,20 +365,22 @@ function WarAvatar:RangedAttack()
 end
 
 function WarAvatar:TrailHit()
-    local hit = CreatePrefab(self.hitPrefabPath)
     local trail = self.trail
     self.trail = nil
 
     RecyclePrefab(trail, self.trailPrefabPath)
-    hit.transform.position = trail.transform.position
-    hit.transform.forward = trail.transform.forward
     if self.target:CheckDead() ~= true then
         self.target:GetHurt(DamageManager.GetHurtValue(self.data, self.target.data))
     end
 
-    DelayedCall(1, function()
-        RecyclePrefab(hit, self.hitPrefabPath)
-    end)
+    if self.hitPrefabPath then
+        local hit = CreatePrefab(self.hitPrefabPath)
+        hit.transform.position = trail.transform.position
+        hit.transform.forward = trail.transform.forward
+        DelayedCall(1, function()
+            RecyclePrefab(hit, self.hitPrefabPath)
+        end)
+    end
 end
 
 function WarAvatar:Update()
@@ -425,11 +431,10 @@ function WarAvatar:GetPath(path)
     self.ani.speed = self.aiPath.maxSpeed/3.5
 end
 
-function WarAvatar:MoveEnd(isForceStop)
+function WarAvatar:MoveEnd()
     --if self.data.id < -1 then
     --    print("你妹 结束移动", self.data.id, self.x, self.z, isForceStop)
     --end
-
     self.aiPath.updateRotation = false
     self.aiPath.updatePosition = false
     self:PlayAnimation(AvatarBase.ANI_IDLE_NAME, 0)
@@ -446,7 +451,7 @@ end
 function WarAvatar:StopMoving(noMoveEndFun)
     self.aiPath:StopMove()
     if noMoveEndFun ~= true then
-        self:MoveEnd(true)
+        self:MoveEnd()
     end
 end
 

@@ -28,10 +28,10 @@ function WarScene:Ctor(scene)
     AstarPath.active.logPathResults = Pathfinding.PathLog.None
 
     ---编辑器模式下生成坐标展示
-    if Application.isEditor == true then
-        self:GenerateGrids()
-    end
-    self.locContainer:SetActive(false) ---默认是否显示格子
+    --if Application.isEditor == true then
+    --    self:GenerateGrids()
+    --    self.locContainer:SetActive(false) ---默认是否显示格子
+    --end
     self.happyCam = GetComponent.HappyCamera(Camera.main.gameObject)
 
     self.avatarConTran = self:GetRootObjByName("AvatarCon").transform
@@ -63,9 +63,37 @@ function WarScene:TestFocusAvatar()
 end
 ---TEST
 
+local testBossData = {atk = 75, def = 0, hp = 2000, maxHp = 2000, name = "金刚熊", prefab = "Prefabs/Avatars/monster_xiong.prefab", side = 2}
 ---挑战BOSS
 function WarScene:ChallengeBoss()
     print("WarScene:ChallengeBoss 挑战BOSS")
+    WarData.bossFighting = true
+    WarData.StopAllAvatarAI()
+
+    ---@param avatar WarAvatar
+    for id, avatar in pairs(WarData.AvatarHash) do
+        if avatar.data.side ~= WarData.mainAvatar.data.side then
+            DelayedFrameCall(function()
+                WarData.RemoveAvatar(avatar)
+            end)
+        else
+            avatar:SetMoveSpeedScale(3)
+        end
+    end
+
+    WarData.avatarIdIndex = WarData.avatarIdIndex + 1
+    testBossData.id = WarData.avatarIdIndex
+    local avatar = WarAvatar.New(testBossData.prefab,
+            testBossData, false, WarData.scene.avatarConTran)
+    avatar:SetExternalBehavior("BehaviorTree/EnemyAI.asset")
+    WarData.AddAvatar(avatar, avatar.data)
+    WarData.scene:PutInNode(avatar, WarData.bossNode[1], WarData.bossNode[2])
+    avatar.transform.localScale = avatar.transform.localScale * 1.5
+    HappyFuns.SetLayerRecursive(avatar.gameObject, 11)
+
+    DelayedCall(2, function()
+        WarData.StartAllAvatarAI()
+    end)
 end
 
 ---@param id number 角色ID

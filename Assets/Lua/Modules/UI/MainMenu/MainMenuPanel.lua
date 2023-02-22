@@ -44,15 +44,15 @@ function MainMenuPanel:Init()
 
 
     ---TEST
-    --DelayedCall(3, function()
-    --    self.bossBtn:SetActive(true)
-    --    local cg = GetComponent.CanvasGroup(self.bossBtn)
-    --    cg.blocksRaycasts = false
-    --    self.bossBtn.transform:DOPunchScale(Vector3.one*0.3, 0.5, 0, 0):SetLoops(2, DOTWEEN_LOOP_TYPE.Restart):OnComplete(function()
-    --
-    --        cg.blocksRaycasts = true
-    --    end)
-    --end)
+    DelayedCall(3, function()
+        self.bossBtn:SetActive(true)
+        local cg = GetComponent.CanvasGroup(self.bossBtn)
+        cg.blocksRaycasts = false
+        self.bossBtn.transform:DOPunchScale(Vector3.one*0.3, 0.5, 0, 0):SetLoops(2, DOTWEEN_LOOP_TYPE.Restart):OnComplete(function()
+
+            cg.blocksRaycasts = true
+        end)
+    end)
 end
 
 function MainMenuPanel:ActiveBtnLight(type, flag)
@@ -73,12 +73,12 @@ end
 
 function MainMenuPanel:OnInfoButtonClick()
     UIMgr.OpenPanel(UIPanelCfg.growUp)
-    --require("Modules.WarScene.Model.WarData"):StopAllAvatarAI()
+    --require("Modules.WarScene.Model.WarData").StopAllAvatarAI()
 end
 
 function MainMenuPanel:OnRewardButtonClick()
     UIMgr.OpenPanel(UIPanelCfg.rewardAlert, DemoCfg.rewardData)
-    --require("Modules.WarScene.Model.WarData"):StartAllAvatarAI()
+    --require("Modules.WarScene.Model.WarData").StartAllAvatarAI()
 end
 
 function MainMenuPanel:OnDrawButtonClick()

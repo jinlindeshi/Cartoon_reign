@@ -18,6 +18,8 @@ WarData.AvatarGrids = {}
 WarData.gridGraph = nil ---@type Pathfinding.GridGraph
 WarData.scene = nil ---@type WarScene
 
+WarData.bossFighting = false ---正在打BOSS
+
 WarData.avatarIdIndex = 0
 
 WarData.mainAvatar = nil ---@type FocusAvatar 当前的主角色
@@ -42,6 +44,7 @@ function WarData.AddAvatar(avatar, data)
     WarData.AvatarHash[data.id] = avatar
 end
 
+---@param avatar WarAvatar
 function WarData.RemoveAvatar(avatar)
 
     WarData.AvatarHash[avatar.data.id] = nil
@@ -129,26 +132,27 @@ function WarData.GetAroundNearestGrid(myPosition, targetX, targetZ, radius, chec
     return goalX,goalZ,goalPosition,grids
 end
 
-function WarData:PauseAllAvatarAI()
+function WarData.PauseAllAvatarAI()
     for id, avatar in pairs(WarData.AvatarHash) do
         avatar:AIPause()
     end
 end
 
-function WarData:ResumeAllAvatarAI()
+function WarData.ResumeAllAvatarAI()
     for id, avatar in pairs(WarData.AvatarHash) do
         avatar:AIResume()
     end
 end
 
-function WarData:StopAllAvatarAI()
+function WarData.StopAllAvatarAI()
     for id, avatar in pairs(WarData.AvatarHash) do
         avatar:AIStop()
         avatar:SetTarget(nil)
+        avatar:EndFollow()
     end
 end
 
-function WarData:StartAllAvatarAI()
+function WarData.StartAllAvatarAI()
     for id, avatar in pairs(WarData.AvatarHash) do
         avatar:AIStart()
     end
