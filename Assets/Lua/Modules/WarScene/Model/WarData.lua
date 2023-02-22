@@ -21,6 +21,7 @@ WarData.scene = nil ---@type WarScene
 WarData.avatarIdIndex = 0
 
 WarData.mainAvatar = nil ---@type FocusAvatar 当前的主角色
+WarData.avatarTeam = {} ----@type table<number, WarAvatar> 当前的战斗队伍列表
 
 function WarData.AddAvatarLoc(x,z, id)
     if not WarData.AvatarGrids[x] then
@@ -153,5 +154,20 @@ function WarData:StartAllAvatarAI()
     end
 end
 
+---添加进队伍
+---@param avatar WarAvatar
+function WarData:TeamAddAvatar(avatar)
+    local id = avatar.data.id
+    if WarData.avatarTeam[id] == nil then
+        LogError("TeamAddAvatar 队伍中已经有该成员 ID：", id)
+    end
+    WarData.avatarTeam[avatar.data.id] = avatar
+end
+
+---从队伍中移除
+---@param avatar WarAvatar
+function WarData:TeamRemoveAvatar(avatar)
+    WarData.avatarTeam[avatar.data.id] = nil
+end
 
 return WarData

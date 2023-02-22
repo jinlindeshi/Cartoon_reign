@@ -58,7 +58,7 @@ end
 ---TEST 测试相机跟随Avatar
 function WarScene:TestFocusAvatar()
     self:AddAvatar(DemoCfg.mainAvatarID, true).skill = require("Modules.WarScene.Controller.Skill.SkillWhirlwind").New()
-    self:AddAvatar(DemoCfg.followerID):SetRangedAttackInfo(2)
+    --self:AddAvatar(DemoCfg.followerID):SetRangedAttackInfo(2)
 
 end
 ---TEST
@@ -70,8 +70,10 @@ end
 
 ---@param id number 角色ID
 ---@param isMainRole boolean 是否是主要角色
+---@param bornLoc table 指定出生格子坐标
+---@param delayAITime number 延迟AI开启的时间 默认不延迟
 ---@return WarAvatar
-function WarScene:AddAvatar(id, isMainRole)
+function WarScene:AddAvatar(id, isMainRole, bornLoc, delayAITime)
     local myData = clone(SData.avatar.GetData(id))
     local attr = AvatarData.GetHeroAttr(id)
     myData.hp = attr.maxHp
@@ -90,14 +92,60 @@ function WarScene:AddAvatar(id, isMainRole)
         avatar:SetExternalBehavior("BehaviorTree/Follower.asset")
     end
     WarData.AddAvatar(avatar, avatar.data)
-    local loc = WarData.bornNodes[-id]
+    WarData:TeamAddAvatar(avatar)
+    local loc = bornLoc or WarData.bornNodes[-id]
     self:PutInNode(avatar, loc[1], loc[2])
+    local bornFx = CreatePrefab("Effect/Prefabs/fx_Itemborn.prefab")
+    bornFx.transform.localScale = Vector3.New(0.8,0.8,0.8)
+    bornFx.transform.position = avatar.transform.position
+    DelayedCall(1, function()
+        RecyclePrefab(bornFx, "Effect/Prefabs/fx_Itemborn.prefab")
+    end)
     HappyFuns.SetLayerRecursive(avatar.gameObject, 11)
-    avatar:AIStart()
-
+    if delayAITime then
+        DelayedCall(delayAITime, function() avatar:AIStart() end)
+    else
+        avatar:AIStart()
+    end
     return avatar
 end
 
+---添加新avatar进入队伍
+function WarScene:TeamAddAvatar(id)
+    if WarData.mainAvatar == nil then
+        LogError("TeamAddAvatar 没有找到主角色 无法添加新角色进入队伍")
+        return
+    end
+
+    local nowGrid = WarData.gridGraph:GetNearest(WarData.mainAvatar.transform.position, Pathfinding.NNConstraint.None).node
+    local grids = WarData.GetAroundGrids(nowGrid.XCoordinateInGrid, nowGrid.ZCoordinateInGrid, 2) --主角两格距离内格子
+    local targetList = {}
+    local remainList = {}
+    for x, tb in pairs(grids) do
+        for z, v in pairs(tb) do
+            local grid = WarData.gridGraph:GetNode(x,z)
+            local pos = SeekerToLua.IntToVector(grid.position)
+            local dot = Vector3.Dot(WarData.mainAvatar.transform.forward, pos)
+            if dot < 0 then
+                --在主角后方的格子
+                table.insert(targetList, {x,z,dot})
+            else
+                table.insert(remainList, {x,z,dot})
+            end
+        end
+    end
+    local loc
+    if next(targetList) ~= nil then --优先选择在主角后面的位置
+        table.sort(targetList, function(a, b) return a[3] < b[3] end)
+        loc = targetList[1]
+    elseif next(remainList) ~= nil then
+        table.sort(remainList, function(a, b) return a[3] > b[3] end)
+        loc = remainList[1]
+    else
+        LogError("TeamAddAvatar 没有找到合适的出生位置 出生在默认出生点")
+    end
+    self:AddAvatar(id, false, loc)
+end
 
 ---@param avatar WarAvatar
 function WarScene:PutInNode(avatar, x, z, obstacle, radius)
