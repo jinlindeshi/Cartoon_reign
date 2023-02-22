@@ -25,6 +25,7 @@ public class DelegateFactory
 		dict.Add(typeof(System.Func<int,int>), factory.System_Func_int_int);
 		dict.Add(typeof(UnityEngine.Camera.CameraCallback), factory.UnityEngine_Camera_CameraCallback);
 		dict.Add(typeof(UnityEngine.RectTransform.ReapplyDrivenProperties), factory.UnityEngine_RectTransform_ReapplyDrivenProperties);
+		dict.Add(typeof(System.Action<TMPro.TMP_TextInfo>), factory.System_Action_TMPro_TMP_TextInfo);
 		dict.Add(typeof(UnityEngine.Events.UnityAction<UnityEngine.SpriteRenderer>), factory.UnityEngine_Events_UnityAction_UnityEngine_SpriteRenderer);
 		dict.Add(typeof(DG.Tweening.TweenCallback), factory.DG_Tweening_TweenCallback);
 		dict.Add(typeof(DG.Tweening.TweenCallback<int>), factory.DG_Tweening_TweenCallback_int);
@@ -90,6 +91,7 @@ public class DelegateFactory
 		DelegateTraits<System.Func<int,int>>.Init(factory.System_Func_int_int);
 		DelegateTraits<UnityEngine.Camera.CameraCallback>.Init(factory.UnityEngine_Camera_CameraCallback);
 		DelegateTraits<UnityEngine.RectTransform.ReapplyDrivenProperties>.Init(factory.UnityEngine_RectTransform_ReapplyDrivenProperties);
+		DelegateTraits<System.Action<TMPro.TMP_TextInfo>>.Init(factory.System_Action_TMPro_TMP_TextInfo);
 		DelegateTraits<UnityEngine.Events.UnityAction<UnityEngine.SpriteRenderer>>.Init(factory.UnityEngine_Events_UnityAction_UnityEngine_SpriteRenderer);
 		DelegateTraits<DG.Tweening.TweenCallback>.Init(factory.DG_Tweening_TweenCallback);
 		DelegateTraits<DG.Tweening.TweenCallback<int>>.Init(factory.DG_Tweening_TweenCallback_int);
@@ -155,6 +157,7 @@ public class DelegateFactory
 		TypeTraits<System.Func<int,int>>.Init(factory.Check_System_Func_int_int);
 		TypeTraits<UnityEngine.Camera.CameraCallback>.Init(factory.Check_UnityEngine_Camera_CameraCallback);
 		TypeTraits<UnityEngine.RectTransform.ReapplyDrivenProperties>.Init(factory.Check_UnityEngine_RectTransform_ReapplyDrivenProperties);
+		TypeTraits<System.Action<TMPro.TMP_TextInfo>>.Init(factory.Check_System_Action_TMPro_TMP_TextInfo);
 		TypeTraits<UnityEngine.Events.UnityAction<UnityEngine.SpriteRenderer>>.Init(factory.Check_UnityEngine_Events_UnityAction_UnityEngine_SpriteRenderer);
 		TypeTraits<DG.Tweening.TweenCallback>.Init(factory.Check_DG_Tweening_TweenCallback);
 		TypeTraits<DG.Tweening.TweenCallback<int>>.Init(factory.Check_DG_Tweening_TweenCallback_int);
@@ -220,6 +223,7 @@ public class DelegateFactory
 		StackTraits<System.Func<int,int>>.Push = factory.Push_System_Func_int_int;
 		StackTraits<UnityEngine.Camera.CameraCallback>.Push = factory.Push_UnityEngine_Camera_CameraCallback;
 		StackTraits<UnityEngine.RectTransform.ReapplyDrivenProperties>.Push = factory.Push_UnityEngine_RectTransform_ReapplyDrivenProperties;
+		StackTraits<System.Action<TMPro.TMP_TextInfo>>.Push = factory.Push_System_Action_TMPro_TMP_TextInfo;
 		StackTraits<UnityEngine.Events.UnityAction<UnityEngine.SpriteRenderer>>.Push = factory.Push_UnityEngine_Events_UnityAction_UnityEngine_SpriteRenderer;
 		StackTraits<DG.Tweening.TweenCallback>.Push = factory.Push_DG_Tweening_TweenCallback;
 		StackTraits<DG.Tweening.TweenCallback<int>>.Push = factory.Push_DG_Tweening_TweenCallback_int;
@@ -845,6 +849,63 @@ public class DelegateFactory
 	}
 
 	void Push_UnityEngine_RectTransform_ReapplyDrivenProperties(IntPtr L, UnityEngine.RectTransform.ReapplyDrivenProperties o)
+	{
+		ToLua.Push(L, o);
+	}
+
+	class System_Action_TMPro_TMP_TextInfo_Event : LuaDelegate
+	{
+		public System_Action_TMPro_TMP_TextInfo_Event(LuaFunction func) : base(func) { }
+		public System_Action_TMPro_TMP_TextInfo_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+
+		public void Call(TMPro.TMP_TextInfo param0)
+		{
+			func.BeginPCall();
+			func.PushObject(param0);
+			func.PCall();
+			func.EndPCall();
+		}
+
+		public void CallWithSelf(TMPro.TMP_TextInfo param0)
+		{
+			func.BeginPCall();
+			func.Push(self);
+			func.PushObject(param0);
+			func.PCall();
+			func.EndPCall();
+		}
+	}
+
+	public System.Action<TMPro.TMP_TextInfo> System_Action_TMPro_TMP_TextInfo(LuaFunction func, LuaTable self, bool flag)
+	{
+		if (func == null)
+		{
+			System.Action<TMPro.TMP_TextInfo> fn = delegate(TMPro.TMP_TextInfo param0) { };
+			return fn;
+		}
+
+		if(!flag)
+		{
+			System_Action_TMPro_TMP_TextInfo_Event target = new System_Action_TMPro_TMP_TextInfo_Event(func);
+			System.Action<TMPro.TMP_TextInfo> d = target.Call;
+			target.method = d.Method;
+			return d;
+		}
+		else
+		{
+			System_Action_TMPro_TMP_TextInfo_Event target = new System_Action_TMPro_TMP_TextInfo_Event(func, self);
+			System.Action<TMPro.TMP_TextInfo> d = target.CallWithSelf;
+			target.method = d.Method;
+			return d;
+		}
+	}
+
+	bool Check_System_Action_TMPro_TMP_TextInfo(IntPtr L, int pos)
+	{
+		return TypeChecker.CheckDelegateType(typeof(System.Action<TMPro.TMP_TextInfo>), L, pos);
+	}
+
+	void Push_System_Action_TMPro_TMP_TextInfo(IntPtr L, System.Action<TMPro.TMP_TextInfo> o)
 	{
 		ToLua.Push(L, o);
 	}

@@ -325,6 +325,20 @@ function GetComponent.TextMesh(go)
     return go:GetComponent(typeof(UnityEngine.TextMesh))
 end
 
+---获得 TextMeshProUGUI 组件
+---@param go UnityEngine.GameObject
+---@return TMPro.TextMeshProUGUI
+function GetComponent.TextMeshProUGUI(go)
+    return go:GetComponent(typeof(TMPro.TextMeshProUGUI))
+end
+
+---获得 TextMeshPro 组件
+---@param go UnityEngine.GameObject
+---@return TMPro.TextMeshProUGUI
+function GetComponent.TextMeshPro(go)
+    return go:GetComponent(typeof(TMPro.TextMeshPro))
+end
+
 ---获得 SpriteRenderer 组件
 ---@param go UnityEngine.GameObject
 ---@return UnityEngine.SpriteRenderer
@@ -373,13 +387,6 @@ end
 ---@return UnityEngine.Light
 function GetComponent.Light(go)
     return go:GetComponent(typeof(UnityEngine.Light))
-end
-
----获得 BehaviorToLua 组件
----@param go UnityEngine.GameObject
----@return BehaviorToLua
-function GetComponent.BehaviorToLua(go)
-    return go:GetComponent(typeof(BehaviorToLua))
 end
 
 ---获得 CharacterController 组件

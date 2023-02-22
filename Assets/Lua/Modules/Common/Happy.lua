@@ -312,4 +312,37 @@ function Happy.FindGameObjectLoopFromParent(name, parent)
     end
 end
 
+---变色屏过渡
+function Happy.ScreenTrans(endCall, middleCall, toMiddleDur, waitDur, toEndDur, color, text, textSpeed)
+    toMiddleDur = toMiddleDur or 1
+    waitDur = waitDur or 1
+    toEndDur = toEndDur or 1
+    color = color or Color.black
+    local obj = CreatePrefab("Prefabs/Common/ScreenTrans.prefab", UIMgr.GetLayer(UILayerName.uiTop))
+
+    local img = GetComponent.Image(obj)
+    local label = GetComponent.TextMeshProUGUI(obj.transform:Find("Text").gameObject)
+    local cg = GetComponent.CanvasGroup(obj)
+
+    img.color = color
+    cg.alpha = 0
+    local seq = DOTween.Sequence()
+    seq:Append(cg:DOFade(1, toMiddleDur))
+    label.text = ""
+    if text then
+        seq:Append(label:DOText(text, string.len(text) * 0.05 / (textSpeed or 1)))
+    end
+    if middleCall then
+        seq:AppendCallback(middleCall)
+    end
+    seq:AppendInterval(waitDur)
+    seq:Append(cg:DOFade(0, toEndDur))
+    seq:AppendCallback(function ()
+        RecyclePrefab(obj,"Prefabs/Common/ScreenTrans.prefab")
+        if endCall then
+            endCall()
+        end
+    end)
+end
+
 return Happy

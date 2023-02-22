@@ -53,12 +53,16 @@ function WarScene:Ctor(scene)
     --        end)
     --    end)
     --end)
+
+    --DelayedCall(1, function()
+    --    Happy.ScreenTrans(nil,nil,nil,nil,nil, Color.red, "dsafa fasdsa ewqrdasd")
+    --end)
 end
 
 ---TEST 测试相机跟随Avatar
 function WarScene:TestFocusAvatar()
     self:AddAvatar(DemoCfg.mainAvatarID, true).skill = require("Modules.WarScene.Controller.Skill.SkillWhirlwind").New()
-    --self:AddAvatar(DemoCfg.followerID):SetRangedAttackInfo(2)
+    self:AddAvatar(DemoCfg.followerID):SetRangedAttackInfo(2)
 end
 ---TEST
 

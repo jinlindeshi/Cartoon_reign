@@ -18,6 +18,7 @@ using BehaviorDesigner.Runtime.Tasks;
 using DG.Tweening.Core;
  using DG.Tweening.Plugins.Options;
  using Pathfinding;
+ using TMPro;
  using UnityEngine.AI;
 using UnityEngine.Audio;
 using UnityEngine.Rendering;
@@ -97,6 +98,8 @@ public static class CustomSettings
         _GT(typeof(ScrollRect)).AddExtendType (typeof(DOTweenModuleUI)),
         _GT(typeof(Slider)).AddExtendType (typeof(DOTweenModuleUI)),
         _GT(typeof(Text)).AddExtendType (typeof(DOTweenModuleUI)),
+        _GT(typeof(TextMeshPro)).AddExtendType (typeof(ShortcutExtensionsTMPText)),
+        _GT(typeof(TextMeshProUGUI)).AddExtendType (typeof(ShortcutExtensionsTMPText)),
 
         _GT(typeof(AudioSource)).AddExtendType (typeof(DOTweenModuleAudio)),
         _GT(typeof(AudioMixer)).AddExtendType (typeof(DOTweenModuleAudio)),
