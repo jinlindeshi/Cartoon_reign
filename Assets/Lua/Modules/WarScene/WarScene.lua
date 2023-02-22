@@ -61,15 +61,16 @@ end
 
 ---TEST 测试相机跟随Avatar
 function WarScene:TestFocusAvatar()
-    self:AddAvatar(DemoCfg.mainAvatarID, true).skill = require("Modules.WarScene.Controller.Skill.SkillWhirlwind").New()
-    self:AddAvatar(DemoCfg.followerID):SetRangedAttackInfo(2)
+    self:AddAvatar(DemoCfg.mainAvatarID, true, nil, 1).skill = require("Modules.WarScene.Controller.Skill.SkillWhirlwind").New()
+    self:AddAvatar(DemoCfg.followerID, false, nil, 1):SetRangedAttackInfo(2)
 end
 ---TEST
 
-local testBossData = {atk = 75, def = 0, hp = 2000, maxHp = 2000, name = "金刚熊", prefab = "Prefabs/Avatars/monster_xiong.prefab", side = 2}
+local testBossData = {atk = 75, def = 0, hp = 2000, maxHp = 2000, name = "金刚熊",
+                      prefab = "Prefabs/Avatars/monster_xiong.prefab", side = 2}
 ---挑战BOSS
 function WarScene:ChallengeBoss()
-    print("WarScene:ChallengeBoss 挑战BOSS")
+    --print("WarScene:ChallengeBoss 挑战BOSS")
     WarData.bossFighting = true
     WarData.StopAllAvatarAI()
 
