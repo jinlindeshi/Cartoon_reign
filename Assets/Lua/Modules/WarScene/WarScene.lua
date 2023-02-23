@@ -50,21 +50,8 @@ function WarScene:Ctor(scene)
     --    ,"一波一波无穷尽"}, function()
     --        Talk.Play(TalkerConfig.Me2D, {"跟你拼啦！"}, function()
     --            print("播放完毕~")
-    --        end)
-    --    end)
-    --end)
-
-    --DelayedCall(1, function()
-    --    local playedTimes = 0
-    --    local fun
-    --    fun = function()
-    --        playedTimes = playedTimes + 1
-    --        print("执行了"..playedTimes.."次")
-    --        if playedTimes <=3 then
-    --            Happy.ScreenTrans(fun,0,Color.red, {dur=0.5, alpha=0.2},{dur=0.5},nil)
-    --        end
-    --    end
-    --    fun()
+    --        end, Talk.SHAKE_EFF_FUN, Talk.SHAKE_EFF_FUN)
+    --    end, Talk.SHAKE_EFF_FUN, Talk.SHAKE_EFF_FUN)
     --end)
     PreInstantiate("Prefabs/Common/ScreenTrans.prefab")
     PreInstantiate("Effect/Prefabs/fx_xuznahuanjian.prefab")
@@ -80,19 +67,23 @@ function WarScene:MyDead()
     if WarData.bossFighting == true then
         WarData.bossFighting = false
     end
-    Happy.ScreenTrans(function()
-        self:GameStart(true)
-        ---重生 播抽卡剧情
 
-    end, nil, nil, {callBack=function()
-        for i, avatar in pairs(WarData.AvatarHash) do
-            DelayedFrameCall(function()
-                WarData.RemoveAvatar(avatar, true)
-            end)
-        end
-        GetComponent.HappyCamera( Camera.main.gameObject).attachObj = nil
-        Camera.main.transform.position = WarData.CameraInitPos
-    end})
+    DelayedCall(1, function()
+        Happy.ScreenTrans(function()
+            self:GameStart(true)
+            ---重生 播抽卡剧情
+
+        end, nil, nil, {callBack=function()
+            for i, avatar in pairs(WarData.AvatarHash) do
+                DelayedFrameCall(function()
+                    WarData.RemoveAvatar(avatar, true)
+                end)
+            end
+            GetComponent.HappyCamera( Camera.main.gameObject).attachObj = nil
+            Camera.main.transform.position = WarData.CameraInitPos
+        end})
+    end)
+
 end
 
 local testBossData = {atk = 600, def = 0, hp = 1000, maxHp = 1000, name = "金刚熊",
@@ -127,6 +118,7 @@ function WarScene:ChallengeBoss()
 
     local playedTimes = 0
     local loopFun
+    local bossShow
     loopFun = function()
         playedTimes = playedTimes+1
         if playedTimes <=3 then
@@ -135,7 +127,16 @@ function WarScene:ChallengeBoss()
             WarData.StartAllAvatarAI()
         end
     end
-    DelayedCall(0.5, loopFun)
+    DelayedCall(0.5, function()
+        bossShow = CreatePrefab("Prefabs/War/BossShow.prefab", UIMgr.GetLayer(UILayerName.top))
+        DelayedCall(0.5, loopFun)
+        DelayedCall(3, function()
+            GetComponent.CanvasGroup(bossShow):DOFade(0, 0.5):OnComplete(function()
+                RecyclePrefab(bossShow, "Prefabs/War/BossShow.prefab")
+                GetComponent.CanvasGroup(bossShow).alpha = 1
+            end)
+        end)
+    end)
 end
 
 ---@param id number 角色ID

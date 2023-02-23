@@ -37,7 +37,7 @@ function SkillWhirlwind:Begin(avatar, callBack)
                 if enemy and enemy.data.side ~= self.avatar.data.side and enemy.moving ~= true and not enemy:CheckDead() then
                     --print("你妹啊~")
                     enemy:GetHurt(DamageManager.GetHurtValue(self.avatar.data, enemy.data)/2)
-                    Happy.Shake(0.2, nil, enemy.gameObject, 0.02, true)
+                    Happy.Shake(enemy.gameObject, 0.2, nil, 0.02)
                     allDead = false
                 end
             end

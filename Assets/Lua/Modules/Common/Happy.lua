@@ -205,15 +205,12 @@ end
 
 ---震动 默认震动主相机
 ---@param obj UnityEngine.GameObject
-function Happy.Shake(duration, callBack, obj, range, notCamera)
+function Happy.Shake(obj, duration, callBack, range, isCamera)
     duration = duration or 0.5
 
     range = range or 1
-    if notCamera == true then
-        range = range * 30
-    end
-    if not obj then
-        obj = Camera.main.gameObject
+    if isCamera == true then
+        range = range / 20
     end
 
     if not obj then
@@ -229,9 +226,9 @@ function Happy.Shake(duration, callBack, obj, range, notCamera)
         local tran = info.tran
         tran.position = tran.position - info.sv
         --print("哦呵呵呵", cameraT.position.x, cameraT.position.y, cameraT.position.z)
-        info.sv = Vector3.New(info.range * (0.1 * math.random(0, 1)),
-                info.range * (0.1 * math.random(0, 1)),
-                info.range * (0.1 * math.random(0, 1)))
+        info.sv = Vector3.New(info.range * math.random(0, 1),
+                info.range * math.random(0, 1),
+                info.range * math.random(0, 1))
 
         --print("你妹啊 doShake", sv.x, sv.y, sv.z)
         tran.position = tran.position + info.sv
