@@ -290,14 +290,13 @@ def main():
 	# parser.add_argument('-p', '--path', type=str, required=True, help=u"指定导表定义文件的路径，可以是具体的文件，也可以是一个目录")
 	# parser.add_argument('-a', '--all', type=int, default=False, help=u"是否全导，如果不，则只导修改过的文件")
 	# args = parser.parse_args()
-
+	sys.path.append(os.getcwd())
 	debuglog("开始导出")
 	# export_excel(args.path, args.all)
-	url = os.path.join(os.path.dirname(os.path.dirname(__file__)),"Excel")
+	url = os.path.join(os.path.dirname(os.getcwd()),"Excel")
 	export_excel(url, -1)
 	debuglog("导出完毕!!!")
-	
-
+	input("按任意按键退出")
 
 if __name__ == "__main__":
 	main()
