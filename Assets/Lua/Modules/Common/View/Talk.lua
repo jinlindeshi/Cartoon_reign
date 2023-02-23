@@ -13,13 +13,17 @@ local Talk = class("Talk", LuaObj)
 ---@param afterTalkCall function fun(goOnFun, index)每段文本后回调
 function Talk.Play(featureInfo, contentList, callBack, beforeTalkCall, afterTalkCall)
     if not Talk.instance then
-        Talk.instance = Talk.New()
+        Talk.instance = Talk.New() ---@type Talk
     end
     --print("Talk.Show",Talk.instance.gameObject)
     Talk.instance:Show(featureInfo, contentList, callBack, beforeTalkCall, afterTalkCall)
 end
 
-
+---震动效果
+Talk.SHAKE_EFF_FUN = function(playFun)
+    --playFun()
+    Happy.Shake(Talk.instance.featureC,1, playFun, 0.5)
+end
 
 function Talk:Ctor()
 
