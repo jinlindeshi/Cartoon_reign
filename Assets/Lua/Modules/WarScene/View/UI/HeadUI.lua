@@ -23,7 +23,7 @@ function HeadUI:SkillNameShow(name)
     name = name or "xuanfeng"
     local prefabPath = "Prefabs/War/SkillName.prefab"
     local gObj = CreatePrefab(prefabPath, self.transform)
-    GetComponent.Image(gObj).sprite = resMgr:LoadSpriteAtPath("Textures/war/"..name..".png")
+    GetComponent.Image(gObj).sprite = resMgr:LoadSpriteAtPath("Textures/war/SkillName/"..name..".png")
     gObj.transform.localPosition = Vector3.New(0, 30,0)
     self.transform:SetAsLastSibling()
     gObj:SetActive(false)

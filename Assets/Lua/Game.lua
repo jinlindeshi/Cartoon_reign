@@ -190,6 +190,9 @@ function CreatePrefab(path, parent, noPool)
     if not prefabsPool[path] then
         prefabsPool[path] = {}
     end
+    if type(parent) == "string" then
+        parent = UIMgr.GetLayer(parent)
+    end
     if #prefabsPool[path] == 0 or noPool then
         return GameObject.Instantiate(prefab, parent)
     else
@@ -247,6 +250,9 @@ end
 function ClonePrefab(gameObj, parent, poolKey)
     if poolKey and not prefabsPool[poolKey] then
         prefabsPool[poolKey] = {}
+    end
+    if type(parent) == "string" then
+        parent = UIMgr.GetLayer(parent)
     end
     if not poolKey or #prefabsPool[poolKey] == 0 then
         return GameObject.Instantiate(gameObj, parent)

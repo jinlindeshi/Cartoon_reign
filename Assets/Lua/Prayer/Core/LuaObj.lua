@@ -27,6 +27,9 @@ function LuaObj:BindGameObject(gameObject, parent)
     self.gameObject = gameObject ---@type UnityEngine.GameObject
     self.transform = gameObject.transform ---@type UnityEngine.Transform
     if parent then
+        if type(parent) == "string" then
+            parent = UIMgr.GetLayer(parent)
+        end
         local pos = self.transform.localPosition
         local scale = self.transform.localScale
         local angel = self.transform.localEulerAngles

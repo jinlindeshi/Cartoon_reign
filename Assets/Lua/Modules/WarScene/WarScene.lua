@@ -107,13 +107,13 @@ function WarScene:ChallengeBoss()
 
     WarData.avatarIdIndex = WarData.avatarIdIndex + 1
     testBossData.id = WarData.avatarIdIndex
-    local avatar = WarAvatar.New(testBossData.prefab,
+    local boss = WarAvatar.New(testBossData.prefab,
             testBossData, false, WarData.scene.avatarConTran)
-    avatar:SetExternalBehavior("BehaviorTree/EnemyAI.asset")
-    WarData.AddAvatar(avatar, avatar.data)
-    WarData.scene:PutInNode(avatar, WarData.bossNode[1], WarData.bossNode[2])
-    avatar.transform.localScale = avatar.transform.localScale * 1.5
-    HappyFuns.SetLayerRecursive(avatar.gameObject, 11)
+    boss:SetExternalBehavior("BehaviorTree/EnemyAI.asset")
+    WarData.AddAvatar(boss, boss.data)
+    WarData.scene:PutInNode(boss, WarData.bossNode[1], WarData.bossNode[2])
+    boss.transform.localScale = boss.transform.localScale * 1.5
+    HappyFuns.SetLayerRecursive(boss.gameObject, 11)
 
 
     local playedTimes = 0
@@ -125,10 +125,15 @@ function WarScene:ChallengeBoss()
             Happy.ScreenTrans(loopFun,0,Color.red, {dur=0.5, alpha=0.2},{dur=0.5},nil)
         else
             WarData.StartAllAvatarAI()
+
+            ---指引箭头
+            --require("Modules.WarScene.View.UI.BossArrow").New(boss)
         end
     end
     DelayedCall(0.5, function()
-        bossShow = CreatePrefab("Prefabs/War/BossShow.prefab", UIMgr.GetLayer(UILayerName.top))
+        bossShow = CreatePrefab("Prefabs/War/BossShow.prefab", UILayerName.top)
+        local cam = Camera.main
+        local screenP = cam:WorldToScreenPoint(self.avatar.transform.position)
         DelayedCall(0.5, loopFun)
         DelayedCall(3, function()
             GetComponent.CanvasGroup(bossShow):DOFade(0, 0.5):OnComplete(function()
