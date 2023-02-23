@@ -181,7 +181,7 @@ end
 local prefabsPool = {}
 
 ---实例化
----@param pathOrGO string|UnityEngine.GameObject prefab路径或者GameObject
+---@param path string prefab路径
 ---@param parent UnityEngine.Transform 父节点
 ---@param noPool boolean 是否加入缓存池
 ---@return UnityEngine.GameObject
@@ -197,6 +197,45 @@ function CreatePrefab(path, parent, noPool)
         obj.transform:SetParent(parent)
         table.remove(prefabsPool[path], 1)
         return obj
+    end
+end
+
+
+local preCreateList = {}
+local preCreateRunning = false
+---预实例化进缓存池，自动分帧进行，减少卡顿
+---@param pathOrGO string|UnityEngine.GameObject prefab路径或要复制的样本
+---@param poolKey string 缓存池用的key
+function PreInstantiate(pathOrGO, poolKey)
+    table.insert(preCreateList, {pathOrGO=pathOrGO, poolKey=poolKey})
+    if preCreateRunning == false then
+        local checkFun
+        checkFun = function()
+            if #preCreateList == 0 then
+                preCreateRunning = false
+                return
+            end
+            preCreateRunning = true
+            DelayedFrameCall(function()
+                local info = preCreateList[1]
+                table.remove(preCreateList, 1)
+
+                local prefab, gameObj, poolKey
+                if type(info.pathOrGO) == "string" then
+                    poolKey = info.pathOrGO
+                    prefab = resMgr:LoadPrefabAtPath(info.pathOrGO)
+                end
+                gameObj = GameObject.Instantiate(prefab, Game.PrefabPool.transform)
+
+                if not prefabsPool[poolKey] then
+                    prefabsPool[poolKey] = {}
+                end
+                table.insert(prefabsPool[poolKey], gameObj)
+                print("你妹啊", poolKey, gameObj)
+                checkFun()
+            end)
+        end
+        checkFun()
     end
 end
 
@@ -222,7 +261,9 @@ end
 ---@param obj UnityEngine.GameObject
 ---@param pathOrKey string 缓存池用的path或key
 function RecyclePrefab(obj, pathOrKey)
-
+    if not pathOrKey then
+        return
+    end
     if not prefabsPool[pathOrKey] then
         prefabsPool[pathOrKey] = {}
     end

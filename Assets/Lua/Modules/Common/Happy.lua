@@ -322,6 +322,10 @@ function Happy.ScreenTrans(endCall, waitDur, color, toMiddleParams, toEndParams,
     color = color or Color.black
     local obj = CreatePrefab("Prefabs/Common/ScreenTrans.prefab", UIMgr.GetLayer(UILayerName.uiTop))
 
+    local rect = GetComponent.RectTransform(obj)
+    rect.localScale = Vector3.one
+    rect.offsetMax = Vector2.zero
+    rect.offsetMin = Vector2.zero
     local img = GetComponent.Image(obj)
     local label = GetComponent.TextMeshProUGUI(obj.transform:Find("Text").gameObject)
     local cg = GetComponent.CanvasGroup(obj)

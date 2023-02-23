@@ -66,6 +66,8 @@ function WarScene:Ctor(scene)
     --    end
     --    fun()
     --end)
+    PreInstantiate("Prefabs/Common/ScreenTrans.prefab")
+    PreInstantiate("Effect/Prefabs/fx_xuznahuanjian.prefab")
 end
 
 ---TEST 测试相机跟随Avatar
