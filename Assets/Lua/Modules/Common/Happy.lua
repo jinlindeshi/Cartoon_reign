@@ -313,10 +313,12 @@ function Happy.FindGameObjectLoopFromParent(name, parent)
 end
 
 ---变色屏过渡
-function Happy.ScreenTrans(endCall, middleCall, toMiddleDur, waitDur, toEndDur, color, text, textSpeed)
-    toMiddleDur = toMiddleDur or 1
+function Happy.ScreenTrans(endCall, waitDur, color, toMiddleParams, toEndParams, textParams)
+    toMiddleParams = toMiddleParams or {}
+    toEndParams = toEndParams or {}
+    textParams = textParams or {}
     waitDur = waitDur or 1
-    toEndDur = toEndDur or 1
+
     color = color or Color.black
     local obj = CreatePrefab("Prefabs/Common/ScreenTrans.prefab", UIMgr.GetLayer(UILayerName.uiTop))
 
@@ -327,16 +329,16 @@ function Happy.ScreenTrans(endCall, middleCall, toMiddleDur, waitDur, toEndDur, 
     img.color = color
     cg.alpha = 0
     local seq = DOTween.Sequence()
-    seq:Append(cg:DOFade(1, toMiddleDur))
+    seq:Append(cg:DOFade(toMiddleParams.alpha or 1, toMiddleParams.dur or 1):SetEase(DOTWEEN_EASE.Linear))
     label.text = ""
-    if text then
-        seq:Append(label:DOText(text, string.len(text) * 0.05 / (textSpeed or 1)))
+    if textParams.content then
+        seq:Append(label:DOText(textParams.content, string.len(textParams.content) * 0.05 / (textParams.speed or 1)):SetEase(DOTWEEN_EASE.Linear))
     end
-    if middleCall then
-        seq:AppendCallback(middleCall)
+    if toMiddleParams.callBack then
+        seq:AppendCallback(toMiddleParams.callBack)
     end
     seq:AppendInterval(waitDur)
-    seq:Append(cg:DOFade(0, toEndDur))
+    seq:Append(cg:DOFade(toEndParams.alpha or 0, toEndParams.dur or 1):SetEase(DOTWEEN_EASE.Linear))
     seq:AppendCallback(function ()
         RecyclePrefab(obj,"Prefabs/Common/ScreenTrans.prefab")
         if endCall then

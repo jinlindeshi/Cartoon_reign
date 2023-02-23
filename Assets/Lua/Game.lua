@@ -185,15 +185,8 @@ local prefabsPool = {}
 ---@param parent UnityEngine.Transform 父节点
 ---@param noPool boolean 是否加入缓存池
 ---@return UnityEngine.GameObject
-function CreatePrefab(pathOrGO, parent, noPool)
-    local path, prefab
-    if type(pathOrGO) == "string" then
-        path = pathOrGO
-        prefab = resMgr:LoadPrefabAtPath(path)
-    else
-        path = pathOrGO.name
-        prefab = pathOrGO
-    end
+function CreatePrefab(path, parent, noPool)
+    local prefab = resMgr:LoadPrefabAtPath(path)
     if not prefabsPool[path] then
         prefabsPool[path] = {}
     end
@@ -207,14 +200,34 @@ function CreatePrefab(pathOrGO, parent, noPool)
     end
 end
 
----@param obj UnityEngine.GameObject
-function RecyclePrefab(obj, path)
+---克隆一个现有的对象 并且支持对象池
+---@param gameObj UnityEngine.GameObject 想要复制的GameObject
+---@param parent UnityEngine.Transform 父节点
+---@param poolKey string 缓存池用的key
+---@return UnityEngine.GameObject
+function ClonePrefab(gameObj, parent, poolKey)
+    if poolKey and not prefabsPool[poolKey] then
+        prefabsPool[poolKey] = {}
+    end
+    if not poolKey or #prefabsPool[poolKey] == 0 then
+        return GameObject.Instantiate(gameObj, parent)
+    else
+        local obj = prefabsPool[poolKey][1] ---@type UnityEngine.GameObject
+        obj.transform:SetParent(parent)
+        table.remove(prefabsPool[poolKey], 1)
+        return obj
+    end
+end
 
-    if not prefabsPool[path] then
-        prefabsPool[path] = {}
+---@param obj UnityEngine.GameObject
+---@param pathOrKey string 缓存池用的path或key
+function RecyclePrefab(obj, pathOrKey)
+
+    if not prefabsPool[pathOrKey] then
+        prefabsPool[pathOrKey] = {}
     end
     obj.transform:SetParent(Game.PrefabPool.transform)
-    table.insert(prefabsPool[path], obj)
+    table.insert(prefabsPool[pathOrKey], obj)
 end
 
 ---添加按钮相关事件

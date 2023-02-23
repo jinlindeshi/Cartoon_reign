@@ -55,7 +55,16 @@ function WarScene:Ctor(scene)
     --end)
 
     --DelayedCall(1, function()
-    --    Happy.ScreenTrans(nil,nil,nil,nil,nil, Color.red, "dsafa fasdsa ewqrdasd")
+    --    local playedTimes = 0
+    --    local fun
+    --    fun = function()
+    --        playedTimes = playedTimes + 1
+    --        print("执行了"..playedTimes.."次")
+    --        if playedTimes <=3 then
+    --            Happy.ScreenTrans(fun,0,Color.red, {dur=0.5, alpha=0.2},{dur=0.5},nil)
+    --        end
+    --    end
+    --    fun()
     --end)
 end
 
@@ -95,9 +104,18 @@ function WarScene:ChallengeBoss()
     avatar.transform.localScale = avatar.transform.localScale * 1.5
     HappyFuns.SetLayerRecursive(avatar.gameObject, 11)
 
-    DelayedCall(2, function()
-        WarData.StartAllAvatarAI()
-    end)
+
+    local playedTimes = 0
+    local loopFun
+    loopFun = function()
+        playedTimes = playedTimes+1
+        if playedTimes <=3 then
+            Happy.ScreenTrans(loopFun,0,Color.red, {dur=0.5, alpha=0.2},{dur=0.5},nil)
+        else
+            WarData.StartAllAvatarAI()
+        end
+    end
+    loopFun()
 end
 
 ---@param id number 角色ID

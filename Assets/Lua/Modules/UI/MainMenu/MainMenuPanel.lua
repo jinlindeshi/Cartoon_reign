@@ -123,7 +123,7 @@ function MainMenuPanel:IconScenePosToUIPos(pos, num, picUrl)
     local targetPos = Vector2.New(self.res_gold.localPosition.x - 50, self.res_gold.localPosition.y)
     local seq = DOTween.Sequence()
     for i = 1, num do
-        local item = CreatePrefab(self.ItemIconObj, self.ItemIconObj.transform.parent)
+        local item = ClonePrefab(self.ItemIconObj, self.ItemIconObj.transform.parent, self.ItemIconObj.name)
         local rect = GetComponent.RectTransform(item)
         if num == 1 then
             rect.anchoredPosition = orgPos
