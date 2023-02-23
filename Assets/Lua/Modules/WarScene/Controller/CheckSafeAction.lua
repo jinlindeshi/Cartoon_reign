@@ -45,8 +45,12 @@ function CheckSafeAction:OnStart()
             for id, avatar in pairs(WarData.AvatarHash) do
                 avatar:SetMoveSpeedScale(1)
             end
+            Happy.ScreenTrans(function()
+                self.cAction:SetUpdateStatus(TaskStatus.Success)
+            end, nil, nil, nil, nil, {content="来到下一层", speed=0.5})
+        else
+            self.cAction:SetUpdateStatus(TaskStatus.Success)
         end
-        self.cAction:SetUpdateStatus(TaskStatus.Success)
     end
 end
 

@@ -275,6 +275,11 @@ function WarAvatar:Recycle()
     self.target = nil
     self.hpBar:Recycle()
     self.headUI:Destroy()
+
+    ---主角没了，重生
+    if self == WarData.mainAvatar then
+        WarData.scene:MyDead()
+    end
 end
 
 ---验证是否死亡
@@ -385,6 +390,11 @@ end
 
 function WarAvatar:Update()
     if self.trail then
+        if self.target == nil then
+            RecyclePrefab(self.trail, self.trailPrefabPath)
+            self.trail = nil
+            return
+        end
         local lockY = self.trail.transform.position.y
         local nowPos = self.trail.transform.position
         nowPos.y = lockY

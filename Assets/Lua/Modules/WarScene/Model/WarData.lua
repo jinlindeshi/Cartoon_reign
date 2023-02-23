@@ -13,12 +13,15 @@ WarData.bossNode = {65,16} ---Boss刷新点
 WarData.patrolNodePath = {{98,104},{99,86},{77,72},{60,78},{48,92},{72,110}} ---刷怪点 Scene01场景
 WarData.patrolNodeIndex = -1
 
+WarData.CameraInitPos = Vector3.New(7.500023, 12, 27.00003)
+
 WarData.AvatarHash = {} ---@type table<number, WarAvatar>
 WarData.AvatarGrids = {}
 WarData.gridGraph = nil ---@type Pathfinding.GridGraph
 WarData.scene = nil ---@type WarScene
 
 WarData.bossFighting = false ---正在打BOSS
+WarData.KillNumToOpenBoss = 10 ---积累杀掉这个数量的小怪，可以打BOSS
 
 WarData.avatarIdIndex = 0
 
@@ -45,10 +48,13 @@ function WarData.AddAvatar(avatar, data)
 end
 
 ---@param avatar WarAvatar
-function WarData.RemoveAvatar(avatar, isPlayDead)
+---@param noPlayDead boolean 是不是不需要播放死亡
+function WarData.RemoveAvatar(avatar, noPlayDead)
     WarData.AvatarHash[avatar.data.id] = nil
-    if isPlayDead == nil then isPlayDead = true end
-    if isPlayDead then
+    if noPlayDead == true then
+        avatar:AIStop()
+        avatar:Recycle()
+    else
         avatar:PlayDead()
     end
 end

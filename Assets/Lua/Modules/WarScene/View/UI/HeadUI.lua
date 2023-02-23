@@ -29,7 +29,9 @@ function HeadUI:SkillNameShow(name)
     gObj:SetActive(false)
     gObj:SetActive(true)
     DelayedCall(2, function()
-        RecyclePrefab(gObj, prefabPath)
+        if isnull(gObj) ~= true then
+            RecyclePrefab(gObj, prefabPath)
+        end
     end)
 end
 
