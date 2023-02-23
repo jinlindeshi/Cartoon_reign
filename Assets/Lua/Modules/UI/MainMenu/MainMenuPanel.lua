@@ -44,6 +44,7 @@ function MainMenuPanel:Init()
     EventMgr.AddEventListener("MonsterDead", self.OnMonsterDead, self)
 
 
+    self.bossBtn:SetActive(false)
     ---TEST
     DelayedCall(3, function()
         self.bossBtn:SetActive(true)

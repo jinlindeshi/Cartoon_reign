@@ -231,7 +231,7 @@ function PreInstantiate(pathOrGO, poolKey)
                     prefabsPool[poolKey] = {}
                 end
                 table.insert(prefabsPool[poolKey], gameObj)
-                print("你妹啊", poolKey, gameObj)
+                --print("你妹啊", poolKey, gameObj)
                 checkFun()
             end)
         end

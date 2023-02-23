@@ -117,7 +117,7 @@ function WarScene:ChallengeBoss()
             WarData.StartAllAvatarAI()
         end
     end
-    loopFun()
+    DelayedCall(0.5, loopFun)
 end
 
 ---@param id number 角色ID
