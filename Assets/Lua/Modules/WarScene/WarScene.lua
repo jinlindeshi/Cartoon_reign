@@ -36,8 +36,8 @@ function WarScene:Ctor(scene)
 
     self.avatarConTran = self:GetRootObjByName("AvatarCon").transform
     self.avatarList = {} --角色列表
-    self:TestFocusAvatar()
     UIMgr.OpenPanel(UIPanelCfg.mainMenu)
+    self:GameStart()
 
     --DelayedCall(1, function()
     --    Happy.MainCameraBlurToggle(true, 1)
@@ -70,14 +70,32 @@ function WarScene:Ctor(scene)
     PreInstantiate("Effect/Prefabs/fx_xuznahuanjian.prefab")
 end
 
----TEST 测试相机跟随Avatar
-function WarScene:TestFocusAvatar()
-    self:AddAvatar(DemoCfg.mainAvatarID, true, nil, 1).skill = require("Modules.WarScene.Controller.Skill.SkillWhirlwind").New()
-    self:AddAvatar(DemoCfg.followerID, false, nil, 1):SetRangedAttackInfo(2)
+function WarScene:GameStart(noAIStart)
+    self:AddAvatar(DemoCfg.mainAvatarID, true, nil, 1, noAIStart).skill = require("Modules.WarScene.Controller.Skill.SkillWhirlwind").New()
+    --self:AddAvatar(DemoCfg.followerID, false, nil, 1, noAIStart):SetRangedAttackInfo(2)
 end
----TEST
 
-local testBossData = {atk = 75, def = 0, hp = 2000, maxHp = 2000, name = "金刚熊",
+---主角死了，清场，主角在本层重生
+function WarScene:MyDead()
+    if WarData.bossFighting == true then
+        WarData.bossFighting = false
+    end
+    Happy.ScreenTrans(function()
+        self:GameStart(true)
+        ---重生 播抽卡剧情
+
+    end, nil, nil, {callBack=function()
+        for i, avatar in pairs(WarData.AvatarHash) do
+            DelayedFrameCall(function()
+                WarData.RemoveAvatar(avatar, true)
+            end)
+        end
+        GetComponent.HappyCamera( Camera.main.gameObject).attachObj = nil
+        Camera.main.transform.position = WarData.CameraInitPos
+    end})
+end
+
+local testBossData = {atk = 600, def = 0, hp = 1000, maxHp = 1000, name = "金刚熊",
                       prefab = "Prefabs/Avatars/monster_xiong.prefab", side = 2}
 ---挑战BOSS
 function WarScene:ChallengeBoss()
@@ -117,7 +135,7 @@ function WarScene:ChallengeBoss()
             WarData.StartAllAvatarAI()
         end
     end
-    loopFun()
+    DelayedCall(0.5, loopFun)
 end
 
 ---@param id number 角色ID
@@ -125,7 +143,7 @@ end
 ---@param bornLoc table 指定出生格子坐标
 ---@param delayAITime number 延迟AI开启的时间 默认不延迟
 ---@return WarAvatar
-function WarScene:AddAvatar(id, isMainRole, bornLoc, delayAITime)
+function WarScene:AddAvatar(id, isMainRole, bornLoc, delayAITime, noAIStart)
     local myData = clone(SData.avatar.GetData(id))
     local attr = AvatarData.GetHeroAttr(id)
     myData.hp = attr.maxHp
@@ -155,6 +173,9 @@ function WarScene:AddAvatar(id, isMainRole, bornLoc, delayAITime)
         RecyclePrefab(bornFx, "Effect/Prefabs/fx_Itemborn.prefab")
     end)
     HappyFuns.SetLayerRecursive(avatar.gameObject, 11)
+    if noAIStart == true then
+        return avatar
+    end
     if delayAITime then
         DelayedCall(delayAITime, function() avatar:AIStart() end)
     else
@@ -205,9 +226,7 @@ function WarScene:TeamRemoveAvatar(id)
         return
     end
     local avatar = WarData.avatarTeam[id]
-    avatar:AIStop()
-    avatar:Recycle()
-    WarData.RemoveAvatar(avatar, false)
+    WarData.RemoveAvatar(avatar, true)
     WarData.TeamRemoveAvatar(avatar)
 end
 

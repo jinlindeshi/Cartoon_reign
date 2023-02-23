@@ -44,16 +44,7 @@ function MainMenuPanel:Init()
     EventMgr.AddEventListener("MonsterDead", self.OnMonsterDead, self)
 
 
-    ---TEST
-    DelayedCall(3, function()
-        self.bossBtn:SetActive(true)
-        local cg = GetComponent.CanvasGroup(self.bossBtn)
-        cg.blocksRaycasts = false
-        self.bossBtn.transform:DOPunchScale(Vector3.one*0.3, 0.5, 0, 0):SetLoops(2, DOTWEEN_LOOP_TYPE.Restart):OnComplete(function()
-
-            cg.blocksRaycasts = true
-        end)
-    end)
+    self.bossBtn:SetActive(false)
 end
 
 function MainMenuPanel:ActiveBtnLight(type, flag)
@@ -89,7 +80,7 @@ end
 function MainMenuPanel:OnBossBtnClick()
     local cg = GetComponent.CanvasGroup(self.bossBtn)
     cg.blocksRaycasts = false
-    cg:DOFade(0, 0.5):SetDelay(0.5):OnComplete(function()
+    cg:DOFade(0, 0.3):SetDelay(0.1):OnComplete(function()
         self.bossBtn:SetActive(false)
         cg.blocksRaycasts = true
         cg.alpha = 1
@@ -112,6 +103,19 @@ function MainMenuPanel:OnMonsterDead(event)
     self:IconScenePosToUIPos(pos,addNum)
     DemoCfg.killCount = DemoCfg.killCount + 1
     self:RefreshKillCount()
+    ---杀了一定数量后可以挑战BOSS
+    if DemoCfg.killCount >= WarData.KillNumToOpenBoss and self.bossBtn.activeSelf == false then
+        self:BossBtnShow()
+    end
+end
+
+function MainMenuPanel:BossBtnShow()
+    self.bossBtn:SetActive(true)
+    local cg = GetComponent.CanvasGroup(self.bossBtn)
+    cg.blocksRaycasts = false
+    self.bossBtn.transform:DOPunchScale(Vector3.one*0.3, 0.5, 0, 0):SetLoops(2, DOTWEEN_LOOP_TYPE.Restart):OnComplete(function()
+        cg.blocksRaycasts = true
+    end)
 end
 
 ---图标动效
