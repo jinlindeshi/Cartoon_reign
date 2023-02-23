@@ -4,6 +4,7 @@
 --- DateTime: 2023/2/23 15:02
 ---
 local AvatarData = require("Modules.WarScene.Model.AvatarData")
+local TeamModel = require("Modules.UI.Team.Model.TeamModel")
 ---@class UI.Team.TeamSlotItem:LuaObj
 ---@field New fun():UI.Team.TeamSlotItem
 local TeamSlotItem = class("UI.Team.CardControl", LuaObj)
@@ -18,7 +19,7 @@ function TeamSlotItem:Ctor(go, index)
     AddButtonHandler(self.click, PointerHandler.CLICK, self.OnClick, self)
 
     self.index = index
-    local slotInfo = AvatarData.HeroSlotMap[self.index]
+    local slotInfo = TeamModel.HeroSlotMap[self.index]
     if slotInfo.lock then
         self:SetLock()
     else
@@ -49,7 +50,7 @@ end
 function TeamSlotItem:SetLock()
     self.lock:SetActive(true)
     self.add:SetActive(false)
-    self.nameBg:SetActive(false)
+    self.nameBg.gameObject:SetActive(false)
     self.icon.gameObject:SetActive(false)
 end
 
@@ -57,6 +58,13 @@ function TeamSlotItem:OnClick()
     if self.id == DemoCfg.mainAvatarID then
         return
     end
+    print("TeamSlotItem:OnClick()")
+    if self.id == nil then
+        EventMgr.DispatchEvent(TeamModel.eventDefine.autoAddTeam, {index = self.index})
+    else
+        EventMgr.DispatchEvent(TeamModel.eventDefine.removeTeam, {index = self.index})
+    end
+
 end
 
 function TeamSlotItem:OnDestroy()

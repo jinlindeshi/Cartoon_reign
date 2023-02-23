@@ -4,7 +4,7 @@
 --- DateTime: 2023/2/23 15:03
 ---
 local AvatarData = require("Modules.WarScene.Model.AvatarData")
-local WarData = require("Modules.WarScene.Model.WarData")
+local TeamModel = require("Modules.UI.Team.Model.TeamModel")
 ---@class UI.Team.TeamHeroItem:LuaObj
 ---@field New fun():UI.Team.TeamHeroItem
 local TeamHeroItem = class("UI.Team.TeamHeroItem", LuaObj)
@@ -26,7 +26,7 @@ function TeamHeroItem:Ctor(parent, info)
 end
 
 function TeamHeroItem:RefreshInTeam()
-    self.inTeam:SetActive(AvatarData.CheckInTeam(self.id))
+    self.inTeam:SetActive(TeamModel.CheckInTeam(self.id))
 end
 
 

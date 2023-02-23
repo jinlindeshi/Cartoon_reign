@@ -26,6 +26,7 @@ function TeamPanel:Init()
 
     EventMgr.AddEventListener(TeamModel.eventDefine.autoAddTeam, self.OnAutoAddTeam, self)
     EventMgr.AddEventListener(TeamModel.eventDefine.removeTeam, self.OnRemoveTeam, self)
+
 end
 
 local itemPosCfg =
@@ -44,7 +45,7 @@ function TeamPanel:RefreshHeroList()
     end
     local count = #heroList
     local contentHeight = 0
-    local itemHeight = nil
+    local itemHeight
     for i = 1, count do
         local info = heroList[i]
         local item = TeamHeroItem.New(self.heroContent, info)
@@ -55,7 +56,7 @@ function TeamPanel:RefreshHeroList()
         end
     end
     local rowCount = math.ceil(count/itemPosCfg.rowCount)
-    contentHeight = rowCount * itemHeight + (rowCount - 1) * itemPosCfg.gapY
+    contentHeight = rowCount * (itemHeight or 110) + (rowCount - 1) * itemPosCfg.gapY
     local centRect = GetComponent.RectTransform(self.heroContent.gameObject)
     if contentHeight < centRect.rect.height then
         contentHeight = centRect.rect.height
@@ -64,13 +65,13 @@ function TeamPanel:RefreshHeroList()
 end
 
 function TeamPanel:AddTeam(index, id)
-    AvatarData.heroInfo[index].id = id
+    TeamModel.HeroSlotMap[index].id = id
     self.teamSlotList[index]:SetHero(id)
     self:RefreshHeroInTeam()
 end
 
 function TeamPanel:RemoveTeam(index)
-    AvatarData.heroInfo[index].id = nil
+    TeamModel.HeroSlotMap[index].id = nil
     self.teamSlotList[index]:SetHero(nil)
     self:RefreshHeroInTeam()
 end
@@ -86,7 +87,7 @@ function TeamPanel:OnAutoAddTeam(event)
     if #self.heroList > 1 then
         table.sort(self.heroList, function(a, b) return a.data.quality > b.data.quality end)
         id = self.heroList[1].id
-    elseif self.heroList == 1 then
+    elseif #self.heroList == 1 then
         id = self.heroList[1].id
     else
         return
@@ -98,25 +99,25 @@ function TeamPanel:OnRemoveTeam(event)
     self:RemoveTeam(event.data.index)
 end
 
-function TeamPanel:Close()
-    TeamPanel.super.Close(self)
-    for _, info in pairs(AvatarData.HeroSlotMap) do
-        if info.id and WarData.avatarTeam[info.id] == nil then
-            WarData.scene:TeamAddAvatar(info.id)
-        end
-    end
-    for _, avatar in pairs(WarData.avatarTeam) do
-        if AvatarData.CheckInTeam(avatar.data.id) == false then
-            WarData.scene:TeamRemoveAvatar(avatar.data.id)
-        end
-    end
-end
-
 function TeamPanel:RemoveListeners()
     TeamPanel.super.RemoveListeners(self)
     EventMgr.RemoveEventListener(TeamModel.eventDefine.autoAddTeam, self.OnAutoAddTeam, self)
     EventMgr.RemoveEventListener(TeamModel.eventDefine.removeTeam, self.OnRemoveTeam, self)
 
+end
+
+function TeamPanel:OnDestroy()
+    TeamPanel.super.OnDestroy(self)
+    for _, info in pairs(TeamModel.HeroSlotMap) do
+        if info.id and WarData.avatarTeam[info.id] == nil then
+            WarData.scene:TeamAddAvatar(info.id)
+        end
+    end
+    for _, avatar in pairs(WarData.avatarTeam) do
+        if TeamModel.CheckInTeam(avatar.data.id) == false then
+            WarData.scene:TeamRemoveAvatar(avatar.data.id)
+        end
+    end
 end
 
 return TeamPanel

@@ -9,4 +9,22 @@ TeamModel.eventDefine =
     autoAddTeam = "autoAddTeam", --进队
     removeTeam = "removeTeam", --离队
 }
+
+TeamModel.HeroSlotMap = ---英雄队列map
+{
+    [1] = {id = DemoCfg.mainAvatarID, lock = false},
+    [2] = {id = nil, lock = false},
+    [3] = {id = nil, lock = true},
+    [4] = {id = nil, lock = true},
+}
+
+function TeamModel.CheckInTeam(id)
+    for _, info in pairs(TeamModel.HeroSlotMap) do
+        if info.id == id then
+            return true
+        end
+    end
+    return false
+end
+
 return TeamModel

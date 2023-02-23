@@ -17,6 +17,7 @@ function DrawCardModel.GetOneDrawData()
 end
 
 function DrawCardModel.GetTenDrawData()
+    require("Modules.WarScene.Model.AvatarData").AddHeroData(DemoCfg.followerID)
     return {13,14,15,16,13,7,14,19,18,17}
 end
 
