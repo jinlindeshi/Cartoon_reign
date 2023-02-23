@@ -25,3 +25,4 @@ UIPanelCfg.mainMenu = {classPath = "Modules.UI.MainMenu.MainMenuPanel", prefabPa
 UIPanelCfg.growUp = {classPath = "Modules.UI.GrowUp.GrowUpPanel", prefabPath = "Prefabs/Panel/GrowUp/GrowUpPanel.prefab"}
 UIPanelCfg.rewardAlert = {classPath = "Modules.UI.Reward.RewardAlertPanel", prefabPath = "Prefabs/Panel/Common/RewardAlertPanel.prefab", layer = UILayerName.alert}
 UIPanelCfg.drawCard = {classPath = "Modules.UI.DrawCard.DrawCardPanel", prefabPath = "Prefabs/Panel/DrawCard/DrawCardPanel.prefab"}
+UIPanelCfg.team = {classPath = "Modules.UI.Team.TeamPanel", prefabPath = "Prefabs/Panel/Team/TeamPanel.prefab"}

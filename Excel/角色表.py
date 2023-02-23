@@ -9,6 +9,7 @@ define = [
 	['攻击力', 'atk', Int()],
 	['防御力', 'def', Int()],
 	['阵营', 'side', Int()],
+	['品质', 'quality', Int()],
 ]
 
 config = {

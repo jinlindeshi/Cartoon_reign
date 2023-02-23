@@ -51,7 +51,7 @@ DemoCfg.cardQuality = ---卡牌品质
 
 DemoCfg.cardColorCfg = ---品质颜色
 {
-    [DemoCfg.cardQuality.white] = Color.white,
+    [DemoCfg.cardQuality.white] = Color.New(123/255, 123/255, 123/255),
     [DemoCfg.cardQuality.purple] = Color.New(186/255, 0, 1),
     [DemoCfg.cardQuality.orange] = Color.New(1, 140/255, 0),
 }

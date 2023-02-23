@@ -90,7 +90,7 @@ function MainMenuPanel:OnBossBtnClick()
 end
 
 function MainMenuPanel:OnTeamButtonClick()
-    
+    UIMgr.OpenPanel(UIPanelCfg.team)
 end
 
 function MainMenuPanel:RefreshKillCount()

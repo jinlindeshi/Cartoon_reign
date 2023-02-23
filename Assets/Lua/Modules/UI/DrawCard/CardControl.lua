@@ -42,9 +42,9 @@ function CardControl:SetCard()
         self.nameText.text = info.name
     end
     if self.data.quality ~= DemoCfg.cardQuality.white then
-        self.nameBG.color = DemoCfg.cardColorCfg[self.data.quality]
+        GetComponent.Image(self.cardBg).color = DemoCfg.cardColorCfg[self.data.quality]
     end
-    GetComponent.Image(self.cardBg).color = DemoCfg.cardColorCfg[self.data.quality]
+    self.nameBG.color = DemoCfg.cardColorCfg[self.data.quality]
 end
 
 function CardControl:Open(callback)

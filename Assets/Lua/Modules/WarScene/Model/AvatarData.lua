@@ -8,7 +8,13 @@ local WarData = require("Modules.WarScene.Model.WarData")
 local AvatarData = {}
 
 AvatarData.HeroInfo = {}
-
+AvatarData.HeroSlotMap = ---英雄队列map
+{
+    [1] = {id = DemoCfg.mainAvatarID, lock = false},
+    [2] = {id = nil, lock = false},
+    [3] = {id = nil, lock = true},
+    [4] = {id = nil, lock = true},
+}
 --添加角色数据
 function AvatarData.AddHeroData(id)
     if AvatarData.HeroInfo[id] then
@@ -17,7 +23,7 @@ function AvatarData.AddHeroData(id)
     end
     AvatarData.HeroInfo[id] =
     {
-        id = -1,
+        id = id,
         starLv = 1,
         equips =
         {
@@ -65,6 +71,15 @@ function AvatarData.AutoEquip(id)
     for i = 1, #data.equips do
         data.equips[i].equipId = data.equips[i].index ---临时处理 自动装备
     end
+end
+
+function AvatarData.CheckInTeam(id)
+    for _, info in pairs(AvatarData.HeroSlotMap) do
+        if info.id == id then
+            return true
+        end
+    end
+    return false
 end
 
 return AvatarData
