@@ -286,8 +286,7 @@ function WarAvatar:Recycle()
 
     ---主角没了，重生
     if self == WarData.mainAvatar then
-        DelayedCall(2, doFun)
-        WarData.scene:MyDead()
+        WarData.scene:MyDead(doFun)
     else
         doFun()
     end

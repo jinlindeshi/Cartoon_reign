@@ -63,7 +63,7 @@ function WarScene:GameStart(noAIStart)
 end
 
 ---主角死了，清场，主角在本层重生
-function WarScene:MyDead()
+function WarScene:MyDead(recycleFun)
     if WarData.bossFighting == true then
         WarData.bossFighting = false
     end
@@ -71,9 +71,15 @@ function WarScene:MyDead()
     DelayedCall(1, function()
         Happy.ScreenTrans(function()
             self:GameStart(true)
+            DelayedCall(2, function()
+                WarData.mainAvatar:AIStart()
+            end)
             ---重生 播抽卡剧情
 
         end, nil, nil, {callBack=function()
+            if recycleFun then
+                recycleFun()
+            end
             for i, avatar in pairs(WarData.AvatarHash) do
                 DelayedFrameCall(function()
                     WarData.RemoveAvatar(avatar, true)
