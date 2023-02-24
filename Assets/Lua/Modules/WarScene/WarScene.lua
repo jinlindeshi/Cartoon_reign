@@ -114,7 +114,7 @@ function WarScene:MyDead(recycleFun)
 end
 
 local testBossData = {atk = 600, def = 0, hp = 1000, maxHp = 1000, name = "金刚熊",
-                      prefab = "Prefabs/Avatars/monster_xiong.prefab", side = 2}
+                      prefab = "Prefabs/Avatars/boss_xiong.prefab", side = 2}
 ---挑战BOSS
 function WarScene:ChallengeBoss()
     --print("WarScene:ChallengeBoss 挑战BOSS")
@@ -139,7 +139,6 @@ function WarScene:ChallengeBoss()
     boss:SetExternalBehavior("BehaviorTree/EnemyAI.asset")
     WarData.AddAvatar(boss, boss.data)
     WarData.scene:PutInNode(boss, WarData.bossNode[1], WarData.bossNode[2])
-    boss.transform.localScale = boss.transform.localScale * 1.5
     HappyFuns.SetLayerRecursive(boss.gameObject, 11)
 
 

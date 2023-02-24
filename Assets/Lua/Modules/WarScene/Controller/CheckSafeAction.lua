@@ -34,7 +34,7 @@ function CheckSafeAction:OnStart()
             end
         end
     end
-    print("CheckSafeAction:OnStart", target)
+    --print("CheckSafeAction:OnStart", target)
     if target then
         self.avatar:SetTarget(target)
         self.cAction:SetUpdateStatus(TaskStatus.Failure)
