@@ -248,7 +248,12 @@ function WarAvatar:PlayDead()
         EventMgr.DispatchEvent("MonsterDead", {pos = self.transform.position})
     end
     self:AIStop()
-    --self:PlayAnimation(AvatarBase.ANI_DEAD_NAME, nil, function()
+    if self.data.side == WarData.mainAvatar.data.side then
+        self:PlayAnimation(AvatarBase.ANI_DEAD_NAME, nil, function()
+            self:Recycle()
+        end)
+    else
+
         local path = "Effects/Prefabs/fx_die_xiong.prefab"
         local dieEff = CreatePrefab(path, self.transform.parent)
         dieEff.transform.localPosition = self.transform.localPosition
@@ -262,23 +267,29 @@ function WarAvatar:PlayDead()
             RecyclePrefab(dieEff, path)
         end)
         self:Recycle()
-    --end)
+    end
 end
 
 function WarAvatar:Recycle()
     if self.destroyed == true then
         return
     end
-    WarAvatar.super.Recycle(self)
-    WarData.RemoveAvatarLoc(self.x, self.z)
-    --print("WarAvatar:Recycle 你妹啊", self.x, self.z)
-    self.target = nil
-    self.hpBar:Recycle()
-    self.headUI:Destroy()
+    local doFun = function()
+
+        WarAvatar.super.Recycle(self)
+        WarData.RemoveAvatarLoc(self.x, self.z)
+        --print("WarAvatar:Recycle 你妹啊", self.x, self.z)
+        self.target = nil
+        self.hpBar:Recycle()
+        self.headUI:Destroy()
+    end
 
     ---主角没了，重生
     if self == WarData.mainAvatar then
+        DelayedCall(2, doFun)
         WarData.scene:MyDead()
+    else
+        doFun()
     end
 end
 
