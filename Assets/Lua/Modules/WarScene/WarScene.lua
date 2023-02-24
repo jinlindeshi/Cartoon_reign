@@ -70,7 +70,7 @@ function WarScene:GameStart(noAIStart)
 end
 
 ---主角死了，清场，主角在本层重生
-function WarScene:MyDead()
+function WarScene:MyDead(recycleFun)
     if WarData.bossFighting == true then
         WarData.bossFighting = false
     end
@@ -99,6 +99,9 @@ function WarScene:MyDead()
             end)
 
         end, nil, nil, {callBack=function()
+            if recycleFun then
+                recycleFun()
+            end
             for i, avatar in pairs(WarData.AvatarHash) do
                 DelayedFrameCall(function()
                     WarData.RemoveAvatar(avatar, true)
@@ -159,13 +162,24 @@ function WarScene:ChallengeBoss()
         local cam = Camera.main
         --local screenP = cam:WorldToScreenPoint(self.avatar.transform.position)
         DelayedCall(0.5, loopFun)
-        DelayedCall(3, function()
-            GetComponent.CanvasGroup(bossShow):DOFade(0, 0.5):OnComplete(function()
-                RecyclePrefab(bossShow, "Prefabs/War/BossShow.prefab")
-                GetComponent.CanvasGroup(bossShow).alpha = 1
-                self.mainMenu:HideKillCount()
-                self.mainMenu:ShowSequence()
+
+        DelayedCall(2, function()
+            local textImg = GetComponent.Image(bossShow.transform:Find("text").gameObject)
+            textImg:DOFade(0, 0.5):OnComplete(function()
+
+                local bossShowImg = bossShow.transform:Find("Image").gameObject
+                ---指引箭头
+                local bossArrow = require("Modules.WarScene.View.UI.BossArrow").New(boss)
+                bossArrow:FlyToIcon(bossShowImg, function()
+                    WarData.StartAllAvatarAI()
+                    textImg.color = Color.New(textImg.color.r, textImg.color.g, textImg.color.b, 1)
+                    RecyclePrefab(bossShow, "Prefabs/War/BossShow.prefab")
+
+                    self.mainMenu:HideKillCount()
+                    self.mainMenu:ShowSequence()
+                end)
             end)
+
         end)
     end)
 end
