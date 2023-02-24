@@ -8,6 +8,26 @@ DemoCfg.mainAvatarID = -1 ---主角色ID
 DemoCfg.mapID = 1 ---地图ID
 DemoCfg.followerID = -2 ---随从ID
 
+DemoCfg.funcCfg =
+{
+    reward = "reward", --挂机奖励
+    growUp = "growUp", --角色信息
+    team = "team", --队伍
+    draw = "draw" --抽奖
+}
+
+DemoCfg.funcOpenCfg =
+{
+    [DemoCfg.funcCfg.reward] = false,
+    [DemoCfg.funcCfg.growUp] = false,
+    [DemoCfg.funcCfg.team] = false,
+    [DemoCfg.funcCfg.draw] = false,
+}
+
+function DemoCfg.SetOpen(type)
+    DemoCfg.funcOpenCfg[type] = true
+end
+
 DemoCfg.starUpRateMap =  ---星级提升 属性上升倍率
 {
     [1] = 1,
@@ -40,7 +60,8 @@ DemoCfg.qualityBgMap =
 }
 
 DemoCfg.goldNum = 0 --金币数量
-DemoCfg.killCount = 0 --击杀数量
+DemoCfg.gemNum = 0 -- 钻石数量
+DemoCfg.killCount = 0 --单层击杀数量
 
 DemoCfg.cardQuality = ---卡牌品质
 {

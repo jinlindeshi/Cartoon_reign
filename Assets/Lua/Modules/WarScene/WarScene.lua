@@ -10,7 +10,7 @@ local LuaScene = require("Prayer.Core.LuaScene")
 local WarData = require("Modules.WarScene.Model.WarData")
 local SData = require("Modules.WarScene.Model.SData")
 local AvatarData = require("Modules.WarScene.Model.AvatarData")
-
+local TeamModel = require("Modules.UI.Team.Model.TeamModel")
 
 ---@class WarScene:LuaScene
 local WarScene = class("WarScene", LuaScene)
@@ -37,6 +37,7 @@ function WarScene:Ctor(scene)
     self.avatarConTran = self:GetRootObjByName("AvatarCon").transform
     self.avatarList = {} --角色列表
     UIMgr.OpenPanel(UIPanelCfg.mainMenu)
+    self.mainMenu = UIMgr.GetPanel(UIPanelCfg.mainMenu) ---@type UI.MainMenuPanel
     self:GameStart()
 
     --DelayedCall(1, function()
@@ -58,28 +59,45 @@ function WarScene:Ctor(scene)
 end
 
 function WarScene:GameStart(noAIStart)
-    self:AddAvatar(DemoCfg.mainAvatarID, true, nil, 1, noAIStart).skill = require("Modules.WarScene.Controller.Skill.SkillWhirlwind").New()
-    --self:AddAvatar(DemoCfg.followerID, false, nil, 1, noAIStart):SetRangedAttackInfo(2)
+    for _, id in ipairs(TeamModel.GetTeamIdList()) do
+        if id == DemoCfg.mainAvatarID then
+            local avatar = self:AddAvatar(DemoCfg.mainAvatarID, true, nil, 1, noAIStart)
+            avatar.skill = require("Modules.WarScene.Controller.Skill.SkillWhirlwind").New()
+        else
+            self:TeamAddAvatar(id, nil, noAIStart)
+        end
+    end
 end
 
 ---主角死了，清场，主角在本层重生
-function WarScene:MyDead(recycleFun)
+function WarScene:MyDead()
     if WarData.bossFighting == true then
         WarData.bossFighting = false
     end
-
+    DemoCfg.killCount = 0
     DelayedCall(1, function()
         Happy.ScreenTrans(function()
             self:GameStart(true)
-            DelayedCall(2, function()
-                WarData.mainAvatar:AIStart()
-            end)
             ---重生 播抽卡剧情
+            local seq = DOTween.Sequence()
+            seq:AppendInterval(0.25)
+            seq:AppendCallback(function()
+                DemoCfg.SetOpen(DemoCfg.funcCfg.draw)
+                self.mainMenu:RefreshFunctionBtn(DemoCfg.funcCfg.draw)
+            end)
+            seq:AppendInterval(0.25)
+            seq:AppendCallback(function()
+                DemoCfg.SetOpen(DemoCfg.funcCfg.team)
+                self.mainMenu:RefreshFunctionBtn(DemoCfg.funcCfg.team)
+            end)
+            seq:AppendInterval(1)
+            seq:AppendCallback(function()
+                for id, avatar in pairs(WarData.avatarTeam) do
+                    avatar:AIStart()
+                end
+            end)
 
         end, nil, nil, {callBack=function()
-            if recycleFun then
-                recycleFun()
-            end
             for i, avatar in pairs(WarData.AvatarHash) do
                 DelayedFrameCall(function()
                     WarData.RemoveAvatar(avatar, true)
@@ -89,7 +107,6 @@ function WarScene:MyDead(recycleFun)
             Camera.main.transform.position = WarData.CameraInitPos
         end})
     end)
-
 end
 
 local testBossData = {atk = 600, def = 0, hp = 1000, maxHp = 1000, name = "金刚熊",
@@ -129,25 +146,25 @@ function WarScene:ChallengeBoss()
         playedTimes = playedTimes+1
         if playedTimes <=3 then
             Happy.ScreenTrans(loopFun,0,Color.red, {dur=0.5, alpha=0.2},{dur=0.5},nil)
+        else
+            WarData.StartAllAvatarAI()
+
+            ---指引箭头
+            --require("Modules.WarScene.View.UI.BossArrow").New(boss)
         end
     end
     DelayedCall(0.5, function()
         bossShow = CreatePrefab("Prefabs/War/BossShow.prefab", UILayerName.top)
+        local cam = Camera.main
+        --local screenP = cam:WorldToScreenPoint(self.avatar.transform.position)
         DelayedCall(0.5, loopFun)
-        DelayedCall(2, function()
-            local textImg = GetComponent.Image(bossShow.transform:Find("text").gameObject)
-            textImg:DOFade(0, 0.5):OnComplete(function()
-
-                local bossShowImg = bossShow.transform:Find("Image").gameObject
-                ---指引箭头
-                local bossArrow = require("Modules.WarScene.View.UI.BossArrow").New(boss)
-                bossArrow:FlyToIcon(bossShowImg, function()
-                    WarData.StartAllAvatarAI()
-                    textImg.color = Color.New(textImg.color.r, textImg.color.g, textImg.color.b, 1)
-                    RecyclePrefab(bossShow, "Prefabs/War/BossShow.prefab")
-                end)
+        DelayedCall(3, function()
+            GetComponent.CanvasGroup(bossShow):DOFade(0, 0.5):OnComplete(function()
+                RecyclePrefab(bossShow, "Prefabs/War/BossShow.prefab")
+                GetComponent.CanvasGroup(bossShow).alpha = 1
+                self.mainMenu:HideKillCount()
+                self.mainMenu:ShowSequence()
             end)
-
         end)
     end)
 end
@@ -156,6 +173,7 @@ end
 ---@param isMainRole boolean 是否是主要角色
 ---@param bornLoc table 指定出生格子坐标
 ---@param delayAITime number 延迟AI开启的时间 默认不延迟
+---@param noAIStart boolean 是否开启AI
 ---@return WarAvatar
 function WarScene:AddAvatar(id, isMainRole, bornLoc, delayAITime, noAIStart)
     local myData = clone(SData.avatar.GetData(id))
@@ -180,6 +198,7 @@ function WarScene:AddAvatar(id, isMainRole, bornLoc, delayAITime, noAIStart)
     WarData.TeamAddAvatar(avatar)
     local loc = bornLoc or WarData.bornNodes[-id]
     self:PutInNode(avatar, loc[1], loc[2])
+    avatar.transform.localEulerAngles = Vector3.New(0,180,0)
     local bornFx = CreatePrefab("Effect/Prefabs/fx_Itemborn.prefab")
     bornFx.transform.localScale = Vector3.New(0.8,0.8,0.8)
     bornFx.transform.position = avatar.transform.position
@@ -187,25 +206,24 @@ function WarScene:AddAvatar(id, isMainRole, bornLoc, delayAITime, noAIStart)
         RecyclePrefab(bornFx, "Effect/Prefabs/fx_Itemborn.prefab")
     end)
     HappyFuns.SetLayerRecursive(avatar.gameObject, 11)
-    if noAIStart == true then
-        return avatar
-    end
-    if delayAITime then
-        DelayedCall(delayAITime, function() avatar:AIStart() end)
-    else
-        avatar:AIStart()
+    if not noAIStart then
+        if delayAITime then
+            DelayedCall(delayAITime, function() avatar:AIStart() end)
+        else
+            avatar:AIStart()
+        end
     end
     return avatar
 end
 
 ---添加新角色进入队伍
-function WarScene:TeamAddAvatar(id)
+function WarScene:TeamAddAvatar(id, delayAITime, noAIStart)
     if WarData.mainAvatar == nil then
         LogError("TeamAddAvatar 没有找到主角色 无法添加新角色进入队伍")
         return
     end
     local nowGrid = WarData.gridGraph:GetNearest(WarData.mainAvatar.transform.position, Pathfinding.NNConstraint.None).node
-    local grids = WarData.GetAroundGrids(nowGrid.XCoordinateInGrid, nowGrid.ZCoordinateInGrid, 2) --主角两格距离内格子
+    local grids = WarData.GetAroundGrids(nowGrid.XCoordinateInGrid, nowGrid.ZCoordinateInGrid, 1) --主角两格距离内格子
     local targetList = {}
     local remainList = {}
     for x, tb in pairs(grids) do
@@ -231,7 +249,7 @@ function WarScene:TeamAddAvatar(id)
     else
         LogError("TeamAddAvatar 没有找到合适的出生位置 出生在默认出生点")
     end
-    self:AddAvatar(id, false, loc)
+    self:AddAvatar(id, false, loc, delayAITime, noAIStart)
 end
 
 ---从队伍中移除角色

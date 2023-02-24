@@ -57,6 +57,7 @@ function WarData.RemoveAvatar(avatar, noPlayDead)
     else
         avatar:PlayDead()
     end
+    WarData.TeamRemoveAvatar(avatar)
 end
 
 ---@return WarAvatar
@@ -180,7 +181,9 @@ end
 ---从队伍中移除
 ---@param avatar WarAvatar
 function WarData.TeamRemoveAvatar(avatar)
-    WarData.avatarTeam[avatar.data.id] = nil
+    if WarData.avatarTeam[avatar.data.id] then
+        WarData.avatarTeam[avatar.data.id] = nil
+    end
 end
 
 return WarData

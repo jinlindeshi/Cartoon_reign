@@ -27,4 +27,14 @@ function TeamModel.CheckInTeam(id)
     return false
 end
 
+function TeamModel.GetTeamIdList()
+    local list = {}
+    for _,info in ipairs(TeamModel.HeroSlotMap) do
+        if info.id ~= nil then
+            table.insert(list, info.id)
+        end
+    end
+    return list
+end
+
 return TeamModel

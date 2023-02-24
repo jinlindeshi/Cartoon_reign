@@ -275,7 +275,6 @@ function WarAvatar:Recycle()
         return
     end
     local doFun = function()
-
         WarAvatar.super.Recycle(self)
         WarData.RemoveAvatarLoc(self.x, self.z)
         --print("WarAvatar:Recycle 你妹啊", self.x, self.z)

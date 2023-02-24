@@ -12,30 +12,38 @@ local WarData = require("Modules.WarScene.Model.WarData")
 function MainMenuPanel:Init()
     MainMenuPanel.super.Init(self)
     self.ItemIconObj = self.transform:Find("ItemIcon").gameObject
+    self.bottomRoot = self.transform:Find("bottomRoot").gameObject
+    self.topRoot = self.transform:Find("topRoot").gameObject
     self.infoButton = self.transform:Find("bottomRoot/infoButton").gameObject
     self.bossBtn = self.transform:Find("bottomRoot/bossBtn").gameObject
     self.rewardButton = self.transform:Find("bottomRoot/rewardButton").gameObject
     self.notice = self.transform:Find("Notice").gameObject
     self.noticeText = GetComponent.Text(self.transform:Find("Notice/Text").gameObject)
-    self.noticePos = GetComponent.RectTransform(self.notice).anchoredPosition
-    self.res_gold = self.transform:Find("Res_gold")
-    self.goldText = GetComponent.Text(self.transform:Find("Res_gold/Text").gameObject)
-    self.killCount = GetComponent.Text(self.transform:Find("KillCount/count").gameObject)
+    self.res_gold = self.transform:Find("topRoot/Res_gold").gameObject
+    self.res_gem = self.transform:Find("topRoot/Res_gem").gameObject
+    self.goldText = GetComponent.Text(self.transform:Find("topRoot/Res_gold/Text").gameObject)
+    self.gemText = GetComponent.Text(self.transform:Find("topRoot/Res_gem/Text").gameObject)
+    self.killCg = GetComponent.CanvasGroup(self.transform:Find("topRoot/KillCount").gameObject)
+    self.killText = GetComponent.Text(self.transform:Find("topRoot/KillCount/Text").gameObject)
+    self.killCount = GetComponent.Text(self.transform:Find("topRoot/KillCount/count").gameObject)
     self.drawButton = self.transform:Find("bottomRoot/drawButton").gameObject
     self.teamButton = self.transform:Find("bottomRoot/teamButton").gameObject
-    self.ItemIconObj:SetActive(false)
+    self.mask = self.transform:Find("mask").gameObject
 
     self.btnLight =
     {
-        ["info"] = self.transform:Find("bottomRoot/infoLight").gameObject,
-        ["reward"] = self.transform:Find("bottomRoot/rewardLight").gameObject,
+        [DemoCfg.funcCfg.growUp] = self.transform:Find("bottomRoot/infoLight").gameObject,
+        [DemoCfg.funcCfg.reward] = self.transform:Find("bottomRoot/rewardLight").gameObject,
     }
-    self:ActiveBtnLight("info", false)
-    self:ActiveBtnLight("reward", true)
 
-    --self:ShowNotice("挂机奖励可以领取了！")
-    self:RefreshKillCount()
-    self.goldText.text = DemoCfg.goldNum
+    self.funcBtnMap = ---@type table<string, UnityEngine.GameObject>
+    {
+        [DemoCfg.funcCfg.reward] = self.rewardButton,
+        [DemoCfg.funcCfg.growUp] = self.infoButton,
+        [DemoCfg.funcCfg.team] = self.teamButton,
+        [DemoCfg.funcCfg.draw] = self.drawButton,
+    }
+
     AddButtonHandler(self.infoButton, PointerHandler.CLICK, self.OnInfoButtonClick, self)
     AddButtonHandler(self.rewardButton, PointerHandler.CLICK, self.OnRewardButtonClick, self)
     AddButtonHandler(self.drawButton, PointerHandler.CLICK, self.OnDrawButtonClick, self)
@@ -43,15 +51,41 @@ function MainMenuPanel:Init()
     AddButtonHandler(self.teamButton, PointerHandler.CLICK, self.OnTeamButtonClick, self)
     EventMgr.AddEventListener("MonsterDead", self.OnMonsterDead, self)
 
+    self.noticePos = GetComponent.RectTransform(self.notice).anchoredPosition
+    self.ItemIconObj:SetActive(false)
+    self.mask:SetActive(false)
 
+    self:ActiveBtnLight(DemoCfg.funcCfg.growUp, false)
+    self:ActiveBtnLight(DemoCfg.funcCfg.reward, false)
+
+    --self:ShowNotice("挂机奖励可以领取了！")
+    self:RefreshKillCount()
+    self.goldText.text = DemoCfg.goldNum
+    self.gemText.text = DemoCfg.gemNum
+    self:ShowKillCount()
     self.bossBtn:SetActive(false)
+    self:RefreshFunctionBtn()
     ---TEST
-    DelayedCall(1, handler(self, self.BossBtnShow))
+    --DelayedCall(1, handler(self, self.BossBtnShow))
 end
 
 function MainMenuPanel:ActiveBtnLight(type, flag)
     if self.btnLight[type] then
         self.btnLight[type]:SetActive(flag)
+    end
+end
+
+---@param openType string 指定功能按钮开启
+function MainMenuPanel:RefreshFunctionBtn(openType)
+    for type, btn in pairs(self.funcBtnMap) do
+        btn:SetActive(DemoCfg.funcOpenCfg[type])
+    end
+    if openType then
+        local openBtn = self.funcBtnMap[openType]
+        openBtn.transform.localScale = Vector2.one * 0.6
+        local seq = DOTween.Sequence()
+        seq:Append(openBtn.transform:DOScale(1.2, 0.25))
+        seq:Append(openBtn.transform:DOScale(1, 0.15))
     end
 end
 
@@ -79,30 +113,70 @@ function MainMenuPanel:OnDrawButtonClick()
     UIMgr.OpenPanel(UIPanelCfg.drawCard)
 end
 
-function MainMenuPanel:OnBossBtnClick()
-    local cg = GetComponent.CanvasGroup(self.bossBtn)
-    cg.blocksRaycasts = false
-    cg:DOFade(0, 0.3):SetDelay(0.1):OnComplete(function()
-        self.bossBtn:SetActive(false)
-        cg.blocksRaycasts = true
-        cg.alpha = 1
-    end)
-
-    WarData.scene:ChallengeBoss()
-end
-
 function MainMenuPanel:OnTeamButtonClick()
     UIMgr.OpenPanel(UIPanelCfg.team)
 end
 
+function MainMenuPanel:OnBossBtnClick()
+    WarData.scene:ChallengeBoss()
+    local cg = GetComponent.CanvasGroup(self.bossBtn)
+    self.mask:SetActive(true)
+    self:HideSequence(function()
+        self.bossBtn:SetActive(false)
+        cg.alpha = 1
+        self.mask:SetActive(false)
+    end)
+end
+
+
+function MainMenuPanel:HideSequence(callback)
+    local seq = DOTween.Sequence()
+    seq:Append(GetComponent.CanvasGroup(self.bottomRoot):DOFade(0,0.25))
+    seq:Join(GetComponent.CanvasGroup(self.topRoot):DOFade(0,0.25))
+    seq:AppendCallback(function()
+        if callback then callback() end
+    end)
+end
+
+function MainMenuPanel:ShowSequence(callback)
+    local seq = DOTween.Sequence()
+    seq:Append(GetComponent.CanvasGroup(self.bottomRoot):DOFade(1,0.25))
+    seq:Join(GetComponent.CanvasGroup(self.topRoot):DOFade(1,0.25))
+    seq:AppendCallback(function()
+        if callback then callback() end
+    end)
+end
+
+function MainMenuPanel:ShowKillCount()
+    self.killText.text = string.format("击败%s个敌人:", WarData.KillNumToOpenBoss)
+    self:RefreshKillCount()
+    self.killCg:DOFade(1, 0.25)
+end
+
+function MainMenuPanel:HideKillCount()
+    self.killCg.alpha = 0
+end
+
 function MainMenuPanel:RefreshKillCount()
-    self.killCount.text = DemoCfg.killCount
+    self.killCount.text = string.format("%s/%s", DemoCfg.killCount, WarData.KillNumToOpenBoss)
 end
 ---怪物死亡事件
 function MainMenuPanel:OnMonsterDead(event)
     local pos = event.data.pos
+    ---宝石获得
+    if DemoCfg.funcOpenCfg[DemoCfg.funcCfg.draw] and math.random(1, 100) > 50 then
+        self:IconScenePosToUIPos(pos, 1, self.res_gem, "Textures/drawCard/icon_rainbowstone.png",function()
+            DemoCfg.gemNum = DemoCfg.gemNum + 1
+            self.gemText.text = DemoCfg.gemNum
+        end)
+    end
+    ---金币获得
     local addNum = math.random(1,3)
-    self:IconScenePosToUIPos(pos,addNum)
+    self:IconScenePosToUIPos(pos, addNum, self.res_gold, nil,function()
+        DemoCfg.goldNum = DemoCfg.goldNum + 1
+        self.goldText.text = DemoCfg.goldNum
+    end)
+    ---击杀计数
     DemoCfg.killCount = DemoCfg.killCount + 1
     self:RefreshKillCount()
     ---杀了一定数量后可以挑战BOSS
@@ -124,25 +198,25 @@ end
 local startTime = 0.2
 local flyTime = 0.5
 local gapTime = 0.15
-function MainMenuPanel:IconScenePosToUIPos(pos, num, picUrl)
+function MainMenuPanel:IconScenePosToUIPos(pos, num, target, picUrl, flyEndCb)
     local orgPos = Happy.WorldPointToRectTransform(pos, self.transform.parent)
-    local targetPos = Vector2.New(self.res_gold.localPosition.x - 50, self.res_gold.localPosition.y)
+    local targetRect = GetComponent.RectTransform(target.transform)
+    local targetPos = Vector2.New(targetRect.anchoredPosition.x, targetRect.anchoredPosition.y)
     local seq = DOTween.Sequence()
     for i = 1, num do
         local item = ClonePrefab(self.ItemIconObj, self.ItemIconObj.transform.parent, self.ItemIconObj.name)
         local rect = GetComponent.RectTransform(item)
         if num == 1 then
-            rect.anchoredPosition = orgPos
+            rect.localPosition = orgPos
         else
-            rect.anchoredPosition = Vector2.New(orgPos.x+math.random(-30,30),
-                    orgPos.y+math.random(-20,-20))
+            rect.localPosition = Vector2.New(orgPos.x + math.random(-30,30),
+                    orgPos.y + math.random(-30,30))
         end
         item.transform.localScale = Vector2.one
         local icon = item.transform:Find("Icon").gameObject
         local iconBg = item.transform:Find("Bg").gameObject
-        if picUrl then
-            GetComponent.Image(icon).sprite = resMgr:LoadSpriteAtPath(picUrl)
-        end
+        GetComponent.Image(icon).sprite = resMgr:LoadSpriteAtPath(picUrl or "Textures/mainMenu/icon_coin_01.png")
+        GetComponent.Image(icon):SetNativeSize()
         icon.transform.localScale = Vector2.zero
         iconBg.transform.localScale = Vector2.zero
         item:SetActive(true)
@@ -150,17 +224,18 @@ function MainMenuPanel:IconScenePosToUIPos(pos, num, picUrl)
             local itemSeq = DOTween.Sequence()
             itemSeq:Append(icon.transform:DOScale(1.2, startTime))
             itemSeq:Append(iconBg.transform:DOScale(1.2, startTime))
-            itemSeq:Append(item.transform:DOLocalMove(targetPos, flyTime):SetEase(DOTWEEN_EASE.InCubic))
+            itemSeq:Append(rect:DOAnchorPos(targetPos, flyTime):SetEase(DOTWEEN_EASE.InCubic))
             itemSeq:Join(iconBg.transform:DOScale(0, flyTime/2))
             itemSeq:Join(icon.transform:DOScale(0.5, flyTime))
             itemSeq:AppendCallback(function()
                 RecyclePrefab(item, self.ItemIconObj.name)
                 local resSeq = DOTween.Sequence()
-                resSeq:Append(self.res_gold.transform:DOScale(1.25, 0.15))
-                resSeq:Append(self.res_gold.transform:DOScale(1, 0.1))
+                resSeq:Append(target.transform:DOScale(1.25, 0.15))
+                resSeq:Append(target.transform:DOScale(1, 0.1))
                 resSeq:AppendCallback(function()
-                    DemoCfg.goldNum = DemoCfg.goldNum + 1
-                    self.goldText.text = DemoCfg.goldNum
+                    if flyEndCb then
+                        flyEndCb()
+                    end
                 end)
             end)
         end)
