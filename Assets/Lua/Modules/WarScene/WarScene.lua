@@ -75,6 +75,7 @@ function WarScene:MyDead()
         WarData.bossFighting = false
     end
     DemoCfg.killCount = 0
+    WarData.patrolNodeIndex = 0
     DelayedCall(1, function()
         Happy.ScreenTrans(function()
             self:GameStart(true)
