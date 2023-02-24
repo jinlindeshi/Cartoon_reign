@@ -123,21 +123,25 @@ function WarScene:ChallengeBoss()
         playedTimes = playedTimes+1
         if playedTimes <=3 then
             Happy.ScreenTrans(loopFun,0,Color.red, {dur=0.5, alpha=0.2},{dur=0.5},nil)
-        else
-            WarData.StartAllAvatarAI()
-
-            ---指引箭头
-            require("Modules.WarScene.View.UI.BossArrow").New(boss)
         end
     end
     DelayedCall(0.5, function()
         bossShow = CreatePrefab("Prefabs/War/BossShow.prefab", UILayerName.top)
         DelayedCall(0.5, loopFun)
-        DelayedCall(3, function()
-            GetComponent.CanvasGroup(bossShow):DOFade(0, 0.5):OnComplete(function()
-                RecyclePrefab(bossShow, "Prefabs/War/BossShow.prefab")
-                GetComponent.CanvasGroup(bossShow).alpha = 1
+        DelayedCall(2, function()
+            local textImg = GetComponent.Image(bossShow.transform:Find("text").gameObject)
+            textImg:DOFade(0, 0.5):OnComplete(function()
+
+                local bossShowImg = bossShow.transform:Find("Image").gameObject
+                ---指引箭头
+                local bossArrow = require("Modules.WarScene.View.UI.BossArrow").New(boss)
+                bossArrow:FlyToIcon(bossShowImg, function()
+                    WarData.StartAllAvatarAI()
+                    textImg.color = Color.New(textImg.color.r, textImg.color.g, textImg.color.b, 1)
+                    RecyclePrefab(bossShow, "Prefabs/War/BossShow.prefab")
+                end)
             end)
+
         end)
     end)
 end

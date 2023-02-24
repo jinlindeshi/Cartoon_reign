@@ -14,20 +14,44 @@ function BossArrow:Ctor(bossAvatar)
     self.bossAvatar = bossAvatar
     self.rect = GetComponent.RectTransform(self.gameObject)
     self.iconRect = GetComponent.RectTransform(self.transform:Find("Bg/iconBg/icon").gameObject)
+    self.cg = GetComponent.CanvasGroup(self.gameObject)
 
-    self.maxX = (Screen.width/2)*0.8
+    self.tween = GetComponent.DOTweenAnimation(self.transform:Find("Bg").gameObject)
+
+    self.maxX = (Screen.width/2)*0.7
     self.minX = -self.maxX
-    self.maxY = (Screen.height/2)*0.7
+    self.maxY = (Screen.height/2)*0.5
     self.minY = -self.maxY
     self.baseDirection = Vector2.New(0, self.maxY)
 
 end
 
+---飞向图标的衔接效果
+function BossArrow:FlyToIcon(fromGo, callBack)
+    self.cg.alpha = 0
+    self.tween:DOPause()
+    local fromRt = GetComponent.RectTransform(fromGo)
+    self:Update()
+    local seq = DOTween.Sequence()
+    seq:Append(fromRt:DOSizeDelta(self.iconRect.sizeDelta, 0.5))
+    seq:Join(fromRt:DOMove(self.iconRect.position, 0.5))
+    seq:Append(self.cg:DOFade(1, 0.3))
+    seq:AppendCallback(function()
+        DelayedCall(0.5, function()
+            self.tween:DOPlay()
+        end)
+
+        --print("你妹啊~1", self.iconRect.position.x, self.iconRect.position.y, self.iconRect.position.z)
+        --print("你妹啊~2", fromRt.position.x, fromRt.position.y, fromRt.position.z)
+        if callBack then
+            callBack()
+        end
+    end)
+end
+
 function BossArrow:Update()
     local screenP = self.cam:WorldToScreenPoint(self.bossAvatar.transform.position)
-    --local fixP =
     local hehe, p = RectTransformUtility.ScreenPointToLocalPointInRectangle(self.transform.parent, screenP, self.uiCamera, Vector2.zero)
-    --print("你妹", screenP.x, screenP.y, screenP.z, p.x, p.y, hehe)
     if screenP.z < 0 then
         p.x = -p.x
         p.y = -p.y
@@ -36,9 +60,8 @@ function BossArrow:Update()
     if changed == false then
         if not self.hideDelay then
             self.hideDelay = DelayedCall(3, function()
-                local cg = GetComponent.CanvasGroup(self.gameObject)
-                cg:DOFade(0, 0.5):OnComplete(function()
-                    cg.alpha = 1
+                self.cg:DOFade(0, 0.5):OnComplete(function()
+                    self.cg.alpha = 1
                     self:Recycle()
                 end)
             end)
