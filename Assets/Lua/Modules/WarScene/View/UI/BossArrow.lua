@@ -13,16 +13,54 @@ function BossArrow:Ctor(bossAvatar)
     self.uiCamera = GetComponent.Canvas(Game.UICanvas).worldCamera
     self.bossAvatar = bossAvatar
     self.rect = GetComponent.RectTransform(self.gameObject)
+    self.iconRect = GetComponent.RectTransform(self.transform:Find("Bg/iconBg/icon").gameObject)
 
-    self.maxX = (Screen.width/2)*0.9
+    self.maxX = (Screen.width/2)*0.8
     self.minX = -self.maxX
-    self.maxY = (Screen.height/2)*0.9
+    self.maxY = (Screen.height/2)*0.7
     self.minY = -self.maxY
+    self.baseDirection = Vector2.New(0, self.maxY)
+
 end
 
 function BossArrow:Update()
     local screenP = self.cam:WorldToScreenPoint(self.bossAvatar.transform.position)
+    --local fixP =
     local hehe, p = RectTransformUtility.ScreenPointToLocalPointInRectangle(self.transform.parent, screenP, self.uiCamera, Vector2.zero)
+    --print("你妹", screenP.x, screenP.y, screenP.z, p.x, p.y, hehe)
+    if screenP.z < 0 then
+        p.x = -p.x
+        p.y = -p.y
+    end
+    local changed = self:FixLimit(p)
+    if changed == false then
+        if not self.hideDelay then
+            self.hideDelay = DelayedCall(3, function()
+                local cg = GetComponent.CanvasGroup(self.gameObject)
+                cg:DOFade(0, 0.5):OnComplete(function()
+                    cg.alpha = 1
+                    self:Recycle()
+                end)
+            end)
+        end
+        self.rect.localEulerAngles = Vector3.New(0,0, 180)
+        self.rect.anchoredPosition = p + Vector2.New(0, 300)
+    else
+        self.rect.anchoredPosition = p
+        self.rect.localEulerAngles = Vector3.New(0,0, Vector2.Angle(self.baseDirection, self.rect.anchoredPosition))
+    end
+    self.iconRect.localEulerAngles = Vector3.New(0,0, -self.rect.localEulerAngles.z)
+end
+
+function BossArrow:FixLimit(p)
+    local oldX = p.x
+    local oldY = p.y
+    p.x = math.max(p.x, self.minX)
+    p.x = math.min(p.x, self.maxX)
+    p.y = math.max(p.y, self.minY)
+    p.y = math.min(p.y, self.maxY)
+
+    return (oldX ~= p.x or oldY ~= p.y)
 end
 
 return BossArrow

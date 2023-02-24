@@ -127,13 +127,11 @@ function WarScene:ChallengeBoss()
             WarData.StartAllAvatarAI()
 
             ---指引箭头
-            --require("Modules.WarScene.View.UI.BossArrow").New(boss)
+            require("Modules.WarScene.View.UI.BossArrow").New(boss)
         end
     end
     DelayedCall(0.5, function()
         bossShow = CreatePrefab("Prefabs/War/BossShow.prefab", UILayerName.top)
-        local cam = Camera.main
-        local screenP = cam:WorldToScreenPoint(self.avatar.transform.position)
         DelayedCall(0.5, loopFun)
         DelayedCall(3, function()
             GetComponent.CanvasGroup(bossShow):DOFade(0, 0.5):OnComplete(function()
