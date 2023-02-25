@@ -13,7 +13,8 @@ local DamageManager = require("Modules.WarScene.Manager.DamageManager")
 local WarAvatar = class("WarAvatar", BehaviorAvatar)
 
 
-local ANI_EVENT_ATTACK_HIT = "attackHit"
+WarAvatar.ANI_EVENT_ATTACK_HIT = "attackHit"
+WarAvatar.ANI_EVENT_SKILL_HIT = "skillHit"
 local BASE_MOVE_SPEED = 5
 function WarAvatar:Ctor(prefabPath, data, static, parent)
     WarAvatar.super.Ctor(self, prefabPath, parent)
@@ -38,6 +39,10 @@ function WarAvatar:Ctor(prefabPath, data, static, parent)
     self.aniEvent = GetComponent.AnimationEvent(self.gameObject)
 
     self.seekerToLua = AddOrGetComponent(self.gameObject, SeekerToLua) ---@type SeekerToLua
+
+    if data.skillName then
+        self.skill = require("Modules.WarScene.Controller.Skill.Skill"..data.skillName)
+    end
 
     if self.static == true then
         return
@@ -336,7 +341,7 @@ function WarAvatar:Attack(callBack)
     --    return
     --end
 
-    self.aniEvent:SetListenerByMsg(ANI_EVENT_ATTACK_HIT, function()
+    self.aniEvent:SetListenerByMsg(WarAvatar.ANI_EVENT_ATTACK_HIT, function()
         if  self.target then
 
             if self.attackRadius then ---远程攻击
@@ -345,7 +350,7 @@ function WarAvatar:Attack(callBack)
                 self.target:GetHurt(DamageManager.GetHurtValue(self.data, self.target.data))
             end
         end
-        self.aniEvent:SetListenerByMsg(ANI_EVENT_ATTACK_HIT, nil)
+        self.aniEvent:SetListenerByMsg(WarAvatar.ANI_EVENT_ATTACK_HIT, nil)
     end)
     self:PlayAnimation(AvatarBase.ANI_ATTACK_NAME, nil, function()
          --RemoveEventListener(Stage, Event.UPDATE, self.attackUpdate)
@@ -357,7 +362,7 @@ end
 
 ---取消正在进行的攻击
 function WarAvatar:CancelAttack()
-    self.aniEvent:SetListenerByMsg(ANI_EVENT_ATTACK_HIT, nil)
+    self.aniEvent:SetListenerByMsg(WarAvatar.ANI_EVENT_ATTACK_HIT, nil)
     self:PlayAnimation(AvatarBase.ANI_IDLE_NAME)
 end
 

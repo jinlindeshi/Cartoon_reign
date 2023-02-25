@@ -113,7 +113,7 @@ function WarScene:MyDead(recycleFun)
     end)
 end
 
-local testBossData = {atk = 600, def = 0, hp = 1000, maxHp = 1000, name = "金刚熊",
+local testBossData = {atk = 400, def = 0, hp = 1000, maxHp = 1000, name = "金刚熊", skillName="JumpAttack",
                       prefab = "Prefabs/Avatars/boss_xiong.prefab", side = 2}
 ---挑战BOSS
 function WarScene:ChallengeBoss()
