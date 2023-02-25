@@ -8,15 +8,20 @@
 local HeadUI = class("HeadUI",LuaObj)
 
 
-function HeadUI:Ctor(avatar, offsetV2)
+function HeadUI:Ctor(avatar)
     local gameObj = GameObject.New()
     gameObj.name = "HeadUI"
     --local img = AddOrGetComponent(gameObj, UnityEngine.UI.Image) ---@type UnityEngine.UI.Image
     --img.color = Color.New(1,1,1,0.3)
     self.rect = AddOrGetComponent(gameObj, UnityEngine.RectTransform)
     HeadUI.super.Ctor(self, nil, gameObj, UIMgr.GetLayer(UILayerName.scene))
-    self.offsetV2 = offsetV2
     self.avatar = avatar ---@type WarAvatar
+    self.worldTrans = avatar.transform
+    self.offsetV2 = Vector2.New(0, 80)
+    if avatar.transform:Find("uiPos") then
+        self.worldTrans = avatar.transform:Find("uiPos")
+        self.offsetV2 = Vector2.zero
+    end
 end
 
 function HeadUI:SkillNameShow(name)
@@ -42,7 +47,8 @@ function HeadUI:Update()
     end
 
     local cam = Camera.main
-    local screenP = cam:WorldToScreenPoint(self.avatar.transform.position)
+    local worldPos = self.avatar.transform.position
+    local screenP = cam:WorldToScreenPoint(self.worldTrans.position)
     local uiCamera = GetComponent.Canvas(Game.UICanvas).worldCamera
     local hehe, p = RectTransformUtility.ScreenPointToLocalPointInRectangle(self.rect.parent, screenP, uiCamera, Vector2.zero)
 

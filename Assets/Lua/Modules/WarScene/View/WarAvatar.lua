@@ -20,9 +20,6 @@ function WarAvatar:Ctor(prefabPath, data, static, parent)
     self.x = 0
     self.z = 0
     self.data = data or {id=0, hp=100, maxHp=100, side=-1}
-    if self.transform:Find("uiPos") then
---TODO
-    end
     self.headUI = require("Modules.WarScene.View.UI.HeadUI").New(self, Vector2.New(0, 80))
     self.hpBar = require("Modules.WarScene.View.UI.HpBar").New(self.data, self.headUI.transform)
     self.hpBar:Hide()
