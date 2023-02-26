@@ -66,7 +66,7 @@ function MainMenuPanel:Init()
     self.bossBtn:SetActive(false)
     self:RefreshFunctionBtn()
     ---TEST
-    DelayedCall(1, handler(self, self.BossBtnShow))
+    --DelayedCall(1, handler(self, self.BossBtnShow))
 end
 
 function MainMenuPanel:ActiveBtnLight(type, flag)

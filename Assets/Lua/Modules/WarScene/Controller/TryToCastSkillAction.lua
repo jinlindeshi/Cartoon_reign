@@ -17,7 +17,7 @@ end
 function TryToCastSkillAction:OnStart()
     --print("TryToCastSkillAction OnStart")
     if not self.avatar.skill then
-        print("技能没配~")
+        --print("技能没配~")
         self.cAction:SetUpdateStatus(TaskStatus.Failure)
         return
     end

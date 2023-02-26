@@ -63,6 +63,7 @@ public static class LuaBinder
 		UnityEngine_AnimatorClipInfoWrap.Register(L);
 		UnityEngine_AnimatorStateInfoWrap.Register(L);
 		UnityEngine_RuntimeAnimatorControllerWrap.Register(L);
+		UnityEngine_AnimationClipWrap.Register(L);
 		UnityEngine_AnimationBlendModeWrap.Register(L);
 		UnityEngine_QueueModeWrap.Register(L);
 		UnityEngine_PlayModeWrap.Register(L);
@@ -261,6 +262,7 @@ public static class LuaBinder
 		Pathfinding_NNInfoWrap.Register(L);
 		Pathfinding_SeekerWrap.Register(L);
 		Pathfinding_GridGraphWrap.Register(L);
+		Pathfinding_GraphNodeWrap.Register(L);
 		Pathfinding_GridNodeWrap.Register(L);
 		Pathfinding_Int3Wrap.Register(L);
 		Pathfinding_NNConstraintWrap.Register(L);
@@ -272,7 +274,6 @@ public static class LuaBinder
 		Pathfinding_AIBaseWrap.Register(L);
 		Pathfinding_NavGraphWrap.Register(L);
 		Pathfinding_GridNodeBaseWrap.Register(L);
-		Pathfinding_GraphNodeWrap.Register(L);
 		L.RegFunction("OnPathDelegate", Pathfinding_OnPathDelegate);
 		L.RegFunction("OnGraphDelegate", Pathfinding_OnGraphDelegate);
 		L.RegFunction("OnScanDelegate", Pathfinding_OnScanDelegate);
@@ -308,7 +309,6 @@ public static class LuaBinder
 		L.AddPreLoad("UnityEngine.CharacterController", LuaOpen_UnityEngine_CharacterController, typeof(UnityEngine.CharacterController));
 		L.AddPreLoad("UnityEngine.CapsuleCollider", LuaOpen_UnityEngine_CapsuleCollider, typeof(UnityEngine.CapsuleCollider));
 		L.AddPreLoad("UnityEngine.Animation", LuaOpen_UnityEngine_Animation, typeof(UnityEngine.Animation));
-		L.AddPreLoad("UnityEngine.AnimationClip", LuaOpen_UnityEngine_AnimationClip, typeof(UnityEngine.AnimationClip));
 		L.AddPreLoad("UnityEngine.AnimationState", LuaOpen_UnityEngine_AnimationState, typeof(UnityEngine.AnimationState));
 		L.AddPreLoad("UnityEngine.SkinWeights", LuaOpen_UnityEngine_SkinWeights, typeof(UnityEngine.SkinWeights));
 		L.AddPreLoad("UnityEngine.RenderTexture", LuaOpen_UnityEngine_RenderTexture, typeof(UnityEngine.RenderTexture));
@@ -2189,24 +2189,6 @@ public static class LuaBinder
 			state.BeginPreModule("UnityEngine");
 			UnityEngine_AnimationWrap.Register(state);
 			int reference = state.GetMetaReference(typeof(UnityEngine.Animation));
-			state.EndPreModule(L, reference);
-			return 1;
-		}
-		catch(Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int LuaOpen_UnityEngine_AnimationClip(IntPtr L)
-	{
-		try
-		{
-			LuaState state = LuaState.Get(L);
-			state.BeginPreModule("UnityEngine");
-			UnityEngine_AnimationClipWrap.Register(state);
-			int reference = state.GetMetaReference(typeof(UnityEngine.AnimationClip));
 			state.EndPreModule(L, reference);
 			return 1;
 		}

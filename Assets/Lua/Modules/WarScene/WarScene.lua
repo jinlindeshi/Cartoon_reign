@@ -62,7 +62,7 @@ function WarScene:GameStart(noAIStart)
     for _, id in ipairs(TeamModel.GetTeamIdList()) do
         if id == DemoCfg.mainAvatarID then
             local avatar = self:AddAvatar(DemoCfg.mainAvatarID, true, nil, 1, noAIStart)
-            avatar.skill = require("Modules.WarScene.Controller.Skill.SkillWhirlwind").New()
+            avatar:SetSkill("Whirlwind")
         else
             self:TeamAddAvatar(id, nil, noAIStart)
         end
@@ -151,15 +151,10 @@ function WarScene:ChallengeBoss()
             Happy.ScreenTrans(loopFun,0,Color.red, {dur=0.5, alpha=0.2},{dur=0.5},nil)
         else
             WarData.StartAllAvatarAI()
-
-            ---指引箭头
-            --require("Modules.WarScene.View.UI.BossArrow").New(boss)
         end
     end
     DelayedCall(0.5, function()
         bossShow = CreatePrefab("Prefabs/War/BossShow.prefab", UILayerName.top)
-        local cam = Camera.main
-        --local screenP = cam:WorldToScreenPoint(self.avatar.transform.position)
         DelayedCall(0.5, loopFun)
 
         DelayedCall(2, function()
@@ -167,12 +162,17 @@ function WarScene:ChallengeBoss()
             textImg:DOFade(0, 0.5):OnComplete(function()
 
                 local bossShowImg = bossShow.transform:Find("Image").gameObject
+                local bossShowImgRt = GetComponent.RectTransform(bossShowImg)
                 ---指引箭头
                 local bossArrow = require("Modules.WarScene.View.UI.BossArrow").New(boss)
+                local nativePos = bossShowImgRt.anchoredPosition
+                local nativeSizeDelta = bossShowImgRt.sizeDelta
                 bossArrow:FlyToIcon(bossShowImg, function()
                     WarData.StartAllAvatarAI()
                     textImg.color = Color.New(textImg.color.r, textImg.color.g, textImg.color.b, 1)
                     RecyclePrefab(bossShow, "Prefabs/War/BossShow.prefab")
+                    bossShowImgRt.anchoredPosition = nativePos
+                    bossShowImgRt.sizeDelta = nativeSizeDelta
 
                     self.mainMenu:HideKillCount()
                     self.mainMenu:ShowSequence()

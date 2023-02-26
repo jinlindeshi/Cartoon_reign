@@ -19,6 +19,7 @@ using DG.Tweening.Core;
  using DG.Tweening.Plugins.Options;
  using Pathfinding;
  using TMPro;
+ using UnityEditor.Animations;
  using UnityEngine.AI;
 using UnityEngine.Audio;
 using UnityEngine.Rendering;
@@ -177,7 +178,7 @@ public static class CustomSettings
         _GT(typeof(Space)),    
         _GT(typeof(AnimatorClipInfo)), 
         _GT(typeof(AnimatorStateInfo)),  
-        _GT(typeof(RuntimeAnimatorController)),    
+        _GT(typeof(RuntimeAnimatorController)),
        
 
         _GT(typeof(MeshRenderer)),
@@ -268,6 +269,7 @@ public static class CustomSettings
         _GT(typeof(NNInfo)),
         _GT(typeof(Seeker)),
         _GT(typeof(GridGraph)),
+        _GT(typeof(GraphNode)),
         _GT(typeof(GridNode)),
         _GT(typeof(Int3)),
         _GT(typeof(SeekerToLua)),
@@ -293,7 +295,6 @@ public static class CustomSettings
         typeof(CapsuleCollider),
 
         typeof(Animation),
-        typeof(AnimationClip),
         typeof(AnimationState),
 
         typeof(SkinWeights),

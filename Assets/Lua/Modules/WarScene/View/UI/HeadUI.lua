@@ -47,7 +47,6 @@ function HeadUI:Update()
     end
 
     local cam = Camera.main
-    local worldPos = self.avatar.transform.position
     local screenP = cam:WorldToScreenPoint(self.worldTrans.position)
     local uiCamera = GetComponent.Canvas(Game.UICanvas).worldCamera
     local hehe, p = RectTransformUtility.ScreenPointToLocalPointInRectangle(self.rect.parent, screenP, uiCamera, Vector2.zero)

@@ -25,7 +25,10 @@ function SkillJumpAttack:Begin(avatar, callBack)
         end)
     end)
 
-    self.avatar:PlayAnimation(AvatarBase.ANI_SKILL_NAME,nil, handler(self,self.Over))
+    self.avatar:PlaySkillName()
+    DelayedCall(0.5, function()
+        self.avatar:PlayAnimation(AvatarBase.ANI_SKILL_NAME,nil, handler(self,self.Over))
+    end)
 end
 
 function SkillJumpAttack:Over()

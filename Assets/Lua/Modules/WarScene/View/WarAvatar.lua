@@ -41,7 +41,7 @@ function WarAvatar:Ctor(prefabPath, data, static, parent)
     self.seekerToLua = AddOrGetComponent(self.gameObject, SeekerToLua) ---@type SeekerToLua
 
     if data.skillName then
-        self.skill = require("Modules.WarScene.Controller.Skill.Skill"..data.skillName)
+        self:SetSkill(data.skillName)
     end
 
     if self.static == true then
@@ -68,6 +68,11 @@ function WarAvatar:Ctor(prefabPath, data, static, parent)
     self:SetAvatarColor()
 end
 
+function WarAvatar:SetSkill(name)
+    self.skillName = name
+    self.skill = require("Modules.WarScene.Controller.Skill.Skill"..self.skillName)
+end
+
 function WarAvatar:SetMoveSpeedScale(scale)
     self.aiPath.maxSpeed = BASE_MOVE_SPEED * scale
 end
@@ -82,7 +87,7 @@ function WarAvatar:PlaySkillName()
     if not self.skill then
         return
     end
-    self.headUI:SkillNameShow()
+    self.headUI:SkillNameShow(self.skillName)
 end
 
 ---设置可跟随的队长
