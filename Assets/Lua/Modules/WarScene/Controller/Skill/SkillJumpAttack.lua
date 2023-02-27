@@ -17,7 +17,7 @@ function SkillJumpAttack:Begin(avatar, callBack)
     SkillJumpAttack.super.Begin(self, avatar, callBack)
 
     self.avatar.aniEvent:SetListenerByMsg(WarAvatar.ANI_EVENT_SKILL_HIT, function()
-        self.avatar.target:GetHurt(600)
+        self.avatar.target:GetHurt(1000, 1.5)
         local nativeScaleY = self.avatar.target.transform.localScale.y
         self.avatar.target.transform:DOScaleY(nativeScaleY * 0.3, 0.1)
         Happy.Shake(Camera.main.gameObject, 0.7, nil, 2, true)
