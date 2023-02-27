@@ -3,3 +3,60 @@
 --- Created by sunshuo.
 --- DateTime: 2023/2/27 18:22
 ---
+local poolItem = require("Data.Excel.poolItem")
+---@class UI.DrawCard.SingleCardShow:LuaObj
+---@field New fun():UI.DrawCard.SingleCardShow
+local SingleCardShow = class("UI.DrawCard.SingleCardShow", LuaObj)
+function SingleCardShow:Ctor(parent, id)
+    SingleCardShow.super.Ctor(self, "Prefabs/Panel/DrawCard/SingleCardShow.prefab", nil, parent)
+    self.light = self.transform:Find("light").gameObject
+    self.equip = self.transform:Find("equip").gameObject
+    self.hero = self.transform:Find("hero").gameObject
+    self.info = self.transform:Find("info").gameObject
+    self.lightCg = GetComponent.CanvasGroup(self.light)
+    self.infoCg = GetComponent.CanvasGroup(self.info)
+    self.heroCg = GetComponent.CanvasGroup(self.hero)
+    self.equipCg = GetComponent.CanvasGroup(self.equip)
+    self.nameText = GetComponent.Text(self.info.transform:Find("name").gameObject)
+
+    self.infoCg.alpha = 0
+    self.lightCg.alpha = 0
+
+    self.id = id
+    self.data = poolItem.GetData(id)
+    self.type = self.data.type
+    if self.type == DemoCfg.cardType.equip then
+        self.equip:SetActive(true)
+        self.hero:SetActive(false)
+        local info = require("Data.Excel.equip").GetData(self.data.toID)
+        self.nameText.text = info.name
+        self.equip.transform.localScale = Vector2.one * 2
+        self.equipCg.alpha = 0.3
+    else
+        self.equip:SetActive(false)
+        self.hero:SetActive(true)
+        local info = require("Data.Excel.avatar").GetData(self.data.toID)
+        self.nameText.text = info.name
+        self.heroCg.alpha = 0
+    end
+
+    self.seq = DOTween.Sequence()
+    if self.type == DemoCfg.cardType.equip then
+        ---装备表现
+        self.seq:Append(self.equip.transform:DOScale(1, 0.5))
+        self.seq:Join(self.equipCg:DOFade(1, 0.3))
+    else
+        ---人物表现
+        self.seq:Append(self.heroCg:DOFade(1, 0.3))
+    end
+    ---闪光
+    self.seq:Append(self.light.transform:DOScale(3.5,0.3))
+    self.seq:Join(self.lightCg:DOFade(1, 0.15))
+    self.seq:Append(self.light.transform:DOScale(3,0.15))
+    ---信息
+    self.seq:Append(self.infoCg:DOFade(1, 0.25))
+end
+
+
+
+return SingleCardShow

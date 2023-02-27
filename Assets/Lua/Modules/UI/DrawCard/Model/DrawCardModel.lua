@@ -13,7 +13,7 @@ DrawCardModel.eventDefine =
 }
 
 function DrawCardModel.GetOneDrawData()
-    return 5
+    return {5}
 end
 
 function DrawCardModel.GetTenDrawData()

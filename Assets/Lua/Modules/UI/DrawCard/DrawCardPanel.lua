@@ -7,6 +7,7 @@ local PoolSelectBtn = require("Modules.UI.DrawCard.PoolSelectBtn")
 local PoolControl = require("Modules.UI.DrawCard.PoolControl")
 local CardControl = require("Modules.UI.DrawCard.CardControl")
 local DrawCardModel = require("Modules.UI.DrawCard.Model.DrawCardModel")
+local OpenCardShow = require("Modules.UI.DrawCard.OpenCardShow")
 ---@class UI.DrawCard.DrawCardPanel:UI.BasePanel
 ---@field New fun():UI.DrawCard.DrawCardPanel
 local DrawCardPanel = class("UI.DrawCard.DrawCardPanel", BasePanel)
@@ -26,10 +27,13 @@ function DrawCardPanel:Init()
     self.AutoButton = self.transform:Find("ResultRoot/ButtonRoot/AutoButton").gameObject
     self.YesButton = self.transform:Find("ResultRoot/ButtonRoot/YesButton").gameObject
     self.AgainButton = self.transform:Find("ResultRoot/ButtonRoot/AgainButton").gameObject
+    self.click = self.transform:Find("ResultRoot/Click").gameObject
 
     AddButtonHandler(self.AutoButton, PointerHandler.CLICK, self.OnAutoButton, self)
     AddButtonHandler(self.YesButton, PointerHandler.CLICK, self.OnYesButton, self)
     AddButtonHandler(self.AgainButton, PointerHandler.CLICK, self.OnAgainButton, self)
+    AddButtonHandler(self.click, PointerHandler.CLICK, self.OnShowClick, self)
+
     self.ResultRoot:SetActive(false)
     self.poolIdList = SData.GetOpenPools()
     self.poolMap = {}
@@ -105,6 +109,7 @@ function DrawCardPanel:StartDraw(callback)
     self.AutoButton:SetActive(true)
     self.YesButton:SetActive(false)
     self.AgainButton:SetActive(false)
+    self.click:SetActive(false)
 
     local seq = DOTween.Sequence()
     seq:Append(cg1:DOFade(0, 0.25))
@@ -114,7 +119,10 @@ function DrawCardPanel:StartDraw(callback)
     seq:Join(lightCg:DOFade(1, 0.2))
     seq:Append(lightCg:DOFade(0, 0.2))
     seq:Join(self.light.transform:DOScale(1,0.2))
-    seq:AppendCallback(callback)
+    seq:AppendCallback(function()
+        self.click:SetActive(true)
+        callback()
+    end)
     seq:Append(btnCg:DOFade(1, 0.2))
 end
 
@@ -147,21 +155,16 @@ function DrawCardPanel:DrawOnce()
     self.OnceRoot:SetActive(true)
     self.TenRoot:SetActive(false)
 
-    local card = CardControl.New(self.cardPos, DrawCardModel.GetOneDrawData())
-    table.insert(self.cardList, card)
+    local data = DrawCardModel.GetOneDrawData()
+    self.show = OpenCardShow.New(self.OnceRoot, data) ---@type UI.DrawCard.OpenCardShow
 end
 
 ---抽十次
 function DrawCardPanel:DrawTenTimes()
     self.OnceRoot:SetActive(false)
     self.TenRoot:SetActive(true)
-
     local data = DrawCardModel.GetTenDrawData()
-    for i = 1, self.PosRoot.childCount do
-        local item = self.PosRoot:GetChild(i-1)
-        local card = CardControl.New(item, data[i])
-        table.insert(self.cardList, card)
-    end
+    self.show = OpenCardShow.New(self.TenRoot, data) ---@type UI.DrawCard.OpenCardShow
 end
 
 ---清理结果
@@ -242,6 +245,10 @@ function DrawCardPanel:OnAgainButton()
     end)
 end
 
+function DrawCardPanel:OnShowClick()
+    self.show:Next()
+end
+
 function DrawCardPanel:RemoveListeners()
     DrawCardPanel.super.RemoveListeners(self)
     EventMgr.RemoveEventListener(DrawCardModel.eventDefine.selectPool, self.OnDrawCardPoolSelect, self)
@@ -251,6 +258,7 @@ function DrawCardPanel:RemoveListeners()
     RemoveButtonHandler(self.AutoButton, PointerHandler.CLICK, self.OnAutoButton, self)
     RemoveButtonHandler(self.YesButton, PointerHandler.CLICK, self.OnYesButton, self)
     RemoveButtonHandler(self.AgainButton, PointerHandler.CLICK, self.OnAgainButton, self)
+    RemoveButtonHandler(self.click, PointerHandler.CLICK, self.OnShowClick, self)
 end
 
 return DrawCardPanel

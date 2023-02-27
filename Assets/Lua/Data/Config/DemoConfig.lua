@@ -21,7 +21,7 @@ DemoCfg.funcOpenCfg =
     [DemoCfg.funcCfg.reward] = false,
     [DemoCfg.funcCfg.growUp] = false,
     [DemoCfg.funcCfg.team] = false,
-    [DemoCfg.funcCfg.draw] = false,
+    [DemoCfg.funcCfg.draw] = true,
 }
 
 function DemoCfg.SetOpen(type)

@@ -3,8 +3,51 @@
 --- Created by sunshuo.
 --- DateTime: 2023/2/27 16:51
 ---
+local SingleCardShow = require("Modules.UI.DrawCard.SingleCardShow")
+---@class UI.DrawCard.OpenCardShow
+---@field New fun():UI.DrawCard.OpenCardShow
 local OpenCardShow = class("UI.DrawCard.OpenCardShow")
 function OpenCardShow:Ctor(go, data)
+    self.gameObject = go ---@type UnityEngine.GameObject
+    self.transform = self.gameObject.transform ---@type UnityEngine.Transform
+    self.data = data
+    self.showList = {}
+    self.index = 0
+    self.seq = nil ---@type DG.Tweening.DOTween
+
+    self:Next()
+end
+
+function OpenCardShow:SingleShow(id)
+    if self.seq ~= nil then
+        self.seq:Kill()
+    end
+    local show = SingleCardShow.New(self.transform, id)
+    table.insert(self.showList, show)
+    self.seq = show.seq
+end
+
+function OpenCardShow:Next()
+    print("OpenCardShow:Next()")
+    local id = self.data[self.index + 1]
+    if id == nil then
+        print("OpenCardShow:Next() End")
+        self:End()
+    else
+        print("OpenCardShow:Next() ", id)
+        if self.index > 0 then
+            self.showList[#self.showList]:Hide()
+        end
+        self:SingleShow(id)
+        self.index = self.index + 1
+    end
+end
+
+function OpenCardShow:Skip()
+
+end
+
+function OpenCardShow:End()
 
 end
 
