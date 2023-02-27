@@ -290,11 +290,20 @@ def main():
 	# parser.add_argument('-p', '--path', type=str, required=True, help=u"指定导表定义文件的路径，可以是具体的文件，也可以是一个目录")
 	# parser.add_argument('-a', '--all', type=int, default=False, help=u"是否全导，如果不，则只导修改过的文件")
 	# args = parser.parse_args()
-	sys.path.append(os.getcwd())
-	debuglog("开始导出")
 	# export_excel(args.path, args.all)
-	#url = os.path.join(os.path.dirname(os.getcwd()),"Excel")
+	
+	debuglog("开始导出")
+	# win上可执行文件 获取目录
+	# sys.path.append(os.getcwd())
+	# url = os.path.join(os.path.dirname(os.getcwd()),"Excel")
+	
+	# Mac上可执行文件 获取目录
+	# sys.path.append(os.path.dirname(sys.executable))
+	# url = os.path.join(os.path.dirname(os.path.dirname(sys.executable)),"Excel")
+	
+	#命令行直接调用文件 获取目录
 	url = os.path.join(os.path.dirname(os.path.dirname(__file__)),"Excel")
+	
 	export_excel(url, -1)
 	debuglog("导出完毕!!!")
 	input("按任意按键退出")
