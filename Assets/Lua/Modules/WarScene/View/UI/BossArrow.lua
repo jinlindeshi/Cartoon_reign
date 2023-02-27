@@ -18,9 +18,9 @@ function BossArrow:Ctor(bossAvatar)
 
     self.tween = GetComponent.DOTweenAnimation(self.transform:Find("Bg").gameObject)
 
-    self.maxX = (Screen.width/2)*0.7
+    self.maxX = (Screen.width/2)*0.82
     self.minX = -self.maxX
-    self.maxY = (Screen.height/2)*0.7
+    self.maxY = (Screen.height/2)*0.75
     self.minY = -self.maxY
     self.baseDirection = Vector2.New(0, self.maxY)
 

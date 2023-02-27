@@ -795,7 +795,7 @@ PrefabInstance:
     - target: {fileID: 3050719649524201400, guid: 069db8b45deaf6e49b5ecf16872a363f,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3050719649524201401, guid: 069db8b45deaf6e49b5ecf16872a363f,
         type: 3}
@@ -1145,11 +1145,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BossShow
-      objectReference: {fileID: 0}
-    - target: {fileID: 6746170606611616327, guid: 7c70f3bb735ecdc4892989005f27cb08,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7c70f3bb735ecdc4892989005f27cb08, type: 3}

@@ -184,8 +184,9 @@ local prefabsPool = {}
 ---@param path string prefab路径
 ---@param parent UnityEngine.Transform 父节点
 ---@param noPool boolean 是否加入缓存池
+---@param recycleDelay number 需要自动回收的话，填一个倒计时间
 ---@return UnityEngine.GameObject
-function CreatePrefab(path, parent, noPool)
+function CreatePrefab(path, parent, recycleDelay, noPool)
     local prefab = resMgr:LoadPrefabAtPath(path)
     if not prefabsPool[path] then
         prefabsPool[path] = {}
@@ -193,14 +194,21 @@ function CreatePrefab(path, parent, noPool)
     if type(parent) == "string" then
         parent = UIMgr.GetLayer(parent)
     end
+    local obj
     if #prefabsPool[path] == 0 or noPool then
-        return GameObject.Instantiate(prefab, parent)
+        obj = GameObject.Instantiate(prefab, parent)
     else
-        local obj = prefabsPool[path][1] ---@type UnityEngine.GameObject
+        obj = prefabsPool[path][1] ---@type UnityEngine.GameObject
         obj.transform:SetParent(parent)
         table.remove(prefabsPool[path], 1)
-        return obj
     end
+
+    if recycleDelay and recycleDelay > 0 then
+        DelayedCall(recycleDelay, function()
+            RecyclePrefab(obj, path)
+        end)
+    end
+    return obj
 end
 
 
