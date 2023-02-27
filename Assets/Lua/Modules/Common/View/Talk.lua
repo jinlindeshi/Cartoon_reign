@@ -119,6 +119,7 @@ function Talk:PlayContent()
     if #self.contentList < self.playContentIdx then
         self:Hide()
         self:ClearFeatures()
+        self.contentLabel.text = ""
         if self.callBack then
             local call = self.callBack
             self.callBack = nil

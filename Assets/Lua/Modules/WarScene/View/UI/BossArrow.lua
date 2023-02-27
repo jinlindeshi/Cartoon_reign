@@ -20,7 +20,7 @@ function BossArrow:Ctor(bossAvatar)
 
     self.maxX = (Screen.width/2)*0.82
     self.minX = -self.maxX
-    self.maxY = (Screen.height/2)*0.75
+    self.maxY = (Screen.height/2)*0.73
     self.minY = -self.maxY
     self.baseDirection = Vector2.New(0, self.maxY)
 

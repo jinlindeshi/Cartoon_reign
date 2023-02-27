@@ -40,6 +40,9 @@ function WarScene:Ctor(scene)
     self.mainMenu = UIMgr.GetPanel(UIPanelCfg.mainMenu) ---@type UI.MainMenuPanel
     self:GameStart()
 
+    ---TEST
+    --self:MyDead()
+
     --DelayedCall(1, function()
     --    Happy.MainCameraBlurToggle(true, 1)
     --    DelayedCall(4, function()
@@ -76,44 +79,59 @@ function WarScene:MyDead(recycleFun)
     end
     DemoCfg.killCount = 0
     WarData.patrolNodeIndex = -1
-    DelayedCall(1, function()
-        Happy.ScreenTrans(function()
-            self:GameStart(true)
-            ---重生 播抽卡剧情
-            local seq = DOTween.Sequence()
-            seq:AppendInterval(0.25)
-            seq:AppendCallback(function()
-                DemoCfg.SetOpen(DemoCfg.funcCfg.draw)
-                self.mainMenu:RefreshFunctionBtn(DemoCfg.funcCfg.draw)
+    ---清理BOSS战
+    local clearBossFightFun = function()
+        if recycleFun then
+            recycleFun()
+        end
+        for i, avatar in pairs(WarData.AvatarHash) do
+            DelayedFrameCall(function()
+                WarData.RemoveAvatar(avatar, true)
             end)
-            seq:AppendInterval(0.25)
-            seq:AppendCallback(function()
-                DemoCfg.SetOpen(DemoCfg.funcCfg.team)
-                self.mainMenu:RefreshFunctionBtn(DemoCfg.funcCfg.team)
+        end
+        GetComponent.HappyCamera( Camera.main.gameObject).attachObj = nil
+        Camera.main.transform.position = WarData.CameraInitPos
+    end
+    ---复活剧情
+    local relifeGuideFun = function()
+        self:GameStart(true)
+        ---重生 播抽卡剧情
+        local seq = DOTween.Sequence()
+        seq:AppendInterval(0.25)
+        seq:AppendCallback(function()
+            seq:TogglePause()
+            Talk.Play(TalkerConfig.Me2D, {"看来我需要一个帮手" ,"抽卡吧！"}, function()
+                seq:TogglePause()
             end)
-            seq:AppendInterval(1)
-            seq:AppendCallback(function()
-                for id, avatar in pairs(WarData.avatarTeam) do
-                    avatar:AIStart()
-                end
-            end)
+        end)
+        seq:AppendInterval(0.25)
+        seq:AppendCallback(function()
+            DemoCfg.SetOpen(DemoCfg.funcCfg.draw)
+            self.mainMenu:RefreshFunctionBtn(DemoCfg.funcCfg.draw)
+        end)
+        seq:AppendInterval(0.25)
+        seq:AppendCallback(function()
+            DemoCfg.SetOpen(DemoCfg.funcCfg.team)
+            self.mainMenu:RefreshFunctionBtn(DemoCfg.funcCfg.team)
+        end)
+        seq:AppendInterval(1)
+        seq:AppendCallback(function()
+            self:TeamAddAvatar(DemoCfg.followerID, nil, true):SetRangedAttackInfo(3)
+        end)
+        seq:AppendInterval(1)
+        seq:AppendCallback(function()
+            Talk.Play(TalkerConfig.Me2D, {"再战！！"}, function()
+                self:ChallengeBoss()
+            end, Talk.SHAKE_EFF_FUN)
+        end)
+    end
 
-        end, nil, nil, {callBack=function()
-            if recycleFun then
-                recycleFun()
-            end
-            for i, avatar in pairs(WarData.AvatarHash) do
-                DelayedFrameCall(function()
-                    WarData.RemoveAvatar(avatar, true)
-                end)
-            end
-            GetComponent.HappyCamera( Camera.main.gameObject).attachObj = nil
-            Camera.main.transform.position = WarData.CameraInitPos
-        end})
+    DelayedCall(1, function()
+        Happy.ScreenTrans(relifeGuideFun, nil, nil, {callBack=clearBossFightFun})
     end)
 end
 
-local testBossData = {atk = 400, def = 0, hp = 1000, maxHp = 1000, name = "金刚熊", skillName="JumpAttack",
+local testBossData = {atk = 300, def = 0, hp = 800, maxHp = 800, name = "金刚熊", skillName="JumpAttack",
                       prefab = "Prefabs/Avatars/boss_xiong.prefab", side = 2}
 ---挑战BOSS
 function WarScene:ChallengeBoss()
@@ -133,9 +151,10 @@ function WarScene:ChallengeBoss()
     end
 
     WarData.avatarIdIndex = WarData.avatarIdIndex + 1
-    testBossData.id = WarData.avatarIdIndex
-    local boss = WarAvatar.New(testBossData.prefab,
-            testBossData, false, WarData.scene.avatarConTran)
+    local bossData = clone(testBossData)
+    bossData.id = WarData.avatarIdIndex
+    local boss = WarAvatar.New(bossData.prefab,
+            bossData, false, WarData.scene.avatarConTran)
     boss:SetExternalBehavior("BehaviorTree/EnemyAI.asset")
     WarData.AddAvatar(boss, boss.data)
     WarData.scene:PutInNode(boss, WarData.bossNode[1], WarData.bossNode[2])
@@ -231,6 +250,7 @@ function WarScene:AddAvatar(id, isMainRole, bornLoc, delayAITime, noAIStart)
 end
 
 ---添加新角色进入队伍
+---@return WarAvatar
 function WarScene:TeamAddAvatar(id, delayAITime, noAIStart)
     if WarData.mainAvatar == nil then
         LogError("TeamAddAvatar 没有找到主角色 无法添加新角色进入队伍")
@@ -263,7 +283,7 @@ function WarScene:TeamAddAvatar(id, delayAITime, noAIStart)
     else
         LogError("TeamAddAvatar 没有找到合适的出生位置 出生在默认出生点")
     end
-    self:AddAvatar(id, false, loc, delayAITime, noAIStart)
+    return self:AddAvatar(id, false, loc, delayAITime, noAIStart)
 end
 
 ---从队伍中移除角色

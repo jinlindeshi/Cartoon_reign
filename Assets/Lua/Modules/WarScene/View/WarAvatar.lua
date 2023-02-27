@@ -167,7 +167,7 @@ end
 WarAvatar.HURT_COLOR = Color.New(0.5, 0, 0, 1)
 WarAvatar.DEFAULT_COLOR = Color.black
 ---受伤
-function WarAvatar:GetHurt(loseHp)
+function WarAvatar:GetHurt(loseHp, textScale)
     self.data.hp = math.max(0, self.data.hp - loseHp)
     --print("WarAvatar:GetHurt", self.gameObject.name, self.data.hp, debug.traceback())
     self.hpBar:ChangeHp(self.data.hp, self.data.maxHp, true)
@@ -205,6 +205,7 @@ function WarAvatar:GetHurt(loseHp)
     labelRt.anchoredPosition = self.hpBar.rect.anchoredPosition
     local label = GetComponent.Text(labelObj.transform:Find("text").gameObject)
     label.text = loseHp
+    label.transform.localScale = label.transform.localScale * (textScale or 1)
     local cg = GetComponent.CanvasGroup(labelObj)
 
     ---生成随机坐标
@@ -222,6 +223,7 @@ function WarAvatar:GetHurt(loseHp)
                 labelRt:DOAnchorPos(nativePos, 0.2)
                 cg:DOFade(0, 0.2):OnComplete(function()
                     cg.alpha = 1
+                    label.transform.localScale = label.transform.localScale / (textScale or 1)
                     RecyclePrefab(labelObj, path)
                 end):SetDelay(0.1)
             end)
@@ -235,6 +237,7 @@ function WarAvatar:GetHurt(loseHp)
             DelayedCall(0.2, function()
                 cg:DOFade(0, 0.1):OnComplete(function()
                     cg.alpha = 1
+                    label.transform.localScale = label.transform.localScale / (textScale or 1)
                     RecyclePrefab(labelObj, path)
                 end)
             end)
