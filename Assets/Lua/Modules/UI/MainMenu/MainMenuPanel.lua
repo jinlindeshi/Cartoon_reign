@@ -63,7 +63,9 @@ function MainMenuPanel:Init()
     self.goldText.text = DemoCfg.goldNum
     self.gemText.text = DemoCfg.gemNum
     self:ShowKillCount()
-    self.bossBtn:SetActive(false)
+    DelayedFrameCall(function()
+        self.bossBtn:SetActive(false)
+    end,1)
     self:RefreshFunctionBtn()
     ---TEST
     --DelayedCall(1, handler(self, self.BossBtnShow))

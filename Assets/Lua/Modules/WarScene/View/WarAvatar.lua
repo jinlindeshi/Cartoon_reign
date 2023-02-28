@@ -137,7 +137,7 @@ function WarAvatar:EndFollow()
 end
 
 function WarAvatar:SetAvatarColor(color, tweenDur, callBack)
-    do return end
+    --do return end
     color = color or WarAvatar.DEFAULT_COLOR
     if self.avatarColorTween then
         self.avatarColorTween:Kill()
@@ -168,9 +168,8 @@ function WarAvatar:GetHurt(loseHp, textScale)
     --print("WarAvatar:GetHurt", self.gameObject.name, self.data.hp, debug.traceback())
     self.hpBar:ChangeHp(self.data.hp, self.data.maxHp, true)
 
-    self:SetAvatarColor(WarAvatar.HURT_COLOR, 0.1, function()
-        self:SetAvatarColor(nil, 0.1)
-    end)
+    self:SetAvatarColor(WarAvatar.HURT_COLOR)
+    DelayedCall(0.1, handler(self, self.SetAvatarColor))
 
     local effPath = "Effect/Prefabs/fx_role_hit_01.prefab"
     if not self.hitParent then

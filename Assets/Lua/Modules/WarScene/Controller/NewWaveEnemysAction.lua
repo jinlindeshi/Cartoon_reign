@@ -41,28 +41,25 @@ function NewWaveEnemysAction:OnStart()
     if data == nil then
         data = pointList[1]
     end
-    --for i = 1, 1 do
+
     for i = 1, #data.monsters do
-        WarData.avatarIdIndex = WarData.avatarIdIndex + 1
-        local enemyData = clone(SData.monster.GetData(data.monsters[i]))
-        enemyData.id = WarData.avatarIdIndex
-        enemyData.hp = enemyData.maxHp
-        local avatar = WarAvatar.New(enemyData.prefab,
-                enemyData, false, WarData.scene.avatarConTran)
-        avatar:SetExternalBehavior("BehaviorTree/EnemyAI.asset")
-        WarData.AddAvatar(avatar, avatar.data)
-        WarData.scene:PutInNode(avatar, gridList[i][1], gridList[i][2])
-        HappyFuns.SetLayerRecursive(avatar.gameObject, 11)
-        avatar:AIStart()
+        DelayedCall(0.1*i,function()
+            WarData.avatarIdIndex = WarData.avatarIdIndex + 1
+            local enemyData = clone(SData.monster.GetData(data.monsters[i]))
+            enemyData.id = WarData.avatarIdIndex
+            enemyData.hp = enemyData.maxHp
+            local avatar = WarAvatar.New(enemyData.prefab,
+                    enemyData, false, WarData.scene.avatarConTran)
+            avatar:SetExternalBehavior("BehaviorTree/EnemyAI.asset")
+            WarData.AddAvatar(avatar, avatar.data)
+            WarData.scene:PutInNode(avatar, gridList[i][1], gridList[i][2])
+            HappyFuns.SetLayerRecursive(avatar.gameObject, 11)
+            avatar:AIStart()
+        end)
     end
 
     --print("NewWaveEnemysAction:OnStart")
     self.cAction:SetUpdateStatus(TaskStatus.Success)
-end
-
-function NewWaveEnemysAction:OnPause(paused)
-    --print("NewWaveEnemysAction:OnPause", paused)
-    --self.paused = paused
 end
 
 return NewWaveEnemysAction

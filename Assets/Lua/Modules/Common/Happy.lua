@@ -6,16 +6,27 @@
 
 Happy = {}
 
+local matCaches = {}
 ---处理对象下面所有指定type的材质球
-function Happy.DoWithMaterials(gameObj, fun, type)
+function Happy.DoWithMaterials(gameObj, fun, type, noPool)
     type = type or UnityEngine.Renderer
-    local smList = gameObj:GetComponentsInChildren(typeof(type))
-    for i = 0, smList.Length-1 do
-        local sm = smList[i] ---@type UnityEngine.Renderer
-        for j = 0, sm.materials.Length-1 do
-            local m = sm.materials[j] ---@type UnityEngine.Material
-            fun(m)
+    local mList
+    if not matCaches[gameObj] then
+        mList = {}
+
+        local smList = gameObj:GetComponentsInChildren(typeof(type))
+        for i = 0, smList.Length-1 do
+            local sm = smList[i] ---@type UnityEngine.Renderer
+            for j = 0, sm.materials.Length-1 do
+                local m = sm.materials[j] ---@type UnityEngine.Material
+                table.insert(mList, m)
+            end
         end
+    else
+        mList = matCaches[gameObj]
+    end
+    for i = 1, #mList do
+        fun(mList[i])
     end
 end
 

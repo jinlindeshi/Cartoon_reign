@@ -10,7 +10,6 @@ namespace LuaFramework {
 		public static bool BundleMode = false;                    //AssetBundle模式 
         public static bool UpdateMode = false;                    //访问更新服务器的更新模式
 
-        public const int TimerInterval = 1;
         public const int GameFrameRate = 60;                        //游戏帧频
 
 		public const string ResPathHead = "Res/";        //资源路径前缀
