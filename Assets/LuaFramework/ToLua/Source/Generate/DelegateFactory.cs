@@ -73,6 +73,7 @@ public class DelegateFactory
 		dict.Add(typeof(System.Action<UnityEngine.AsyncOperation>), factory.System_Action_UnityEngine_AsyncOperation);
 		dict.Add(typeof(UnityEngine.Canvas.WillRenderCanvases), factory.UnityEngine_Canvas_WillRenderCanvases);
 		dict.Add(typeof(BehaviorDesigner.Runtime.Behavior.BehaviorHandler), factory.BehaviorDesigner_Runtime_Behavior_BehaviorHandler);
+		dict.Add(typeof(BehaviorDesigner.Runtime.BehaviorManager.BehaviorManagerHandler), factory.BehaviorDesigner_Runtime_BehaviorManager_BehaviorManagerHandler);
 		dict.Add(typeof(UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene,UnityEngine.SceneManagement.LoadSceneMode>), factory.UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene_UnityEngine_SceneManagement_LoadSceneMode);
 		dict.Add(typeof(UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene>), factory.UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene);
 		dict.Add(typeof(UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene,UnityEngine.SceneManagement.Scene>), factory.UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene_UnityEngine_SceneManagement_Scene);
@@ -139,6 +140,7 @@ public class DelegateFactory
 		DelegateTraits<System.Action<UnityEngine.AsyncOperation>>.Init(factory.System_Action_UnityEngine_AsyncOperation);
 		DelegateTraits<UnityEngine.Canvas.WillRenderCanvases>.Init(factory.UnityEngine_Canvas_WillRenderCanvases);
 		DelegateTraits<BehaviorDesigner.Runtime.Behavior.BehaviorHandler>.Init(factory.BehaviorDesigner_Runtime_Behavior_BehaviorHandler);
+		DelegateTraits<BehaviorDesigner.Runtime.BehaviorManager.BehaviorManagerHandler>.Init(factory.BehaviorDesigner_Runtime_BehaviorManager_BehaviorManagerHandler);
 		DelegateTraits<UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene,UnityEngine.SceneManagement.LoadSceneMode>>.Init(factory.UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene_UnityEngine_SceneManagement_LoadSceneMode);
 		DelegateTraits<UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene>>.Init(factory.UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene);
 		DelegateTraits<UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene,UnityEngine.SceneManagement.Scene>>.Init(factory.UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene_UnityEngine_SceneManagement_Scene);
@@ -205,6 +207,7 @@ public class DelegateFactory
 		TypeTraits<System.Action<UnityEngine.AsyncOperation>>.Init(factory.Check_System_Action_UnityEngine_AsyncOperation);
 		TypeTraits<UnityEngine.Canvas.WillRenderCanvases>.Init(factory.Check_UnityEngine_Canvas_WillRenderCanvases);
 		TypeTraits<BehaviorDesigner.Runtime.Behavior.BehaviorHandler>.Init(factory.Check_BehaviorDesigner_Runtime_Behavior_BehaviorHandler);
+		TypeTraits<BehaviorDesigner.Runtime.BehaviorManager.BehaviorManagerHandler>.Init(factory.Check_BehaviorDesigner_Runtime_BehaviorManager_BehaviorManagerHandler);
 		TypeTraits<UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene,UnityEngine.SceneManagement.LoadSceneMode>>.Init(factory.Check_UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene_UnityEngine_SceneManagement_LoadSceneMode);
 		TypeTraits<UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene>>.Init(factory.Check_UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene);
 		TypeTraits<UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene,UnityEngine.SceneManagement.Scene>>.Init(factory.Check_UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene_UnityEngine_SceneManagement_Scene);
@@ -271,6 +274,7 @@ public class DelegateFactory
 		StackTraits<System.Action<UnityEngine.AsyncOperation>>.Push = factory.Push_System_Action_UnityEngine_AsyncOperation;
 		StackTraits<UnityEngine.Canvas.WillRenderCanvases>.Push = factory.Push_UnityEngine_Canvas_WillRenderCanvases;
 		StackTraits<BehaviorDesigner.Runtime.Behavior.BehaviorHandler>.Push = factory.Push_BehaviorDesigner_Runtime_Behavior_BehaviorHandler;
+		StackTraits<BehaviorDesigner.Runtime.BehaviorManager.BehaviorManagerHandler>.Push = factory.Push_BehaviorDesigner_Runtime_BehaviorManager_BehaviorManagerHandler;
 		StackTraits<UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene,UnityEngine.SceneManagement.LoadSceneMode>>.Push = factory.Push_UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene_UnityEngine_SceneManagement_LoadSceneMode;
 		StackTraits<UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene>>.Push = factory.Push_UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene;
 		StackTraits<UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene,UnityEngine.SceneManagement.Scene>>.Push = factory.Push_UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene_UnityEngine_SceneManagement_Scene;
@@ -3625,6 +3629,59 @@ public class DelegateFactory
 	}
 
 	void Push_BehaviorDesigner_Runtime_Behavior_BehaviorHandler(IntPtr L, BehaviorDesigner.Runtime.Behavior.BehaviorHandler o)
+	{
+		ToLua.Push(L, o);
+	}
+
+	class BehaviorDesigner_Runtime_BehaviorManager_BehaviorManagerHandler_Event : LuaDelegate
+	{
+		public BehaviorDesigner_Runtime_BehaviorManager_BehaviorManagerHandler_Event(LuaFunction func) : base(func) { }
+		public BehaviorDesigner_Runtime_BehaviorManager_BehaviorManagerHandler_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+
+		public void Call()
+		{
+			func.Call();
+		}
+
+		public void CallWithSelf()
+		{
+			func.BeginPCall();
+			func.Push(self);
+			func.PCall();
+			func.EndPCall();
+		}
+	}
+
+	public BehaviorDesigner.Runtime.BehaviorManager.BehaviorManagerHandler BehaviorDesigner_Runtime_BehaviorManager_BehaviorManagerHandler(LuaFunction func, LuaTable self, bool flag)
+	{
+		if (func == null)
+		{
+			BehaviorDesigner.Runtime.BehaviorManager.BehaviorManagerHandler fn = delegate() { };
+			return fn;
+		}
+
+		if(!flag)
+		{
+			BehaviorDesigner_Runtime_BehaviorManager_BehaviorManagerHandler_Event target = new BehaviorDesigner_Runtime_BehaviorManager_BehaviorManagerHandler_Event(func);
+			BehaviorDesigner.Runtime.BehaviorManager.BehaviorManagerHandler d = target.Call;
+			target.method = d.Method;
+			return d;
+		}
+		else
+		{
+			BehaviorDesigner_Runtime_BehaviorManager_BehaviorManagerHandler_Event target = new BehaviorDesigner_Runtime_BehaviorManager_BehaviorManagerHandler_Event(func, self);
+			BehaviorDesigner.Runtime.BehaviorManager.BehaviorManagerHandler d = target.CallWithSelf;
+			target.method = d.Method;
+			return d;
+		}
+	}
+
+	bool Check_BehaviorDesigner_Runtime_BehaviorManager_BehaviorManagerHandler(IntPtr L, int pos)
+	{
+		return TypeChecker.CheckDelegateType(typeof(BehaviorDesigner.Runtime.BehaviorManager.BehaviorManagerHandler), L, pos);
+	}
+
+	void Push_BehaviorDesigner_Runtime_BehaviorManager_BehaviorManagerHandler(IntPtr L, BehaviorDesigner.Runtime.BehaviorManager.BehaviorManagerHandler o)
 	{
 		ToLua.Push(L, o);
 	}

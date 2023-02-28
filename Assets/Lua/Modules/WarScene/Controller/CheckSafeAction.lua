@@ -48,9 +48,9 @@ function CheckSafeAction:OnStart()
 
             self.cAction:SetUpdateStatus(TaskStatus.Running)
             DelayedCall(1, function()
-                Happy.ScreenTrans(function()
+                Happy.ScreenTrans(nil, nil, nil, { callBack=function()
                     self.cAction:SetUpdateStatus(TaskStatus.Success)
-                end, nil, nil, nil, nil, {content="来到下一层", speed=0.5})
+                end }, nil, {content="来到下一层", speed=0.5})
             end)
         else
             self.cAction:SetUpdateStatus(TaskStatus.Success)

@@ -235,6 +235,8 @@ public static class CustomSettings
         _GT(typeof(TaskStatus)),
         _GT(typeof(LuaAction)),
         _GT(typeof(ExternalBehaviorTree)),
+        _GT(typeof(BehaviorManager)),
+        _GT(typeof(UpdateIntervalType)),
 
 
         _GT(typeof(ManagerHandler)),

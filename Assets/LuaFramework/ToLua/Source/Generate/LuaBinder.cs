@@ -233,6 +233,8 @@ public static class LuaBinder
 		L.BeginModule("Runtime");
 		BehaviorDesigner_Runtime_BehaviorTreeWrap.Register(L);
 		BehaviorDesigner_Runtime_ExternalBehaviorTreeWrap.Register(L);
+		BehaviorDesigner_Runtime_BehaviorManagerWrap.Register(L);
+		BehaviorDesigner_Runtime_UpdateIntervalTypeWrap.Register(L);
 		BehaviorDesigner_Runtime_BehaviorWrap.Register(L);
 		BehaviorDesigner_Runtime_ExternalBehaviorWrap.Register(L);
 		L.BeginModule("Tasks");
@@ -243,6 +245,9 @@ public static class LuaBinder
 		L.EndModule();
 		L.BeginModule("Behavior");
 		L.RegFunction("BehaviorHandler", BehaviorDesigner_Runtime_Behavior_BehaviorHandler);
+		L.EndModule();
+		L.BeginModule("BehaviorManager");
+		L.RegFunction("BehaviorManagerHandler", BehaviorDesigner_Runtime_BehaviorManager_BehaviorManagerHandler);
 		L.EndModule();
 		L.EndModule();
 		L.EndModule();
@@ -1549,6 +1554,33 @@ public static class LuaBinder
 			{
 				LuaTable self = ToLua.CheckLuaTable(L, 2);
 				Delegate arg1 = DelegateTraits<BehaviorDesigner.Runtime.Behavior.BehaviorHandler>.Create(func, self);
+				ToLua.Push(L, arg1);
+			}
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int BehaviorDesigner_Runtime_BehaviorManager_BehaviorManagerHandler(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
+
+			if (count == 1)
+			{
+				Delegate arg1 = DelegateTraits<BehaviorDesigner.Runtime.BehaviorManager.BehaviorManagerHandler>.Create(func);
+				ToLua.Push(L, arg1);
+			}
+			else
+			{
+				LuaTable self = ToLua.CheckLuaTable(L, 2);
+				Delegate arg1 = DelegateTraits<BehaviorDesigner.Runtime.BehaviorManager.BehaviorManagerHandler>.Create(func, self);
 				ToLua.Push(L, arg1);
 			}
 			return 1;

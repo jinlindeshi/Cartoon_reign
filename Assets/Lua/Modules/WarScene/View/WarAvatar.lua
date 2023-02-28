@@ -59,12 +59,7 @@ function WarAvatar:Ctor(prefabPath, data, static, parent)
     self.aiPath.whenCloseToDestination = Pathfinding.CloseToDestinationMode.Stop
     self.aiPath.rotationSpeed = 3000
     self.aiPath.slowWhenNotFacingTarget = false
-    --self.aiPath.gravity = Vector3.zero
     self.aiPath:SetLuaCallBack(handler(self, self.MoveEnd))
-    --Happy.DoWithMaterials(self.gameObject, function(mat)
-    --    mat:EnableKeyword("_EMISSION")
-    --    mat:SetColor("_EmissionColor", Color.black)
-    --end, UnityEngine.SkinnedMeshRenderer)
     self:SetAvatarColor()
 end
 
@@ -142,6 +137,7 @@ function WarAvatar:EndFollow()
 end
 
 function WarAvatar:SetAvatarColor(color, tweenDur, callBack)
+    do return end
     color = color or WarAvatar.DEFAULT_COLOR
     if self.avatarColorTween then
         self.avatarColorTween:Kill()

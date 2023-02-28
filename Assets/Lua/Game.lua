@@ -33,6 +33,9 @@ function Game.Init()
             Game.Manager[funName](Game.Manager)
         end
     end
+    local bm = AddOrGetComponent(component.gameObject, BehaviorDesigner.Runtime.BehaviorManager) ---@type BehaviorDesigner.Runtime.BehaviorManager
+    bm.UpdateInterval = BehaviorDesigner.Runtime.UpdateIntervalType.SpecifySeconds
+    bm.UpdateIntervalSeconds = 0.1
     Game.behaviorCalls = {}
 end
 
