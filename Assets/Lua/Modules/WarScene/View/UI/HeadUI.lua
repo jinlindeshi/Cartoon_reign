@@ -9,15 +9,11 @@ local HeadUI = class("HeadUI",LuaObj)
 
 
 function HeadUI:Ctor(avatar)
-    local gameObj = GameObject.New()
-    gameObj.name = "HeadUI"
-    --local img = AddOrGetComponent(gameObj, UnityEngine.UI.Image) ---@type UnityEngine.UI.Image
-    --img.color = Color.New(1,1,1,0.3)
-    self.rect = AddOrGetComponent(gameObj, UnityEngine.RectTransform)
-    HeadUI.super.Ctor(self, nil, gameObj, UIMgr.GetLayer(UILayerName.scene))
+    HeadUI.super.Ctor(self, "Prefabs/War/HeadUI.prefab", nil, UIMgr.GetLayer(UILayerName.scene))
     self.avatar = avatar ---@type WarAvatar
     self.worldTrans = avatar.transform
     self.offsetV2 = Vector2.New(0, 80)
+    self.rect = GetComponent.RectTransform(self.gameObject)
     if avatar.transform:Find("uiPos") then
         self.worldTrans = avatar.transform:Find("uiPos")
         self.offsetV2 = Vector2.zero

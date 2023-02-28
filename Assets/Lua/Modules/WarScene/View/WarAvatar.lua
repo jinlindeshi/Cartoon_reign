@@ -195,7 +195,7 @@ function WarAvatar:GetHurt(loseHp, textScale)
     else
         path = "Prefabs/War/EnemyBloodText.prefab"
     end
-    local labelObj = CreatePrefab(path, self.hpBar.transform.parent)
+    local labelObj = CreatePrefab(path, self.headUI.transform)
     local labelRt = GetComponent.RectTransform(labelObj)
     labelRt.anchoredPosition = self.hpBar.rect.anchoredPosition
     local label = GetComponent.Text(labelObj.transform:Find("text").gameObject)
@@ -288,7 +288,7 @@ function WarAvatar:Recycle()
         --print("WarAvatar:Recycle 你妹啊", self.x, self.z)
         self.target = nil
         self.hpBar:Recycle()
-        self.headUI:Destroy()
+        self.headUI:Recycle()
     end
 
     ---主角没了，重生
