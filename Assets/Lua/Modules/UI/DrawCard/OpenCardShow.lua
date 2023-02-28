@@ -4,6 +4,7 @@
 --- DateTime: 2023/2/27 16:51
 ---
 local SingleCardShow = require("Modules.UI.DrawCard.SingleCardShow")
+local DrawCardModel = require("Modules.UI.DrawCard.Model.DrawCardModel")
 ---@class UI.DrawCard.OpenCardShow
 ---@field New fun():UI.DrawCard.OpenCardShow
 local OpenCardShow = class("UI.DrawCard.OpenCardShow")
@@ -11,7 +12,7 @@ function OpenCardShow:Ctor(go, data)
     self.gameObject = go ---@type UnityEngine.GameObject
     self.transform = self.gameObject.transform ---@type UnityEngine.Transform
     self.data = data
-    self.showList = {}
+    self.showList = {} ---@type table<number, UI.DrawCard.SingleCardShow>
     self.index = 0
     self.seq = nil ---@type DG.Tweening.DOTween
 
@@ -28,15 +29,13 @@ function OpenCardShow:SingleShow(id)
 end
 
 function OpenCardShow:Next()
-    print("OpenCardShow:Next()")
     local id = self.data[self.index + 1]
     if id == nil then
-        print("OpenCardShow:Next() End")
-        self:End()
+        EventMgr.DispatchEvent(DrawCardModel.eventDefine.showResult)
+        self:Clean()
     else
-        print("OpenCardShow:Next() ", id)
         if self.index > 0 then
-            self.showList[#self.showList]:Hide()
+            self.showList[#self.showList].gameObject:SetActive(false)
         end
         self:SingleShow(id)
         self.index = self.index + 1
@@ -44,11 +43,16 @@ function OpenCardShow:Next()
 end
 
 function OpenCardShow:Skip()
-
+    self:Clean()
 end
 
-function OpenCardShow:End()
-
+function OpenCardShow:Clean()
+    if self.seq ~= nil then
+        self.seq:Kill()
+    end
+    for i = 1, #self.showList do
+        self.showList[i]:Recycle()
+    end
 end
 
 return OpenCardShow

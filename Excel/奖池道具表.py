@@ -6,6 +6,7 @@ define = [
 	['类型', 'type', Str()],
 	['对应ID', 'toID', Int()],
 	['品质', 'quality', Int()],
+	['星级', 'starLv', Int()],
 	['所属奖池', 'inPool', List(Int(), ",")],
 ]
 

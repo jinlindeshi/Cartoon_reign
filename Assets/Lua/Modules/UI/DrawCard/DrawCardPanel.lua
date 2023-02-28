@@ -23,17 +23,30 @@ function DrawCardPanel:Init()
     self.cardPos = self.transform:Find("ResultRoot/OnceRoot/cardPos")
     self.TenRoot = self.transform:Find("ResultRoot/TenRoot").gameObject
     self.PosRoot = self.transform:Find("ResultRoot/TenRoot/PosRoot")
-    self.ButtonRoot = self.transform:Find("ResultRoot/ButtonRoot")
+    self.ButtonRoot = self.transform:Find("ResultRoot/ButtonRoot").gameObject
     self.AutoButton = self.transform:Find("ResultRoot/ButtonRoot/AutoButton").gameObject
     self.YesButton = self.transform:Find("ResultRoot/ButtonRoot/YesButton").gameObject
     self.AgainButton = self.transform:Find("ResultRoot/ButtonRoot/AgainButton").gameObject
     self.click = self.transform:Find("ResultRoot/Click").gameObject
+    self.List1 = self.TenRoot.transform:Find("PosRoot/List1").gameObject
+    self.List2 = self.TenRoot.transform:Find("PosRoot/List2").gameObject
+    self.List3 = self.TenRoot.transform:Find("PosRoot/List3").gameObject
+    self.cardPosList = {} --卡牌坐标位置list
+    for i = 1, self.List1.transform.childCount do
+        table.insert(self.cardPosList, self.List1.transform:GetChild(i-1))
+    end
+    for i = 1, self.List2.transform.childCount do
+        table.insert(self.cardPosList, self.List2.transform:GetChild(i-1))
+    end
+    for i = 1, self.List3.transform.childCount do
+        table.insert(self.cardPosList, self.List3.transform:GetChild(i-1))
+    end
 
-    AddButtonHandler(self.AutoButton, PointerHandler.CLICK, self.OnAutoButton, self)
     AddButtonHandler(self.YesButton, PointerHandler.CLICK, self.OnYesButton, self)
     AddButtonHandler(self.AgainButton, PointerHandler.CLICK, self.OnAgainButton, self)
     AddButtonHandler(self.click, PointerHandler.CLICK, self.OnShowClick, self)
 
+    self.AutoButton:SetActive(false)
     self.ResultRoot:SetActive(false)
     self.poolIdList = SData.GetOpenPools()
     self.poolMap = {}
@@ -42,7 +55,7 @@ function DrawCardPanel:Init()
     EventMgr.AddEventListener(DrawCardModel.eventDefine.selectPool, self.OnDrawCardPoolSelect, self)
     EventMgr.AddEventListener(DrawCardModel.eventDefine.oneDraw, self.OnDrawCard, self)
     EventMgr.AddEventListener(DrawCardModel.eventDefine.tenDraw, self.OnDrawCard, self)
-    EventMgr.AddEventListener(DrawCardModel.eventDefine.checkOpen, self.OnCheckOpen, self)
+    EventMgr.AddEventListener(DrawCardModel.eventDefine.showResult, self.OnShowResult, self)
 
     EventMgr.DispatchEvent(DrawCardModel.eventDefine.selectPool, {id = self.poolIdList[1]})
 end
@@ -104,9 +117,9 @@ function DrawCardPanel:StartDraw(callback)
     resultCg.alpha = 0
     lightCg.alpha = 0
     btnCg.alpha = 0
-    self.light.transform.localScale = Vector2.one
+
     self.ResultRoot:SetActive(true)
-    self.AutoButton:SetActive(true)
+    --self.AutoButton:SetActive(true)
     self.YesButton:SetActive(false)
     self.AgainButton:SetActive(false)
     self.click:SetActive(false)
@@ -115,10 +128,9 @@ function DrawCardPanel:StartDraw(callback)
     seq:Append(cg1:DOFade(0, 0.25))
     seq:Join(cg2:DOFade(0, 0.25))
     seq:Join(resultCg:DOFade(1, 0.25))
-    seq:Append(self.light.transform:DOScale(2,0.8))
-    seq:Join(lightCg:DOFade(1, 0.2))
-    seq:Append(lightCg:DOFade(0, 0.2))
-    seq:Join(self.light.transform:DOScale(1,0.2))
+    seq:Join(lightCg:DOFade(1, 0.15))
+    seq:AppendInterval(1)
+    seq:Append(lightCg:DOFade(0, 0.15))
     seq:AppendCallback(function()
         self.click:SetActive(true)
         callback()
@@ -128,7 +140,8 @@ end
 
 ---抽卡完成
 function DrawCardPanel:DrawComplete()
-    self.AutoButton:SetActive(false)
+    --self.AutoButton:SetActive(false)
+    self.click:SetActive(false)
     self.YesButton:SetActive(true)
     self.AgainButton:SetActive(true)
 end
@@ -156,6 +169,7 @@ function DrawCardPanel:DrawOnce()
     self.TenRoot:SetActive(false)
 
     local data = DrawCardModel.GetOneDrawData()
+    self.resultData = data
     self.show = OpenCardShow.New(self.OnceRoot, data) ---@type UI.DrawCard.OpenCardShow
 end
 
@@ -164,15 +178,8 @@ function DrawCardPanel:DrawTenTimes()
     self.OnceRoot:SetActive(false)
     self.TenRoot:SetActive(true)
     local data = DrawCardModel.GetTenDrawData()
+    self.resultData = data
     self.show = OpenCardShow.New(self.TenRoot, data) ---@type UI.DrawCard.OpenCardShow
-end
-
----清理结果
-function DrawCardPanel:CleanCard()
-    for i = 1, #self.cardList do
-        self.cardList[i]:Destroy()
-        self.cardList[i] = nil
-    end
 end
 
 ---抽卡事件
@@ -187,44 +194,57 @@ function DrawCardPanel:OnDrawCard(event)
     end)
 end
 
-function DrawCardPanel:OnCheckOpen()
-    local flag = true
-    for i = 1, #self.cardList do
-        if self.cardList[i].isOpen == false then
-            flag = false
-            break
+---展示抽卡结果
+function DrawCardPanel:OnShowResult()
+    local btnCg = GetComponent.CanvasGroup(self.ButtonRoot)
+    btnCg.alpha = 0
+    local sequence = DOTween.Sequence()
+    if self.drawType == DrawCardModel.eventDefine.oneDraw then
+        local card = CardControl.New(self.cardPos, self.resultData[1])
+        table.insert(self.cardList, card)
+        sequence:AppendCallback(function()
+            for i = 1, #self.cardList do
+                self.cardList[i]:Open()
+            end
+        end)
+        sequence:AppendInterval(0.5)
+        sequence:AppendCallback(function()
+            self:DrawComplete()
+        end)
+        sequence:Append(btnCg:DOFade(1, 0.2))
+    else
+        self.List1.transform.localPosition = Vector2.New(-210, 150)
+        self.List2.transform.localPosition = Vector2.New(0, -250)
+        self.List3.transform.localPosition = Vector2.New(210, 150)
+        for i = 1, #self.cardPosList do
+            local card = CardControl.New(self.cardPosList[i], self.resultData[i])
+            table.insert(self.cardList, card)
         end
-    end
-    if flag then
-        self:DrawComplete()
+        local cg = GetComponent.CanvasGroup(self.TenRoot.transform:Find("PosRoot").gameObject)
+        cg.alpha = 0
+        sequence:Append(self.List1.transform:DOLocalMoveY(-100, 1.2):SetEase(DOTWEEN_EASE.OutCubic))
+        sequence:Join(self.List2.transform:DOLocalMoveY(0, 1.2):SetEase(DOTWEEN_EASE.OutCubic))
+        sequence:Join(self.List3.transform:DOLocalMoveY(-100, 1.2):SetEase(DOTWEEN_EASE.OutCubic))
+        sequence:Join(cg:DOFade(1, 0.2))
+        sequence:AppendInterval(0.2)
+        sequence:AppendCallback(function()
+            for i = 1, #self.cardList do
+                self.cardList[i]:Open()
+            end
+        end)
+        sequence:AppendInterval(0.5)
+        sequence:AppendCallback(function()
+            self:DrawComplete()
+        end)
+        sequence:Append(btnCg:DOFade(1, 0.2))
     end
 end
 
----一键翻开
-function DrawCardPanel:OnAutoButton()
-    GetComponent.CanvasGroup(self.ButtonRoot).alpha = 0
-    self:DrawComplete()
-    local list = {}
+---清理结果
+function DrawCardPanel:CleanCard()
     for i = 1, #self.cardList do
-        local item = self.cardList[i]
-        if item.isOpen == false then
-            table.insert(list, item)
-        end
-    end
-    local seq = DOTween.Sequence()
-    for i = 1, #list do
-        if i ~= #list then
-            seq:AppendCallback(function()
-                list[i]:Open()
-            end)
-            seq:AppendInterval(0.15)
-        else
-            seq:AppendCallback(function()
-                list[i]:Open(function()
-                    GetComponent.CanvasGroup(self.ButtonRoot):DOFade(1, 0.15)
-                end)
-            end)
-        end
+        self.cardList[i]:Destroy()
+        self.cardList[i] = nil
     end
 end
 
@@ -245,6 +265,7 @@ function DrawCardPanel:OnAgainButton()
     end)
 end
 
+---展示下个结果
 function DrawCardPanel:OnShowClick()
     self.show:Next()
 end
@@ -254,8 +275,8 @@ function DrawCardPanel:RemoveListeners()
     EventMgr.RemoveEventListener(DrawCardModel.eventDefine.selectPool, self.OnDrawCardPoolSelect, self)
     EventMgr.RemoveEventListener(DrawCardModel.eventDefine.oneDraw, self.OnDrawCard, self)
     EventMgr.RemoveEventListener(DrawCardModel.eventDefine.tenDraw, self.OnDrawCard, self)
-    EventMgr.RemoveEventListener(DrawCardModel.eventDefine.checkOpen, self.OnCheckOpen, self)
-    RemoveButtonHandler(self.AutoButton, PointerHandler.CLICK, self.OnAutoButton, self)
+    EventMgr.RemoveEventListener(DrawCardModel.eventDefine.showResult, self.OnShowResult, self)
+
     RemoveButtonHandler(self.YesButton, PointerHandler.CLICK, self.OnYesButton, self)
     RemoveButtonHandler(self.AgainButton, PointerHandler.CLICK, self.OnAgainButton, self)
     RemoveButtonHandler(self.click, PointerHandler.CLICK, self.OnShowClick, self)

@@ -4,34 +4,61 @@
 --- DateTime: 2023/2/27 18:22
 ---
 local poolItem = require("Data.Excel.poolItem")
----@class UI.DrawCard.SingleCardShow:LuaObj
+
+local url = "Prefabs/Panel/DrawCard/SingleCardShow.prefab"
+---@class UI.DrawCard.SingleCardShow
 ---@field New fun():UI.DrawCard.SingleCardShow
-local SingleCardShow = class("UI.DrawCard.SingleCardShow", LuaObj)
+local SingleCardShow = class("UI.DrawCard.SingleCardShow")
 function SingleCardShow:Ctor(parent, id)
-    SingleCardShow.super.Ctor(self, "Prefabs/Panel/DrawCard/SingleCardShow.prefab", nil, parent)
+    self.gameObject = CreatePrefab(url, parent)
+    self.transform = self.gameObject.transform
     self.light = self.transform:Find("light").gameObject
     self.equip = self.transform:Find("equip").gameObject
+    self.equipBg = GetComponent.Image(self.transform:Find("equip/bg").gameObject)
+    self.equipIcon = GetComponent.Image(self.transform:Find("equip/icon").gameObject)
     self.hero = self.transform:Find("hero").gameObject
     self.info = self.transform:Find("info").gameObject
+    self.infoBg = GetComponent.Image(self.transform:Find("info/bg").gameObject)
     self.lightCg = GetComponent.CanvasGroup(self.light)
     self.infoCg = GetComponent.CanvasGroup(self.info)
     self.heroCg = GetComponent.CanvasGroup(self.hero)
     self.equipCg = GetComponent.CanvasGroup(self.equip)
     self.nameText = GetComponent.Text(self.info.transform:Find("name").gameObject)
 
+    self.starList = {}
+    for i = 1, 5 do
+        local tra = self.info.transform:Find("StartList/StarBG"..i)
+        if tra then
+            table.insert(self.starList, tra.gameObject)
+        end
+    end
+
     self.infoCg.alpha = 0
     self.lightCg.alpha = 0
-
+    self.light.transform.localScale = Vector2.one * 0.5
     self.id = id
     self.data = poolItem.GetData(id)
     self.type = self.data.type
+    for i = 1, #self.starList do
+        if i > self.data.starLv then
+            self.starList[i]:SetActive(false)
+        end
+    end
+    if self.data.quality ~= DemoCfg.cardQuality.white then
+        self.infoBg.color = DemoCfg.cardColorCfg[self.data.quality]
+        self.equipBg.color = DemoCfg.cardColorCfg[self.data.quality]
+    else
+        self.infoBg.color = Color.white
+        self.equipBg.color = Color.white
+    end
     if self.type == DemoCfg.cardType.equip then
         self.equip:SetActive(true)
         self.hero:SetActive(false)
         local info = require("Data.Excel.equip").GetData(self.data.toID)
         self.nameText.text = info.name
-        self.equip.transform.localScale = Vector2.one * 2
-        self.equipCg.alpha = 0.3
+        self.equipIcon.sprite = resMgr:LoadSpriteAtPath(string.format("%s%s.png", DemoCfg.equipIconPath, info.icon))
+        self.equip.transform.localScale = Vector2.one * 2.5
+        self.equipCg.alpha = 0.35
     else
         self.equip:SetActive(false)
         self.hero:SetActive(true)
@@ -39,24 +66,35 @@ function SingleCardShow:Ctor(parent, id)
         self.nameText.text = info.name
         self.heroCg.alpha = 0
     end
-
+    local infoStartPosY = -350
+    local infoEndPosY = -225
+    self.gameObject:SetActive(true)
+    self.info.transform.localPosition = Vector2.New(0, infoStartPosY)
     self.seq = DOTween.Sequence()
     if self.type == DemoCfg.cardType.equip then
         ---装备表现
-        self.seq:Append(self.equip.transform:DOScale(1, 0.5))
-        self.seq:Join(self.equipCg:DOFade(1, 0.3))
+        self.seq:Append(self.equip.transform:DOScale(1, 0.5):SetEase(DOTWEEN_EASE.InCubic))
+        self.seq:Join(self.equipCg:DOFade(1, 0.5))
     else
         ---人物表现
         self.seq:Append(self.heroCg:DOFade(1, 0.3))
     end
-    ---闪光
-    self.seq:Append(self.light.transform:DOScale(3.5,0.3))
-    self.seq:Join(self.lightCg:DOFade(1, 0.15))
-    self.seq:Append(self.light.transform:DOScale(3,0.15))
+    ---闪光出现
+    self.seq:Insert(0.2, self.lightCg:DOFade(1, 0.5))
+    self.seq:Insert(0.2, self.light.transform:DOScale(1, 0.5))
     ---信息
-    self.seq:Append(self.infoCg:DOFade(1, 0.25))
+    self.seq:Append(self.info.transform:DOLocalMoveY(infoEndPosY, 0.5):SetEase(DOTWEEN_EASE.OutCubic))
+    self.seq:Join(self.infoCg:DOFade(1, 0.5))
+    ---闪光消失
+    self.seq:Append(self.lightCg:DOFade(0, 0.5))
+    self.seq:AppendCallback(function()
+        self.seq = nil
+    end)
 end
 
+function SingleCardShow:Recycle()
+    RecyclePrefab(self.gameObject, url)
+end
 
 
 return SingleCardShow

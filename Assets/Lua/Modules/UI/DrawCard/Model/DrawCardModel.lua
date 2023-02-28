@@ -10,6 +10,7 @@ DrawCardModel.eventDefine =
     tenDraw = "DrawCardTen", --十连
     selectPool = "DrawCardPoolSelect", --选择卡池
     checkOpen = "DrawCardCheckOpen", --检测是否所有的卡都已经翻开
+    showResult = "showResult",--展示抽卡结果
 }
 
 function DrawCardModel.GetOneDrawData()
@@ -17,7 +18,7 @@ function DrawCardModel.GetOneDrawData()
 end
 
 function DrawCardModel.GetTenDrawData()
-    require("Modules.WarScene.Model.AvatarData").AddHeroData(DemoCfg.followerID)
+    --require("Modules.WarScene.Model.AvatarData").AddHeroData(DemoCfg.followerID)
     return {13,14,15,16,13,7,14,19,18,17}
 end
 
