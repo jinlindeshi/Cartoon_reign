@@ -10,6 +10,7 @@ define = [
 	['防御力', 'def', Int()],
 	['阵营', 'side', Int()],
 	['品质', 'quality', Int()],
+	['角色立绘', 'pic', Str()],
 ]
 
 config = {

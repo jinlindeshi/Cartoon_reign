@@ -4,6 +4,7 @@
 --- DateTime: 2023/2/27 18:22
 ---
 local poolItem = require("Data.Excel.poolItem")
+local DrawCardModel = require("Modules.UI.DrawCard.Model.DrawCardModel")
 
 local url = "Prefabs/Panel/DrawCard/SingleCardShow.prefab"
 ---@class UI.DrawCard.SingleCardShow
@@ -17,6 +18,7 @@ function SingleCardShow:Ctor(parent, id)
     self.equipBg = GetComponent.Image(self.transform:Find("equip/bg").gameObject)
     self.equipIcon = GetComponent.Image(self.transform:Find("equip/icon").gameObject)
     self.hero = self.transform:Find("hero").gameObject
+    self.heroIcon = GetComponent.Image(self.transform:Find("hero/icon").gameObject)
     self.info = self.transform:Find("info").gameObject
     self.infoBg = GetComponent.Image(self.transform:Find("info/bg").gameObject)
     self.lightCg = GetComponent.CanvasGroup(self.light)
@@ -25,6 +27,7 @@ function SingleCardShow:Ctor(parent, id)
     self.equipCg = GetComponent.CanvasGroup(self.equip)
     self.nameText = GetComponent.Text(self.info.transform:Find("name").gameObject)
     self.fx_UI_ring = self.transform:Find("fx_UI_ring").gameObject
+    self.featurePic = GetComponent.Image(self.transform:Find("featurePic").gameObject)
 
     self.starList = {}
     for i = 1, 5 do
@@ -54,36 +57,62 @@ function SingleCardShow:Ctor(parent, id)
         self.equipBg.color = Color.white
     end
     if self.type == DemoCfg.cardType.equip then
-        self.equip:SetActive(true)
-        self.hero:SetActive(false)
         local info = require("Data.Excel.equip").GetData(self.data.toID)
+        self.equipInfo = info
         self.nameText.text = info.name
         self.equipIcon.sprite = resMgr:LoadSpriteAtPath(string.format("%s%s.png", DemoCfg.equipIconPath, info.icon))
         self.equip.transform.localScale = Vector2.one * 2.5
         self.equipCg.alpha = 0.35
     else
-        self.equip:SetActive(false)
-        self.hero:SetActive(true)
         local info = require("Data.Excel.avatar").GetData(self.data.toID)
+        self.avatarInfo = info
         self.nameText.text = info.name
+        self.heroIcon.sprite = resMgr:LoadSpriteAtPath(string.format("%s%s.png", DemoCfg.characterPicPath, self.avatarInfo.pic))
+        self.heroIcon.transform.localScale = Vector2.one
         self.heroCg.alpha = 0
     end
+    self.seq = DOTween.Sequence()
+    self.equip:SetActive(false)
+    self.hero:SetActive(false)
+    if self.type == DemoCfg.cardType.hero and self.data.quality == DemoCfg.cardQuality.orange then
+        ---展示特写
+        self.featurePic.sprite = resMgr:LoadSpriteAtPath(string.format("%s%s.png", DemoCfg.characterPicPath, self.avatarInfo.pic))
+        self.featurePic.gameObject:SetActive(true)
+        EventMgr.DispatchEvent(DrawCardModel.eventDefine.activeClick, {active = false})
+        local classUrl = string.format("Modules.UI.DrawCard.Feature.%s_feature", self.avatarInfo.pic)
+        require(classUrl).New(self.featurePic.gameObject, function()
+            self:StartSeq()
+            EventMgr.DispatchEvent(DrawCardModel.eventDefine.activeClick, {active = true})
+        end)
+    else
+        self.featurePic.gameObject:SetActive(false)
+        self:StartSeq()
+    end
+    self.gameObject:SetActive(true)
+end
+
+function SingleCardShow:StartSeq()
     local infoStartPosY = -350
     local infoEndPosY = -225
-    self.gameObject:SetActive(true)
-    self.info.transform.localPosition = Vector2.New(0, infoStartPosY)
-    self.seq = DOTween.Sequence()
+    local insertTime = 0.4
     if self.type == DemoCfg.cardType.equip then
+        self.equip:SetActive(true)
         ---装备表现
         self.seq:Append(self.equip.transform:DOScale(1, 0.5):SetEase(DOTWEEN_EASE.InOutCubic))
         self.seq:Join(self.equipCg:DOFade(1, 0.5))
     else
+        self.hero:SetActive(true)
+        infoStartPosY = -450
+        infoEndPosY = -365
+        self.heroIcon.transform.localPosition = Vector2.New(0,100)
         ---人物表现
-        self.seq:Append(self.heroCg:DOFade(1, 0.3))
+        self.seq:Append(self.heroCg:DOFade(1, 0.2))
+        self.seq:Append(self.heroIcon.transform:DOLocalMoveY(0, 1))
     end
+    self.info.transform.localPosition = Vector2.New(0, infoStartPosY)
     ---闪光出现
-    self.seq:Insert(0.4, self.lightCg:DOFade(1, 0.5))
-    self.seq:Insert(0.4, self.light.transform:DOScale(1, 0.5))
+    self.seq:Insert(insertTime, self.lightCg:DOFade(1, 0.5))
+    self.seq:Insert(insertTime, self.light.transform:DOScale(1, 0.5))
     self.seq:InsertCallback(0, function()
         self.fx_UI_ring:SetActive(true)
     end)

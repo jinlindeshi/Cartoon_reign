@@ -56,6 +56,7 @@ function DrawCardPanel:Init()
     EventMgr.AddEventListener(DrawCardModel.eventDefine.oneDraw, self.OnDrawCard, self)
     EventMgr.AddEventListener(DrawCardModel.eventDefine.tenDraw, self.OnDrawCard, self)
     EventMgr.AddEventListener(DrawCardModel.eventDefine.showResult, self.OnShowResult, self)
+    EventMgr.AddEventListener(DrawCardModel.eventDefine.activeClick, self.OnActiveClick, self)
 
     EventMgr.DispatchEvent(DrawCardModel.eventDefine.selectPool, {id = self.poolIdList[1]})
 end
@@ -239,6 +240,11 @@ function DrawCardPanel:OnShowResult()
     end
 end
 
+---控制是否可以点击
+function DrawCardPanel:OnActiveClick(event)
+    self.click:SetActive(event.data.active)
+end
+
 ---清理结果
 function DrawCardPanel:CleanCard()
     for i = 1, #self.cardList do
@@ -275,6 +281,7 @@ function DrawCardPanel:RemoveListeners()
     EventMgr.RemoveEventListener(DrawCardModel.eventDefine.oneDraw, self.OnDrawCard, self)
     EventMgr.RemoveEventListener(DrawCardModel.eventDefine.tenDraw, self.OnDrawCard, self)
     EventMgr.RemoveEventListener(DrawCardModel.eventDefine.showResult, self.OnShowResult, self)
+    EventMgr.RemoveEventListener(DrawCardModel.eventDefine.activeClick, self.OnActiveClick, self)
 
     RemoveButtonHandler(self.YesButton, PointerHandler.CLICK, self.OnYesButton, self)
     RemoveButtonHandler(self.AgainButton, PointerHandler.CLICK, self.OnAgainButton, self)

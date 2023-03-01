@@ -45,6 +45,7 @@ DemoCfg.rewardData =
 }
 
 DemoCfg.equipIconPath = "Textures/equip/"
+DemoCfg.characterPicPath = "Textures/character/"
 DemoCfg.equipQuality = ---品质
 {
     white = 1, --白色
