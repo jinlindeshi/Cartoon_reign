@@ -213,26 +213,25 @@ function DrawCardPanel:OnShowResult()
         end)
         sequence:Append(btnCg:DOFade(1, 0.2))
     else
-        self.List1.transform.localPosition = Vector2.New(-210, 150)
-        self.List2.transform.localPosition = Vector2.New(0, -250)
-        self.List3.transform.localPosition = Vector2.New(210, 150)
+        self.List1.transform.localPosition = Vector2.New(-210, 200)
+        self.List2.transform.localPosition = Vector2.New(0, -300)
+        self.List3.transform.localPosition = Vector2.New(210, 200)
         for i = 1, #self.cardPosList do
             local card = CardControl.New(self.cardPosList[i], self.resultData[i])
             table.insert(self.cardList, card)
         end
-        local cg = GetComponent.CanvasGroup(self.TenRoot.transform:Find("PosRoot").gameObject)
-        cg.alpha = 0
-        sequence:Append(self.List1.transform:DOLocalMoveY(-100, 1.2):SetEase(DOTWEEN_EASE.OutCubic))
-        sequence:Join(self.List2.transform:DOLocalMoveY(0, 1.2):SetEase(DOTWEEN_EASE.OutCubic))
-        sequence:Join(self.List3.transform:DOLocalMoveY(-100, 1.2):SetEase(DOTWEEN_EASE.OutCubic))
-        sequence:Join(cg:DOFade(1, 0.2))
-        sequence:AppendInterval(0.2)
-        sequence:AppendCallback(function()
+        --local cg = GetComponent.CanvasGroup(self.TenRoot.transform:Find("PosRoot").gameObject)
+        --cg.alpha = 0
+        sequence:Append(self.List1.transform:DOLocalMoveY(-100, 1.5):SetEase(DOTWEEN_EASE.OutSine))
+        sequence:Join(self.List2.transform:DOLocalMoveY(0, 1.5):SetEase(DOTWEEN_EASE.OutSine))
+        sequence:Join(self.List3.transform:DOLocalMoveY(-100, 1.5):SetEase(DOTWEEN_EASE.OutSine))
+        --sequence:Join(cg:DOFade(1, 0.15))
+        sequence:InsertCallback(1,function()
             for i = 1, #self.cardList do
                 self.cardList[i]:Open()
             end
         end)
-        sequence:AppendInterval(0.5)
+        sequence:AppendInterval(0.2)
         sequence:AppendCallback(function()
             self:DrawComplete()
         end)
