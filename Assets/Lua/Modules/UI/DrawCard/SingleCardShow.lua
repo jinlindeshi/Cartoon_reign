@@ -24,6 +24,7 @@ function SingleCardShow:Ctor(parent, id)
     self.heroCg = GetComponent.CanvasGroup(self.hero)
     self.equipCg = GetComponent.CanvasGroup(self.equip)
     self.nameText = GetComponent.Text(self.info.transform:Find("name").gameObject)
+    self.fx_UI_ring = self.transform:Find("fx_UI_ring").gameObject
 
     self.starList = {}
     for i = 1, 5 do
@@ -33,6 +34,7 @@ function SingleCardShow:Ctor(parent, id)
         end
     end
 
+    self.fx_UI_ring:SetActive(false)
     self.infoCg.alpha = 0
     self.lightCg.alpha = 0
     self.light.transform.localScale = Vector2.one * 0.5
@@ -73,18 +75,21 @@ function SingleCardShow:Ctor(parent, id)
     self.seq = DOTween.Sequence()
     if self.type == DemoCfg.cardType.equip then
         ---装备表现
-        self.seq:Append(self.equip.transform:DOScale(1, 0.5):SetEase(DOTWEEN_EASE.InCubic))
+        self.seq:Append(self.equip.transform:DOScale(1, 0.5):SetEase(DOTWEEN_EASE.InOutCubic))
         self.seq:Join(self.equipCg:DOFade(1, 0.5))
     else
         ---人物表现
         self.seq:Append(self.heroCg:DOFade(1, 0.3))
     end
     ---闪光出现
-    self.seq:Insert(0.2, self.lightCg:DOFade(1, 0.5))
-    self.seq:Insert(0.2, self.light.transform:DOScale(1, 0.5))
+    self.seq:Insert(0.4, self.lightCg:DOFade(1, 0.5))
+    self.seq:Insert(0.4, self.light.transform:DOScale(1, 0.5))
+    self.seq:InsertCallback(0, function()
+        self.fx_UI_ring:SetActive(true)
+    end)
     ---信息
-    self.seq:Append(self.info.transform:DOLocalMoveY(infoEndPosY, 0.5):SetEase(DOTWEEN_EASE.OutCubic))
-    self.seq:Join(self.infoCg:DOFade(1, 0.5))
+    self.seq:Append(self.info.transform:DOLocalMoveY(infoEndPosY, 0.35):SetEase(DOTWEEN_EASE.OutCubic))
+    self.seq:Join(self.infoCg:DOFade(1, 0.35))
     ---闪光消失
     self.seq:Append(self.lightCg:DOFade(0, 0.5))
     self.seq:AppendCallback(function()
