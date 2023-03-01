@@ -102,7 +102,7 @@ function SingleCardShow:StartSeq()
         self.seq:Join(self.equipCg:DOFade(1, 0.5))
     else
         self.hero:SetActive(true)
-        infoStartPosY = -450
+        infoStartPosY = -500
         infoEndPosY = -365
         self.heroIcon.transform.localPosition = Vector2.New(0,100)
         ---人物表现
