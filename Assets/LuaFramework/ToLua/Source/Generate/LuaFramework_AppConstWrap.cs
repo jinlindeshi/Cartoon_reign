@@ -12,7 +12,6 @@ public class LuaFramework_AppConstWrap
 		L.RegVar("LuaByteMode", get_LuaByteMode, set_LuaByteMode);
 		L.RegVar("BundleMode", get_BundleMode, set_BundleMode);
 		L.RegVar("UpdateMode", get_UpdateMode, set_UpdateMode);
-		L.RegConstant("TimerInterval", 1);
 		L.RegConstant("GameFrameRate", 60);
 		L.RegVar("ResPathHead", get_ResPathHead, null);
 		L.RegVar("AppName", get_AppName, null);

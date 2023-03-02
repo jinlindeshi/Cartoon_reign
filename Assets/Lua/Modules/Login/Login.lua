@@ -12,6 +12,10 @@ function Login:Ctor()
     self.OutLineBtn = self.transform:Find("ButtonOutline").gameObject
     self.TestButton = self.transform:Find("TestButton").gameObject
 
+    self.camData = CameraExtensions.GetUniversalAdditionalCameraData(GetComponent.Canvas(Game.UICanvas).worldCamera)
+    self.camData.renderType = CameraRenderType.Base
+
+
     local p = self.LoginBtn:GetComponent("PointerHandler") ---@type Prayer.PointerHandler
 
     NM.AddListenerPush(NM.PushNewChatMsg, function (data)
@@ -35,6 +39,7 @@ function Login:Ctor()
             --require("Modules.FightScene.FightScene").New(scene)
             self:Destroy()
 
+            self.camData.renderType = CameraRenderType.Overlay
         end, true)
     end)
 
@@ -65,18 +70,6 @@ function Login:Ctor()
 
     end)
 
-
-    ---测试 多格拖放包裹
-    --require("Modules.Login.TestBag").New(self.transform)
-
-    local testImgRt = GetComponent.RectTransform(self.transform:Find("Image").gameObject) ---@type UnityEngine.Transform
-    DelayedCall(1, function ()
-        if tolua.isnull(testImgRt) == true or tolua.isnull(testImgRt.gameObject) == true then
-            return
-        end
-        testImgRt:DOLocalPath({self.transform:Find("Image (1)").localPosition, self.transform:Find("Image (2)").localPosition, self.transform:Find("Image (3)").localPosition},
-                1, DG.Tweening.PathType.CubicBezier, DG.Tweening.PathMode.Ignore)
-    end)
 end
 
 

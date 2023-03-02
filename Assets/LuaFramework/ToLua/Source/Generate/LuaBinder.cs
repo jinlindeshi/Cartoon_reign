@@ -108,14 +108,12 @@ public static class LuaBinder
 		UnityEngine_EventSystems_BaseEventDataWrap.Register(L);
 		UnityEngine_EventSystems_AbstractEventDataWrap.Register(L);
 		L.EndModule();
-		L.BeginModule("AI");
-		UnityEngine_AI_NavMeshAgentWrap.Register(L);
-		L.EndModule();
 		L.BeginModule("Rendering");
 		UnityEngine_Rendering_VolumeWrap.Register(L);
 		L.BeginModule("Universal");
 		UnityEngine_Rendering_Universal_UniversalAdditionalCameraDataWrap.Register(L);
 		UnityEngine_Rendering_Universal_CameraExtensionsWrap.Register(L);
+		UnityEngine_Rendering_Universal_CameraRenderTypeWrap.Register(L);
 		L.EndModule();
 		L.EndModule();
 		L.BeginModule("Events");

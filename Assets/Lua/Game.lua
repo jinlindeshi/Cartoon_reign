@@ -17,10 +17,10 @@ function Game.Init()
 
     require("Manager.SceneManager").New(function ()
         Game.InitUICanvas()
-        --require("Modules.Login.Login").New() ---登录界面
+        require("Modules.Login.Login").New() ---登录界面
 
         ---自动战斗Demo
-        SM.AddScene("War", require("Modules.WarScene.WarScene"), nil, true)
+        --SM.AddScene("War", require("Modules.WarScene.WarScene"), nil, true)
     end)
     require("Manager.NetworkManager").New()
 
@@ -486,13 +486,6 @@ end
 ---@return BehaviorDesigner.Runtime.BehaviorTree
 function GetComponent.BehaviorTree(go)
     return go:GetComponent(typeof(BehaviorDesigner.Runtime.BehaviorTree))
-end
-
----获得 NavMeshAgent 组件
----@param go UnityEngine.GameObject
----@return UnityEngine.AI.NavMeshAgent
-function GetComponent.NavMeshAgent(go)
-    return go:GetComponent(typeof(UnityEngine.AI.NavMeshAgent))
 end
 
 ---获得 SeekerToLua 组件

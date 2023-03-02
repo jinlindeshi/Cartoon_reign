@@ -254,7 +254,6 @@ public static class CustomSettings
         _GT(typeof(PointerEventData)),
         _GT(typeof(DragHandler)),
         _GT(typeof(UnityEngine.Random)),
-        _GT(typeof(NavMeshAgent)),
         _GT(typeof(RectTransformUtility)),
         _GT(typeof(TextMesh)),
         
@@ -262,6 +261,7 @@ public static class CustomSettings
         _GT(typeof(Volume)),
         _GT(typeof(UniversalAdditionalCameraData)),
         _GT(typeof(CameraExtensions)),
+        _GT(typeof(CameraRenderType)),
         
         
         _GT(typeof(ABPath)),

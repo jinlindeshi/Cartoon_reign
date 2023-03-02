@@ -57,7 +57,8 @@ DOTWEEN_LOOP_TYPE = DG.Tweening.LoopType ---@type DG.Tweening.LoopType
 ---Behavior Desiner
 TaskStatus = BehaviorDesigner.Runtime.Tasks.TaskStatus
 
-CameraExtension = UnityEngine.Rendering.Universal.CameraExtension ---@type UnityEngine.Rendering.Universal.CameraExtensions
+CameraExtensions = UnityEngine.Rendering.Universal.CameraExtensions ---@type UnityEngine.Rendering.Universal.CameraExtensions
+CameraRenderType = UnityEngine.Rendering.Universal.CameraRenderType
 RectTransformUtility = UnityEngine.RectTransformUtility
 --Time = UnityEngine.Time
 DOTween = DG.Tweening.DOTween
