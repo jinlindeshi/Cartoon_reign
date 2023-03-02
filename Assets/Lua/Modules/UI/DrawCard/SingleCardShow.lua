@@ -69,9 +69,7 @@ function SingleCardShow:Ctor(parent, id)
         self.nameText.text = info.name
         self.heroIcon.sprite = resMgr:LoadSpriteAtPath(string.format("%s%s.png", DemoCfg.characterPicPath, self.avatarInfo.pic))
         self.heroIcon.transform.localScale = Vector2.one
-        self.heroCg.alpha = 0
     end
-    self.seq = DOTween.Sequence()
     self.equip:SetActive(false)
     self.hero:SetActive(false)
     if self.type == DemoCfg.cardType.hero and self.data.quality == DemoCfg.cardQuality.orange then
@@ -79,11 +77,11 @@ function SingleCardShow:Ctor(parent, id)
         self.featurePic.sprite = resMgr:LoadSpriteAtPath(string.format("%s%s.png", DemoCfg.characterPicPath, self.avatarInfo.pic))
         self.featurePic.gameObject:SetActive(true)
         EventMgr.DispatchEvent(DrawCardModel.eventDefine.activeClick, {active = false})
+        local showCb = function() self:StartSeq(true) end
+        local endCb = function()  EventMgr.DispatchEvent(DrawCardModel.eventDefine.activeClick, {active = true})  end
+
         local classUrl = string.format("Modules.UI.DrawCard.Feature.%s_feature", self.avatarInfo.pic)
-        require(classUrl).New(self.featurePic.gameObject, function()
-            self:StartSeq()
-            EventMgr.DispatchEvent(DrawCardModel.eventDefine.activeClick, {active = true})
-        end)
+        require(classUrl).New(self.featurePic.gameObject,showCb,endCb)
     else
         self.featurePic.gameObject:SetActive(false)
         self:StartSeq()
@@ -91,7 +89,8 @@ function SingleCardShow:Ctor(parent, id)
     self.gameObject:SetActive(true)
 end
 
-function SingleCardShow:StartSeq()
+function SingleCardShow:StartSeq(isFeature)
+    self.seq = DOTween.Sequence()
     local infoStartPosY = -350
     local infoEndPosY = -225
     local insertTime = 0.4
@@ -106,8 +105,7 @@ function SingleCardShow:StartSeq()
         infoEndPosY = -365
         self.heroIcon.transform.localPosition = Vector2.New(0,100)
         ---人物表现
-        self.seq:Append(self.heroCg:DOFade(1, 0.2))
-        self.seq:Append(self.heroIcon.transform:DOLocalMoveY(0, 1))
+        self.seq:Append(self.heroIcon.transform:DOLocalMoveY(0, 1.5))
     end
     self.info.transform.localPosition = Vector2.New(0, infoStartPosY)
     ---闪光出现
@@ -117,8 +115,13 @@ function SingleCardShow:StartSeq()
         self.fx_UI_ring:SetActive(true)
     end)
     ---信息
-    self.seq:Append(self.info.transform:DOLocalMoveY(infoEndPosY, 0.35):SetEase(DOTWEEN_EASE.OutCubic))
-    self.seq:Join(self.infoCg:DOFade(1, 0.35))
+    self.seq:Append(self.info.transform:DOLocalMoveY(infoEndPosY, 0.3):SetEase(DOTWEEN_EASE.OutCubic))
+    if isFeature then
+        self.seq:AppendCallback(function()
+            CreatePrefab("Effect/Prefabs/fx_ui_shanguang.prefab", self.info.transform, 2)
+        end)
+    end
+    self.seq:Join(self.infoCg:DOFade(1, 0.3))
     ---闪光消失
     self.seq:Append(self.lightCg:DOFade(0, 0.5))
     self.seq:AppendCallback(function()
