@@ -7,14 +7,14 @@
 ---@field New fun():UI.DrawCard.OpenCardShow
 local Character_1_feature = class("UI.DrawCard.Character_1_feature")
 local fxUrl = "Effect/Prefabs/fx_starShine.prefab"
-local step1_scale = Vector2.New(1.5,1.5)
-local step1_start_pos = Vector2.New(300,340)
-local step1_end_pos = Vector2.New(300,520)
+local step1_scale = Vector2.New(3,3)
+local step1_start_pos = Vector2.New(540,1100)
+local step1_end_pos = Vector2.New(540,1300)
 local step1_fx_pos = Vector2.New(0,-50)
-local step2_scale = Vector2.New(1.8,1.8)
-local step2_start_pos = Vector2.New(180,260)
-local step2_end_pos = Vector2.New(0,260)
-local step2_fx_pos = Vector2.New(0,200)
+local step2_scale = Vector2.New(4,4)
+local step2_start_pos = Vector2.New(300,100)
+local step2_end_pos = Vector2.New(100,100)
+local step2_fx_pos = Vector2.New(100,250)
 function Character_1_feature:Ctor(go, showCb, endCb)
     self.gameObject = go ---@type UnityEngine.GameObject
     self.transform = self.gameObject.transform
@@ -24,6 +24,7 @@ function Character_1_feature:Ctor(go, showCb, endCb)
     self.cg = GetComponent.CanvasGroup(self.gameObject)
     local fx = CreatePrefab(fxUrl, self.transform.parent)
     fx:SetActive(false)
+    self.img.color = Color.white
     self.cg.alpha = 1
     self.maskCg.alpha = 1
     self.transform.localPosition = step1_start_pos

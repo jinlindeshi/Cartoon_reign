@@ -15,7 +15,7 @@ function CardControl:Ctor(parent, id)
     self.cardBg = self.Root:Find("cardBg").gameObject
     self.cardFront = self.Root:Find("cardFront").gameObject
     self.itemIcon = GetComponent.Image(self.Root:Find("cardFront/itemIcon").gameObject)
-    self.heroIcon = GetComponent.Image(self.Root:Find("cardFront/heroIcon").gameObject)
+    self.heroIcon = GetComponent.Image(self.Root:Find("cardFront/heroMask/heroIcon").gameObject)
     self.nameBG = GetComponent.Image(self.Root:Find("cardFront/nameBg").gameObject)
     self.nameText = GetComponent.Text(self.Root:Find("cardFront/nameBg/Text").gameObject)
     self.fx_star_show = self.transform:Find("fx_star_show").gameObject
@@ -28,6 +28,7 @@ function CardControl:Ctor(parent, id)
     self.fx_star_light_cg.alpha = 0
     self.isOpen = false ---是否已经翻开
 
+    self.Root.localScale = Vector2.one * 0.9
     self.id = id
     self.data = poolItem.GetData(id)
     self:SetCard()
@@ -64,12 +65,15 @@ function CardControl:Open(callback)
     RemoveButtonHandler(self.click, PointerHandler.CLICK, self.OnClick, self)
     self.isOpen = true
     local seq = DOTween.Sequence()
-    seq:Append(self.Root:DOLocalRotate(Vector2.New(0,90),0.3, DG.Tweening.RotateMode.WorldAxisAdd))
+    seq:Append(self.Root:DOLocalRotate(Vector2.New(0,90),0.25, DG.Tweening.RotateMode.WorldAxisAdd))
     seq:AppendCallback(function()
         self.cardBg:SetActive(false)
         self.cardFront:SetActive(true)
     end)
-    seq:Append(self.Root:DOLocalRotate(Vector2.New(0,90),0.3, DG.Tweening.RotateMode.WorldAxisAdd))
+    seq:Append(self.Root:DOLocalRotate(Vector2.New(0,90),0.25, DG.Tweening.RotateMode.WorldAxisAdd))
+    if self.data.type == DemoCfg.cardType.hero then
+        seq:Append(self.Root:DOScale(1.1, 0.25))
+    end
     seq:AppendCallback(function()
         if self.data.quality == DemoCfg.cardQuality.orange then
             self.fx_star_show:SetActive(true)
