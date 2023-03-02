@@ -15,10 +15,11 @@ local step2_scale = Vector2.New(1.8,1.8)
 local step2_start_pos = Vector2.New(180,260)
 local step2_end_pos = Vector2.New(0,260)
 local step2_fx_pos = Vector2.New(0,200)
-function Character_1_feature:Ctor(go, endCb)
+function Character_1_feature:Ctor(go, showCb, endCb)
     self.gameObject = go ---@type UnityEngine.GameObject
     self.transform = self.gameObject.transform
     self.mask = self.transform:Find("Mask").gameObject
+    self.img = GetComponent.Image(self.gameObject)
     self.maskCg = GetComponent.CanvasGroup(self.mask)
     self.cg = GetComponent.CanvasGroup(self.gameObject)
     local fx = CreatePrefab(fxUrl, self.transform.parent)
@@ -28,14 +29,13 @@ function Character_1_feature:Ctor(go, endCb)
     self.transform.localPosition = step1_start_pos
     self.transform.localScale = step1_scale
     self.gameObject:SetActive(true)
-
     local seq = DOTween.Sequence()
     ---第一阶段特写
     seq:AppendInterval(0.2)
     seq:Append(self.maskCg:DOFade(0, 0.5))
     seq:Join(self.transform:DOLocalMove(step1_end_pos, 2))
-    seq:AppendInterval(1.5)
-    seq:InsertCallback(0.7 + 0.8, function()
+    seq:AppendInterval(1.3)
+    seq:InsertCallback(0.7 + 0.5, function()
         fx.transform.localPosition = step1_fx_pos
         fx:SetActive(true)
     end)
@@ -48,7 +48,7 @@ function Character_1_feature:Ctor(go, endCb)
     seq:AppendInterval(0.2)
     seq:Append(self.maskCg:DOFade(0, 0.5))
     seq:Join(self.transform:DOLocalMove(step2_end_pos, 2))
-    seq:AppendInterval(1.5)
+    seq:AppendInterval(1.3)
     seq:InsertCallback(3.9 + 0.8, function()
         fx.transform.localPosition = step2_fx_pos
         fx:SetActive(false)
@@ -56,6 +56,10 @@ function Character_1_feature:Ctor(go, endCb)
     end)
     ---结束
     seq:Append(self.maskCg:DOFade(1, 0.2))
+    seq:AppendCallback(function()
+        self.img.color = Color.New(1,1,1,0)
+        showCb()
+    end)
     seq:Append(self.cg:DOFade(0, 0.5))
     seq:AppendCallback(function()
         RecyclePrefab(fx, fxUrl)
