@@ -38,8 +38,6 @@ function Login:Ctor()
         SM.AddScene("War", require("Modules.WarScene.WarScene"), function (scene)
             --require("Modules.FightScene.FightScene").New(scene)
             self:Destroy()
-
-            self.camData.renderType = CameraRenderType.Overlay
         end, true)
     end)
 

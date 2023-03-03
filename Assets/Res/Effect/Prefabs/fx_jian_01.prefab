@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 610001843736194361}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: fx_jian_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8033110498671189706}
   - component: {fileID: 5407697217982089739}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: trail (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -183,7 +183,7 @@ GameObject:
   - component: {fileID: 3738524880033475236}
   - component: {fileID: 3553536478394363028}
   - component: {fileID: 3543523782625287890}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: jian
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5047,7 +5047,7 @@ GameObject:
   - component: {fileID: 3742453287009950964}
   - component: {fileID: 3742453287024140024}
   - component: {fileID: 3742453287023942614}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: jiantou
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9875,7 +9875,7 @@ GameObject:
   - component: {fileID: 3742453287009946276}
   - component: {fileID: 3742453287024123428}
   - component: {fileID: 3742453287023999370}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14703,7 +14703,7 @@ GameObject:
   - component: {fileID: 3742453287009993280}
   - component: {fileID: 3742453287024098172}
   - component: {fileID: 3742453287023950658}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: fx_tile_C1151_atk
   m_TagString: Untagged
   m_Icon: {fileID: 0}

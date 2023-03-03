@@ -20,7 +20,10 @@ function WarScene:Ctor(scene)
     WarScene.super.Ctor(self, scene)
     WarData.scene = self
 
-    LuaHelper.AddCameraToStackList(self.mainCamera, GetComponent.Canvas(Game.UICanvas).worldCamera, true)
+    local uiCam = GetComponent.Canvas(Game.UICanvas).worldCamera
+    self.camData = CameraExtensions.GetUniversalAdditionalCameraData(uiCam)
+    self.camData.renderType = CameraRenderType.Overlay
+    LuaHelper.AddCameraToStackList(self.mainCamera, uiCam, true)
 
     self.avatarLoc = {}
     WarData.gridGraph = AstarPath.active.graphs[0] ---@type Pathfinding.GridGraph
