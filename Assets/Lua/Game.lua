@@ -37,9 +37,24 @@ function Game.Init()
     bm.UpdateInterval = BehaviorDesigner.Runtime.UpdateIntervalType.SpecifySeconds
     bm.UpdateIntervalSeconds = 0.1
     Game.behaviorCalls = {}
+    if Application.isEditor == true then
+        AddEventListener(Stage, Event.UPDATE, function()
+            if Input.GetKeyDown(UnityEngine.KeyCode.Escape) then
+                require("Modules.Common.View.ConsoleView").ShowOrHide()
+            end
+        end)
+    end
 
     local touchEventCom = AddOrGetComponent(component.gameObject, Prayer.TouchEvent)
     touchEventCom:AddListener("TouchEvent_Begin", Game.AddClickFx)
+end
+
+---重载游戏
+function Game.Relaunch()
+    DOTween.KillAll()
+    DestroyImmediate(Game.UICanvas)
+    DestroyImmediate(Game.PrefabPool)
+    GameObject.Find("GameManager"):GetComponent(typeof(LuaFramework.GameManager)):ReLaunch()
 end
 
 function Game.InitUICanvas()

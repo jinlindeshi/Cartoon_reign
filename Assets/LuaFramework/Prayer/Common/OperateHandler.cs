@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using System.Collections;
 using System.Collections.Generic;
+using LuaFramework;
 using LuaInterface;
 
 namespace Prayer
@@ -49,9 +50,16 @@ namespace Prayer
             {
                 return;
             }
+            if (AppFacade.Instance.GetManager<LuaManager>(ManagerName.Lua).CheckDispose())
+            {
+                return;
+            }
             for (int i = 0; i < funDic[type].Count; i++)
             {
-                funDic[type][i].Call(eventData);
+                if (funDic[type][i].GetLuaState() != null)
+                {
+                    funDic[type][i].Call(eventData);
+                }
             }
         }
     }

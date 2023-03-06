@@ -7,7 +7,6 @@ namespace LuaFramework {
     public class LuaManager : Manager {
         private LuaState lua;
         private LuaLoader loader;
-        private LuaLooper looper;
 
         // Use this for initialization
         void Awake() {
@@ -35,15 +34,6 @@ namespace LuaFramework {
             }
             lua.Start();    //启动LUAVM
             lua.DoFile("Main.lua");
-            this.StartLooper();
-        }
-
-        void StartLooper()
-        {
-            GameObject looperObj = new GameObject("LuaLooper");
-            Object.DontDestroyOnLoad(looperObj);
-            looper = looperObj.AddComponent<LuaLooper>();
-            looper.luaState = lua;
         }
 
         //cjson 比较特殊，只new了一个table，没有注册库，这里注册一下
@@ -97,10 +87,17 @@ namespace LuaFramework {
         }
 
         public void Close() {
-
-            lua.Dispose();
-            lua = null;
+            if (lua != null)
+            {
+                lua.Dispose();
+                lua = null;  
+            }
             loader = null;
+        }
+
+        public bool CheckDispose()
+        {
+            return lua == null;
         }
     }
 }

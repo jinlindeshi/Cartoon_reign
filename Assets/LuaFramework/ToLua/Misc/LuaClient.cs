@@ -38,7 +38,6 @@ public class LuaClient : MonoBehaviour
     }
 
     protected LuaState luaState = null;
-    protected LuaLooper loop = null;
     protected LuaFunction levelLoaded = null;
 
     protected bool openLuaSocket = false;
@@ -143,12 +142,6 @@ public class LuaClient : MonoBehaviour
         CallMain();
     }
 
-    protected void StartLooper()
-    {
-        loop = gameObject.AddComponent<LuaLooper>();
-        loop.luaState = luaState;
-    }
-
     protected virtual void Bind()
     {        
         LuaBinder.Bind(luaState);
@@ -179,7 +172,6 @@ public class LuaClient : MonoBehaviour
     protected virtual void OnLoadFinished()
     {
         luaState.Start();
-        StartLooper();
         StartMain();        
     }
 
@@ -229,12 +221,6 @@ public class LuaClient : MonoBehaviour
                 levelLoaded = null;
             }
 
-            if (loop != null)
-            {
-                loop.Destroy();
-                loop = null;
-            }
-
             state.Dispose();
             Instance = null;
         }
@@ -253,11 +239,6 @@ public class LuaClient : MonoBehaviour
     public static LuaState GetMainState()
     {
         return Instance.luaState;
-    }
-
-    public LuaLooper GetLooper()
-    {
-        return loop;
     }
 
     LuaTable profiler = null;

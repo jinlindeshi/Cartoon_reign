@@ -61,6 +61,11 @@ namespace LuaInterface
             base.Dispose();
         }
 
+        public bool CheckAlive()
+        {
+            return luaState != null;
+        }
+
         public T ToDelegate<T>() where T : class
         {
             return DelegateTraits<T>.Create(this) as T;
@@ -104,6 +109,10 @@ namespace LuaInterface
 
         public void EndPCall()
         {
+            if (luaState == null)
+            {
+                throw new LuaException("LuaFunction has been disposed");
+            }
             if (oldTop != -1)
             {
                 luaState.EndPCall(oldTop);

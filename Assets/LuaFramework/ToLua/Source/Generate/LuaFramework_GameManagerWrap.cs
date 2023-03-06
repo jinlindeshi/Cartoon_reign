@@ -10,6 +10,7 @@ public class LuaFramework_GameManagerWrap
 		L.RegFunction("CreateProgressUI", CreateProgressUI);
 		L.RegFunction("CheckExtractResource", CheckExtractResource);
 		L.RegFunction("OnResourceInited", OnResourceInited);
+		L.RegFunction("ReLaunch", ReLaunch);
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.EndClass();
@@ -56,6 +57,22 @@ public class LuaFramework_GameManagerWrap
 			ToLua.CheckArgsCount(L, 1);
 			LuaFramework.GameManager obj = (LuaFramework.GameManager)ToLua.CheckObject<LuaFramework.GameManager>(L, 1);
 			obj.OnResourceInited();
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int ReLaunch(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			LuaFramework.GameManager obj = (LuaFramework.GameManager)ToLua.CheckObject<LuaFramework.GameManager>(L, 1);
+			obj.ReLaunch();
 			return 0;
 		}
 		catch (Exception e)

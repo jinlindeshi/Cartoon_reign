@@ -48,15 +48,11 @@ function SkillWhirlwind:Begin(avatar, callBack)
         end
     end
     self.dur = 0 --技能持续的时间
-    self.timer = Timer.New(checkAndHurt, HURT_GAP_TIME, -1)
-    self.timer:Start()
+    Happy.RegisterLoopFun(self, checkAndHurt, HURT_GAP_TIME)
 end
 
 function SkillWhirlwind:Over()
-    if self.timer and self.timer.running then
-        self.timer:Stop()
-        self.timer = nil
-    end
+    Happy.UnRegisterLoopFun(self)
     if self.recycleEff then
         self.recycleEff()
     end

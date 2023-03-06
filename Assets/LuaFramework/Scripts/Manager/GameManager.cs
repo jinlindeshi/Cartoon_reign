@@ -333,5 +333,23 @@ namespace LuaFramework
 
             Debug.Log("~GameManager was destroyed");
         }
+
+        /// <summary>
+        /// 游戏重启 </summary>
+        public void ReLaunch()
+        {
+            DestroyImmediate(gameObject);
+            int sceneCount = UnityEngine.SceneManagement.SceneManager.sceneCount;
+            Debug.Log("你妹啊~~~1 " + sceneCount);
+            for (int n = 0; n < sceneCount; ++n)
+            {
+                Scene scene = UnityEngine.SceneManagement.SceneManager.GetSceneAt(n);
+                Debug.Log("你妹啊~~~2 " + scene.name);
+                UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(scene);
+            }
+
+            AppFacade.Destroy();
+            UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("Enter");
+        }
     }
 }
