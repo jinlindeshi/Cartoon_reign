@@ -28,7 +28,7 @@ function CardControl:Ctor(parent, id)
     self.fx_star_light_cg.alpha = 0
     self.isOpen = false ---是否已经翻开
 
-    self.Root.localScale = Vector2.one * 0.9
+    self.Root.localScale = Vector2.one
     self.id = id
     self.data = poolItem.GetData(id)
     self:SetCard()
@@ -72,7 +72,7 @@ function CardControl:Open(callback)
     end)
     seq:Append(self.Root:DOLocalRotate(Vector2.New(0,90),0.25, DG.Tweening.RotateMode.WorldAxisAdd))
     if self.data.type == DemoCfg.cardType.hero then
-        seq:Append(self.Root:DOScale(1.1, 0.25))
+        seq:Append(self.Root:DOScale(1.2, 0.25))
     end
     seq:AppendCallback(function()
         if self.data.quality == DemoCfg.cardQuality.orange then

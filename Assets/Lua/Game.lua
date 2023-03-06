@@ -47,6 +47,7 @@ function Game.Init()
 
     local touchEventCom = AddOrGetComponent(component.gameObject, Prayer.TouchEvent)
     touchEventCom:AddListener("TouchEvent_Begin", Game.AddClickFx)
+    Game.touchEventCom = touchEventCom
 end
 
 ---重载游戏

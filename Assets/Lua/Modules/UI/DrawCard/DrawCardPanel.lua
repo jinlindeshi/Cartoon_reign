@@ -8,6 +8,7 @@ local PoolControl = require("Modules.UI.DrawCard.PoolControl")
 local CardControl = require("Modules.UI.DrawCard.CardControl")
 local DrawCardModel = require("Modules.UI.DrawCard.Model.DrawCardModel")
 local OpenCardShow = require("Modules.UI.DrawCard.OpenCardShow")
+local RollCards = require("Modules.UI.DrawCard.RollCards")
 ---@class UI.DrawCard.DrawCardPanel:UI.BasePanel
 ---@field New fun():UI.DrawCard.DrawCardPanel
 local DrawCardPanel = class("UI.DrawCard.DrawCardPanel", BasePanel)
@@ -59,6 +60,7 @@ function DrawCardPanel:Init()
     EventMgr.AddEventListener(DrawCardModel.eventDefine.activeClick, self.OnActiveClick, self)
 
     EventMgr.DispatchEvent(DrawCardModel.eventDefine.selectPool, {id = self.poolIdList[1]})
+    RollCards.New(self.transform)
 end
 
 ---卡池选择scrollView配置
