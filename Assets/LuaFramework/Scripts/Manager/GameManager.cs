@@ -7,7 +7,8 @@ using System.Reflection;
 using UnityEngine.SceneManagement;
 using System.IO;
 using System.Net;
-using UnityEngine.Networking;
+ using DG.Tweening;
+ using UnityEngine.Networking;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
@@ -338,13 +339,18 @@ namespace LuaFramework
         /// 游戏重启 </summary>
         public void ReLaunch()
         {
+            StartCoroutine(DoRelaunch());
+        }
+
+        IEnumerator DoRelaunch()
+        {
+            yield return new WaitForEndOfFrame();
+            DOTween.KillAll();
             DestroyImmediate(gameObject);
             int sceneCount = UnityEngine.SceneManagement.SceneManager.sceneCount;
-            Debug.Log("你妹啊~~~1 " + sceneCount);
             for (int n = 0; n < sceneCount; ++n)
             {
                 Scene scene = UnityEngine.SceneManagement.SceneManager.GetSceneAt(n);
-                Debug.Log("你妹啊~~~2 " + scene.name);
                 UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(scene);
             }
 

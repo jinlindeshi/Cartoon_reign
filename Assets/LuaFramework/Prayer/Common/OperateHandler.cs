@@ -46,20 +46,13 @@ namespace Prayer
 
         protected void TakeCall(string type, PointerEventData eventData)
         {
-            if (funDic.ContainsKey(type) == false)
-            {
-                return;
-            }
-            if (AppFacade.Instance.GetManager<LuaManager>(ManagerName.Lua).CheckDispose())
+            if (funDic.ContainsKey(type) == false || funDic[type] == null)
             {
                 return;
             }
             for (int i = 0; i < funDic[type].Count; i++)
             {
-                if (funDic[type][i].GetLuaState() != null)
-                {
-                    funDic[type][i].Call(eventData);
-                }
+                funDic[type][i].Call(eventData);
             }
         }
     }
