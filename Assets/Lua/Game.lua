@@ -52,9 +52,10 @@ end
 
 ---重载游戏
 function Game.Relaunch()
-    DOTween.KillAll()
-    DestroyImmediate(Game.UICanvas)
-    DestroyImmediate(Game.PrefabPool)
+    DelayedFrameCall(function()
+        DestroyImmediate(Game.UICanvas)
+        DestroyImmediate(Game.PrefabPool)
+    end)
     GameObject.Find("GameManager"):GetComponent(typeof(LuaFramework.GameManager)):ReLaunch()
 end
 
@@ -372,7 +373,7 @@ end
 ---@param go UnityEngine.GameObject
 ---@param delay number
 function Destroy(go, delay)
-    GameObject.Destroy(go, delay)
+    GameObject.Destroy(go, delay or 0)
 end
 ---立即销毁 GameObject
 ---@param go UnityEngine.GameObject
