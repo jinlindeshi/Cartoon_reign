@@ -176,7 +176,7 @@ namespace LuaFramework {
 
 
         public void Unload() {
-            if (_socket == null)
+            if (_socket != null)
             {
                 _socket.Close();
             }

@@ -25,6 +25,7 @@ public class Facade {
                 m_GameManager = GameObject.Find("GameManager");
             }
             if (m_GameManager == null) {
+                Debug.Log("新建GameManager");
                 m_GameManager = new GameObject("GameManager");
             }
             return m_GameManager;
@@ -37,6 +38,12 @@ public class Facade {
     protected virtual void InitFramework() {
         if (m_controller != null) return;
         m_controller = Controller.Instance;
+    }
+
+    protected virtual void Dispose()
+    {
+        m_GameManager = null;
+        m_Managers = new Dictionary<string, object>();
     }
 
     public virtual void RegisterCommand(string commandName, Type commandType) {
@@ -85,6 +92,7 @@ public class Facade {
         object result = null;
         m_Managers.TryGetValue(typeName, out result);
         if (result != null) {
+            Debug.Log("Manager已经存在 " + typeName);
             return (T)result;
         }
         Component c = AppGameManager.AddComponent<T>();

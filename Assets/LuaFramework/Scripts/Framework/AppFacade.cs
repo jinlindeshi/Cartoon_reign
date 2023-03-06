@@ -2,6 +2,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using LuaInterface;
 
 public class AppFacade : Facade
 {
@@ -19,6 +21,17 @@ public class AppFacade : Facade
             }
             return _instance;
         }
+    }
+
+    public static void Destroy()
+    {
+        _instance.Dispose();
+        _instance = null;
+    }
+
+    override protected void Dispose()
+    {
+        base.Dispose();
     }
 
     override protected void InitFramework()

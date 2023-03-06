@@ -359,4 +359,29 @@ function Happy.ScreenTrans(endCall, waitDur, color, toMiddleParams, toEndParams,
     end)
 end
 
+local loopFuns = {}
+---注册一个时间循环播放函数
+function Happy.RegisterLoopFun(obj, func, gapTime)
+    gapTime = gapTime or 1
+    loopFuns[obj] = {func=func, gapTime=gapTime}
+    local loopFun
+    loopFun = function()
+        local params = loopFuns[obj]
+        if not params then
+            return
+        end
+        params.func()
+        params.handlerRef = DelayedCall(params.gapTime, loopFun)
+    end
+    loopFun()
+end
+
+function Happy.UnRegisterLoopFun(obj)
+    local params = loopFuns[obj]
+    loopFuns[obj] = nil
+    if params and params.handlerRef then
+        StopDelayedCall(params.handlerRef)
+    end
+end
+
 return Happy

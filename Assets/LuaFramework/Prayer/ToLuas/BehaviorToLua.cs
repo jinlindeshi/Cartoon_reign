@@ -64,7 +64,7 @@ public class BehaviorToLua:BehaviorTree
             return;
         }
 
-        if (_dic[name].IsAlive == true)
+        if (_dic[name].GetLuaState() != null)
         {
             _dic[name].Call(action, statusFunName, paramFloat, paramBool, paused);
         }
