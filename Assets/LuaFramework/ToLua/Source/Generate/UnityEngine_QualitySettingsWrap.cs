@@ -7,13 +7,13 @@ public class UnityEngine_QualitySettingsWrap
 	public static void Register(LuaState L)
 	{
 		L.BeginStaticLibs("QualitySettings");
-		L.RegFunction("IncreaseLevel", IncreaseLevel);
-		L.RegFunction("DecreaseLevel", DecreaseLevel);
-		L.RegFunction("SetQualityLevel", SetQualityLevel);
 		L.RegFunction("SetLODSettings", SetLODSettings);
 		L.RegFunction("GetRenderPipelineAssetAt", GetRenderPipelineAssetAt);
 		L.RegFunction("GetQualityLevel", GetQualityLevel);
 		L.RegFunction("GetQualitySettings", GetQualitySettings);
+		L.RegFunction("SetQualityLevel", SetQualityLevel);
+		L.RegFunction("IncreaseLevel", IncreaseLevel);
+		L.RegFunction("DecreaseLevel", DecreaseLevel);
 		L.RegFunction("__eq", op_Equality);
 		L.RegVar("pixelLightCount", get_pixelLightCount, set_pixelLightCount);
 		L.RegVar("shadows", get_shadows, set_shadows);
@@ -51,95 +51,6 @@ public class UnityEngine_QualitySettingsWrap
 		L.RegVar("desiredColorSpace", get_desiredColorSpace, null);
 		L.RegVar("activeColorSpace", get_activeColorSpace, null);
 		L.EndStaticLibs();
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int IncreaseLevel(IntPtr L)
-	{
-		try
-		{
-			int count = LuaDLL.lua_gettop(L);
-
-			if (count == 0)
-			{
-				UnityEngine.QualitySettings.IncreaseLevel();
-				return 0;
-			}
-			else if (count == 1)
-			{
-				bool arg0 = LuaDLL.luaL_checkboolean(L, 1);
-				UnityEngine.QualitySettings.IncreaseLevel(arg0);
-				return 0;
-			}
-			else
-			{
-				return LuaDLL.luaL_throw(L, "invalid arguments to method: UnityEngine.QualitySettings.IncreaseLevel");
-			}
-		}
-		catch (Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int DecreaseLevel(IntPtr L)
-	{
-		try
-		{
-			int count = LuaDLL.lua_gettop(L);
-
-			if (count == 0)
-			{
-				UnityEngine.QualitySettings.DecreaseLevel();
-				return 0;
-			}
-			else if (count == 1)
-			{
-				bool arg0 = LuaDLL.luaL_checkboolean(L, 1);
-				UnityEngine.QualitySettings.DecreaseLevel(arg0);
-				return 0;
-			}
-			else
-			{
-				return LuaDLL.luaL_throw(L, "invalid arguments to method: UnityEngine.QualitySettings.DecreaseLevel");
-			}
-		}
-		catch (Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int SetQualityLevel(IntPtr L)
-	{
-		try
-		{
-			int count = LuaDLL.lua_gettop(L);
-
-			if (count == 1)
-			{
-				int arg0 = (int)LuaDLL.luaL_checknumber(L, 1);
-				UnityEngine.QualitySettings.SetQualityLevel(arg0);
-				return 0;
-			}
-			else if (count == 2)
-			{
-				int arg0 = (int)LuaDLL.luaL_checknumber(L, 1);
-				bool arg1 = LuaDLL.luaL_checkboolean(L, 2);
-				UnityEngine.QualitySettings.SetQualityLevel(arg0, arg1);
-				return 0;
-			}
-			else
-			{
-				return LuaDLL.luaL_throw(L, "invalid arguments to method: UnityEngine.QualitySettings.SetQualityLevel");
-			}
-		}
-		catch (Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -217,6 +128,95 @@ public class UnityEngine_QualitySettingsWrap
 			UnityEngine.Object o = UnityEngine.QualitySettings.GetQualitySettings();
 			ToLua.Push(L, o);
 			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int SetQualityLevel(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+
+			if (count == 1)
+			{
+				int arg0 = (int)LuaDLL.luaL_checknumber(L, 1);
+				UnityEngine.QualitySettings.SetQualityLevel(arg0);
+				return 0;
+			}
+			else if (count == 2)
+			{
+				int arg0 = (int)LuaDLL.luaL_checknumber(L, 1);
+				bool arg1 = LuaDLL.luaL_checkboolean(L, 2);
+				UnityEngine.QualitySettings.SetQualityLevel(arg0, arg1);
+				return 0;
+			}
+			else
+			{
+				return LuaDLL.luaL_throw(L, "invalid arguments to method: UnityEngine.QualitySettings.SetQualityLevel");
+			}
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int IncreaseLevel(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+
+			if (count == 0)
+			{
+				UnityEngine.QualitySettings.IncreaseLevel();
+				return 0;
+			}
+			else if (count == 1)
+			{
+				bool arg0 = LuaDLL.luaL_checkboolean(L, 1);
+				UnityEngine.QualitySettings.IncreaseLevel(arg0);
+				return 0;
+			}
+			else
+			{
+				return LuaDLL.luaL_throw(L, "invalid arguments to method: UnityEngine.QualitySettings.IncreaseLevel");
+			}
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int DecreaseLevel(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+
+			if (count == 0)
+			{
+				UnityEngine.QualitySettings.DecreaseLevel();
+				return 0;
+			}
+			else if (count == 1)
+			{
+				bool arg0 = LuaDLL.luaL_checkboolean(L, 1);
+				UnityEngine.QualitySettings.DecreaseLevel(arg0);
+				return 0;
+			}
+			else
+			{
+				return LuaDLL.luaL_throw(L, "invalid arguments to method: UnityEngine.QualitySettings.DecreaseLevel");
+			}
 		}
 		catch (Exception e)
 		{

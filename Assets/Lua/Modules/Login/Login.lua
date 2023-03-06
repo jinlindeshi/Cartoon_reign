@@ -7,7 +7,7 @@ local Login = class("Login", LuaObj)
 
 function Login:Ctor()
     --print("Login:Ctor")
-    Login.super.Ctor(self, "Prefabs/Login/Login.prefab", nil, Game.UICanvas.transform)
+    Login.super.Ctor(self, "Prefabs/Login/Login.prefab", nil, UIMgr.GetLayer(UILayerName.top))
     self.LoginBtn = self.transform:Find("Button").gameObject
     self.OutLineBtn = self.transform:Find("ButtonOutline").gameObject
     self.TestButton = self.transform:Find("TestButton").gameObject

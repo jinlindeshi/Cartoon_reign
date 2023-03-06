@@ -37,6 +37,9 @@ function Game.Init()
     bm.UpdateInterval = BehaviorDesigner.Runtime.UpdateIntervalType.SpecifySeconds
     bm.UpdateIntervalSeconds = 0.1
     Game.behaviorCalls = {}
+
+    local touchEventCom = AddOrGetComponent(component.gameObject, Prayer.TouchEvent)
+    touchEventCom:AddListener("TouchEvent_Begin", Game.AddClickFx)
 end
 
 function Game.InitUICanvas()
@@ -58,6 +61,15 @@ function Game.InitUICanvas()
     --local uiCameraData = CameraExtension.GetUniversalAdditionalCameraData(uiCamera)
     --local mainCameraData = CameraExtension.GetUniversalAdditionalCameraData(mainCamera)
 
+end
+
+local fx_click = "Effect/Prefabs/fx_click.prefab"
+function Game.AddClickFx(type, pos)
+    local layer = UIMgr.GetLayer(UILayerName.top)
+    local uiCamera = GetComponent.Canvas(Game.UICanvas).worldCamera
+    local _, p = RectTransformUtility.ScreenPointToLocalPointInRectangle(layer, pos, uiCamera, Vector2.zero)
+    local fx = CreatePrefab(fx_click, layer, 1)
+    fx.transform.localPosition = p
 end
 
 ---获得场景上的对象

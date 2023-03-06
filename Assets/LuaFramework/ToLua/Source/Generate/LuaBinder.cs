@@ -254,6 +254,7 @@ public static class LuaBinder
 		Prayer_OnDestroyHandlerWrap.Register(L);
 		Prayer_PointerHandlerWrap.Register(L);
 		Prayer_DragHandlerWrap.Register(L);
+		Prayer_TouchEventWrap.Register(L);
 		Prayer_OperateHandlerWrap.Register(L);
 		L.EndModule();
 		L.BeginModule("HappyCode");

@@ -256,6 +256,7 @@ public static class CustomSettings
         _GT(typeof(UnityEngine.Random)),
         _GT(typeof(RectTransformUtility)),
         _GT(typeof(TextMesh)),
+        _GT(typeof(TouchEvent)),
         
         //URP相机相关
         _GT(typeof(Volume)),
