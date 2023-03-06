@@ -21,7 +21,7 @@ function RollCards:ResetList()
     for i = 1, self.transform.childCount do
         local tra = self.transform:GetChild(i - 1)
         local pos = tra.localPosition
-        table.insert(self.itemList, tra)
+        table.insert(self.itemList, {tra = tra, rollIndex = i})
         table.insert(self.posList, pos)
     end
 end
@@ -34,23 +34,29 @@ function RollCards:StartMove(moveTime)
         self.seq = DOTween.Sequence()
         for i = 1, #self.itemList do
             local item = self.itemList[i]
-            if self.posList[i + 1] then
-                local targetY = self.posList[i + 1].y
+            local target = self.posList[item.rollIndex + 1]
+
+            if target then
                 if i == 1 then
-                    self.seq:Append(item:DOLocalMoveY(targetY, self.moveTime):SetEase(DOTWEEN_EASE.Linear))
+                    self.seq:Append(item.tra:DOLocalMove(target, self.moveTime):SetEase(DOTWEEN_EASE.Linear))
                 else
-                    self.seq:Join(item:DOLocalMoveY(targetY, self.moveTime):SetEase(DOTWEEN_EASE.Linear))
+                    self.seq:Join(item.tra:DOLocalMove(target, self.moveTime):SetEase(DOTWEEN_EASE.Linear))
                 end
+                item.rollIndex = item.rollIndex + 1
+            else
+                --local last = table.remove(self.itemList)
+                item.tra.localPosition = self.posList[1]
+                item.rollIndex = 1
+                --table.insert(self.itemList, 1, last)
             end
         end
-        self.seq:AppendCallback(function()
-            local last = table.remove(self.itemList, #self.itemList)
-            last.transform.localPosition = self.posList[1]
-            table.insert(self.itemList, 1, last)
-        end)
     end
-    Happy.RegisterLoopFun(self, moveFunc, self.moveTime)
+    Happy.RegisterLoopFun(self, moveFunc, self.moveTime+0.01)
 end
 
+function RollCards:Recycle()
+    RecyclePrefab(self.gameObject, url)
+    Happy.RegisterLoopFun(self)
+end
 
 return RollCards

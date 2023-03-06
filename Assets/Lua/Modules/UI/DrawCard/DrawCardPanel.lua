@@ -53,6 +53,7 @@ function DrawCardPanel:Init()
     self.poolMap = {}
     self:InitSelectPool()
     self.cardList = {}
+    self.rollList = {}
     EventMgr.AddEventListener(DrawCardModel.eventDefine.selectPool, self.OnDrawCardPoolSelect, self)
     EventMgr.AddEventListener(DrawCardModel.eventDefine.oneDraw, self.OnDrawCard, self)
     EventMgr.AddEventListener(DrawCardModel.eventDefine.tenDraw, self.OnDrawCard, self)
@@ -60,7 +61,7 @@ function DrawCardPanel:Init()
     EventMgr.AddEventListener(DrawCardModel.eventDefine.activeClick, self.OnActiveClick, self)
 
     EventMgr.DispatchEvent(DrawCardModel.eventDefine.selectPool, {id = self.poolIdList[1]})
-    RollCards.New(self.transform)
+    self:OnShowResult()
 end
 
 ---卡池选择scrollView配置
@@ -197,48 +198,29 @@ function DrawCardPanel:OnDrawCard(event)
     end)
 end
 
+local rollCfg =
+{
+    count = 7,
+    startX = -750,
+    gapX = 250,
+    angle = Vector3.New(0,0,-30)
+}
 ---展示抽卡结果
 function DrawCardPanel:OnShowResult()
     local btnCg = GetComponent.CanvasGroup(self.ButtonRoot)
     btnCg.alpha = 0
+    for i = 1, rollCfg.count do
+        local item = RollCards.New( self.transform)
+        GetComponent.RectTransform(item.gameObject).anchoredPosition = Vector2.New(rollCfg.startX + (i - 1) * rollCfg.gapX, 0)
+        item.transform.localEulerAngles = rollCfg.angle
+        table.insert(self.rollList, item)
+    end
     local sequence = DOTween.Sequence()
     if self.drawType == DrawCardModel.eventDefine.oneDraw then
-        local card = CardControl.New(self.cardPos, self.resultData[1])
-        table.insert(self.cardList, card)
-        sequence:AppendCallback(function()
-            for i = 1, #self.cardList do
-                self.cardList[i]:Open()
-            end
-        end)
-        sequence:AppendInterval(0.5)
-        sequence:AppendCallback(function()
-            self:DrawComplete()
-        end)
-        sequence:Append(btnCg:DOFade(1, 0.2))
+
     else
-        self.List1.transform.localPosition = Vector2.New(-210, 200)
-        self.List2.transform.localPosition = Vector2.New(0, -300)
-        self.List3.transform.localPosition = Vector2.New(210, 200)
-        for i = 1, #self.cardPosList do
-            local card = CardControl.New(self.cardPosList[i], self.resultData[i])
-            table.insert(self.cardList, card)
-        end
-        --local cg = GetComponent.CanvasGroup(self.TenRoot.transform:Find("PosRoot").gameObject)
-        --cg.alpha = 0
-        sequence:Append(self.List1.transform:DOLocalMoveY(-100, 1.5):SetEase(DOTWEEN_EASE.OutSine))
-        sequence:Join(self.List2.transform:DOLocalMoveY(0, 1.5):SetEase(DOTWEEN_EASE.OutSine))
-        sequence:Join(self.List3.transform:DOLocalMoveY(-100, 1.5):SetEase(DOTWEEN_EASE.OutSine))
-        --sequence:Join(cg:DOFade(1, 0.15))
-        sequence:InsertCallback(1,function()
-            for i = 1, #self.cardList do
-                self.cardList[i]:Open()
-            end
-        end)
-        sequence:AppendInterval(0.2)
-        sequence:AppendCallback(function()
-            self:DrawComplete()
-        end)
-        sequence:Append(btnCg:DOFade(1, 0.2))
+
+
     end
 end
 
@@ -288,6 +270,13 @@ function DrawCardPanel:RemoveListeners()
     RemoveButtonHandler(self.YesButton, PointerHandler.CLICK, self.OnYesButton, self)
     RemoveButtonHandler(self.AgainButton, PointerHandler.CLICK, self.OnAgainButton, self)
     RemoveButtonHandler(self.click, PointerHandler.CLICK, self.OnShowClick, self)
+end
+
+function DrawCardPanel:OnDestroy()
+    DrawCardPanel.super.OnDestroy(self)
+    for i = 1, #self.rollList do
+        self.rollList[i]:Recycle()
+    end
 end
 
 return DrawCardPanel
