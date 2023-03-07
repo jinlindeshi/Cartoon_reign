@@ -215,12 +215,22 @@ function DrawCardPanel:OnShowResult()
         item.transform.localEulerAngles = rollCfg.angle
         table.insert(self.rollList, item)
     end
-    local sequence = DOTween.Sequence()
     if self.drawType == DrawCardModel.eventDefine.oneDraw then
 
     else
-
-
+        local seq = DOTween.Sequence()
+        seq:AppendInterval(2)
+        seq:AppendCallback(function()
+            self.rollList[3]:SetMoveTime(0.3)
+            self.rollList[4]:SetMoveTime(0.3)
+            self.rollList[5]:SetMoveTime(0.3)
+        end)
+        seq:AppendInterval(2.5)
+        seq:AppendCallback(function()
+            self.rollList[3]:SetStopCount(2)
+            self.rollList[4]:SetStopCount(2)
+            self.rollList[5]:SetStopCount(2)
+        end)
     end
 end
 
