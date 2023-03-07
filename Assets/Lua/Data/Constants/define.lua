@@ -50,6 +50,7 @@ SceneManager = UnityEngine.SceneManagement.SceneManager
 Input = UnityEngine.Input
 Physics = UnityEngine.Physics
 Random = UnityEngine.Random
+Time = UnityEngine.Time
 
 DOTWEEN_EASE = DG.Tweening.Ease ---@type DG.Tweening.Ease
 DOTWEEN_LOOP_TYPE = DG.Tweening.LoopType ---@type DG.Tweening.LoopType
@@ -60,7 +61,6 @@ TaskStatus = BehaviorDesigner.Runtime.Tasks.TaskStatus
 CameraExtensions = UnityEngine.Rendering.Universal.CameraExtensions ---@type UnityEngine.Rendering.Universal.CameraExtensions
 CameraRenderType = UnityEngine.Rendering.Universal.CameraRenderType
 RectTransformUtility = UnityEngine.RectTransformUtility
---Time = UnityEngine.Time
 DOTween = DG.Tweening.DOTween
 LuaObj = require("Prayer.Core.LuaObj")
 ---UI管理器

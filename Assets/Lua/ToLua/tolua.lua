@@ -37,7 +37,6 @@ RaycastHit	= require "UnityEngine.RaycastHit"
 Touch		= require "UnityEngine.Touch"
 LayerMask	= require "UnityEngine.LayerMask"
 Plane		= require "UnityEngine.Plane"
-Time		= reimport "UnityEngine.Time" ---@type UnityEngine.Time
 
 list		= require "list"
 utf8		= require "misc.utf8"
@@ -45,8 +44,6 @@ utf8		= require "misc.utf8"
 require "event"
 require "typeof"
 require "slot"
-require "System.Timer"
-require "System.coroutine"
 require "System.ValueType"
 require "System.Reflection.BindingFlags"
 
