@@ -15,20 +15,20 @@ function CardControl:Ctor(parent, id)
     self.cardBg = self.Root:Find("cardBg").gameObject
     self.cardFront = self.Root:Find("cardFront").gameObject
     self.itemIcon = GetComponent.Image(self.Root:Find("cardFront/itemIcon").gameObject)
-    self.heroIcon = GetComponent.Image(self.Root:Find("cardFront/heroMask/heroIcon").gameObject)
+    self.heroIcon = GetComponent.SpriteRenderer(self.Root:Find("cardFront/heroMask/heroSprite").gameObject)
     self.nameBG = GetComponent.Image(self.Root:Find("cardFront/nameBg").gameObject)
     self.nameText = GetComponent.Text(self.Root:Find("cardFront/nameBg/Text").gameObject)
     self.fx_star_show = self.transform:Find("fx_star_show").gameObject
-    self.fx_star_light_cg = GetComponent.CanvasGroup(self.transform:Find("fx_star_light").gameObject)
+    self.fx_star_light = self.Root:Find("cardFront/heroMask/fx_douqi_new 1").gameObject
 
     self.cardBg:SetActive(true)
     self.cardFront:SetActive(false)
     self.fx_star_show:SetActive(false)
-    self.Root.transform.localEulerAngles = Vector2.New(0, -180)
-    self.fx_star_light_cg.alpha = 0
+    self.Root.transform.localEulerAngles = Vector2.New(0, 0)
+    self.fx_star_light:SetActive(false)
     self.isOpen = false ---是否已经翻开
-
-    self.Root.localScale = Vector2.one
+    self.orgScale = 0.75
+    self.Root.localScale = Vector2.one * 0.75
     self.id = id
     self.data = poolItem.GetData(id)
     self:SetCard()
@@ -48,11 +48,12 @@ function CardControl:SetCard()
         self.nameText.text = info.name
     end
     if self.data.quality ~= DemoCfg.cardQuality.white then
-        GetComponent.Image(self.cardBg).color = DemoCfg.cardColorCfg[self.data.quality]
+        --GetComponent.Image(self.cardBg).color = DemoCfg.cardColorCfg[self.data.quality]
         GetComponent.Image(self.cardFront).color = DemoCfg.cardColorCfg[self.data.quality]
         self.nameText.color = DemoCfg.cardColorCfg[self.data.quality]
+        self.heroIcon.color = Color.New(1,1,1,0)
     else
-        GetComponent.Image(self.cardBg).color = Color.white
+        --GetComponent.Image(self.cardBg).color = Color.white
         GetComponent.Image(self.cardFront).color = Color.white
         self.nameText.color = Color.white
     end
@@ -71,20 +72,24 @@ function CardControl:Open(callback)
         self.cardFront:SetActive(true)
     end)
     seq:Append(self.Root:DOLocalRotate(Vector2.New(0,90),0.25, DG.Tweening.RotateMode.WorldAxisAdd))
-    if self.data.type == DemoCfg.cardType.hero then
-        seq:Append(self.Root:DOScale(1.2, 0.25))
-    end
     seq:AppendCallback(function()
         if self.data.quality == DemoCfg.cardQuality.orange then
             self.fx_star_show:SetActive(true)
+            self.fx_star_light:SetActive(true)
         end
+    end)
+    if self.data.type == DemoCfg.cardType.hero then
+        seq:Append(self.Root:DOScale(self.orgScale * 1.2, 0.15))
+        seq:Append(self.heroIcon:DOColor(Color.white, 0.3))
+        seq:AppendCallback(function()
+            self.heroIcon.transform:DOLocalMoveY(30, 1):SetEase(DOTWEEN_EASE.Linear):SetLoops(-1, DOTWEEN_LOOP_TYPE.Yoyo)
+        end)
+    end
+    seq:AppendCallback(function()
         if callback then
             callback()
         end
     end)
-    if self.data.quality == DemoCfg.cardQuality.orange then
-        seq:Append(self.fx_star_light_cg:DOFade(1,0.15))
-    end
 
 end
 

@@ -32,6 +32,8 @@ function DrawCardPanel:Init()
     self.List1 = self.TenRoot.transform:Find("PosRoot/List1").gameObject
     self.List2 = self.TenRoot.transform:Find("PosRoot/List2").gameObject
     self.List3 = self.TenRoot.transform:Find("PosRoot/List3").gameObject
+    self.RollRoot = self.transform:Find("ResultRoot/RollRoot")
+
     self.cardPosList = {} --卡牌坐标位置list
     for i = 1, self.List1.transform.childCount do
         table.insert(self.cardPosList, self.List1.transform:GetChild(i-1))
@@ -48,7 +50,7 @@ function DrawCardPanel:Init()
     AddButtonHandler(self.click, PointerHandler.CLICK, self.OnShowClick, self)
 
     self.AutoButton:SetActive(false)
-    self.ResultRoot:SetActive(false)
+    --self.ResultRoot:SetActive(false)
     self.poolIdList = SData.GetOpenPools()
     self.poolMap = {}
     self:InitSelectPool()
@@ -61,6 +63,7 @@ function DrawCardPanel:Init()
     EventMgr.AddEventListener(DrawCardModel.eventDefine.activeClick, self.OnActiveClick, self)
 
     EventMgr.DispatchEvent(DrawCardModel.eventDefine.selectPool, {id = self.poolIdList[1]})
+    self.resultData = DrawCardModel.GetTenDrawData()
     self:OnShowResult()
 end
 
@@ -200,37 +203,74 @@ end
 
 local rollCfg =
 {
-    count = 7,
-    startX = -750,
-    gapX = 250,
-    angle = Vector3.New(0,0,-30)
+    count = 11,
+    gapX = 145,
+    startX = -145 * 5,
+}
+
+local showRollList = {5, 6, 7}
+
+local showCardIndexList =
+{
+    {8,7,6},
+    {9,8,7,6},
+    {9,8,7},
+
 }
 ---展示抽卡结果
 function DrawCardPanel:OnShowResult()
+    self.click:SetActive(false)
     local btnCg = GetComponent.CanvasGroup(self.ButtonRoot)
     btnCg.alpha = 0
+    local rollCg = GetComponent.CanvasGroup(self.RollRoot.gameObject)
+    rollCg.alpha = 0
     for i = 1, rollCfg.count do
-        local item = RollCards.New( self.transform)
-        GetComponent.RectTransform(item.gameObject).anchoredPosition = Vector2.New(rollCfg.startX + (i - 1) * rollCfg.gapX, 0)
-        item.transform.localEulerAngles = rollCfg.angle
+        local item = RollCards.New(self.RollRoot, 1.5)
+        GetComponent.RectTransform(item.gameObject).anchoredPosition = Vector2.New(rollCfg.startX + (i - 1) * rollCfg.gapX, 250)
         table.insert(self.rollList, item)
     end
+
     if self.drawType == DrawCardModel.eventDefine.oneDraw then
 
     else
         local seq = DOTween.Sequence()
-        seq:AppendInterval(2)
+        seq:Append(rollCg:DOFade(1, 0.3))
+        seq:AppendInterval(0.8)
         seq:AppendCallback(function()
-            self.rollList[3]:SetMoveTime(0.3)
-            self.rollList[4]:SetMoveTime(0.3)
-            self.rollList[5]:SetMoveTime(0.3)
+            for i = 1, #showRollList do
+                self.rollList[showRollList[i]]:SetMoveTime(0.8)
+            end
         end)
-        seq:AppendInterval(2.5)
+        seq:AppendInterval(1.5)
         seq:AppendCallback(function()
-            self.rollList[3]:SetStopCount(2)
-            self.rollList[4]:SetStopCount(2)
-            self.rollList[5]:SetStopCount(2)
+            local stopCount = 2
+            local dataIndex = 1
+            self.cardList = {}
+            for i = 1, #showRollList do
+                local roll = self.rollList[showRollList[i]]
+                roll:SetStopCount(stopCount)
+                local cardIndexList = showCardIndexList[i]
+                for j = 1, #cardIndexList do
+                    local index = cardIndexList[j]
+                    local item = roll:GetItem(index)
+                    GetComponent.Image(item.gameObject).color = Color.New(0,0,0,0)
+                    local card = CardControl.New(item, self.resultData[dataIndex])
+                    table.insert(self.cardList, card)
+                    dataIndex = dataIndex + 1
+                end
+            end
         end)
+        seq:AppendInterval(0.5)
+        seq:AppendCallback(function()
+            for i = 1, #self.cardList do
+                self.cardList[i]:Open()
+            end
+        end)
+        seq:AppendInterval(1)
+        seq:AppendCallback(function()
+            self:DrawComplete()
+        end)
+        seq:Append(btnCg:DOFade(1, 0.2))
     end
 end
 
@@ -244,6 +284,10 @@ function DrawCardPanel:CleanCard()
     for i = 1, #self.cardList do
         self.cardList[i]:Destroy()
         self.cardList[i] = nil
+    end
+    for i = 1, #self.rollList do
+        self.rollList[i]:Recycle()
+        self.rollList[i] = nil
     end
 end
 

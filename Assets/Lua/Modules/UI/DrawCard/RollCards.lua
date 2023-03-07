@@ -10,7 +10,7 @@ local RollCards = class("UI.DrawCard.RollCards")
 function RollCards:Ctor(parent, moveTime)
     self.gameObject = CreatePrefab(url, parent)
     self.transform = self.gameObject.transform
-    self.moveTime = moveTime or 0.8
+    self.moveTime = moveTime or 1
     self.moveTimeTemp = nil
     self.stopCount = nil
     self:ResetList()
@@ -18,8 +18,9 @@ function RollCards:Ctor(parent, moveTime)
 end
 
 function RollCards:ResetList()
-    self.itemList = {} ---@type table<number, UnityEngine.Transform>
+    self.itemList = {}
     self.posList = {}
+    self.itemCount = self.transform.childCount
     for i = 1, self.transform.childCount do
         local tra = self.transform:GetChild(i - 1)
         local pos = tra.localPosition
@@ -41,6 +42,17 @@ end
 
 function RollCards:SetMoveTime(moveTime)
     self.moveTimeTemp = moveTime
+end
+
+function RollCards:GetItem(index)
+    if index > self.itemCount then
+        index = index - self.itemCount
+    end
+    for i = 1, #self.itemList do
+        if self.itemList[i].index == index then
+            return self.itemList[i].tra
+        end
+    end
 end
 
 ---移动更新
@@ -102,14 +114,14 @@ function RollCards:Update()
             local percent = sinceTime / item.durTime
             if item.smooth then
                 item.tra.localPosition = Vector2.SmoothDamp(item.startPos, item.targetPos, Vector2.zero, 0.5, nil,percent)
-                if percent > 1 then
+                if percent >= 1 then
                     --item.tra.localPosition = item.targetPos
                     item.isMove = false
                     self:CheckMoveList()
                 end
             else
                 item.tra.localPosition = Vector2.Lerp(item.startPos, item.targetPos, percent)
-                if percent > 1 then
+                if percent >= 1 then
                     item.tra.localPosition = item.targetPos
                     item.isMove = false
                     self:CheckMoveList()
