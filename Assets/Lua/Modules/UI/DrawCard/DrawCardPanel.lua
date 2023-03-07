@@ -201,6 +201,7 @@ function DrawCardPanel:OnDrawCard(event)
     end)
 end
 
+--188.25
 local rollCfg =
 {
     count = 11,
@@ -212,9 +213,9 @@ local showRollList = {5, 6, 7}
 
 local showCardIndexList =
 {
-    {8,7,6},
-    {9,8,7,6},
-    {9,8,7},
+    {10,9,8},
+    {11,10,9,8},
+    {11,10,9},
 
 }
 ---展示抽卡结果
@@ -260,7 +261,7 @@ function DrawCardPanel:OnShowResult()
                 end
             end
         end)
-        seq:AppendInterval(0.5)
+        seq:AppendInterval(0.8)
         seq:AppendCallback(function()
             for i = 1, #self.cardList do
                 self.cardList[i]:Open()

@@ -3,6 +3,7 @@
 --- Created by sunshuo.
 --- DateTime: 2023/3/6 17:24
 --- 滚动卡牌
+local DrawCardModel = require("Modules.UI.DrawCard.Model.DrawCardModel")
 local url = "Prefabs/Panel/DrawCard/RollCards.prefab"
 ---@class UI.DrawCard.RollCards
 ---@field New fun():UI.DrawCard.RollCards
@@ -19,14 +20,23 @@ end
 
 function RollCards:ResetList()
     self.itemList = {}
-    self.posList = {}
     self.itemCount = self.transform.childCount
-    for i = 1, self.transform.childCount do
-        local tra = self.transform:GetChild(i - 1)
-        local pos = tra.localPosition
-        table.insert(self.itemList, {tra = tra, index = i})
-        table.insert(self.posList, pos)
+    if DrawCardModel.rollPosList ~= nil then
+        for i = 1, self.transform.childCount do
+            local tra = self.transform:GetChild(i - 1)
+            table.insert(self.itemList, {tra = tra, index = i})
+            tra.localPosition = DrawCardModel.rollPosList[i]
+        end
+    else
+        DrawCardModel.rollPosList = {}
+        for i = 1, self.transform.childCount do
+            local tra = self.transform:GetChild(i - 1)
+            local pos = tra.localPosition
+            table.insert(self.itemList, {tra = tra, index = i})
+            table.insert(DrawCardModel.rollPosList, pos)
+        end
     end
+    self.posList = DrawCardModel.rollPosList
 end
 
 function RollCards:StartMove()
@@ -136,6 +146,9 @@ end
 function RollCards:Recycle()
     RecyclePrefab(self.gameObject, url)
     RemoveEventListener(Stage, Event.UPDATE, self.updateFun)
+    for i = 1, self.transform.childCount do
+        GetComponent.Image( self.transform:GetChild(i-1).gameObject).color = Color.white
+    end
 end
 
 return RollCards
