@@ -41,7 +41,7 @@ function WarScene:Ctor(scene)
     self.avatarList = {} --角色列表
     UIMgr.OpenPanel(UIPanelCfg.mainMenu)
     self.mainMenu = UIMgr.GetPanel(UIPanelCfg.mainMenu) ---@type UI.MainMenuPanel
-    self:GameStart()
+    --self:GameStart()
 
     ---TEST
     --self:MyDead()
