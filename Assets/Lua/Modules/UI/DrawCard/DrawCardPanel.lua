@@ -39,6 +39,7 @@ function DrawCardPanel:Init()
     self.featurePic = GetComponent.Image(self.transform:Find("ResultRoot/featurePic").gameObject)
     self.featurePic.gameObject:SetActive(false)
     self.SearchRoot = self.transform:Find("ResultRoot/SearchRoot").gameObject
+    self.SearchRoot:SetActive(false)
 
     self.cardPosList = {} --卡牌坐标位置list
     for i = 1, self.List1.transform.childCount do
@@ -146,8 +147,8 @@ function DrawCardPanel:StartDraw(callback)
     --seq:Append(lightCg:DOFade(0, 0.15))
     seq:AppendCallback(function()
         --self.click:SetActive(true)
-        callback()
-        --SearchShow.New(self.SearchRoot, callback)
+        --callback()
+        SearchShow.New(self.SearchRoot, callback)
     end)
 end
 
