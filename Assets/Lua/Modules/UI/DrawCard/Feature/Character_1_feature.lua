@@ -7,28 +7,38 @@
 ---@field New fun():UI.DrawCard.OpenCardShow
 local Character_1_feature = class("UI.DrawCard.Character_1_feature")
 local fxUrl = "Effect/Prefabs/fx_starShine.prefab"
-local step1_scale = Vector2.New(3,3)
-local step1_start_pos = Vector2.New(540,1100)
-local step1_end_pos = Vector2.New(540,1300)
-local step1_fx_pos = Vector2.New(0,-50)
-local step2_scale = Vector2.New(4,4)
-local step2_start_pos = Vector2.New(300,100)
-local step2_end_pos = Vector2.New(100,100)
-local step2_fx_pos = Vector2.New(100,250)
-function Character_1_feature:Ctor(go, showCb, endCb)
-    self.gameObject = go ---@type UnityEngine.GameObject
+local step1_scale = Vector2.New(2.8,2.8)
+local step1_start_pos = Vector2.New(450,450)
+local step1_end_pos = Vector2.New(450,780)
+local step1_fx_pos = Vector2.New(-75,-180)
+local step2_start_pos = step1_end_pos
+local step2_end_pos = Vector2.New(0,140)
+local step2_fx_pos = Vector2.New(0,240)
+--local step2_scale = Vector2.New(4,4)
+
+--local step2_fx_pos = Vector2.New(100,250)
+function Character_1_feature:Ctor(go, parent, pic,showCb, endCb)
+    self.name = go.name
+    self.gameObject = ClonePrefab(go,parent,go.name) ---@type UnityEngine.GameObject
     self.transform = self.gameObject.transform
+    self.showCb = showCb
+    self.endCb = endCb
     self.mask = self.transform:Find("Mask").gameObject
     self.img = GetComponent.Image(self.gameObject)
     self.maskCg = GetComponent.CanvasGroup(self.mask)
     self.cg = GetComponent.CanvasGroup(self.gameObject)
-    local fx = CreatePrefab(fxUrl, self.transform.parent)
-    fx:SetActive(false)
+    self.fx = CreatePrefab(fxUrl, self.transform.parent)
+    self.img.sprite = resMgr:LoadSpriteAtPath(string.format("%s%s.png", DemoCfg.characterPicPath, pic))
+    self.img:SetNativeSize()
+    self.fx:SetActive(false)
     self.img.color = Color.white
     self.cg.alpha = 1
     self.maskCg.alpha = 1
     self.transform.localPosition = step1_start_pos
     self.transform.localScale = step1_scale
+end
+
+function Character_1_feature:Play()
     self.gameObject:SetActive(true)
     local seq = DOTween.Sequence()
     ---第一阶段特写
@@ -37,34 +47,32 @@ function Character_1_feature:Ctor(go, showCb, endCb)
     seq:Join(self.transform:DOLocalMove(step1_end_pos, 2))
     seq:AppendInterval(1.3)
     seq:InsertCallback(0.7 + 0.5, function()
-        fx.transform.localPosition = step1_fx_pos
-        fx:SetActive(true)
+        self.fx.transform.localPosition = step1_fx_pos
+        self.fx:SetActive(true)
     end)
     ---第二阶段特写
-    seq:Append(self.maskCg:DOFade(1, 0.2))
-    seq:AppendCallback(function()
-        self.transform.localPosition = step2_start_pos
-        self.transform.localScale = step2_scale
+    seq:Append(self.transform:DOLocalMove(step2_end_pos, 2))
+    seq:InsertCallback(3.8 + 0.8, function()
+        self.fx.transform.localPosition = step2_fx_pos
+        self.fx:SetActive(false)
+        self.fx:SetActive(true)
     end)
-    seq:AppendInterval(0.2)
-    seq:Append(self.maskCg:DOFade(0, 0.5))
-    seq:Join(self.transform:DOLocalMove(step2_end_pos, 2))
     seq:AppendInterval(1.3)
-    seq:InsertCallback(3.9 + 0.8, function()
-        fx.transform.localPosition = step2_fx_pos
-        fx:SetActive(false)
-        fx:SetActive(true)
-    end)
     ---结束
     seq:Append(self.maskCg:DOFade(1, 0.2))
     seq:AppendCallback(function()
         self.img.color = Color.New(1,1,1,0)
-        showCb()
+        if self.showCb then
+            self.showCb()
+        end
     end)
-    seq:Append(self.cg:DOFade(0, 0.5))
+    seq:Append(self.cg:DOFade(0, 0.25))
     seq:AppendCallback(function()
-        RecyclePrefab(fx, fxUrl)
-        endCb()
+        RecyclePrefab(self.fx, fxUrl)
+        RecyclePrefab(self.gameObject, self.name)
+        if self.endCb then
+            self.endCb()
+        end
     end)
 end
 

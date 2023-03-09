@@ -9,6 +9,9 @@ local CardControl = require("Modules.UI.DrawCard.CardControl")
 local DrawCardModel = require("Modules.UI.DrawCard.Model.DrawCardModel")
 local OpenCardShow = require("Modules.UI.DrawCard.OpenCardShow")
 local RollCards = require("Modules.UI.DrawCard.RollCards")
+local poolItem = require("Data.Excel.poolItem")
+local SearchShow = require("Modules.UI.DrawCard.SearchShow")
+
 ---@class UI.DrawCard.DrawCardPanel:UI.BasePanel
 ---@field New fun():UI.DrawCard.DrawCardPanel
 local DrawCardPanel = class("UI.DrawCard.DrawCardPanel", BasePanel)
@@ -33,6 +36,9 @@ function DrawCardPanel:Init()
     self.List2 = self.TenRoot.transform:Find("PosRoot/List2").gameObject
     self.List3 = self.TenRoot.transform:Find("PosRoot/List3").gameObject
     self.RollRoot = self.transform:Find("ResultRoot/RollRoot")
+    self.featurePic = GetComponent.Image(self.transform:Find("ResultRoot/featurePic").gameObject)
+    self.featurePic.gameObject:SetActive(false)
+    self.SearchRoot = self.transform:Find("ResultRoot/SearchRoot").gameObject
 
     self.cardPosList = {} --卡牌坐标位置list
     for i = 1, self.List1.transform.childCount do
@@ -63,8 +69,8 @@ function DrawCardPanel:Init()
     EventMgr.AddEventListener(DrawCardModel.eventDefine.activeClick, self.OnActiveClick, self)
 
     EventMgr.DispatchEvent(DrawCardModel.eventDefine.selectPool, {id = self.poolIdList[1]})
-    self.resultData = DrawCardModel.GetTenDrawData()
-    self:OnShowResult()
+
+    EventMgr.DispatchEvent(DrawCardModel.eventDefine.tenDraw)
 end
 
 ---卡池选择scrollView配置
@@ -135,14 +141,14 @@ function DrawCardPanel:StartDraw(callback)
     seq:Append(cg1:DOFade(0, 0.25))
     seq:Join(cg2:DOFade(0, 0.25))
     seq:Join(resultCg:DOFade(1, 0.25))
-    seq:Join(lightCg:DOFade(1, 0.15))
-    seq:AppendInterval(1)
-    seq:Append(lightCg:DOFade(0, 0.15))
+    --seq:Join(lightCg:DOFade(1, 0.15))
+    --seq:AppendInterval(1)
+    --seq:Append(lightCg:DOFade(0, 0.15))
     seq:AppendCallback(function()
-        self.click:SetActive(true)
+        --self.click:SetActive(true)
         callback()
+        --SearchShow.New(self.SearchRoot, callback)
     end)
-    seq:Append(btnCg:DOFade(1, 0.2))
 end
 
 ---抽卡完成
@@ -175,18 +181,19 @@ function DrawCardPanel:DrawOnce()
     self.OnceRoot:SetActive(true)
     self.TenRoot:SetActive(false)
 
-    local data = DrawCardModel.GetOneDrawData()
-    self.resultData = data
-    self.show = OpenCardShow.New(self.OnceRoot, data) ---@type UI.DrawCard.OpenCardShow
+    self.resultData,self.featureData = DrawCardModel.GetOneDrawData()
+    --self.show = OpenCardShow.New(self.OnceRoot, self.resultData) ---@type UI.DrawCard.OpenCardShow
+
 end
 
 ---抽十次
 function DrawCardPanel:DrawTenTimes()
     self.OnceRoot:SetActive(false)
     self.TenRoot:SetActive(true)
-    local data = DrawCardModel.GetTenDrawData()
-    self.resultData = data
-    self.show = OpenCardShow.New(self.TenRoot, data) ---@type UI.DrawCard.OpenCardShow
+
+    self.resultData,self.featureData = DrawCardModel.GetTenDrawData()
+    --self.show = OpenCardShow.New(self.TenRoot, self.resultData) ---@type UI.DrawCard.OpenCardShow
+    EventMgr.DispatchEvent(DrawCardModel.eventDefine.showResult)
 end
 
 ---抽卡事件
@@ -205,17 +212,22 @@ end
 local rollCfg =
 {
     count = 11,
-    gapX = 145,
-    startX = -145 * 5,
+    gapX = 180,
+    startX = -180 * 5,
 }
 
+local rootCfg =
+{
+    {pos = Vector3.New(0, 75,60), rot = Vector3.New(45, 0, 340)},
+    {pos = Vector3.New(0, 0,-350), rot = Vector3.New(45, 0, 360)},
+}
 local showRollList = {5, 6, 7}
 
 local showCardIndexList =
 {
-    {10,9,8},
-    {11,10,9,8},
-    {11,10,9},
+    {7,6,5},
+    {8,7,6,5},
+    {8,7,6},
 
 }
 ---展示抽卡结果
@@ -225,54 +237,139 @@ function DrawCardPanel:OnShowResult()
     btnCg.alpha = 0
     local rollCg = GetComponent.CanvasGroup(self.RollRoot.gameObject)
     rollCg.alpha = 0
+    self.RollRoot.transform.localPosition = rootCfg[1].pos
+    self.RollRoot.transform.localEulerAngles = rootCfg[1].rot
     for i = 1, rollCfg.count do
         local item = RollCards.New(self.RollRoot, 1.5)
-        GetComponent.RectTransform(item.gameObject).anchoredPosition = Vector2.New(rollCfg.startX + (i - 1) * rollCfg.gapX, 250)
+        GetComponent.RectTransform(item.gameObject).anchoredPosition = Vector2.New(rollCfg.startX + (i - 1) * rollCfg.gapX, 400)
         table.insert(self.rollList, item)
+    end
+
+    local seq = DOTween.Sequence()
+    seq:Append(rollCg:DOFade(1, 0))
+    seq:AppendInterval(1)
+    ---滚动加速
+    seq:AppendCallback(function()
+        for i = 1, #showRollList do
+            self.rollList[showRollList[i]]:SetMoveTime(0.8)
+        end
+    end)
+    ---转换角度
+    seq:Append(self.RollRoot.transform:DOLocalMove(rootCfg[2].pos, 1))
+    seq:Join(Happy.DOTweenFloat(rootCfg[1].rot.z, rootCfg[2].rot.z, 1, function(value)
+        self.RollRoot.transform.localEulerAngles = Vector3.New(rootCfg[2].rot.x, rootCfg[2].rot.y, value)
+    end, function()
+        self.RollRoot.transform.localEulerAngles = rootCfg[2].rot
+    end))
+    ---出现结果
+    seq:AppendCallback(function()
+        local stopCount = 2
+        local dataIndex = 1
+        self.cardList = {}
+        for i = 1, #showRollList do
+            local roll = self.rollList[showRollList[i]]
+            roll:SetStopCount(stopCount)
+            local cardIndexList = showCardIndexList[i]
+            for j = 1, #cardIndexList do
+                local index = cardIndexList[j]
+                local item = roll:GetItem(index)
+                GetComponent.Image(item.gameObject).color = Color.New(0,0,0,0)
+                local card = CardControl.New(item, self.resultData[dataIndex])
+                table.insert(self.cardList, card)
+                dataIndex = dataIndex + 1
+            end
+        end
+    end)
+    seq:AppendInterval(0.8)
+    seq:AppendCallback(function()
+        for i = 1, #self.cardList do
+            self.cardList[i]:Open()
+        end
+    end)
+    if self.featureData then
+        ---播放特写
+        seq:AppendInterval(1)
+        seq:AppendCallback(function()
+            self.featureShowList =  {}
+            for i = 1, #self.featureData do
+                local poolData = poolItem.GetData(self.featureData[i])
+                local info = require("Data.Excel.avatar").GetData(poolData.toID)
+                local classUrl = string.format("Modules.UI.DrawCard.Feature.%s_feature", info.pic)
+                local endCb = function() self:NextFeature() end
+                local feature = require(classUrl).New(self.featurePic.gameObject,self.ResultRoot.transform,info.pic,nil,endCb)
+                table.insert(self.featureShowList, 1, feature)
+            end
+            self.featureShowList[1]:Play()
+            --隐藏特效
+            for i = 1, #self.cardList do
+                if self.cardList[i]:CheckHighHero() then
+                    self.cardList[i].fx_douqi:SetActive(false)
+                end
+            end
+        end)
+    else
+        seq:AppendInterval(1)
+        seq:AppendCallback(function()
+            self:ResumeResult()
+        end)
     end
 
     if self.drawType == DrawCardModel.eventDefine.oneDraw then
 
     else
-        local seq = DOTween.Sequence()
-        seq:Append(rollCg:DOFade(1, 0.3))
-        seq:AppendInterval(0.8)
-        seq:AppendCallback(function()
-            for i = 1, #showRollList do
-                self.rollList[showRollList[i]]:SetMoveTime(0.8)
+
+    end
+end
+
+function DrawCardPanel:NextFeature()
+    table.remove(self.featureShowList)
+    if next(self.featureShowList) then
+        self.featureShowList[1]:Play()
+    else
+        for i = 1, #self.cardList do
+            if self.cardList[i]:CheckHighHero() then
+                self.cardList[i].fx_douqi:SetActive(true)
             end
-        end)
-        seq:AppendInterval(1.5)
+        end
+        local seq = DOTween.Sequence()
+        seq:AppendInterval(0.5)
         seq:AppendCallback(function()
-            local stopCount = 2
-            local dataIndex = 1
-            self.cardList = {}
-            for i = 1, #showRollList do
-                local roll = self.rollList[showRollList[i]]
-                roll:SetStopCount(stopCount)
-                local cardIndexList = showCardIndexList[i]
-                for j = 1, #cardIndexList do
-                    local index = cardIndexList[j]
-                    local item = roll:GetItem(index)
-                    GetComponent.Image(item.gameObject).color = Color.New(0,0,0,0)
-                    local card = CardControl.New(item, self.resultData[dataIndex])
-                    table.insert(self.cardList, card)
-                    dataIndex = dataIndex + 1
+            for i = 1, #self.cardList do
+                if self.cardList[i]:CheckHighHero() then
+                    self.cardList[i]:NormalHeroShow()
                 end
             end
         end)
-        seq:AppendInterval(0.8)
+        seq:AppendInterval(2)
         seq:AppendCallback(function()
-            for i = 1, #self.cardList do
-                self.cardList[i]:Open()
-            end
+            self:ResumeResult()
         end)
-        seq:AppendInterval(1)
-        seq:AppendCallback(function()
-            self:DrawComplete()
-        end)
-        seq:Append(btnCg:DOFade(1, 0.2))
     end
+end
+
+function DrawCardPanel:ResumeResult()
+    local btnCg = GetComponent.CanvasGroup(self.ButtonRoot)
+    local seq = DOTween.Sequence()
+    ---角色卡牌角度转回
+    seq:AppendCallback(function()
+        for i = 1, #self.cardList do
+            if self.cardList[i]:CheckHighHero() then
+                self.cardList[i]:ChangeHeroAngle(1, 2, 0.5)
+            end
+        end
+    end)
+    ---角度转回
+    seq:Append(self.RollRoot.transform:DOLocalMove(rootCfg[1].pos, 0.5))
+    seq:Join(Happy.DOTweenFloat(rootCfg[2].rot.z, rootCfg[1].rot.z, 0.5, function(value)
+        self.RollRoot.transform.localEulerAngles = Vector3.New(rootCfg[1].rot.x, rootCfg[1].rot.y, value)
+    end, function()
+        self.RollRoot.transform.localEulerAngles = rootCfg[1].rot
+    end))
+    ---抽卡完成
+    seq:AppendCallback(function()
+        self:DrawComplete()
+    end)
+    seq:Append(btnCg:DOFade(1, 0.2))
 end
 
 ---控制是否可以点击

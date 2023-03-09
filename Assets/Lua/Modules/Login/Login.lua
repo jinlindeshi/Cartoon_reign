@@ -14,8 +14,6 @@ function Login:Ctor()
 
     self.camData = CameraExtensions.GetUniversalAdditionalCameraData(GetComponent.Canvas(Game.UICanvas).worldCamera)
     self.camData.renderType = CameraRenderType.Base
-
-
     local p = self.LoginBtn:GetComponent("PointerHandler") ---@type Prayer.PointerHandler
 
     NM.AddListenerPush(NM.PushNewChatMsg, function (data)
@@ -35,10 +33,12 @@ function Login:Ctor()
         --
         --end, true)
 
-        SM.AddScene("War", require("Modules.WarScene.WarScene"), function (scene)
-            --require("Modules.FightScene.FightScene").New(scene)
-            self:Destroy()
-        end, true)
+        --SM.AddScene("War", require("Modules.WarScene.WarScene"), function (scene)
+        --    --require("Modules.FightScene.FightScene").New(scene)
+        --    self:Destroy()
+        --end, true)
+        UIMgr.OpenPanel(UIPanelCfg.drawCard)
+        self:Destroy()
     end)
 
     AddButtonHandler(self.TestButton, PointerHandler.CLICK, function ()

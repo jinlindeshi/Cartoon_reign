@@ -12,15 +12,22 @@ DrawCardModel.eventDefine =
     checkOpen = "DrawCardCheckOpen", --检测是否所有的卡都已经翻开
     showResult = "showResult",--展示抽卡结果
     activeClick = "activeClick",--控制是否可以点击
+    changeHeroAngel = "changeHeroAngel" --角色卡牌图片角度转换
 }
 
+---单抽数据
+---获取卡牌数据和需要特写的ID
+---@return table,table
 function DrawCardModel.GetOneDrawData()
     return {5}
 end
 
+---十连数据
+---获取卡牌数据和需要特写的ID
+---@return table,table
 function DrawCardModel.GetTenDrawData()
     --require("Modules.WarScene.Model.AvatarData").AddHeroData(DemoCfg.followerID)
-    return {13,14,15,16,19,13,7,14,18,17}
+    return {13,14,15,16,19,13,7,14,18,17}, {19}
 end
 
 return DrawCardModel

@@ -5,6 +5,11 @@
 ---
 local DrawCardModel = require("Modules.UI.DrawCard.Model.DrawCardModel")
 local poolItem = require("Data.Excel.poolItem")
+local heroShowCfg =
+{
+    {pos = Vector3.New(0,0,-40), rot = Vector3.New(-65,0,0)},
+    {pos = Vector3.New(0,0,-40), rot = Vector3.New(-58,-35,31)}
+}
 ---@class UI.DrawCard.CardControl:LuaObj
 ---@field New fun():UI.DrawCard.CardControl
 local CardControl = class("UI.DrawCard.CardControl", LuaObj)
@@ -15,17 +20,18 @@ function CardControl:Ctor(parent, id)
     self.cardBg = self.Root:Find("cardBg").gameObject
     self.cardFront = self.Root:Find("cardFront").gameObject
     self.itemIcon = GetComponent.Image(self.Root:Find("cardFront/itemIcon").gameObject)
+    self.heroRoot = self.Root:Find("cardFront/heroMask")
     self.heroIcon = GetComponent.SpriteRenderer(self.Root:Find("cardFront/heroMask/heroSprite").gameObject)
     self.nameBG = GetComponent.Image(self.Root:Find("cardFront/nameBg").gameObject)
     self.nameText = GetComponent.Text(self.Root:Find("cardFront/nameBg/Text").gameObject)
     self.fx_star_show = self.transform:Find("fx_star_show").gameObject
-    self.fx_star_light = self.Root:Find("cardFront/heroMask/fx_douqi_new 1").gameObject
+    self.fx_douqi = self.Root:Find("cardFront/heroMask/fx_douqi_new 1").gameObject
 
     self.cardBg:SetActive(true)
     self.cardFront:SetActive(false)
     self.fx_star_show:SetActive(false)
+    self.fx_douqi:SetActive(false)
     self.Root.transform.localEulerAngles = Vector2.New(0, 0)
-    self.fx_star_light:SetActive(false)
     self.isOpen = false ---是否已经翻开
     self.orgScale = 0.75
     self.Root.localScale = Vector2.one * 0.75
@@ -57,9 +63,10 @@ function CardControl:SetCard()
         GetComponent.Image(self.cardFront).color = Color.white
         self.nameText.color = Color.white
     end
+    self:ChangeHeroAngle(1)
 end
 
-function CardControl:Open(callback)
+function CardControl:Open()
     if self.isOpen then
         return
     end
@@ -74,23 +81,59 @@ function CardControl:Open(callback)
     seq:Append(self.Root:DOLocalRotate(Vector2.New(0,90),0.25, DG.Tweening.RotateMode.WorldAxisAdd))
     seq:AppendCallback(function()
         if self.data.quality == DemoCfg.cardQuality.orange then
+            self.fx_star_show:SetActive(false)
             self.fx_star_show:SetActive(true)
-            self.fx_star_light:SetActive(true)
         end
     end)
     if self.data.type == DemoCfg.cardType.hero then
         seq:Append(self.Root:DOScale(self.orgScale * 1.2, 0.15))
-        seq:Append(self.heroIcon:DOColor(Color.white, 0.3))
-        seq:AppendCallback(function()
-            self.heroIcon.transform:DOLocalMoveY(30, 1):SetEase(DOTWEEN_EASE.Linear):SetLoops(-1, DOTWEEN_LOOP_TYPE.Yoyo)
+        if self.data.quality == DemoCfg.cardQuality.orange then
+            seq:AppendCallback(function()
+                self.fx_douqi:SetActive(false)
+                self.fx_douqi:SetActive(true)
+            end)
+
+        else
+            seq:AppendCallback(function()
+                self:NormalHeroShow()
+            end)
+        end
+    end
+end
+
+function CardControl:CheckHighHero()
+    if self.data.quality == DemoCfg.cardQuality.orange and self.data.type == DemoCfg.cardType.hero then
+        return true
+    end
+    return false
+end
+
+function CardControl:ChangeHeroAngle(start, target, tweenDur)
+    local cfg1 = heroShowCfg[start]
+    self.heroRoot.localEulerAngles = cfg1.rot
+    if target then
+        local cfg2 = heroShowCfg[target]
+        local offsetX = cfg2.rot.x - cfg1.rot.x
+        local offsetY = cfg2.rot.y - cfg1.rot.y
+        local offsetZ = cfg2.rot.z - cfg1.rot.z
+        self.tween = Happy.DOTweenFloat(0, 1, tweenDur or 0.5, function(value)
+            self.heroRoot.localEulerAngles = Vector3.New(cfg1.rot.x+offsetX * value, cfg1.rot.y+offsetY * value,
+                    cfg1.rot.z+offsetZ * value)
+        end, function()
+            self.heroRoot.localEulerAngles = cfg2.rot
         end)
     end
-    seq:AppendCallback(function()
-        if callback then
-            callback()
-        end
-    end)
+end
 
+function CardControl:NormalHeroShow()
+    local scale = self.heroIcon.transform.localScale.x
+    local seq = DOTween.Sequence()
+    seq:Append(self.heroIcon:DOColor(Color.white, 0.5))
+    seq:Append(self.heroIcon.transform:DOScale(Vector3.New(scale *1.1,scale *1.1,scale *1.1), 0.3))
+    seq:Append(self.heroIcon.transform:DOScale(Vector3.New(scale ,scale,scale ), 0.2))
+    seq:AppendCallback(function()
+        self.heroIcon.transform:DOLocalMoveY(30, 1):SetEase(DOTWEEN_EASE.Linear):SetLoops(-1, DOTWEEN_LOOP_TYPE.Yoyo)
+    end)
 end
 
 return CardControl
