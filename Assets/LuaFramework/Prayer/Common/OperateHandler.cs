@@ -11,36 +11,32 @@ namespace Prayer
     {
         protected Dictionary<string, List<LuaFunction>> funDic = new Dictionary<string, List<LuaFunction>>();
 
-        public void AddCall(string type, LuaFunction call)
+        public LuaFunction AddCall(string type, LuaFunction call)
         {
             if(funDic.ContainsKey(type) == false)
             {
                 funDic[type] = new List<LuaFunction>();
             }
             funDic[type].Add(call);
+
+            return call;
         }
 
         public void RemoveCall(string type, LuaFunction call)
         {
-//            var removeIndex = -1;
-//            for (int i = 0; i < funDic[type].Count; i++)
-//            {
-//                if (funDic[type][i] == call)
-//                {
-//                    removeIndex = i;
-//                    break;
-//                }
-//            }
-//            Debug.Log("RemoveCall1 " + removeIndex + " ^ " + funDic[type].Count + " ^ " + call);
-//            if (removeIndex > 0)
-//            {
-//                funDic[type].RemoveAt(removeIndex);
-//            }
-//            Debug.Log("RemoveCall2 " + removeIndex + " ^ " + funDic[type].Count + " ^ " + call);
-            ///TODO RemoveCall无法正常移除 暂时按钮只支持唯一事件
-            if (funDic[type] != null)
+            var removeIndex = -1;
+            List<LuaFunction> list = funDic[type];
+            for (int i = 0; i < list.Count; i++)
             {
-                funDic[type].Clear();
+                if (list[i] == call)
+                {
+                    removeIndex = i;
+                    break;
+                }
+            }
+            if (removeIndex >= 0)
+            {
+                funDic[type].RemoveAt(removeIndex);
             }
         }
 
@@ -50,9 +46,15 @@ namespace Prayer
             {
                 return;
             }
+
+            List<LuaFunction> list = new List<LuaFunction>();
             for (int i = 0; i < funDic[type].Count; i++)
             {
-                funDic[type][i].Call(eventData);
+                list.Add(funDic[type][i]);
+            }
+            for (int i = 0; i < list.Count; i++)
+            {
+                list[i].Call(eventData);
             }
         }
     }

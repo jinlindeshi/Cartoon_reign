@@ -37,15 +37,20 @@ function Login:Ctor()
         --    --require("Modules.FightScene.FightScene").New(scene)
         --    self:Destroy()
         --end, true)
+
         UIMgr.OpenPanel(UIPanelCfg.drawCard)
         self:Destroy()
     end)
 
-    AddButtonHandler(self.TestButton, PointerHandler.CLICK, function ()
 
-        SM.AddScene("Test", nil, function (scene)
 
-        end, true)
+    self.testCall1 = AddButtonHandler(self.TestButton, PointerHandler.CLICK, function ()
+        print("Handler1")
+        RemoveButtonHandler(self.TestButton, PointerHandler.CLICK, self.testCall1)
+    end)
+
+    self.testCall2 = AddButtonHandler(self.TestButton, PointerHandler.CLICK, function ()
+        print("Handler2")
     end)
 
     self.nameText = GetComponent.Text(self.transform:Find("InputField/Text").gameObject)

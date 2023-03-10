@@ -319,12 +319,13 @@ end
 
 ---添加按钮相关事件
 ---@param go UnityEngine.GameObject
+---@return function
 function AddButtonHandler(go, type, callBack, caller)
     local pointerHandler = GetComponent.PointerHandler(go)
     if not pointerHandler then
         pointerHandler = go:AddComponent(typeof(Prayer.PointerHandler))
     end
-    pointerHandler:AddCall(type, function(eventData)
+    return pointerHandler:AddCall(type, function(eventData)
         Game.UIInput = true
         if caller then
             callBack(caller, eventData)
@@ -345,7 +346,7 @@ function RemoveButtonHandler(go, type, callBack)
         return
     end
     pointerHandler:RemoveCall(type, callBack)
-
+    return callBack
 end
 
 ---为对象添加唯一组件，已有则Return

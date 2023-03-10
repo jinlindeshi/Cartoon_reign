@@ -23,8 +23,9 @@ public class Prayer_OperateHandlerWrap
 			Prayer.OperateHandler obj = (Prayer.OperateHandler)ToLua.CheckObject<Prayer.OperateHandler>(L, 1);
 			string arg0 = ToLua.CheckString(L, 2);
 			LuaFunction arg1 = ToLua.CheckLuaFunction(L, 3);
-			obj.AddCall(arg0, arg1);
-			return 0;
+			LuaInterface.LuaFunction o = obj.AddCall(arg0, arg1);
+			ToLua.Push(L, o);
+			return 1;
 		}
 		catch (Exception e)
 		{
