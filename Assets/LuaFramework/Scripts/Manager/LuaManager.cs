@@ -94,10 +94,5 @@ namespace LuaFramework {
             }
             loader = null;
         }
-
-        public bool CheckDispose()
-        {
-            return lua == null;
-        }
     }
 }
