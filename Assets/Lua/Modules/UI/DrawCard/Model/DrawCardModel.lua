@@ -30,4 +30,11 @@ function DrawCardModel.GetTenDrawData()
     return {13,14,15,16,19,13,7,14,18,17}, {19}
 end
 
+---五连数据
+---获取卡牌数据和需要特写的ID
+---@return table,table
+function DrawCardModel.GetFiveDrawData()
+    --require("Modules.WarScene.Model.AvatarData").AddHeroData(DemoCfg.followerID)
+    return {13,14,15,16,19}, {19}
+end
 return DrawCardModel

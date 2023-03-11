@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8950429091531437597}
   - component: {fileID: 851102464271815944}
   m_Layer: 5
-  m_Name: goldenLight
+  m_Name: fx_search_light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -11,6 +11,7 @@ local OpenCardShow = require("Modules.UI.DrawCard.OpenCardShow")
 local RollCards = require("Modules.UI.DrawCard.RollCards")
 local poolItem = require("Data.Excel.poolItem")
 local SearchShow = require("Modules.UI.DrawCard.SearchShow")
+local SearchResult = require("Modules.UI.DrawCard.SearchResult")
 
 ---@class UI.DrawCard.DrawCardPanel:UI.BasePanel
 ---@field New fun():UI.DrawCard.DrawCardPanel
@@ -22,6 +23,7 @@ function DrawCardPanel:Init()
     self.SelectPoolRoot = self.transform:Find("SelectPoolRoot")
     self.SelectRoot = self.transform:Find("SelectPoolRoot/Scroll View/Viewport/Content")
     self.ResultRoot = self.transform:Find("ResultRoot").gameObject
+    self.ResultRootBg = self.transform:Find("ResultRoot/Bg").gameObject
     self.light = self.transform:Find("ResultRoot/light").gameObject
     self.OnceRoot = self.transform:Find("ResultRoot/OnceRoot").gameObject
     self.cardPos = self.transform:Find("ResultRoot/OnceRoot/cardPos")
@@ -40,6 +42,7 @@ function DrawCardPanel:Init()
     self.featurePic.gameObject:SetActive(false)
     self.SearchRoot = self.transform:Find("ResultRoot/SearchRoot").gameObject
     self.SearchRoot:SetActive(false)
+    self.SearchResultRoot = self.transform:Find("ResultRoot/SearchResultRoot")
 
     self.cardPosList = {} --卡牌坐标位置list
     for i = 1, self.List1.transform.childCount do
@@ -147,11 +150,13 @@ function DrawCardPanel:StartDraw(callback)
     --seq:Append(lightCg:DOFade(0, 0.15))
     seq:AppendCallback(function()
         --self.click:SetActive(true)
-
+        callback()
         if DemoCfg.curDrawType == DemoCfg.drawCardType.search then
-            SearchShow.New(self.SearchRoot, callback)
+            self.ResultRootBg:SetActive(false)
+            SearchShow.New(self.SearchRoot, function() self:SearchResult() end)
         else
-            callback()
+            self.ResultRootBg:SetActive(true)
+            self:CardResult()
         end
 
     end)
@@ -178,6 +183,10 @@ function DrawCardPanel:DrawEnd()
     seq:Join(resultCg:DOFade(0, 0.25))
     seq:AppendCallback(function()
         self.ResultRoot:SetActive(false)
+        if self.sr then
+            self.sr:Recycle()
+            self.sr = nil
+        end
         self:CleanCard()
     end)
 end
@@ -211,7 +220,6 @@ function DrawCardPanel:OnDrawCard(event)
         --    self:DrawTenTimes()
         --end
         self:DrawTenTimes()
-        self:OnShowResult()
     end)
 end
 
@@ -390,6 +398,16 @@ function DrawCardPanel:NextFeature(endCall)
     end
 end
 
+---城市寻找
+function DrawCardPanel:SearchResult()
+    local endCall = function()
+        local btnCg = GetComponent.CanvasGroup(self.ButtonRoot)
+        btnCg:DOFade(1, 0.2)
+        self:DrawComplete()
+    end
+    self.sr = SearchResult.New(self.SearchResultRoot, endCall)
+    self.sr:PlayResult()
+end
 
 ---展示抽卡结果
 function DrawCardPanel:OnShowResult()
@@ -398,11 +416,6 @@ function DrawCardPanel:OnShowResult()
     --else
     --
     --end
-    if DemoCfg.curDrawType == DemoCfg.drawCardType.card then
-        self:CardResult()
-    else
-        self:CardResult()
-    end
 end
 
 ---清理结果

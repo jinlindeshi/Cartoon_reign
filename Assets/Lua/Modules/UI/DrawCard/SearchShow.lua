@@ -21,16 +21,11 @@ function SearchShow:Ctor(go, callback)
     self.maskCg.alpha = 1
     self.gameObject:SetActive(true)
 
-    self:ShowImage(1)
     self.imageList[1].transform.localScale = Vector3.one
     local fadeTime = 0.2 --白屏过度时间
     local fadeGapTime = 0.15 --白屏持续时间
     local holdTime = 2
     local seq = DOTween.Sequence()
-    seq:AppendInterval(fadeGapTime)
-    seq:Append(self.maskCg:DOFade(0, fadeTime))
-    seq:Append(self.imageList[1]:DOScale(1.8, 1.5))
-    seq:Append(self.maskCg:DOFade(1, fadeTime))
     seq:AppendCallback(function()
         self:ShowImage(2)
     end)
@@ -49,15 +44,14 @@ function SearchShow:Ctor(go, callback)
     seq:Append(self.maskCg:DOFade(1, fadeTime))
     seq:AppendCallback(function()
         self:ShowImage(0)
-    end)
-    seq:AppendInterval(fadeGapTime)
-    seq:Append(self.maskCg:DOFade(0, fadeTime))
-
-    seq:AppendCallback(function()
-        self.gameObject:SetActive(false)
         if callback then
             callback()
         end
+    end)
+    seq:AppendInterval(fadeGapTime)
+    seq:Append(self.maskCg:DOFade(0, fadeTime))
+    seq:AppendCallback(function()
+        self.gameObject:SetActive(false)
     end)
 end
 

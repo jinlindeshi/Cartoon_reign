@@ -90,6 +90,6 @@ DemoCfg.drawCardType =
     search = 2,---城市寻找
 }
 
-DemoCfg.curDrawType = DemoCfg.drawCardType.card
+DemoCfg.curDrawType = DemoCfg.drawCardType.search
 
 return DemoCfg
