@@ -147,8 +147,13 @@ function DrawCardPanel:StartDraw(callback)
     --seq:Append(lightCg:DOFade(0, 0.15))
     seq:AppendCallback(function()
         --self.click:SetActive(true)
-        --callback()
-        SearchShow.New(self.SearchRoot, callback)
+
+        if DemoCfg.curDrawType == DemoCfg.drawCardType.search then
+            SearchShow.New(self.SearchRoot, callback)
+        else
+            callback()
+        end
+
     end)
 end
 
@@ -194,22 +199,23 @@ function DrawCardPanel:DrawTenTimes()
 
     self.resultData,self.featureData = DrawCardModel.GetTenDrawData()
     --self.show = OpenCardShow.New(self.TenRoot, self.resultData) ---@type UI.DrawCard.OpenCardShow
-    EventMgr.DispatchEvent(DrawCardModel.eventDefine.showResult)
 end
 
----抽卡事件
+---抽卡事件 都播放十连效果
 function DrawCardPanel:OnDrawCard(event)
     self.drawType = event.type
     self:StartDraw(function()
-        if self.drawType == DrawCardModel.eventDefine.oneDraw then
-            self:DrawOnce()
-        else
-            self:DrawTenTimes()
-        end
+        --if self.drawType == DrawCardModel.eventDefine.oneDraw then
+        --    self:DrawOnce()
+        --else
+        --    self:DrawTenTimes()
+        --end
+        self:DrawTenTimes()
+        self:OnShowResult()
     end)
 end
 
---188.25
+---滚动卡牌抽卡效果相关
 local rollCfg =
 {
     count = 11,
@@ -231,8 +237,8 @@ local showCardIndexList =
     {8,7,6},
 
 }
----展示抽卡结果
-function DrawCardPanel:OnShowResult()
+
+function DrawCardPanel:CardResult()
     self.click:SetActive(false)
     local btnCg = GetComponent.CanvasGroup(self.ButtonRoot)
     btnCg.alpha = 0
@@ -291,16 +297,27 @@ function DrawCardPanel:OnShowResult()
         ---播放特写
         seq:AppendInterval(1)
         seq:AppendCallback(function()
-            self.featureShowList =  {}
-            for i = 1, #self.featureData do
-                local poolData = poolItem.GetData(self.featureData[i])
-                local info = require("Data.Excel.avatar").GetData(poolData.toID)
-                local classUrl = string.format("Modules.UI.DrawCard.Feature.%s_feature", info.pic)
-                local endCb = function() self:NextFeature() end
-                local feature = require(classUrl).New(self.featurePic.gameObject,self.ResultRoot.transform,info.pic,nil,endCb)
-                table.insert(self.featureShowList, 1, feature)
+            local endFun = function()
+                for i = 1, #self.cardList do
+                    if self.cardList[i]:CheckHighHero() then
+                        self.cardList[i].fx_douqi:SetActive(true)
+                    end
+                end
+                local seq = DOTween.Sequence()
+                seq:AppendInterval(0.5)
+                seq:AppendCallback(function()
+                    for i = 1, #self.cardList do
+                        if self.cardList[i]:CheckHighHero() then
+                            self.cardList[i]:NormalHeroShow()
+                        end
+                    end
+                end)
+                seq:AppendInterval(2)
+                seq:AppendCallback(function()
+                    self:ResumeResult()
+                end)
             end
-            self.featureShowList[1]:Play()
+            self:PlayFeature(endFun)
             --隐藏特效
             for i = 1, #self.cardList do
                 if self.cardList[i]:CheckHighHero() then
@@ -314,40 +331,9 @@ function DrawCardPanel:OnShowResult()
             self:ResumeResult()
         end)
     end
-
-    if self.drawType == DrawCardModel.eventDefine.oneDraw then
-
-    else
-
-    end
 end
 
-function DrawCardPanel:NextFeature()
-    table.remove(self.featureShowList)
-    if next(self.featureShowList) then
-        self.featureShowList[1]:Play()
-    else
-        for i = 1, #self.cardList do
-            if self.cardList[i]:CheckHighHero() then
-                self.cardList[i].fx_douqi:SetActive(true)
-            end
-        end
-        local seq = DOTween.Sequence()
-        seq:AppendInterval(0.5)
-        seq:AppendCallback(function()
-            for i = 1, #self.cardList do
-                if self.cardList[i]:CheckHighHero() then
-                    self.cardList[i]:NormalHeroShow()
-                end
-            end
-        end)
-        seq:AppendInterval(2)
-        seq:AppendCallback(function()
-            self:ResumeResult()
-        end)
-    end
-end
-
+---恢复效果
 function DrawCardPanel:ResumeResult()
     local btnCg = GetComponent.CanvasGroup(self.ButtonRoot)
     local seq = DOTween.Sequence()
@@ -376,6 +362,47 @@ end
 ---控制是否可以点击
 function DrawCardPanel:OnActiveClick(event)
     self.click:SetActive(event.data.active)
+end
+
+----播放特写
+function DrawCardPanel:PlayFeature(endCall)
+    self.featureShowList =  {}
+    for i = 1, #self.featureData do
+        local poolData = poolItem.GetData(self.featureData[i])
+        local info = require("Data.Excel.avatar").GetData(poolData.toID)
+        local classUrl = string.format("Modules.UI.DrawCard.Feature.%s_feature", info.pic)
+        local endCb = function() self:NextFeature(endCall) end
+        local feature = require(classUrl).New(self.featurePic.gameObject,self.ResultRoot.transform,info.pic,nil,endCb)
+        table.insert(self.featureShowList, 1, feature)
+    end
+    self.featureShowList[1]:Play()
+end
+
+---下一个特写
+function DrawCardPanel:NextFeature(endCall)
+    table.remove(self.featureShowList)
+    if next(self.featureShowList) then
+        self.featureShowList[1]:Play()
+    else
+        if endCall then
+            endCall()
+        end
+    end
+end
+
+
+---展示抽卡结果
+function DrawCardPanel:OnShowResult()
+    --if self.drawType == DrawCardModel.eventDefine.oneDraw then
+    --
+    --else
+    --
+    --end
+    if DemoCfg.curDrawType == DemoCfg.drawCardType.card then
+        self:CardResult()
+    else
+        self:CardResult()
+    end
 end
 
 ---清理结果

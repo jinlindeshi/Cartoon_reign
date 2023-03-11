@@ -83,4 +83,13 @@ DemoCfg.cardType= ---卡牌类型
     equip = "equip", --装备
     hero = "hero", --角色
 }
+
+DemoCfg.drawCardType =
+{
+    card = 1, ---卡牌滚动
+    search = 2,---城市寻找
+}
+
+DemoCfg.curDrawType = DemoCfg.drawCardType.card
+
 return DemoCfg
