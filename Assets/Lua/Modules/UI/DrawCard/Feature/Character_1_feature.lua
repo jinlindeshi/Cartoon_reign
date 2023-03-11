@@ -46,13 +46,13 @@ function Character_1_feature:Play()
     local seq = DOTween.Sequence()
     ---第一阶段特写
     seq:AppendInterval(0.2)
-    seq:Append(self.transform:DOLocalMove(step1_end_pos, 4))
+    seq:Append(self.transform:DOLocalMove(step1_end_pos, 4.5))
     seq:Join(self.maskCg:DOFade(0, 0.5))
     seq:InsertCallback(0.7 + 0.5, function()
         self.fx.transform.localPosition = step1_fx_pos
         self.fx:SetActive(true)
     end)
-    seq:InsertCallback(0.7 + 2.5, function()
+    seq:InsertCallback(0.7 + 2, function()
         self.fx.transform.localPosition = step2_fx_pos
         self.fx:SetActive(false)
         self.fx:SetActive(true)

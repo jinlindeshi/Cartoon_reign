@@ -30,7 +30,7 @@ function SearchResult:Ctor(parent, endCall)
         table.insert(self.itemList, item)
     end
     self.isStart = false
-    self.startTime = 3
+    self.startTime = 2.5
 end
 
 function SearchResult:PlayResult()

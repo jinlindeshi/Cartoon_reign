@@ -145,21 +145,19 @@ function DrawCardPanel:StartDraw(callback)
     seq:Append(cg1:DOFade(0, 0.25))
     seq:Join(cg2:DOFade(0, 0.25))
     seq:Join(resultCg:DOFade(1, 0.25))
-    --seq:Join(lightCg:DOFade(1, 0.15))
-    --seq:AppendInterval(1)
-    --seq:Append(lightCg:DOFade(0, 0.15))
-    seq:AppendCallback(function()
-        --self.click:SetActive(true)
+    if DemoCfg.curDrawType == DemoCfg.drawCardType.search then
         callback()
-        if DemoCfg.curDrawType == DemoCfg.drawCardType.search then
-            self.ResultRootBg:SetActive(false)
-            SearchShow.New(self.SearchRoot, function() self:SearchResult() end)
-        else
+        self.ResultRootBg:SetActive(false)
+        SearchShow.New(self.SearchRoot, function() self:SearchResult() end)
+    else
+        seq:AppendCallback(function()
+            callback()
             self.ResultRootBg:SetActive(true)
             self:CardResult()
-        end
+        end)
+    end
 
-    end)
+
 end
 
 ---抽卡完成
@@ -183,10 +181,6 @@ function DrawCardPanel:DrawEnd()
     seq:Join(resultCg:DOFade(0, 0.25))
     seq:AppendCallback(function()
         self.ResultRoot:SetActive(false)
-        if self.sr then
-            self.sr:Recycle()
-            self.sr = nil
-        end
         self:CleanCard()
     end)
 end
@@ -402,7 +396,7 @@ end
 function DrawCardPanel:SearchResult()
     local endCall = function()
         local btnCg = GetComponent.CanvasGroup(self.ButtonRoot)
-        btnCg:DOFade(1, 0.2)
+        btnCg:DOFade(1, 0.2):SetDelay(0.8)
         self:DrawComplete()
     end
     self.sr = SearchResult.New(self.SearchResultRoot, endCall)
@@ -427,6 +421,10 @@ function DrawCardPanel:CleanCard()
     for i = 1, #self.rollList do
         self.rollList[i]:Recycle()
         self.rollList[i] = nil
+    end
+    if self.sr then
+        self.sr:Recycle()
+        self.sr = nil
     end
 end
 
