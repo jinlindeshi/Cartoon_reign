@@ -36,7 +36,7 @@ function WarAvatar:Ctor(prefabPath, data, static, parent)
     self:RegisterAction(BehaviorConstants.ATTACK)
     self:RegisterAction(BehaviorConstants.TRY_TO_CAST_SKILL)
 
-    self.aniEvent = GetComponent.AnimationEvent(self.gameObject)
+    self.aniEvent = self.gameObject:GetComponentInChildren(typeof(AnimationEvent)) ---@type AnimationEvent
 
     self.seekerToLua = AddOrGetComponent(self.gameObject, SeekerToLua) ---@type SeekerToLua
 

@@ -25,9 +25,6 @@ function AvatarBase:Ctor(prefabPath, noController, parent)
         return
     end
     self:PlayAnimation(AvatarBase.ANI_IDLE_NAME)
-    if noController ~= true then
-        self.cc = AddOrGetComponent(self.gameObject, UnityEngine.CharacterController) ---@type UnityEngine.CharacterController
-    end
     self:InitAnimations()
 end
 
