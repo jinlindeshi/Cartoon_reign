@@ -61,7 +61,7 @@ function SearchResultItem:PlayTween(endCall)
             local showFunc = function()
                 self.fx_douqi_new:SetActive(true)
                 cg:DOFade(1, 0.3)
-                self.image.transform:DOLocalMoveY(30, 1):SetEase(DOTWEEN_EASE.Linear):SetLoops(-1, DOTWEEN_LOOP_TYPE.Yoyo)
+                self.image.transform:DOLocalMoveY(75, 1):SetEase(DOTWEEN_EASE.Linear):SetLoops(-1, DOTWEEN_LOOP_TYPE.Yoyo)
                 if endCall then
                     endCall()
                 end

@@ -43,6 +43,7 @@ function DrawCardPanel:Init()
     self.SearchRoot = self.transform:Find("ResultRoot/SearchRoot").gameObject
     self.SearchRoot:SetActive(false)
     self.SearchResultRoot = self.transform:Find("ResultRoot/SearchResultRoot")
+    self.ResultRoot:SetActive(false)
 
     self.cardPosList = {} --卡牌坐标位置list
     for i = 1, self.List1.transform.childCount do
@@ -74,7 +75,7 @@ function DrawCardPanel:Init()
 
     EventMgr.DispatchEvent(DrawCardModel.eventDefine.selectPool, {id = self.poolIdList[1]})
 
-    EventMgr.DispatchEvent(DrawCardModel.eventDefine.tenDraw)
+    --EventMgr.DispatchEvent(DrawCardModel.eventDefine.tenDraw)
 end
 
 ---卡池选择scrollView配置

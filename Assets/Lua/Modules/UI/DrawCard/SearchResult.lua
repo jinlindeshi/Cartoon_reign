@@ -53,7 +53,7 @@ function SearchResult:PlayResult()
                 sequence:AppendCallback(function()
                     item:PlayTween()
                 end)
-                sequence:AppendInterval(0.8)
+                sequence:AppendInterval(0.6)
             end
         end
     end

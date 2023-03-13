@@ -1048,7 +1048,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 130, y: 120}
+  m_AnchoredPosition: {x: 0, y: 120}
   m_SizeDelta: {x: 259, y: 125}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4994020328495391539
@@ -1168,7 +1168,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2056801169353230208
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1447,7 +1447,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u53EC\u5524\u5341\u6B21"
+  m_Text: "\u5BFB\u6C42\u9082\u9005"
 --- !u!114 &4587648270515337101
 MonoBehaviour:
   m_ObjectHideFlags: 0

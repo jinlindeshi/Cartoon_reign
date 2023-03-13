@@ -983,7 +983,7 @@ RectTransform:
   - {fileID: 5987593481509828144}
   - {fileID: 686371627938849157}
   m_Father: {fileID: 6496494192582678003}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1111,8 +1111,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2687823498419469514}
-  - {fileID: 5860236810004981760}
   - {fileID: 3374792828461003700}
+  - {fileID: 5860236810004981760}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1346,7 +1346,7 @@ PrefabInstance:
     - target: {fileID: 249541649634747781, guid: 9b6c17db74e71bc4e8474f5e0b79445d,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 249541649634747781, guid: 9b6c17db74e71bc4e8474f5e0b79445d,
         type: 3}
@@ -1497,6 +1497,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2846154966999454587, guid: 9b6c17db74e71bc4e8474f5e0b79445d,
+        type: 3}
+      propertyPath: m_Scale3D.x
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 2846154966999454587, guid: 9b6c17db74e71bc4e8474f5e0b79445d,
+        type: 3}
+      propertyPath: m_Scale3D.y
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 2846154966999454587, guid: 9b6c17db74e71bc4e8474f5e0b79445d,
+        type: 3}
+      propertyPath: m_Scale3D.z
+      value: 60
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9b6c17db74e71bc4e8474f5e0b79445d, type: 3}
