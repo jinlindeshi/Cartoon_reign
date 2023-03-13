@@ -84,6 +84,12 @@ DemoCfg.cardType= ---卡牌类型
     hero = "hero", --角色
 }
 
+DemoCfg.SearchLightCfg =
+{
+    [1] = "Effect/Prefabs/fx_search_light_blue.prefab",
+    [2] = "Effect/Prefabs/fx_search_light_purple.prefab",
+    [3] = "Effect/Prefabs/fx_search_light.prefab",
+}
 DemoCfg.drawCardType =
 {
     card = 1, ---卡牌滚动

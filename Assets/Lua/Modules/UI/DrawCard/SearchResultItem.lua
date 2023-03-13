@@ -12,7 +12,6 @@ function SearchResultItem:Ctor(parent, id)
     self.gameObject = CreatePrefab(url, parent)
     self.transform = self.gameObject.transform
     self.parent = parent
-    self.fx_search_light = self.transform:Find("fx_search_light").gameObject
     self.EquipImage = self.transform:Find("EquipImage").gameObject
     self.HeroImage = self.transform:Find("HeroImage").gameObject
     self.fx_star_show = self.transform:Find("fx_star_show").gameObject
@@ -39,6 +38,9 @@ function SearchResultItem:Ctor(parent, id)
         self.info = info
         --self.nameText.text = info.name
     end
+
+    self.fxUrl = DemoCfg.SearchLightCfg[self.data.quality]
+    self.fx_search_light = CreatePrefab(self.fxUrl, self.transform:Find("fxRoot"))
 end
 
 function SearchResultItem:PlayTween(endCall)
@@ -81,5 +83,6 @@ end
 
 function SearchResultItem:Recycle()
     RecyclePrefab(self.gameObject, url)
+    RecyclePrefab(self.fxUrl)
 end
 return SearchResultItem

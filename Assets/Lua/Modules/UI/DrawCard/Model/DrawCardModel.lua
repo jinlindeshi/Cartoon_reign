@@ -35,6 +35,6 @@ end
 ---@return table,table
 function DrawCardModel.GetFiveDrawData()
     --require("Modules.WarScene.Model.AvatarData").AddHeroData(DemoCfg.followerID)
-    return {13,14,15,16,19}, {19}
+    return {7,14,9,11,19}, {19}
 end
 return DrawCardModel

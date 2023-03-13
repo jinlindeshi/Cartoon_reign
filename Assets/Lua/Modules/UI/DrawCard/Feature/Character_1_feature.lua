@@ -27,6 +27,12 @@ function Character_1_feature:Ctor(go, parent, pic,showCb, endCb)
     self.showCb = showCb
     self.endCb = endCb
     self.mask = self.transform:Find("Mask").gameObject
+    self.infoCg = GetComponent.CanvasGroup(self.transform:Find("info").gameObject)
+    self.infoFx = self.transform:Find("fx_ui_shanguang").gameObject
+
+    self.infoCg.alpha = 0
+    self.infoCg.transform.localScale = Vector2.one * 2
+    self.infoFx:SetActive(false)
     self.img = GetComponent.Image(self.gameObject)
     self.maskCg = GetComponent.CanvasGroup(self.mask)
     self.cg = GetComponent.CanvasGroup(self.gameObject)
@@ -60,6 +66,12 @@ function Character_1_feature:Play()
     ---结束
     seq:Append(self.transform:DOScale(1, 0.5))
     seq:Join(self.transform:DOLocalMove(Vector2.zero, 0.5))
+    seq:AppendInterval(0.5)
+    seq:AppendCallback(function()
+        self.infoFx:SetActive(true)
+    end)
+    seq:Append(self.infoCg.transform:DOScale(1, 0.5):SetEase(DOTWEEN_EASE.InOutCubic))
+    seq:Join(self.infoCg:DOFade(1, 0.2))
     seq:AppendInterval(1.5)
     seq:Append(self.maskCg:DOFade(1, 0.2))
     seq:AppendCallback(function()

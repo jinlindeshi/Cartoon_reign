@@ -4,25 +4,28 @@ using LuaInterface;
 
 namespace Prayer
 {
-    public class TouchEvent : MonoBehaviour
+    public static class TouchEvent 
     {
-	    private const string TOUCH_BEGIN = "TouchEvent_Begin";
-	    private const string TOUCH_MOVE = "TouchEvent_Move";
-	    private const string TOUCH_END = "TouchEvent_End";
+	    //设为静态类 统一在一个updata函数里更新
+	    //派发touch相关事件
+	    
+	    private const string TOUCH_BEGIN = "TouchEvent_Begin"; //开始触摸
+	    private const string TOUCH_MOVE = "TouchEvent_Move"; //触摸中
+	    private const string TOUCH_END = "TouchEvent_End"; //触摸结束
 
-	    private Dictionary<string, List<LuaFunction>> _listenerDic = new Dictionary<string, List<LuaFunction>>();
+	    private static Dictionary<string, List<LuaFunction>> _listenerDic = new Dictionary<string, List<LuaFunction>>();
 	    
 	    /// 当前是否正在触摸中
-	    private bool s_touching = false;
+	    private static bool s_touching = false;
 	    /// 记录触摸或点击的位置
-	    private Vector2 s_pos = new Vector2();
+	    private static Vector2 s_pos = new Vector2();
 	    // 记录当前交互位置与上次位置的偏移 用来判断交互状态
-	    private Vector2 s_deltaPos = new Vector2();
+	    private static Vector2 s_deltaPos = new Vector2();
 	    /// 记录移动端当前触摸的fingerId 用来排除多指操作
-	    private int s_id = -1;
+	    private static int s_id = -1;
 	    
 	    //添加监听
-	    public void AddListener(string type, LuaFunction call)
+	    public static void AddListener(string type, LuaFunction call)
 	    {
 		    if(_listenerDic.ContainsKey(type) == false)
 		    {
@@ -32,12 +35,12 @@ namespace Prayer
 	    }
 	    
 	    //移除监听
-	    public void RemoveListener(string type, LuaFunction call)
+	    public static void RemoveListener(string type, LuaFunction call)
 	    {
 		    List<LuaFunction> callList;
 		    if (_listenerDic.TryGetValue(type, out callList))
 		    {
-			    Debug.Log("======删除之前"+ callList.Count);
+			    // Debug.Log("======删除之前"+ callList.Count);
 			    for (int i = 0; i < callList.Count; i++)
 			    {
 				    if (callList[i] == call)
@@ -46,12 +49,12 @@ namespace Prayer
 					    break;
 				    }
 			    }
-			    Debug.Log("======删除之后"+ _listenerDic[type].Count);
+			    // Debug.Log("======删除之后"+ _listenerDic[type].Count);
 		    }
 	    }
 	    
 	    //派发事件
-	    void DispatchEvent(string type)
+	    static void DispatchEvent(string type)
 	    {
 		    if (_listenerDic.ContainsKey(type) == false)
 		    {
@@ -63,7 +66,7 @@ namespace Prayer
 		    }
 	    }
 
-	    void Update()
+	    public static void _Update()
         {
 	        //Editor调用
 #if UNITY_EDITOR

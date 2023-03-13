@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 199073188800656538}
   - component: {fileID: 8950429091531437597}
   - component: {fileID: 851102464271815944}
+  - component: {fileID: -8099727671377407472}
   m_Layer: 5
   m_Name: fx_search_light
   m_TagString: Untagged
@@ -4675,6 +4676,18 @@ MonoBehaviour:
   - {fileID: 198940726568530462}
   - {fileID: 198206493252294532}
   m_ShrinkByMaterial: 0
+--- !u!225 &-8099727671377407472
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1557333745233640}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1579936399154644
 GameObject:
   m_ObjectHideFlags: 0

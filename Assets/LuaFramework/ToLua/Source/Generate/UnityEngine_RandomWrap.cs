@@ -7,9 +7,9 @@ public class UnityEngine_RandomWrap
 	public static void Register(LuaState L)
 	{
 		L.BeginStaticLibs("Random");
+		L.RegFunction("ColorHSV", ColorHSV);
 		L.RegFunction("InitState", InitState);
 		L.RegFunction("Range", Range);
-		L.RegFunction("ColorHSV", ColorHSV);
 		L.RegVar("state", get_state, set_state);
 		L.RegVar("value", get_value, null);
 		L.RegVar("insideUnitSphere", get_insideUnitSphere, null);
@@ -18,40 +18,6 @@ public class UnityEngine_RandomWrap
 		L.RegVar("rotation", get_rotation, null);
 		L.RegVar("rotationUniform", get_rotationUniform, null);
 		L.EndStaticLibs();
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int InitState(IntPtr L)
-	{
-		try
-		{
-			ToLua.CheckArgsCount(L, 1);
-			int arg0 = (int)LuaDLL.luaL_checknumber(L, 1);
-			UnityEngine.Random.InitState(arg0);
-			return 0;
-		}
-		catch (Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
-
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int Range(IntPtr L)
-	{
-		try
-		{
-			ToLua.CheckArgsCount(L, 2);
-			float arg0 = (float)LuaDLL.luaL_checknumber(L, 1);
-			float arg1 = (float)LuaDLL.luaL_checknumber(L, 2);
-			float o = UnityEngine.Random.Range(arg0, arg1);
-			LuaDLL.lua_pushnumber(L, o);
-			return 1;
-		}
-		catch (Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -115,6 +81,40 @@ public class UnityEngine_RandomWrap
 			{
 				return LuaDLL.luaL_throw(L, "invalid arguments to method: UnityEngine.Random.ColorHSV");
 			}
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int InitState(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			int arg0 = (int)LuaDLL.luaL_checknumber(L, 1);
+			UnityEngine.Random.InitState(arg0);
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int Range(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			float arg0 = (float)LuaDLL.luaL_checknumber(L, 1);
+			float arg1 = (float)LuaDLL.luaL_checknumber(L, 2);
+			float o = UnityEngine.Random.Range(arg0, arg1);
+			LuaDLL.lua_pushnumber(L, o);
+			return 1;
 		}
 		catch (Exception e)
 		{

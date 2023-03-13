@@ -7,7 +7,6 @@ namespace Prayer
     public class ManagerHandler : MonoBehaviour
     {
         public LuaFunction checkCall;
-
         private void CallLua(string funName)
         {
             if (checkCall == null)
@@ -26,6 +25,7 @@ namespace Prayer
         void Update()
         {
             CallLua("Update");
+            TouchEvent._Update();
         }
 
         void FixedUpdate()

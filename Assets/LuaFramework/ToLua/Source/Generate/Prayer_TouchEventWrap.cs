@@ -6,12 +6,11 @@ public class Prayer_TouchEventWrap
 {
 	public static void Register(LuaState L)
 	{
-		L.BeginClass(typeof(Prayer.TouchEvent), typeof(UnityEngine.MonoBehaviour));
+		L.BeginStaticLibs("TouchEvent");
 		L.RegFunction("AddListener", AddListener);
 		L.RegFunction("RemoveListener", RemoveListener);
-		L.RegFunction("__eq", op_Equality);
-		L.RegFunction("__tostring", ToLua.op_ToString);
-		L.EndClass();
+		L.RegFunction("_Update", _Update);
+		L.EndStaticLibs();
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -19,11 +18,10 @@ public class Prayer_TouchEventWrap
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 3);
-			Prayer.TouchEvent obj = (Prayer.TouchEvent)ToLua.CheckObject<Prayer.TouchEvent>(L, 1);
-			string arg0 = ToLua.CheckString(L, 2);
-			LuaFunction arg1 = ToLua.CheckLuaFunction(L, 3);
-			obj.AddListener(arg0, arg1);
+			ToLua.CheckArgsCount(L, 2);
+			string arg0 = ToLua.CheckString(L, 1);
+			LuaFunction arg1 = ToLua.CheckLuaFunction(L, 2);
+			Prayer.TouchEvent.AddListener(arg0, arg1);
 			return 0;
 		}
 		catch (Exception e)
@@ -37,11 +35,10 @@ public class Prayer_TouchEventWrap
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 3);
-			Prayer.TouchEvent obj = (Prayer.TouchEvent)ToLua.CheckObject<Prayer.TouchEvent>(L, 1);
-			string arg0 = ToLua.CheckString(L, 2);
-			LuaFunction arg1 = ToLua.CheckLuaFunction(L, 3);
-			obj.RemoveListener(arg0, arg1);
+			ToLua.CheckArgsCount(L, 2);
+			string arg0 = ToLua.CheckString(L, 1);
+			LuaFunction arg1 = ToLua.CheckLuaFunction(L, 2);
+			Prayer.TouchEvent.RemoveListener(arg0, arg1);
 			return 0;
 		}
 		catch (Exception e)
@@ -51,16 +48,13 @@ public class Prayer_TouchEventWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int op_Equality(IntPtr L)
+	static int _Update(IntPtr L)
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 2);
-			UnityEngine.Object arg0 = (UnityEngine.Object)ToLua.ToObject(L, 1);
-			UnityEngine.Object arg1 = (UnityEngine.Object)ToLua.ToObject(L, 2);
-			bool o = arg0 == arg1;
-			LuaDLL.lua_pushboolean(L, o);
-			return 1;
+			ToLua.CheckArgsCount(L, 0);
+			Prayer.TouchEvent._Update();
+			return 0;
 		}
 		catch (Exception e)
 		{
