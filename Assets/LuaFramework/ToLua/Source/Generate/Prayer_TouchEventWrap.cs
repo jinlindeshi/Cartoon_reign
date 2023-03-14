@@ -9,6 +9,7 @@ public class Prayer_TouchEventWrap
 		L.BeginStaticLibs("TouchEvent");
 		L.RegFunction("AddListener", AddListener);
 		L.RegFunction("RemoveListener", RemoveListener);
+		L.RegFunction("Clear", Clear);
 		L.RegFunction("_Update", _Update);
 		L.EndStaticLibs();
 	}
@@ -39,6 +40,21 @@ public class Prayer_TouchEventWrap
 			string arg0 = ToLua.CheckString(L, 1);
 			LuaFunction arg1 = ToLua.CheckLuaFunction(L, 2);
 			Prayer.TouchEvent.RemoveListener(arg0, arg1);
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int Clear(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 0);
+			Prayer.TouchEvent.Clear();
 			return 0;
 		}
 		catch (Exception e)

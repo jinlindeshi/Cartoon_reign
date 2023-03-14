@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 using System.IO;
 using System.Net;
  using DG.Tweening;
+ using Prayer;
  using UnityEngine.Networking;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -355,6 +356,7 @@ namespace LuaFramework
             }
 
             AppFacade.Destroy();
+            TouchEvent.Clear();
             UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("Enter");
         }
     }

@@ -52,6 +52,11 @@ namespace Prayer
 			    // Debug.Log("======删除之后"+ _listenerDic[type].Count);
 		    }
 	    }
+	    //清理
+	    public static void Clear()
+	    {
+		    _listenerDic = new Dictionary<string, List<LuaFunction>>();
+	    }
 	    
 	    //派发事件
 	    static void DispatchEvent(string type)
