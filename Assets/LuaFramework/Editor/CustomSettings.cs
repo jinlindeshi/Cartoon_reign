@@ -24,7 +24,8 @@ using DG.Tweening.Core;
 using UnityEngine.Audio;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
-using Action = System.Action;
+ using UnityEngine.Video;
+ using Action = System.Action;
 using Debugger = LuaInterface.Debugger;
  using Path = DG.Tweening.Plugins.Core.PathCore.Path;
 
@@ -263,6 +264,7 @@ public static class CustomSettings
         _GT(typeof(UniversalAdditionalCameraData)),
         _GT(typeof(CameraExtensions)),
         _GT(typeof(CameraRenderType)),
+        _GT(typeof(VideoPlayer)),
         
         
         _GT(typeof(ABPath)),

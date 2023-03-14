@@ -116,6 +116,15 @@ public static class LuaBinder
 		UnityEngine_Rendering_Universal_CameraRenderTypeWrap.Register(L);
 		L.EndModule();
 		L.EndModule();
+		L.BeginModule("Video");
+		UnityEngine_Video_VideoPlayerWrap.Register(L);
+		L.BeginModule("VideoPlayer");
+		L.RegFunction("EventHandler", UnityEngine_Video_VideoPlayer_EventHandler);
+		L.RegFunction("ErrorEventHandler", UnityEngine_Video_VideoPlayer_ErrorEventHandler);
+		L.RegFunction("TimeEventHandler", UnityEngine_Video_VideoPlayer_TimeEventHandler);
+		L.RegFunction("FrameReadyEventHandler", UnityEngine_Video_VideoPlayer_FrameReadyEventHandler);
+		L.EndModule();
+		L.EndModule();
 		L.BeginModule("Events");
 		L.RegFunction("UnityAction", UnityEngine_Events_UnityAction);
 		L.RegFunction("UnityAction_UnityEngine_SpriteRenderer", UnityEngine_Events_UnityAction_UnityEngine_SpriteRenderer);
@@ -319,6 +328,114 @@ public static class LuaBinder
 		L.AddPreLoad("UnityEngine.Rigidbody", LuaOpen_UnityEngine_Rigidbody, typeof(UnityEngine.Rigidbody));
 		L.EndPreLoad();
 		Debugger.Log("Register lua type cost time: {0}", Time.realtimeSinceStartup - t);
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int UnityEngine_Video_VideoPlayer_EventHandler(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
+
+			if (count == 1)
+			{
+				Delegate arg1 = DelegateTraits<UnityEngine.Video.VideoPlayer.EventHandler>.Create(func);
+				ToLua.Push(L, arg1);
+			}
+			else
+			{
+				LuaTable self = ToLua.CheckLuaTable(L, 2);
+				Delegate arg1 = DelegateTraits<UnityEngine.Video.VideoPlayer.EventHandler>.Create(func, self);
+				ToLua.Push(L, arg1);
+			}
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int UnityEngine_Video_VideoPlayer_ErrorEventHandler(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
+
+			if (count == 1)
+			{
+				Delegate arg1 = DelegateTraits<UnityEngine.Video.VideoPlayer.ErrorEventHandler>.Create(func);
+				ToLua.Push(L, arg1);
+			}
+			else
+			{
+				LuaTable self = ToLua.CheckLuaTable(L, 2);
+				Delegate arg1 = DelegateTraits<UnityEngine.Video.VideoPlayer.ErrorEventHandler>.Create(func, self);
+				ToLua.Push(L, arg1);
+			}
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int UnityEngine_Video_VideoPlayer_TimeEventHandler(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
+
+			if (count == 1)
+			{
+				Delegate arg1 = DelegateTraits<UnityEngine.Video.VideoPlayer.TimeEventHandler>.Create(func);
+				ToLua.Push(L, arg1);
+			}
+			else
+			{
+				LuaTable self = ToLua.CheckLuaTable(L, 2);
+				Delegate arg1 = DelegateTraits<UnityEngine.Video.VideoPlayer.TimeEventHandler>.Create(func, self);
+				ToLua.Push(L, arg1);
+			}
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int UnityEngine_Video_VideoPlayer_FrameReadyEventHandler(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+			LuaFunction func = ToLua.CheckLuaFunction(L, 1);
+
+			if (count == 1)
+			{
+				Delegate arg1 = DelegateTraits<UnityEngine.Video.VideoPlayer.FrameReadyEventHandler>.Create(func);
+				ToLua.Push(L, arg1);
+			}
+			else
+			{
+				LuaTable self = ToLua.CheckLuaTable(L, 2);
+				Delegate arg1 = DelegateTraits<UnityEngine.Video.VideoPlayer.FrameReadyEventHandler>.Create(func, self);
+				ToLua.Push(L, arg1);
+			}
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

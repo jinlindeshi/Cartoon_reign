@@ -77,6 +77,10 @@ public class DelegateFactory
 		dict.Add(typeof(UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene,UnityEngine.SceneManagement.LoadSceneMode>), factory.UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene_UnityEngine_SceneManagement_LoadSceneMode);
 		dict.Add(typeof(UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene>), factory.UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene);
 		dict.Add(typeof(UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene,UnityEngine.SceneManagement.Scene>), factory.UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene_UnityEngine_SceneManagement_Scene);
+		dict.Add(typeof(UnityEngine.Video.VideoPlayer.EventHandler), factory.UnityEngine_Video_VideoPlayer_EventHandler);
+		dict.Add(typeof(UnityEngine.Video.VideoPlayer.ErrorEventHandler), factory.UnityEngine_Video_VideoPlayer_ErrorEventHandler);
+		dict.Add(typeof(UnityEngine.Video.VideoPlayer.TimeEventHandler), factory.UnityEngine_Video_VideoPlayer_TimeEventHandler);
+		dict.Add(typeof(UnityEngine.Video.VideoPlayer.FrameReadyEventHandler), factory.UnityEngine_Video_VideoPlayer_FrameReadyEventHandler);
 		dict.Add(typeof(Pathfinding.OnPathDelegate), factory.Pathfinding_OnPathDelegate);
 		dict.Add(typeof(Pathfinding.OnGraphDelegate), factory.Pathfinding_OnGraphDelegate);
 		dict.Add(typeof(Pathfinding.OnScanDelegate), factory.Pathfinding_OnScanDelegate);
@@ -144,6 +148,10 @@ public class DelegateFactory
 		DelegateTraits<UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene,UnityEngine.SceneManagement.LoadSceneMode>>.Init(factory.UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene_UnityEngine_SceneManagement_LoadSceneMode);
 		DelegateTraits<UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene>>.Init(factory.UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene);
 		DelegateTraits<UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene,UnityEngine.SceneManagement.Scene>>.Init(factory.UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene_UnityEngine_SceneManagement_Scene);
+		DelegateTraits<UnityEngine.Video.VideoPlayer.EventHandler>.Init(factory.UnityEngine_Video_VideoPlayer_EventHandler);
+		DelegateTraits<UnityEngine.Video.VideoPlayer.ErrorEventHandler>.Init(factory.UnityEngine_Video_VideoPlayer_ErrorEventHandler);
+		DelegateTraits<UnityEngine.Video.VideoPlayer.TimeEventHandler>.Init(factory.UnityEngine_Video_VideoPlayer_TimeEventHandler);
+		DelegateTraits<UnityEngine.Video.VideoPlayer.FrameReadyEventHandler>.Init(factory.UnityEngine_Video_VideoPlayer_FrameReadyEventHandler);
 		DelegateTraits<Pathfinding.OnPathDelegate>.Init(factory.Pathfinding_OnPathDelegate);
 		DelegateTraits<Pathfinding.OnGraphDelegate>.Init(factory.Pathfinding_OnGraphDelegate);
 		DelegateTraits<Pathfinding.OnScanDelegate>.Init(factory.Pathfinding_OnScanDelegate);
@@ -211,6 +219,10 @@ public class DelegateFactory
 		TypeTraits<UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene,UnityEngine.SceneManagement.LoadSceneMode>>.Init(factory.Check_UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene_UnityEngine_SceneManagement_LoadSceneMode);
 		TypeTraits<UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene>>.Init(factory.Check_UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene);
 		TypeTraits<UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene,UnityEngine.SceneManagement.Scene>>.Init(factory.Check_UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene_UnityEngine_SceneManagement_Scene);
+		TypeTraits<UnityEngine.Video.VideoPlayer.EventHandler>.Init(factory.Check_UnityEngine_Video_VideoPlayer_EventHandler);
+		TypeTraits<UnityEngine.Video.VideoPlayer.ErrorEventHandler>.Init(factory.Check_UnityEngine_Video_VideoPlayer_ErrorEventHandler);
+		TypeTraits<UnityEngine.Video.VideoPlayer.TimeEventHandler>.Init(factory.Check_UnityEngine_Video_VideoPlayer_TimeEventHandler);
+		TypeTraits<UnityEngine.Video.VideoPlayer.FrameReadyEventHandler>.Init(factory.Check_UnityEngine_Video_VideoPlayer_FrameReadyEventHandler);
 		TypeTraits<Pathfinding.OnPathDelegate>.Init(factory.Check_Pathfinding_OnPathDelegate);
 		TypeTraits<Pathfinding.OnGraphDelegate>.Init(factory.Check_Pathfinding_OnGraphDelegate);
 		TypeTraits<Pathfinding.OnScanDelegate>.Init(factory.Check_Pathfinding_OnScanDelegate);
@@ -278,6 +290,10 @@ public class DelegateFactory
 		StackTraits<UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene,UnityEngine.SceneManagement.LoadSceneMode>>.Push = factory.Push_UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene_UnityEngine_SceneManagement_LoadSceneMode;
 		StackTraits<UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene>>.Push = factory.Push_UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene;
 		StackTraits<UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene,UnityEngine.SceneManagement.Scene>>.Push = factory.Push_UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene_UnityEngine_SceneManagement_Scene;
+		StackTraits<UnityEngine.Video.VideoPlayer.EventHandler>.Push = factory.Push_UnityEngine_Video_VideoPlayer_EventHandler;
+		StackTraits<UnityEngine.Video.VideoPlayer.ErrorEventHandler>.Push = factory.Push_UnityEngine_Video_VideoPlayer_ErrorEventHandler;
+		StackTraits<UnityEngine.Video.VideoPlayer.TimeEventHandler>.Push = factory.Push_UnityEngine_Video_VideoPlayer_TimeEventHandler;
+		StackTraits<UnityEngine.Video.VideoPlayer.FrameReadyEventHandler>.Push = factory.Push_UnityEngine_Video_VideoPlayer_FrameReadyEventHandler;
 		StackTraits<Pathfinding.OnPathDelegate>.Push = factory.Push_Pathfinding_OnPathDelegate;
 		StackTraits<Pathfinding.OnGraphDelegate>.Push = factory.Push_Pathfinding_OnGraphDelegate;
 		StackTraits<Pathfinding.OnScanDelegate>.Push = factory.Push_Pathfinding_OnScanDelegate;
@@ -3857,6 +3873,240 @@ public class DelegateFactory
 	}
 
 	void Push_UnityEngine_Events_UnityAction_UnityEngine_SceneManagement_Scene_UnityEngine_SceneManagement_Scene(IntPtr L, UnityEngine.Events.UnityAction<UnityEngine.SceneManagement.Scene,UnityEngine.SceneManagement.Scene> o)
+	{
+		ToLua.Push(L, o);
+	}
+
+	class UnityEngine_Video_VideoPlayer_EventHandler_Event : LuaDelegate
+	{
+		public UnityEngine_Video_VideoPlayer_EventHandler_Event(LuaFunction func) : base(func) { }
+		public UnityEngine_Video_VideoPlayer_EventHandler_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+
+		public void Call(UnityEngine.Video.VideoPlayer param0)
+		{
+			func.BeginPCall();
+			func.PushSealed(param0);
+			func.PCall();
+			func.EndPCall();
+		}
+
+		public void CallWithSelf(UnityEngine.Video.VideoPlayer param0)
+		{
+			func.BeginPCall();
+			func.Push(self);
+			func.PushSealed(param0);
+			func.PCall();
+			func.EndPCall();
+		}
+	}
+
+	public UnityEngine.Video.VideoPlayer.EventHandler UnityEngine_Video_VideoPlayer_EventHandler(LuaFunction func, LuaTable self, bool flag)
+	{
+		if (func == null)
+		{
+			UnityEngine.Video.VideoPlayer.EventHandler fn = delegate(UnityEngine.Video.VideoPlayer param0) { };
+			return fn;
+		}
+
+		if(!flag)
+		{
+			UnityEngine_Video_VideoPlayer_EventHandler_Event target = new UnityEngine_Video_VideoPlayer_EventHandler_Event(func);
+			UnityEngine.Video.VideoPlayer.EventHandler d = target.Call;
+			target.method = d.Method;
+			return d;
+		}
+		else
+		{
+			UnityEngine_Video_VideoPlayer_EventHandler_Event target = new UnityEngine_Video_VideoPlayer_EventHandler_Event(func, self);
+			UnityEngine.Video.VideoPlayer.EventHandler d = target.CallWithSelf;
+			target.method = d.Method;
+			return d;
+		}
+	}
+
+	bool Check_UnityEngine_Video_VideoPlayer_EventHandler(IntPtr L, int pos)
+	{
+		return TypeChecker.CheckDelegateType(typeof(UnityEngine.Video.VideoPlayer.EventHandler), L, pos);
+	}
+
+	void Push_UnityEngine_Video_VideoPlayer_EventHandler(IntPtr L, UnityEngine.Video.VideoPlayer.EventHandler o)
+	{
+		ToLua.Push(L, o);
+	}
+
+	class UnityEngine_Video_VideoPlayer_ErrorEventHandler_Event : LuaDelegate
+	{
+		public UnityEngine_Video_VideoPlayer_ErrorEventHandler_Event(LuaFunction func) : base(func) { }
+		public UnityEngine_Video_VideoPlayer_ErrorEventHandler_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+
+		public void Call(UnityEngine.Video.VideoPlayer param0, string param1)
+		{
+			func.BeginPCall();
+			func.PushSealed(param0);
+			func.Push(param1);
+			func.PCall();
+			func.EndPCall();
+		}
+
+		public void CallWithSelf(UnityEngine.Video.VideoPlayer param0, string param1)
+		{
+			func.BeginPCall();
+			func.Push(self);
+			func.PushSealed(param0);
+			func.Push(param1);
+			func.PCall();
+			func.EndPCall();
+		}
+	}
+
+	public UnityEngine.Video.VideoPlayer.ErrorEventHandler UnityEngine_Video_VideoPlayer_ErrorEventHandler(LuaFunction func, LuaTable self, bool flag)
+	{
+		if (func == null)
+		{
+			UnityEngine.Video.VideoPlayer.ErrorEventHandler fn = delegate(UnityEngine.Video.VideoPlayer param0, string param1) { };
+			return fn;
+		}
+
+		if(!flag)
+		{
+			UnityEngine_Video_VideoPlayer_ErrorEventHandler_Event target = new UnityEngine_Video_VideoPlayer_ErrorEventHandler_Event(func);
+			UnityEngine.Video.VideoPlayer.ErrorEventHandler d = target.Call;
+			target.method = d.Method;
+			return d;
+		}
+		else
+		{
+			UnityEngine_Video_VideoPlayer_ErrorEventHandler_Event target = new UnityEngine_Video_VideoPlayer_ErrorEventHandler_Event(func, self);
+			UnityEngine.Video.VideoPlayer.ErrorEventHandler d = target.CallWithSelf;
+			target.method = d.Method;
+			return d;
+		}
+	}
+
+	bool Check_UnityEngine_Video_VideoPlayer_ErrorEventHandler(IntPtr L, int pos)
+	{
+		return TypeChecker.CheckDelegateType(typeof(UnityEngine.Video.VideoPlayer.ErrorEventHandler), L, pos);
+	}
+
+	void Push_UnityEngine_Video_VideoPlayer_ErrorEventHandler(IntPtr L, UnityEngine.Video.VideoPlayer.ErrorEventHandler o)
+	{
+		ToLua.Push(L, o);
+	}
+
+	class UnityEngine_Video_VideoPlayer_TimeEventHandler_Event : LuaDelegate
+	{
+		public UnityEngine_Video_VideoPlayer_TimeEventHandler_Event(LuaFunction func) : base(func) { }
+		public UnityEngine_Video_VideoPlayer_TimeEventHandler_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+
+		public void Call(UnityEngine.Video.VideoPlayer param0, double param1)
+		{
+			func.BeginPCall();
+			func.PushSealed(param0);
+			func.Push(param1);
+			func.PCall();
+			func.EndPCall();
+		}
+
+		public void CallWithSelf(UnityEngine.Video.VideoPlayer param0, double param1)
+		{
+			func.BeginPCall();
+			func.Push(self);
+			func.PushSealed(param0);
+			func.Push(param1);
+			func.PCall();
+			func.EndPCall();
+		}
+	}
+
+	public UnityEngine.Video.VideoPlayer.TimeEventHandler UnityEngine_Video_VideoPlayer_TimeEventHandler(LuaFunction func, LuaTable self, bool flag)
+	{
+		if (func == null)
+		{
+			UnityEngine.Video.VideoPlayer.TimeEventHandler fn = delegate(UnityEngine.Video.VideoPlayer param0, double param1) { };
+			return fn;
+		}
+
+		if(!flag)
+		{
+			UnityEngine_Video_VideoPlayer_TimeEventHandler_Event target = new UnityEngine_Video_VideoPlayer_TimeEventHandler_Event(func);
+			UnityEngine.Video.VideoPlayer.TimeEventHandler d = target.Call;
+			target.method = d.Method;
+			return d;
+		}
+		else
+		{
+			UnityEngine_Video_VideoPlayer_TimeEventHandler_Event target = new UnityEngine_Video_VideoPlayer_TimeEventHandler_Event(func, self);
+			UnityEngine.Video.VideoPlayer.TimeEventHandler d = target.CallWithSelf;
+			target.method = d.Method;
+			return d;
+		}
+	}
+
+	bool Check_UnityEngine_Video_VideoPlayer_TimeEventHandler(IntPtr L, int pos)
+	{
+		return TypeChecker.CheckDelegateType(typeof(UnityEngine.Video.VideoPlayer.TimeEventHandler), L, pos);
+	}
+
+	void Push_UnityEngine_Video_VideoPlayer_TimeEventHandler(IntPtr L, UnityEngine.Video.VideoPlayer.TimeEventHandler o)
+	{
+		ToLua.Push(L, o);
+	}
+
+	class UnityEngine_Video_VideoPlayer_FrameReadyEventHandler_Event : LuaDelegate
+	{
+		public UnityEngine_Video_VideoPlayer_FrameReadyEventHandler_Event(LuaFunction func) : base(func) { }
+		public UnityEngine_Video_VideoPlayer_FrameReadyEventHandler_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+
+		public void Call(UnityEngine.Video.VideoPlayer param0, long param1)
+		{
+			func.BeginPCall();
+			func.PushSealed(param0);
+			func.Push(param1);
+			func.PCall();
+			func.EndPCall();
+		}
+
+		public void CallWithSelf(UnityEngine.Video.VideoPlayer param0, long param1)
+		{
+			func.BeginPCall();
+			func.Push(self);
+			func.PushSealed(param0);
+			func.Push(param1);
+			func.PCall();
+			func.EndPCall();
+		}
+	}
+
+	public UnityEngine.Video.VideoPlayer.FrameReadyEventHandler UnityEngine_Video_VideoPlayer_FrameReadyEventHandler(LuaFunction func, LuaTable self, bool flag)
+	{
+		if (func == null)
+		{
+			UnityEngine.Video.VideoPlayer.FrameReadyEventHandler fn = delegate(UnityEngine.Video.VideoPlayer param0, long param1) { };
+			return fn;
+		}
+
+		if(!flag)
+		{
+			UnityEngine_Video_VideoPlayer_FrameReadyEventHandler_Event target = new UnityEngine_Video_VideoPlayer_FrameReadyEventHandler_Event(func);
+			UnityEngine.Video.VideoPlayer.FrameReadyEventHandler d = target.Call;
+			target.method = d.Method;
+			return d;
+		}
+		else
+		{
+			UnityEngine_Video_VideoPlayer_FrameReadyEventHandler_Event target = new UnityEngine_Video_VideoPlayer_FrameReadyEventHandler_Event(func, self);
+			UnityEngine.Video.VideoPlayer.FrameReadyEventHandler d = target.CallWithSelf;
+			target.method = d.Method;
+			return d;
+		}
+	}
+
+	bool Check_UnityEngine_Video_VideoPlayer_FrameReadyEventHandler(IntPtr L, int pos)
+	{
+		return TypeChecker.CheckDelegateType(typeof(UnityEngine.Video.VideoPlayer.FrameReadyEventHandler), L, pos);
+	}
+
+	void Push_UnityEngine_Video_VideoPlayer_FrameReadyEventHandler(IntPtr L, UnityEngine.Video.VideoPlayer.FrameReadyEventHandler o)
 	{
 		ToLua.Push(L, o);
 	}
