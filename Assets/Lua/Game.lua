@@ -566,4 +566,11 @@ function GetComponent.DOTweenVisualManager(go)
     return go:GetComponent(typeof(DG.Tweening.DOTweenVisualManager))
 end
 
+---获得 VideoPlayer 组件
+---@param go UnityEngine.GameObject
+---@return UnityEngine.Video.VideoPlayer
+function GetComponent.VideoPlayer(go)
+    return go:GetComponent(typeof(UnityEngine.Video.VideoPlayer))
+end
+
 return Game
